@@ -24,6 +24,7 @@ public class ModCreativeModeTabs {
                         output.accept(ModItems.COOKED_INSPIRATION);
                         output.accept(ModBlocks.LIGNITE_BLOCK);
                         output.accept(ModItems.INSPIREAD);
+                        output.accept(ModItems.INSPIRRY);
                     })
                     .build());
     public static void register(IEventBus eventBus) {
