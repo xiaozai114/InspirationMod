@@ -15,6 +15,8 @@ public class ModItems {
             ITEMS.register("cooked_inspiration", () ->new Item(new Item.Properties().food(ModFoods.COOKED_INSPIRATION)));
     public static final DeferredItem<Item> LIGNITE=
             ITEMS.register("lignite", () ->new Item(new Item.Properties()));
+    public static final DeferredItem<Item> COKE=
+            ITEMS.register("coke", () ->new Item(new Item.Properties()));
     public static final DeferredItem<Item> INSPIREAD=
             ITEMS.register("inspiread", () ->new Item(new Item.Properties().food(ModFoods.INSPIREAD)));
     public static final DeferredItem<Item> INSPIRRY=

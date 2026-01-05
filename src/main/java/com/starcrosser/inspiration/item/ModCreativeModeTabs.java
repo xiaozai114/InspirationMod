@@ -25,6 +25,7 @@ public class ModCreativeModeTabs {
                         output.accept(ModBlocks.LIGNITE_BLOCK);
                         output.accept(ModItems.INSPIREAD);
                         output.accept(ModItems.INSPIRRY);
+                        output.accept(ModItems.COKE);
                     })
                     .build());
     public static void register(IEventBus eventBus) {

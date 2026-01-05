@@ -1,0 +1,11 @@
+{
+  "values": {
+    "inspiration:lignite": {
+      "burn_time": 1200
+    },
+    "inspiration:coke": {
+      "burn_time": 2400
+    }
+  }
+
+}
