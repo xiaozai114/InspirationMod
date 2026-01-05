@@ -1,0 +1,14 @@
+{
+  "item.inspiration.inspiration":"灵感",
+  "item.inspiration.cooked_inspiration":"烤灵感",
+  "item.inspiration.lignite":"褐煤",
+  "block.inspiration.lignite_block": "褐煤块",
+  "itemGroup.inspire_tab": "灵感",
+  "inspiration.configuration.title": "Inspiration Configs",
+  "inspiration.configuration.section.inspiration.common.toml": "Inspiration Configs",
+  "inspiration.configuration.section.inspiration.common.toml.title": "Inspiration Configs",
+  "inspiration.configuration.items": "Item List",
+  "inspiration.configuration.logDirtBlock": "Log Dirt Block",
+  "inspiration.configuration.magicNumberIntroduction": "Magic Number Text",
+  "inspiration.configuration.magicNumber": "Magic Number"
+}
