@@ -5,8 +5,9 @@
   "item.inspiration.inspiread":"inspiread",
   "item.inspiration.inspirry":"inspirry",
   "item.inspiration.coke":"coke",
-  "item.inspiration.exp_sword":"Experience Sword",
+  "item.inspiration.exp_sword":"Inspiration Sword",
   "item.inspiration.storm_sword":"Storm Sword",
+  "item.inspiration.sticky_axe":"Inspiration Axe",
   "tooltip.inspiration.exp_sword.description": "Create experience orb when attack",
   "tooltip.inspiration.storm_sowrd.description": "Right click for windburst",
 

@@ -1,8 +1,11 @@
+//todo: 写一个给铜除锈生成铜粒的逻辑
+
 package com.starcrosser.inspiration.item.custom;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.ExperienceOrb;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.context.UseOnContext;
@@ -35,17 +38,17 @@ public class StickyAxe extends AxeItem {
         STRIPPABLE_LOGS.add(Blocks.CRIMSON_STEM);
         STRIPPABLE_LOGS.add(Blocks.WARPED_STEM);
 
-        // 去皮后的方块也要考虑，避免重复剥皮
-        STRIPPABLE_LOGS.add(Blocks.STRIPPED_OAK_LOG);
-        STRIPPABLE_LOGS.add(Blocks.STRIPPED_SPRUCE_LOG);
-        STRIPPABLE_LOGS.add(Blocks.STRIPPED_BIRCH_LOG);
-        STRIPPABLE_LOGS.add(Blocks.STRIPPED_JUNGLE_LOG);
-        STRIPPABLE_LOGS.add(Blocks.STRIPPED_ACACIA_LOG);
-        STRIPPABLE_LOGS.add(Blocks.STRIPPED_DARK_OAK_LOG);
-        STRIPPABLE_LOGS.add(Blocks.STRIPPED_MANGROVE_LOG);
-        STRIPPABLE_LOGS.add(Blocks.STRIPPED_CHERRY_LOG);
-        STRIPPABLE_LOGS.add(Blocks.STRIPPED_CRIMSON_STEM);
-        STRIPPABLE_LOGS.add(Blocks.STRIPPED_WARPED_STEM);
+
+//        STRIPPABLE_LOGS.add(Blocks.STRIPPED_OAK_LOG);
+//        STRIPPABLE_LOGS.add(Blocks.STRIPPED_SPRUCE_LOG);
+//        STRIPPABLE_LOGS.add(Blocks.STRIPPED_BIRCH_LOG);
+//        STRIPPABLE_LOGS.add(Blocks.STRIPPED_JUNGLE_LOG);
+//        STRIPPABLE_LOGS.add(Blocks.STRIPPED_ACACIA_LOG);
+//        STRIPPABLE_LOGS.add(Blocks.STRIPPED_DARK_OAK_LOG);
+//        STRIPPABLE_LOGS.add(Blocks.STRIPPED_MANGROVE_LOG);
+//        STRIPPABLE_LOGS.add(Blocks.STRIPPED_CHERRY_LOG);
+//        STRIPPABLE_LOGS.add(Blocks.STRIPPED_CRIMSON_STEM);
+//        STRIPPABLE_LOGS.add(Blocks.STRIPPED_WARPED_STEM);
     }
 
     public StickyAxe(Tier tier, float attackDamage, float attackSpeed, Properties properties) {
@@ -63,20 +66,13 @@ public class StickyAxe extends AxeItem {
 
         // 先让原版斧子处理剥皮逻辑
         InteractionResult result = super.useOn(context);
-
-        // 只有在服务端处理掉落物
-        if (!level.isClientSide && result == InteractionResult.SUCCESS) {
-            BlockState newState = level.getBlockState(pos);
-
-            // 检查方块是否被剥皮（方块发生了变化）
-            if (!state.is(newState.getBlock())) {
-                // 检查是否是可剥皮的原木
-                if (isStrippableLog(state)) {
-                    dropStick(context, pos);
-
-                }
-            }
+        if (isStrippableLog(state)) {
+            dropStick(context, pos);
+            ExperienceOrb orb = new ExperienceOrb(level ,pos.getX()+0.5,pos.getY()+1, pos.getZ()+0.5,1);
+            level.addFreshEntity(orb);
         }
+
+
 
         return result;
     }
@@ -86,13 +82,10 @@ public class StickyAxe extends AxeItem {
         ItemEntity stickEntity = new ItemEntity(
                 level,
                 pos.getX()+0.5,
-                pos.getY()+0.5,
+                pos.getY()+0.5+1,
                 pos.getZ()+0.5,
                 new ItemStack(Items.STICK, 1)
         );
-        // 设置拾取延迟
-        stickEntity.setDefaultPickUpDelay();
-
         // 添加到世界中
         level.addFreshEntity(stickEntity);
     }

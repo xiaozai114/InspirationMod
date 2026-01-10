@@ -28,6 +28,7 @@ public class ModCreativeModeTabs {
                         output.accept(ModItems.COKE);
                         output.accept(ModItems.EXP_SWORD);
                         output.accept(ModItems.STORM_SWORD);
+                        output.accept(ModItems.STICKY_AXE);
                     })
                     .build());
     public static void register(IEventBus eventBus) {
