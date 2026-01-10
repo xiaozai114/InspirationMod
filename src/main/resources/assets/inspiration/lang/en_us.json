@@ -5,6 +5,10 @@
   "item.inspiration.inspiread":"inspiread",
   "item.inspiration.inspirry":"inspirry",
   "item.inspiration.coke":"coke",
+  "item.inspiration.exp_sword":"Experience Sword",
+  "item.inspiration.storm_sword":"Storm Sword",
+  "tooltip.inspiration.exp_sword.description": "Create experience orb when attack",
+  "tooltip.inspiration.storm_sowrd.description": "Right click for windburst",
 
   "block.inspiration.lignite_block": "lignite block",
   "itemGroup.inspire_tab": "Inspiration",
@@ -14,5 +18,6 @@
   "inspiration.configuration.items": "Item List",
   "inspiration.configuration.logDirtBlock": "Log Dirt Block",
   "inspiration.configuration.magicNumberIntroduction": "Magic Number Text",
-  "inspiration.configuration.magicNumber": "Magic Number"
+  "inspiration.configuration.magicNumber": "Magic Number",
+  "tooltip.inspiration.sticky_axe.description": "Try Stripping some wood?"
 }

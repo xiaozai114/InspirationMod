@@ -5,6 +5,11 @@
   "item.inspiration.inspiread":"灵感面包",
   "item.inspiration.inspirry":"灵感浆果",
   "item.inspiration.coke":"焦煤",
+  "item.inspiration.exp_sword":"灵感之剑",
+  "item.inspiration.storm_sword":"风暴军刀",
+  "tooltip.inspiration.exp_sword.description": "攻击敌人时掉落经验球",
+  "tooltip.inspiration.storm_sowrd.description": "右键发射风弹攻击",
+  "tooltip.inspiration.sticky_axe.description": "Try Stripping some wood?",
 
   "block.inspiration.lignite_block": "褐煤块",
   "itemGroup.inspire_tab": "灵感",
