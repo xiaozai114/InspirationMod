@@ -12,6 +12,7 @@
   "tooltip.inspiration.exp_sword.description": "攻击敌人时掉落经验球",
   "tooltip.inspiration.storm_sowrd.description": "右键发射风弹攻击",
   "tooltip.inspiration.sticky_axe.description": "为什么要给树木去皮？",
+  "item.inspiration.unstable_core": "§7不稳核心",
 
   "block.inspiration.lignite_block": "褐煤块",
   "itemGroup.inspire_tab": "灵感",

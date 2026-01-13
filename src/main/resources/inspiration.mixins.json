@@ -2,7 +2,9 @@
   "required": true,
   "package": "com.starcrosser.inspiration.mixin",
   "compatibilityLevel": "JAVA_21",
-  "mixins": [],
+  "mixins": [
+    "SpawnerBlockMixin"
+  ],
   "injectors": {
     "defaultRequire": 1
   },

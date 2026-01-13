@@ -27,6 +27,8 @@ public class ModItems {
             ITEMS.register("redstone_ingot", () ->new Item(new Item.Properties()));
     public static final DeferredItem<Item> LAPIS_INGOT=
             ITEMS.register("lapis_ingot", () ->new Item(new Item.Properties()));
+    public static final DeferredItem<Item> UNSTABLE_CORE=
+            ITEMS.register("unstable_core", () ->new Item(new Item.Properties()));
     public static final DeferredItem<Item> INSPIRRY=
             ITEMS.register("inspirry", () ->new Item(new Item.Properties().food(ModFoods.INSPIRRY)));
     public static final DeferredItem<Item> EXP_SWORD=

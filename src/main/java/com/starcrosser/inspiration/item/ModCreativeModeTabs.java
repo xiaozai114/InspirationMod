@@ -35,7 +35,7 @@ public class ModCreativeModeTabs {
                         output.accept(ModItems.LAPIS_INGOT);
                         output.accept(ModBlocks.LAPIS_INGOT_BLOCK);
                         output.accept(ModBlocks.REDSTONE_INGOT_BLOCK);
-
+                        output.accept(ModItems.UNSTABLE_CORE);
                     })
                     .build());
     public static void register(IEventBus eventBus) {
