@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "group": "redstone_ingot",
+  "key": {
+    "#": {
+      "item": "minecraft:redstone"
+    },
+    "Y": {
+      "item": "inspiration:inspiration"
+    },
+    "X": {
+      "item": "minecraft:gold_ingot"
+    }
+  },
+  "pattern": [
+    "###",
+    "#Y#",
+    "#X#"
+  ],
+  "result": {
+    "count": 2,
+    "id": "inspiration:redstone_ingot"
+  }
+}

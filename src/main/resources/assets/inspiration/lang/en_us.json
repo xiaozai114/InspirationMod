@@ -11,7 +11,12 @@
   "item.inspiration.head_hunter_axe":"Head Hunter",
   "tooltip.inspiration.exp_sword.description": "Create experience orb when attack",
   "tooltip.inspiration.storm_sowrd.description": "Right click for windburst",
+  "item.inspiration.exp_pickaxe": "Inspiration Pickaxe",
+  "item.inspiration.redstone_ingot": "Redstone Ingot",
+  "item.inspiration.lapis_ingot": "Lapis Ingot",
 
+  "block.inspiration.redstone_ingot_block": "Redstone Ingot Block",
+  "block.inspiration.lapis_ingot_block": "Lapis Ingot Block",
   "block.inspiration.lignite_block": "lignite block",
   "itemGroup.inspire_tab": "Inspiration",
   "inspiration.configuration.title": "Inspiration Configs",
@@ -21,5 +26,6 @@
   "inspiration.configuration.logDirtBlock": "Log Dirt Block",
   "inspiration.configuration.magicNumberIntroduction": "Magic Number Text",
   "inspiration.configuration.magicNumber": "Magic Number",
-  "tooltip.inspiration.sticky_axe.description": "Try Stripping some wood?"
+  "tooltip.inspiration.sticky_axe.description": "Try Stripping some wood?",
+  "tooltip.inspiration.exp_pickaxe.description": "Create experience orb when mining"
 }

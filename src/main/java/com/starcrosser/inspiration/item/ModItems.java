@@ -1,10 +1,7 @@
 package com.starcrosser.inspiration.item;
 
 import com.starcrosser.inspiration.Inspiration;
-import com.starcrosser.inspiration.item.custom.ExperienceSword;
-import com.starcrosser.inspiration.item.custom.HeadHunterAxe;
-import com.starcrosser.inspiration.item.custom.StickyAxe;
-import com.starcrosser.inspiration.item.custom.StormSword;
+import com.starcrosser.inspiration.item.custom.*;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.Tier;
@@ -26,6 +23,10 @@ public class ModItems {
             ITEMS.register("coke", () ->new Item(new Item.Properties()));
     public static final DeferredItem<Item> INSPIREAD=
             ITEMS.register("inspiread", () ->new Item(new Item.Properties().food(ModFoods.INSPIREAD)));
+    public static final DeferredItem<Item> REDSTONE_INGOT=
+            ITEMS.register("redstone_ingot", () ->new Item(new Item.Properties()));
+    public static final DeferredItem<Item> LAPIS_INGOT=
+            ITEMS.register("lapis_ingot", () ->new Item(new Item.Properties()));
     public static final DeferredItem<Item> INSPIRRY=
             ITEMS.register("inspirry", () ->new Item(new Item.Properties().food(ModFoods.INSPIRRY)));
     public static final DeferredItem<Item> EXP_SWORD=
@@ -40,6 +41,9 @@ public class ModItems {
     public static final DeferredItem<Item> HEAD_HUNTER_AXE=
             ITEMS.register("head_hunter_axe", () ->new HeadHunterAxe(Tiers.DIAMOND, 9,-3.2F,
                     new Item.Properties().durability(1799).rarity(Rarity.EPIC)));
+    public static final DeferredItem<Item> EXP_PICKAXE=
+            ITEMS.register("exp_pickaxe", () ->new ExperiencePickaxe(Tiers.IRON, 0,-2.4F,
+                    new Item.Properties().durability(899).rarity(Rarity.RARE)));
     public static void register(IEventBus eventBus) {
         ITEMS.register(eventBus);
     }

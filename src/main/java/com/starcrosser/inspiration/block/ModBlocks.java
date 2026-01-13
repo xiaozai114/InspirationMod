@@ -28,7 +28,12 @@ public class ModBlocks {
     public static final DeferredBlock<Block> LIGNITE_BLOCK =
             registerBlocks("lignite_block",()->new Block(BlockBehaviour.Properties.of().strength(1.5F,6.0F)
                     .requiresCorrectToolForDrops()));
-
+    public static final DeferredBlock<Block> LAPIS_INGOT_BLOCK =
+            registerBlocks("lapis_ingot_block",()->new Block(BlockBehaviour.Properties.of().strength(2.5F,6.0F)
+                    .requiresCorrectToolForDrops()));
+    public static final DeferredBlock<Block> REDSTONE_INGOT_BLOCK =
+            registerBlocks("redstone_ingot_block",()->new Block(BlockBehaviour.Properties.of().strength(2.5F,6.0F)
+                    .requiresCorrectToolForDrops()));
     public static void register(IEventBus eventBus) {
         BLOCKS.register(eventBus);
     }

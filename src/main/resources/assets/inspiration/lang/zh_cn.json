@@ -21,5 +21,11 @@
   "inspiration.configuration.items": "Item List",
   "inspiration.configuration.logDirtBlock": "Log Dirt Block",
   "inspiration.configuration.magicNumberIntroduction": "Magic Number Text",
-  "inspiration.configuration.magicNumber": "Magic Number"
+  "inspiration.configuration.magicNumber": "Magic Number",
+  "item.inspiration.exp_pickaxe": "灵感之镐",
+  "tooltip.inspiration.exp_pickaxe.description": "挖掘时掉落经验球",
+  "item.inspiration.redstone_ingot": "红石锭",
+  "item.inspiration.lapis_ingot": "青金石锭",
+  "block.inspiration.redstone_ingot_block": "红石锭方块",
+  "block.inspiration.lapis_ingot_block": "青金石锭方块"
 }

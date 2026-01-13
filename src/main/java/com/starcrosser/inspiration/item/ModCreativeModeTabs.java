@@ -30,6 +30,12 @@ public class ModCreativeModeTabs {
                         output.accept(ModItems.STORM_SWORD);
                         output.accept(ModItems.STICKY_AXE);
                         output.accept(ModItems.HEAD_HUNTER_AXE);
+                        output.accept(ModItems.EXP_PICKAXE);
+                        output.accept(ModItems.REDSTONE_INGOT);
+                        output.accept(ModItems.LAPIS_INGOT);
+                        output.accept(ModBlocks.LAPIS_INGOT_BLOCK);
+                        output.accept(ModBlocks.REDSTONE_INGOT_BLOCK);
+
                     })
                     .build());
     public static void register(IEventBus eventBus) {
