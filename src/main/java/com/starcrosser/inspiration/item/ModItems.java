@@ -2,6 +2,7 @@ package com.starcrosser.inspiration.item;
 
 import com.starcrosser.inspiration.Inspiration;
 import com.starcrosser.inspiration.item.custom.ExperienceSword;
+import com.starcrosser.inspiration.item.custom.HeadHunterAxe;
 import com.starcrosser.inspiration.item.custom.StickyAxe;
 import com.starcrosser.inspiration.item.custom.StormSword;
 import net.minecraft.world.item.Item;
@@ -36,6 +37,9 @@ public class ModItems {
     public static final DeferredItem<Item> STICKY_AXE=
         ITEMS.register("sticky_axe", () ->new StickyAxe(Tiers.IRON, 7,-3.2F,
                     new Item.Properties().durability(899).rarity(Rarity.RARE)));
+    public static final DeferredItem<Item> HEAD_HUNTER_AXE=
+            ITEMS.register("head_hunter_axe", () ->new HeadHunterAxe(Tiers.DIAMOND, 9,-3.2F,
+                    new Item.Properties().durability(1799).rarity(Rarity.EPIC)));
     public static void register(IEventBus eventBus) {
         ITEMS.register(eventBus);
     }

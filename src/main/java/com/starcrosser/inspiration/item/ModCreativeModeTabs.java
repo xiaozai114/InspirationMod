@@ -29,6 +29,7 @@ public class ModCreativeModeTabs {
                         output.accept(ModItems.EXP_SWORD);
                         output.accept(ModItems.STORM_SWORD);
                         output.accept(ModItems.STICKY_AXE);
+                        output.accept(ModItems.HEAD_HUNTER_AXE);
                     })
                     .build());
     public static void register(IEventBus eventBus) {

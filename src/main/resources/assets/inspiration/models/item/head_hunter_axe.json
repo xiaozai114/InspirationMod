@@ -1,0 +1,6 @@
+{
+  "parent": "item/handheld",
+  "textures": {
+    "layer0": "inspiration:item/head_hunter_axe"
+  }
+}
