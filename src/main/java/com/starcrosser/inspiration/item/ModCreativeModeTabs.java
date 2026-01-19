@@ -36,6 +36,12 @@ public class ModCreativeModeTabs {
                         output.accept(ModBlocks.LAPIS_INGOT_BLOCK);
                         output.accept(ModBlocks.REDSTONE_INGOT_BLOCK);
                         output.accept(ModItems.UNSTABLE_CORE);
+                        output.accept(ModItems.UNSTABLE_SMITHING_TEMPLATE);
+                        output.accept(ModItems.EXTREME_ALLOY);
+                        output.accept(ModBlocks.EPHEMERAL_ORE);
+                        output.accept(ModItems.EPHEMERAL_MATERIAL);
+                        output.accept(ModItems.SOD);
+                        output.accept(ModItems.EXP_HOE);
                     })
                     .build());
     public static void register(IEventBus eventBus) {

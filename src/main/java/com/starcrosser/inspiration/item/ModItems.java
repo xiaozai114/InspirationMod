@@ -21,6 +21,8 @@ public class ModItems {
             ITEMS.register("lignite", () ->new Item(new Item.Properties()));
     public static final DeferredItem<Item> COKE=
             ITEMS.register("coke", () ->new Item(new Item.Properties()));
+    public static final DeferredItem<Item> UNSTABLE_SMITHING_TEMPLATE=
+            ITEMS.register("unstable_smithing_template", () ->new Item(new Item.Properties()));
     public static final DeferredItem<Item> INSPIREAD=
             ITEMS.register("inspiread", () ->new Item(new Item.Properties().food(ModFoods.INSPIREAD)));
     public static final DeferredItem<Item> REDSTONE_INGOT=
@@ -29,6 +31,12 @@ public class ModItems {
             ITEMS.register("lapis_ingot", () ->new Item(new Item.Properties()));
     public static final DeferredItem<Item> UNSTABLE_CORE=
             ITEMS.register("unstable_core", () ->new Item(new Item.Properties()));
+    public static final DeferredItem<Item> EXTREME_ALLOY=
+            ITEMS.register("extreme_alloy", () ->new Item(new Item.Properties()));
+    public static final DeferredItem<Item> EPHEMERAL_MATERIAL=
+            ITEMS.register("ephemeral_material", () ->new Item(new Item.Properties()));
+    public static final DeferredItem<Item> SOD=
+            ITEMS.register("sod", () ->new Item(new Item.Properties().food(ModFoods.SOD)));
     public static final DeferredItem<Item> INSPIRRY=
             ITEMS.register("inspirry", () ->new Item(new Item.Properties().food(ModFoods.INSPIRRY)));
     public static final DeferredItem<Item> EXP_SWORD=
@@ -44,8 +52,16 @@ public class ModItems {
             ITEMS.register("head_hunter_axe", () ->new HeadHunterAxe(Tiers.DIAMOND, 9,-3.2F,
                     new Item.Properties().durability(1799).rarity(Rarity.EPIC)));
     public static final DeferredItem<Item> EXP_PICKAXE=
-            ITEMS.register("exp_pickaxe", () ->new ExperiencePickaxe(Tiers.IRON, 0,-2.4F,
+            ITEMS.register("exp_pickaxe", () ->new ExperiencePickaxe(Tiers.DIAMOND, 0,-2.4F,
                     new Item.Properties().durability(899).rarity(Rarity.RARE)));
+    public static final DeferredItem<Item> WORLD_BREAKER=
+            ITEMS.register("world_breaker", () ->new BedrockPickaxe(Tiers.NETHERITE, 0,-2.0F,
+                    new Item.Properties().durability(999999).rarity(Rarity.EPIC)));
+    public static final DeferredItem<Item> EXP_HOE=
+            ITEMS.register("exp_hoe", () ->new ExperienceHoe(Tiers.IRON, -2.0F,-0.0F,
+                    new Item.Properties().durability(899).rarity(Rarity.RARE)));
+
+
     public static void register(IEventBus eventBus) {
         ITEMS.register(eventBus);
     }

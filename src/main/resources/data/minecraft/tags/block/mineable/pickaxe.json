@@ -1,6 +1,9 @@
 {
   "replace": false,
   "values": [
-    "inspiration:lignite_block"
+    "inspiration:lignite_block",
+    "inspiration:ephemeral_ore",
+    "inspiration:lapis_ingot_block",
+    "inspiration:redstone_ingot_block"
   ]
 }

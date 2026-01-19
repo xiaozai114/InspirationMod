@@ -13,6 +13,9 @@
   "tooltip.inspiration.storm_sowrd.description": "右键发射风弹攻击",
   "tooltip.inspiration.sticky_axe.description": "为什么要给树木去皮？",
   "item.inspiration.unstable_core": "§7不稳核心",
+  "item.inspiration.unstable_smithing_template": "§7不稳锻造模板",
+  "item.inspiration.world_breaker": "§9破§a界§4者§5XX",
+  "item.inspiration.extreme_alloy": "§9极限§4合金",
 
   "block.inspiration.lignite_block": "褐煤块",
   "itemGroup.inspire_tab": "灵感",
@@ -28,5 +31,9 @@
   "item.inspiration.redstone_ingot": "红石锭",
   "item.inspiration.lapis_ingot": "青金石锭",
   "block.inspiration.redstone_ingot_block": "红石锭方块",
-  "block.inspiration.lapis_ingot_block": "青金石锭方块"
+  "block.inspiration.lapis_ingot_block": "青金石锭方块",
+  "item.inspiration.ephemeral_material": "§5无恒物质",
+  "block.inspiration.ephemeral_ore": "§5无恒矿石",
+  "item.inspiration.sod": "草皮",
+  "item.inspiration.exp_hoe": "灵感之锄"
 }
