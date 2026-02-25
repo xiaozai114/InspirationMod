@@ -24,6 +24,6 @@ public class ModFoods {
                     .build());
     public static final FoodProperties SOD =
             (new FoodProperties.Builder().nutrition(1).saturationModifier(0.0F)
-                    .effect(new MobEffectInstance(MobEffects.CONFUSION,600),1)
+                    .effect(new MobEffectInstance(MobEffects.CONFUSION,60),1)
                     .build());
 }

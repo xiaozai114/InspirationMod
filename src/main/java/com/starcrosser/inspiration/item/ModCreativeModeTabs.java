@@ -42,6 +42,9 @@ public class ModCreativeModeTabs {
                         output.accept(ModItems.EPHEMERAL_MATERIAL);
                         output.accept(ModItems.SOD);
                         output.accept(ModItems.EXP_HOE);
+                        output.accept(ModItems.SCYTHE_OF_DEATH);
+                        output.accept(ModItems.EMPTY_BEACON);
+
                     })
                     .build());
     public static void register(IEventBus eventBus) {

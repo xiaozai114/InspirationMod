@@ -1,0 +1,28 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "group": "lapis_ingot",
+  "key": {
+    "#": {
+      "item": "minecraft:glass"
+    },
+    "Y": {
+      "item": "inspiration:unstable_core"
+    },
+    "X": {
+      "item": "minecraft:ephemeral_material"
+    },
+    "Z": {
+      "item": "minecraft:obsidian"
+    }
+  },
+  "pattern": [
+    "###",
+    "#Y#",
+    "ZXZ"
+  ],
+  "result": {
+    "count": 1,
+    "id": "empty_beacon"
+  }
+}

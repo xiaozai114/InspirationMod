@@ -19,8 +19,11 @@
   "item.inspiration.world_breaker": "§9WORLD§4BREAKER§5XX",
   "item.inspiration.extreme_alloy": "§9Extreme §4Alloy",
   "item.inspiration.ephemeral_material": "§5Ephemeral Material",
-  "item.inspiration.sod": "SOD",
+  "item.inspiration.sod": "Sod",
   "item.inspiration.exp_hoe": "Inspiration Hoe",
+  "item.inspiration.scythe_of_death": "Scythe of Death",
+  "item.inspiration.empty_beacon": "Empty Beacon",
+
 
   "block.inspiration.redstone_ingot_block": "Redstone Ingot Block",
   "block.inspiration.lapis_ingot_block": "Lapis Ingot Block",

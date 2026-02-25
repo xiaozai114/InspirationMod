@@ -16,6 +16,7 @@
   "item.inspiration.unstable_smithing_template": "§7不稳锻造模板",
   "item.inspiration.world_breaker": "§9破§a界§4者§5XX",
   "item.inspiration.extreme_alloy": "§9极限§4合金",
+  "item.inspiration.empty_beacon": "空信标",
 
   "block.inspiration.lignite_block": "褐煤块",
   "itemGroup.inspire_tab": "灵感",
@@ -35,5 +36,6 @@
   "item.inspiration.ephemeral_material": "§5无恒物质",
   "block.inspiration.ephemeral_ore": "§5无恒矿石",
   "item.inspiration.sod": "草皮",
-  "item.inspiration.exp_hoe": "灵感之锄"
+  "item.inspiration.exp_hoe": "灵感之锄",
+  "item.inspiration.scythe_of_death": "死神之镰"
 }
