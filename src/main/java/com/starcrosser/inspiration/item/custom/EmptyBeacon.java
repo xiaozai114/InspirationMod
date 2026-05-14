@@ -26,7 +26,7 @@ public class EmptyBeacon extends Item {
     public InteractionResult interactLivingEntity(ItemStack heldItem, Player player, LivingEntity entity,
                                                   InteractionHand hand) {
 
-        if (WitherBoss.class.isInstance(entity))
+        if (!WitherBoss.class.isInstance(entity))
             return InteractionResult.PASS;
 
         Level world = player.level();
