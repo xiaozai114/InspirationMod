@@ -38,7 +38,9 @@ public class ModZhCnLangProvider extends LanguageProvider {
         add(ModItems.EXP_HOE.get(), "灵感之锄");
         add(ModItems.SCYTHE_OF_DEATH.get(), "死神之镰");
         add(ModItems.EMPTY_BEACON.get(), "空信标");
-
+        add(ModItems.CESIUM_SALT.get(), "铯盐");
+        add(ModBlocks.CESIUM_SALT_ORE.get(), "铯盐矿");
+        add(ModItems.RAW_CESIUM_SALT.get(), "粗铯盐");
         // 方块
         add(ModBlocks.REDSTONE_INGOT_BLOCK.get(), "红石锭方块");
         add(ModBlocks.LAPIS_INGOT_BLOCK.get(), "青金石锭方块");

@@ -1,6 +1,0 @@
-{
-  "parent": "block/cube_all",
-  "textures": {
-    "all": "inspiration:block/lapis_ingot_block"
-  }
-}

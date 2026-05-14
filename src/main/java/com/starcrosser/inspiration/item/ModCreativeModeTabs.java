@@ -44,6 +44,8 @@ public class ModCreativeModeTabs {
                         output.accept(ModItems.EXP_HOE);
                         output.accept(ModItems.SCYTHE_OF_DEATH);
                         output.accept(ModItems.EMPTY_BEACON);
+                        output.accept(ModItems.CESIUM_SALT);
+                        output.accept(ModItems.RAW_CESIUM_SALT);
 
                     })
                     .build());

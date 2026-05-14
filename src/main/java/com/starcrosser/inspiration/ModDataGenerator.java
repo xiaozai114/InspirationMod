@@ -38,9 +38,10 @@ public class ModDataGenerator {
         generator.addProvider(event.includeServer(),
                 new ModItemTagsProvider(packOutput, lookupProvider, blockTagsProvider.contentsGetter(),existingFileHelper));
         generator.addProvider(event.includeClient(),
-                new ModItemModelsProvider(packOutput, existingFileHelper));
-        generator.addProvider(event.includeClient(),
                 new ModBlockStatesProvider(packOutput, existingFileHelper));
+        generator.addProvider(event.includeClient(),
+                new ModItemModelsProvider(packOutput, existingFileHelper));
+
         generator.addProvider(event.includeClient(),
                 new ModEnUsLangProvider(packOutput));
         generator.addProvider(event.includeClient(),

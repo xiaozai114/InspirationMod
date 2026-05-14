@@ -15,6 +15,10 @@ public class ModItems {
             DeferredRegister.createItems(Inspiration.MODID);
     public static final DeferredItem<Item> INSPIRATION=
             ITEMS.register("inspiration", () ->new Item(new Item.Properties()));
+    public static final DeferredItem<Item> CESIUM_SALT=
+            ITEMS.register("cesium_salt", () ->new Item(new Item.Properties()));
+    public static final DeferredItem<Item> RAW_CESIUM_SALT=
+            ITEMS.register("raw_cesium_salt", () ->new Item(new Item.Properties()));
     public static final DeferredItem<Item> COOKED_INSPIRATION=
             ITEMS.register("cooked_inspiration", () ->new Item(new Item.Properties().food(ModFoods.COOKED_INSPIRATION)));
     public static final DeferredItem<Item> LIGNITE=

@@ -18,9 +18,26 @@ public class ModBlockTagsProvider extends BlockTagsProvider {
 
     @Override
     protected void addTags(HolderLookup.Provider provider) {
-        //tag(BlockTags.MINEABLE_WITH_PICKAXE)
-                //.add(ModBlocks.LIGNITE_BLOCK.get());
-        //tag(BlockTags.NEEDS_STONE_TOOL)
-                //.add(ModBlocks.LIGNITE_BLOCK.get());
+        // 镐子可挖掘
+        tag(BlockTags.MINEABLE_WITH_PICKAXE)
+                .add(ModBlocks.LIGNITE_BLOCK.get())
+                .add(ModBlocks.EPHEMERAL_ORE.get())
+                .add(ModBlocks.LAPIS_INGOT_BLOCK.get())
+                .add(ModBlocks.CESIUM_SALT_ORE.get())
+                .add(ModBlocks.REDSTONE_INGOT_BLOCK.get());
+
+        // 挖掘等级：石镐及以上
+        tag(BlockTags.NEEDS_STONE_TOOL)
+                .add(ModBlocks.LIGNITE_BLOCK.get())
+                .add(ModBlocks.CESIUM_SALT_ORE.get());
+
+        // 挖掘等级：铁镐及以上
+        tag(BlockTags.NEEDS_IRON_TOOL)
+                .add(ModBlocks.LAPIS_INGOT_BLOCK.get())
+                .add(ModBlocks.REDSTONE_INGOT_BLOCK.get());
+
+        // 挖掘等级：钻石镐及以上
+        tag(BlockTags.NEEDS_DIAMOND_TOOL)
+                .add(ModBlocks.EPHEMERAL_ORE.get());
     }
 }

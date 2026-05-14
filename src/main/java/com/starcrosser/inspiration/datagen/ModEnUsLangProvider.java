@@ -38,6 +38,9 @@ public class ModEnUsLangProvider extends LanguageProvider {
         add(ModItems.EXP_HOE.get(), "Inspiration Hoe");
         add(ModItems.SCYTHE_OF_DEATH.get(), "Scythe of Death");
         add(ModItems.EMPTY_BEACON.get(), "Empty Beacon");
+        add(ModItems.CESIUM_SALT.get(), "Cesium Salt");
+        add(ModBlocks.CESIUM_SALT_ORE.get(), "Cesium Salt Ore");
+        add(ModItems.RAW_CESIUM_SALT.get(), "Raw Cesium Salt");
 
         // 方块
         add(ModBlocks.REDSTONE_INGOT_BLOCK.get(), "Redstone Ingot Block");

@@ -25,6 +25,8 @@ public class ModBlockLootTablesProvider extends BlockLootSubProvider {
         dropSelf(ModBlocks.LAPIS_INGOT_BLOCK.get());
         dropSelf(ModBlocks.REDSTONE_INGOT_BLOCK.get());
         dropOther(ModBlocks.EPHEMERAL_ORE.get(), ModItems.EPHEMERAL_MATERIAL.get());
+        dropOther(ModBlocks.CESIUM_SALT_ORE.get(), ModItems.RAW_CESIUM_SALT.get());
+
     }
     @Override
     protected Iterable<Block> getKnownBlocks() {
