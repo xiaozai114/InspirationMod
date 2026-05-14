@@ -18,9 +18,9 @@ public class ModBlockTagsProvider extends BlockTagsProvider {
 
     @Override
     protected void addTags(HolderLookup.Provider provider) {
-        tag(BlockTags.MINEABLE_WITH_PICKAXE)
-                .add(ModBlocks.LIGNITE_BLOCK.get());
-        tag(BlockTags.NEEDS_STONE_TOOL)
-                .add(ModBlocks.LIGNITE_BLOCK.get());
+        //tag(BlockTags.MINEABLE_WITH_PICKAXE)
+                //.add(ModBlocks.LIGNITE_BLOCK.get());
+        //tag(BlockTags.NEEDS_STONE_TOOL)
+                //.add(ModBlocks.LIGNITE_BLOCK.get());
     }
 }

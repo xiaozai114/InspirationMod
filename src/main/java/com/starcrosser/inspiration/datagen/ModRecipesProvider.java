@@ -19,45 +19,45 @@ public class ModRecipesProvider extends RecipeProvider implements IConditionBuil
     public ModRecipesProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> registries) {
         super(output, registries);
     }
-    public static final List<ItemLike> COOKED_INSPIRATION = List.of(ModItems.INSPIRATION);
+    //public static final List<ItemLike> COOKED_INSPIRATION = List.of(ModItems.INSPIRATION);
 
     @Override
     protected void buildRecipes(RecipeOutput recipeOutput){
         super.buildRecipes(recipeOutput);
-        oreSmelting(recipeOutput, COOKED_INSPIRATION, RecipeCategory.MISC, ModItems.COOKED_INSPIRATION,0.25f,200,"COOKED_INSPIRATION");
+        //oreSmelting(recipeOutput, COOKED_INSPIRATION, RecipeCategory.MISC, ModItems.COOKED_INSPIRATION,0.25f,200,"COOKED_INSPIRATION");
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ModBlocks.LIGNITE_BLOCK)
-                .pattern("###")
-                .pattern("###")
-                .pattern("###")
-                .define('#', ModItems.LIGNITE)
-                .unlockedBy(getHasName(ModItems.LIGNITE), has(ModItems.LIGNITE))
-                .save(recipeOutput);
-
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ModItems.LIGNITE,9)
-                .requires(ModBlocks.LIGNITE_BLOCK)
-                .unlockedBy(getHasName(ModBlocks.LIGNITE_BLOCK), has(ModBlocks.LIGNITE_BLOCK))
-                .save(recipeOutput,Inspiration.MODID+":"+"lignite_from_lignite_block");
-        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.INSPIRATION)
-                .pattern(" # ")
-                .pattern("#Y#")
-                .pattern(" # ")
-                .define('#', Items.COPPER_INGOT)
-                .define('Y', Items.QUARTZ)
-                .unlockedBy(getHasName(Items.QUARTZ), has(Items.QUARTZ))
-                .save(recipeOutput);
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ModItems.LIGNITE,6)
-                .requires(ModItems.INSPIRATION)
-                .requires(Items.COAL)
-                .requires(Items.COAL)
-                .requires(Items.COAL)
-                .requires(Items.COAL)
-                .unlockedBy(getHasName(Items.COAL), has(Items.COAL))
-                .save(recipeOutput);
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, Items.EXPERIENCE_BOTTLE,4)
-                .requires(ModItems.INSPIRATION)
-                .unlockedBy(getHasName(ModItems.INSPIRATION), has(ModItems.INSPIRATION))
-                .save(recipeOutput, Inspiration.MODID+":"+"experience_bottle");
+//        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ModBlocks.LIGNITE_BLOCK)
+//                .pattern("###")
+//                .pattern("###")
+//                .pattern("###")
+//                .define('#', ModItems.LIGNITE)
+//                .unlockedBy(getHasName(ModItems.LIGNITE), has(ModItems.LIGNITE))
+//                .save(recipeOutput);
+//
+//        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ModItems.LIGNITE,9)
+//                .requires(ModBlocks.LIGNITE_BLOCK)
+//                .unlockedBy(getHasName(ModBlocks.LIGNITE_BLOCK), has(ModBlocks.LIGNITE_BLOCK))
+//                .save(recipeOutput,Inspiration.MODID+":"+"lignite_from_lignite_block");
+//        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.INSPIRATION)
+//                .pattern(" # ")
+//                .pattern("#Y#")
+//                .pattern(" # ")
+//                .define('#', Items.COPPER_INGOT)
+//                .define('Y', Items.QUARTZ)
+//                .unlockedBy(getHasName(Items.QUARTZ), has(Items.QUARTZ))
+//                .save(recipeOutput);
+//        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ModItems.LIGNITE,6)
+//                .requires(ModItems.INSPIRATION)
+//                .requires(Items.COAL)
+//                .requires(Items.COAL)
+//                .requires(Items.COAL)
+//                .requires(Items.COAL)
+//                .unlockedBy(getHasName(Items.COAL), has(Items.COAL))
+//                .save(recipeOutput);
+//        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, Items.EXPERIENCE_BOTTLE,4)
+//                .requires(ModItems.INSPIRATION)
+//                .unlockedBy(getHasName(ModItems.INSPIRATION), has(ModItems.INSPIRATION))
+//                .save(recipeOutput, Inspiration.MODID+":"+"experience_bottle");
 
     }
     protected static void oreSmelting(

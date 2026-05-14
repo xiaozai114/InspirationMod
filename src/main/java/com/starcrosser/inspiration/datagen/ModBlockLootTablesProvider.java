@@ -1,6 +1,7 @@
 package com.starcrosser.inspiration.datagen;
 
 import com.starcrosser.inspiration.block.ModBlocks;
+import com.starcrosser.inspiration.item.ModItems;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.loot.BlockLootSubProvider;
@@ -21,6 +22,9 @@ public class ModBlockLootTablesProvider extends BlockLootSubProvider {
     @Override
     protected void generate() {
         dropSelf(ModBlocks.LIGNITE_BLOCK.get());
+        dropSelf(ModBlocks.LAPIS_INGOT_BLOCK.get());
+        dropSelf(ModBlocks.REDSTONE_INGOT_BLOCK.get());
+        dropOther(ModBlocks.EPHEMERAL_ORE.get(), ModItems.EPHEMERAL_MATERIAL.get());
     }
     @Override
     protected Iterable<Block> getKnownBlocks() {
