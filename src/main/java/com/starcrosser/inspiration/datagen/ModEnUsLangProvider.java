@@ -46,6 +46,7 @@ public class ModEnUsLangProvider extends LanguageProvider {
         add(ModBlocks.REDSTONE_INGOT_BLOCK.get(), "Redstone Ingot Block");
         add(ModBlocks.LAPIS_INGOT_BLOCK.get(), "Lapis Ingot Block");
         add(ModBlocks.LIGNITE_BLOCK.get(), "lignite block");
+        add(ModBlocks.INTENSIFIED_TNT.get(), "intensified_tnt");
         add(ModBlocks.EPHEMERAL_ORE.get(), "§5Ephemeral Ore");
 
         // 工具提示

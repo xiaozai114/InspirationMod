@@ -40,6 +40,9 @@ public class ModBlocks {
     public static final DeferredBlock<Block> CESIUM_SALT_ORE =
             registerBlocks("cesium_salt_ore",()->new Block(BlockBehaviour.Properties.of().strength(1.0F,6.0F)
                     .requiresCorrectToolForDrops()));
+    public static final DeferredBlock<ReinforcedTNTBlock> INTENSIFIED_TNT =
+            registerBlocks("intensified_tnt",()->new ReinforcedTNTBlock(BlockBehaviour.Properties.of().strength(0.0F,0.0F)
+                    ));
     public static void register(IEventBus eventBus) {
         BLOCKS.register(eventBus);
     }

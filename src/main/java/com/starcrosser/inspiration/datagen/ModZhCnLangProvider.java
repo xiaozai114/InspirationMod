@@ -41,11 +41,14 @@ public class ModZhCnLangProvider extends LanguageProvider {
         add(ModItems.CESIUM_SALT.get(), "铯盐");
         add(ModBlocks.CESIUM_SALT_ORE.get(), "铯盐矿");
         add(ModItems.RAW_CESIUM_SALT.get(), "粗铯盐");
+
         // 方块
         add(ModBlocks.REDSTONE_INGOT_BLOCK.get(), "红石锭方块");
         add(ModBlocks.LAPIS_INGOT_BLOCK.get(), "青金石锭方块");
         add(ModBlocks.LIGNITE_BLOCK.get(), "褐煤块");
+        add(ModBlocks.INTENSIFIED_TNT.get(), "强化TNT");
         add(ModBlocks.EPHEMERAL_ORE.get(), "§5无恒矿石");
+
 
         // 工具提示
         add("tooltip.inspiration.exp_sword.description", "攻击敌人时掉落经验球");

@@ -46,7 +46,8 @@ public class ModCreativeModeTabs {
                         output.accept(ModItems.EMPTY_BEACON);
                         output.accept(ModItems.CESIUM_SALT);
                         output.accept(ModItems.RAW_CESIUM_SALT);
-
+                        output.accept(ModBlocks.CESIUM_SALT_ORE);
+                        output.accept(ModBlocks.INTENSIFIED_TNT);
                     })
                     .build());
     public static void register(IEventBus eventBus) {

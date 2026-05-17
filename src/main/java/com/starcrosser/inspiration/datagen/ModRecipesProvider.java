@@ -9,6 +9,7 @@ import net.minecraft.data.recipes.*;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.*;
+import net.minecraft.world.level.block.Blocks;
 import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.common.conditions.IConditionBuilder;
 
@@ -56,6 +57,14 @@ public class ModRecipesProvider extends RecipeProvider implements IConditionBuil
                 .save(recipeOutput, "cesium_salt_from_raw");
 
         // ========== 有序合成配方 ==========
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModBlocks.INTENSIFIED_TNT.get())
+                .pattern("Y#Y")
+                .pattern("#Y#")
+                .pattern("Y#Y")
+                .define('#', Blocks.SAND)
+                .define('Y', ModItems.CESIUM_SALT.get())
+                .unlockedBy(getHasName(ModItems.CESIUM_SALT.get()), has(ModItems.CESIUM_SALT.get()))
+                .save(recipeOutput);
         // 灵感（默认 ID "inspiration"）
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.INSPIRATION.get())
                 .pattern(" # ")

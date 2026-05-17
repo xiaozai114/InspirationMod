@@ -38,6 +38,7 @@ public class ModItemModelsProvider extends ItemModelProvider {
         basicItem(ModItems.RAW_CESIUM_SALT.get());
 
 
+
         // ========== 手持物品（handheld）直接使用父类方法 ==========
         handheldItem(ModItems.STICKY_AXE.get());
         handheldItem(ModItems.HEAD_HUNTER_AXE.get());
@@ -50,6 +51,7 @@ public class ModItemModelsProvider extends ItemModelProvider {
         blockItem(ModBlocks.LAPIS_INGOT_BLOCK.get());
         blockItem(ModBlocks.EPHEMERAL_ORE.get());
         blockItem(ModBlocks.CESIUM_SALT_ORE.get());
+        blockItem(ModBlocks.INTENSIFIED_TNT.get());
     }
 
     /** 生成方块物品模型：父模型为对应方块的模型 */
