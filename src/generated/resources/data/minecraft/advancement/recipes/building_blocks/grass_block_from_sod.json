@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_sod": {
+      "conditions": {
+        "items": [
+          {
+            "items": "inspiration:sod"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "minecraft:grass_block_from_sod"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_sod"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "minecraft:grass_block_from_sod"
+    ]
+  }
+}

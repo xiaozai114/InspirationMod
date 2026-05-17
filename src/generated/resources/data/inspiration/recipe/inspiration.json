@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "#": {
+      "item": "minecraft:copper_ingot"
+    },
+    "Y": {
+      "item": "minecraft:quartz"
+    }
+  },
+  "pattern": [
+    " # ",
+    "#Y#",
+    " # "
+  ],
+  "result": {
+    "count": 1,
+    "id": "inspiration:inspiration"
+  }
+}

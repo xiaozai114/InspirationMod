@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:campfire_cooking",
+  "category": "food",
+  "cookingtime": 1200,
+  "experience": 0.8,
+  "ingredient": {
+    "item": "inspiration:inspiration"
+  },
+  "result": {
+    "count": 1,
+    "id": "inspiration:cooked_inspiration"
+  }
+}

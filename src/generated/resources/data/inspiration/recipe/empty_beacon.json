@@ -1,0 +1,28 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "group": "empty_beacon",
+  "key": {
+    "#": {
+      "item": "minecraft:glass"
+    },
+    "X": {
+      "item": "inspiration:ephemeral_material"
+    },
+    "Y": {
+      "item": "inspiration:unstable_core"
+    },
+    "Z": {
+      "item": "minecraft:obsidian"
+    }
+  },
+  "pattern": [
+    "###",
+    "#Y#",
+    "ZXZ"
+  ],
+  "result": {
+    "count": 1,
+    "id": "inspiration:empty_beacon"
+  }
+}

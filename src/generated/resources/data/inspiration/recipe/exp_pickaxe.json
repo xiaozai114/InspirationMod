@@ -1,0 +1,30 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "#": {
+      "tag": "c:rods/wooden"
+    },
+    "W": {
+      "item": "inspiration:redstone_ingot"
+    },
+    "X": {
+      "item": "minecraft:crying_obsidian"
+    },
+    "Y": {
+      "item": "inspiration:inspiration"
+    },
+    "Z": {
+      "item": "inspiration:lapis_ingot"
+    }
+  },
+  "pattern": [
+    "ZXW",
+    " Y ",
+    " # "
+  ],
+  "result": {
+    "count": 1,
+    "id": "inspiration:exp_pickaxe"
+  }
+}

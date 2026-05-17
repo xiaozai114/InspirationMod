@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_exp_hoe": {
+      "conditions": {
+        "items": [
+          {
+            "items": "inspiration:exp_hoe"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "minecraft:scythe_of_death_smithing"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_exp_hoe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "minecraft:scythe_of_death_smithing"
+    ]
+  }
+}

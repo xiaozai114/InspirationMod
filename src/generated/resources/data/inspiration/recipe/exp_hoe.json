@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "#": {
+      "tag": "c:rods/wooden"
+    },
+    "X": {
+      "item": "minecraft:moss_block"
+    },
+    "Y": {
+      "item": "inspiration:inspiration"
+    },
+    "Z": {
+      "item": "minecraft:fern"
+    }
+  },
+  "pattern": [
+    "ZX",
+    " Y",
+    " #"
+  ],
+  "result": {
+    "count": 1,
+    "id": "inspiration:exp_hoe"
+  }
+}
