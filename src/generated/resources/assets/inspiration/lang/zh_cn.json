@@ -4,6 +4,7 @@
   "block.inspiration.intensified_tnt": "强化TNT",
   "block.inspiration.lapis_ingot_block": "青金石锭方块",
   "block.inspiration.lignite_block": "褐煤块",
+  "block.inspiration.mind_fluid_block": "思维流体",
   "block.inspiration.redstone_ingot_block": "红石锭方块",
   "inspiration.configuration.items": "Item List",
   "inspiration.configuration.logDirtBlock": "Log Dirt Block",
@@ -20,6 +21,7 @@
   "item.inspiration.exp_hoe": "灵感之锄",
   "item.inspiration.exp_pickaxe": "灵感之镐",
   "item.inspiration.exp_sword": "灵感之剑",
+  "item.inspiration.exploding_candy": "跳跳糖",
   "item.inspiration.extreme_alloy": "§9极限§4合金",
   "item.inspiration.head_hunter_axe": "斩首者",
   "item.inspiration.inspiration": "灵感",
@@ -27,6 +29,8 @@
   "item.inspiration.inspirry": "灵感浆果",
   "item.inspiration.lapis_ingot": "青金石锭",
   "item.inspiration.lignite": "褐煤",
+  "item.inspiration.mind_fluid_bucket": "思维流体桶",
+  "item.inspiration.power_beacon": "动力信标",
   "item.inspiration.raw_cesium_salt": "粗铯盐",
   "item.inspiration.redstone_ingot": "红石锭",
   "item.inspiration.scythe_of_death": "死神之镰",
@@ -39,6 +43,7 @@
   "itemGroup.inspire_tab": "灵感",
   "tooltip.inspiration.exp_pickaxe.description": "挖掘时掉落经验球",
   "tooltip.inspiration.exp_sword.description": "攻击敌人时掉落经验球",
+  "tooltip.inspiration.exploding_candy.description": "好吃到爆炸！",
   "tooltip.inspiration.sticky_axe.description": "为什么要给树木去皮？",
   "tooltip.inspiration.storm_sowrd.description": "右键发射风弹攻击"
 }

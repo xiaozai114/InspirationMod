@@ -1,10 +1,12 @@
 package com.starcrosser.inspiration.client;
 
 import com.starcrosser.inspiration.entity.ModEntities;
+import com.starcrosser.inspiration.fluid.ModFluids;
 import net.minecraft.client.renderer.entity.TntMinecartRenderer;
 import net.minecraft.client.renderer.entity.TntRenderer;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
+import net.neoforged.neoforge.client.event.ModelEvent;
 
 public class ClientModEvents {
     @SubscribeEvent

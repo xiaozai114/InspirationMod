@@ -1,8 +1,11 @@
 package com.starcrosser.inspiration;
 
 import com.starcrosser.inspiration.block.ModBlocks;
+import com.starcrosser.inspiration.fluid.ModFluids;
 import com.starcrosser.inspiration.item.ModCreativeModeTabs;
 import com.starcrosser.inspiration.item.ModItems;
+import com.starcrosser.inspiration.recipe.ModRecipes;
+import com.starcrosser.inspiration.recipe.RightClickBlockHandler;
 import org.slf4j.Logger;
 
 import com.mojang.logging.LogUtils;
@@ -49,6 +52,7 @@ public class Inspiration {
         modEventBus.addListener(this::commonSetup);
 
         ModItems.register(modEventBus);
+        ModFluids.register(modEventBus);
         ModCreativeModeTabs.register(modEventBus);
         ModBlocks.register(modEventBus);
         // Register ourselves for server and other game events we are interested in.
@@ -61,6 +65,11 @@ public class Inspiration {
 
         // Register our mod's ModConfigSpec so that FML can create and load the config file for us
         modContainer.registerConfig(ModConfig.Type.COMMON, Config.SPEC);
+        ModRecipes.TYPES.register(modEventBus);
+        ModRecipes.SERIALIZERS.register(modEventBus);
+
+        // 注册事件处理器
+        NeoForge.EVENT_BUS.register(RightClickBlockHandler.class);
     }
 
     private void commonSetup(FMLCommonSetupEvent event) {

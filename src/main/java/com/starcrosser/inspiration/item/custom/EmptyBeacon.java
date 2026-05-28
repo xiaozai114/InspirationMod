@@ -42,7 +42,7 @@ public class EmptyBeacon extends Item {
         if (world.isClientSide) {
             for (int i = 0; i < 40; i++) {
                 Vec3 motion = VecHelper.offsetRandomly(Vec3.ZERO, world.random, .125f);
-                world.addParticle(ParticleTypes.FLAME, vec.x, vec.y, vec.z, motion.x, motion.y, motion.z);
+                world.addParticle(ParticleTypes.SOUL, vec.x, vec.y, vec.z, motion.x, motion.y, motion.z);
                 Vec3 circle = motion.multiply(1, 0, 1)
                         .normalize()
                         .scale(.5f);

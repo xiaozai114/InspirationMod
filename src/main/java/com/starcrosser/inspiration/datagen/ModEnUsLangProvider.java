@@ -41,7 +41,8 @@ public class ModEnUsLangProvider extends LanguageProvider {
         add(ModItems.CESIUM_SALT.get(), "Cesium Salt");
         add(ModBlocks.CESIUM_SALT_ORE.get(), "Cesium Salt Ore");
         add(ModItems.RAW_CESIUM_SALT.get(), "Raw Cesium Salt");
-
+        add(ModItems.EXPLODING_CANDY.get(),"Exploding Candy");
+        add(ModItems.POWER_BEACON.get(), "Power Beacon");
         // 方块
         add(ModBlocks.REDSTONE_INGOT_BLOCK.get(), "Redstone Ingot Block");
         add(ModBlocks.LAPIS_INGOT_BLOCK.get(), "Lapis Ingot Block");
@@ -54,6 +55,7 @@ public class ModEnUsLangProvider extends LanguageProvider {
         add("tooltip.inspiration.storm_sowrd.description", "Right click for windburst");
         add("tooltip.inspiration.sticky_axe.description", "Try Stripping some wood?");
         add("tooltip.inspiration.exp_pickaxe.description", "Create experience orb when mining");
+        add("tooltip.inspiration.exploding_candy.description", " ");
 
         // 物品组
         add("itemGroup.inspire_tab", "Inspiration");

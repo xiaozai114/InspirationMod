@@ -20,6 +20,7 @@
   "item.inspiration.exp_hoe": "Inspiration Hoe",
   "item.inspiration.exp_pickaxe": "Inspiration Pickaxe",
   "item.inspiration.exp_sword": "Inspiration Sword",
+  "item.inspiration.exploding_candy": "Exploding Candy",
   "item.inspiration.extreme_alloy": "§9Extreme §4Alloy",
   "item.inspiration.head_hunter_axe": "Head Hunter",
   "item.inspiration.inspiration": "inspiration",
@@ -27,6 +28,7 @@
   "item.inspiration.inspirry": "inspirry",
   "item.inspiration.lapis_ingot": "Lapis Ingot",
   "item.inspiration.lignite": "lignite",
+  "item.inspiration.power_beacon": "Power Beacon",
   "item.inspiration.raw_cesium_salt": "Raw Cesium Salt",
   "item.inspiration.redstone_ingot": "Redstone Ingot",
   "item.inspiration.scythe_of_death": "Scythe of Death",
@@ -39,6 +41,7 @@
   "itemGroup.inspire_tab": "Inspiration",
   "tooltip.inspiration.exp_pickaxe.description": "Create experience orb when mining",
   "tooltip.inspiration.exp_sword.description": "Create experience orb when attack",
+  "tooltip.inspiration.exploding_candy.description": " ",
   "tooltip.inspiration.sticky_axe.description": "Try Stripping some wood?",
   "tooltip.inspiration.storm_sowrd.description": "Right click for windburst"
 }

@@ -30,20 +30,22 @@ public class ModItemModelsProvider extends ItemModelProvider {
         basicItem(ModItems.EPHEMERAL_MATERIAL.get());
         basicItem(ModItems.SOD.get());
         basicItem(ModItems.EMPTY_BEACON.get());
+        basicItem(ModItems.POWER_BEACON.get());
         basicItem(ModItems.EXP_HOE.get());
         basicItem(ModItems.SCYTHE_OF_DEATH.get());
         basicItem(ModItems.EXP_SWORD.get());
         basicItem(ModItems.EXP_PICKAXE.get());
         basicItem(ModItems.CESIUM_SALT.get());
         basicItem(ModItems.RAW_CESIUM_SALT.get());
-
-
+        basicItem(ModItems.EXPLODING_CANDY.get());
+        basicItem(ModItems.MIND_FLUID_BUCKET.get());
 
         // ========== 手持物品（handheld）直接使用父类方法 ==========
         handheldItem(ModItems.STICKY_AXE.get());
         handheldItem(ModItems.HEAD_HUNTER_AXE.get());
         handheldItem(ModItems.STORM_SWORD.get());
         handheldItem(ModItems.WORLD_BREAKER.get());
+
 
         // ========== 方块物品（指向对应的方块模型） ==========
         blockItem(ModBlocks.LIGNITE_BLOCK.get());
@@ -52,6 +54,7 @@ public class ModItemModelsProvider extends ItemModelProvider {
         blockItem(ModBlocks.EPHEMERAL_ORE.get());
         blockItem(ModBlocks.CESIUM_SALT_ORE.get());
         blockItem(ModBlocks.INTENSIFIED_TNT.get());
+
     }
 
     /** 生成方块物品模型：父模型为对应方块的模型 */
@@ -59,4 +62,5 @@ public class ModItemModelsProvider extends ItemModelProvider {
         String name = block.getDescriptionId().replace("block." + Inspiration.MODID + ".", "");
         withExistingParent(name, modLoc("block/" + name));
     }
+
 }

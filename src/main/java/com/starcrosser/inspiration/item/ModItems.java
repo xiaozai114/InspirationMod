@@ -1,12 +1,13 @@
 package com.starcrosser.inspiration.item;
 
 import com.starcrosser.inspiration.Inspiration;
+import com.starcrosser.inspiration.fluid.ModFluids;
 import com.starcrosser.inspiration.item.custom.*;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.Rarity;
-import net.minecraft.world.item.Tier;
-import net.minecraft.world.item.Tiers;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.item.*;
 import net.neoforged.bus.api.IEventBus;
+import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
@@ -25,6 +26,8 @@ public class ModItems {
             ITEMS.register("lignite", () ->new Item(new Item.Properties()));
     public static final DeferredItem<Item> EMPTY_BEACON=
             ITEMS.register("empty_beacon", () ->new EmptyBeacon(new Item.Properties()));
+    public static final DeferredItem<Item> POWER_BEACON=
+            ITEMS.register("power_beacon", () ->new PowerBeacon(new Item.Properties().stacksTo(1)));
     public static final DeferredItem<Item> COKE=
             ITEMS.register("coke", () ->new Item(new Item.Properties()));
     public static final DeferredItem<Item> UNSTABLE_SMITHING_TEMPLATE=
@@ -45,6 +48,8 @@ public class ModItems {
             ITEMS.register("sod", () ->new Item(new Item.Properties().food(ModFoods.SOD)));
     public static final DeferredItem<Item> INSPIRRY=
             ITEMS.register("inspirry", () ->new Item(new Item.Properties().food(ModFoods.INSPIRRY)));
+    public static final DeferredItem<Item> EXPLODING_CANDY=
+            ITEMS.register("exploding_candy", () ->new ExplodingCandy(new Item.Properties().food(ModFoods.EXPLODING_CANDY)));
     public static final DeferredItem<Item> EXP_SWORD=
             ITEMS.register("exp_sword", () ->new ExperienceSword(Tiers.IRON, 3,-2.2F,5,
                     new Item.Properties().durability(899).rarity(Rarity.RARE)));
@@ -70,7 +75,11 @@ public class ModItems {
             ITEMS.register("scythe_of_death", () ->new Scythe(Tiers.DIAMOND, 3.0F,-2.8F,
                     new Item.Properties().durability(1799).rarity(Rarity.EPIC)));
 
-
+    public static final DeferredHolder<Item, BucketItem> MIND_FLUID_BUCKET = ITEMS.register(
+            "mind_fluid_bucket",
+            ()->new BucketItem(ModFluids.Fluids.MIND_FLUID.get(),
+                    new Item.Properties())
+    );
     public static void register(IEventBus eventBus) {
         ITEMS.register(eventBus);
     }

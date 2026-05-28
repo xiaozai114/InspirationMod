@@ -18,6 +18,9 @@ public class ModFoods {
     public static final FoodProperties COOKED_INSPIRATION =
             (new FoodProperties.Builder().nutrition(5).saturationModifier(0.4F)
                     .build());
+    public static final FoodProperties EXPLODING_CANDY =
+            (new FoodProperties.Builder().nutrition(1).saturationModifier(0.0F)
+                    .build());
     public static final FoodProperties INSPIRRY =
             (new FoodProperties.Builder().nutrition(3).saturationModifier(0.4F)
                     .effect(new MobEffectInstance(MobEffects.REGENERATION,100),1)
@@ -26,4 +29,5 @@ public class ModFoods {
             (new FoodProperties.Builder().nutrition(1).saturationModifier(0.0F)
                     .effect(new MobEffectInstance(MobEffects.CONFUSION,60),1)
                     .build());
+
 }

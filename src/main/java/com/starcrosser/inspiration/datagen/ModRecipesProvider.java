@@ -6,7 +6,9 @@ import com.starcrosser.inspiration.item.ModItems;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.*;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.block.Blocks;
@@ -149,6 +151,18 @@ public class ModRecipesProvider extends RecipeProvider implements IConditionBuil
                 .define('Z', Items.OBSIDIAN)
                 .unlockedBy(getHasName(ModItems.UNSTABLE_CORE.get()), has(ModItems.UNSTABLE_CORE.get()))
                 .save(recipeOutput);
+        // 动力信标（默认 ID "power_beacon"）
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.POWER_BEACON.get())
+                .group("power_beacon")
+                .pattern("#Y#")
+                .pattern("#Z#")
+                .pattern("XXX")
+                .define('#', ModItems.CESIUM_SALT.get())
+                .define('Y', Items.WITHER_SKELETON_SKULL)
+                .define('X', ModItems.EPHEMERAL_MATERIAL.get())
+                .define('Z', ModItems.EMPTY_BEACON.get())
+                .unlockedBy(getHasName(ModItems.UNSTABLE_CORE.get()), has(ModItems.UNSTABLE_CORE.get()))
+                .save(recipeOutput);
 
         // 灵感之剑（默认 ID "exp_sword"）
         ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, ModItems.EXP_SWORD.get())
@@ -199,6 +213,13 @@ public class ModRecipesProvider extends RecipeProvider implements IConditionBuil
                 .save(recipeOutput);
 
         // ========== 无序合成配方 ==========
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ModItems.EXPLODING_CANDY, 3)
+                .requires(ModItems.CESIUM_SALT.get())
+                .requires(ModItems.INSPIRATION.get())
+                .requires(Items.SUGAR)
+                .requires(Items.SUGAR)
+                .unlockedBy(getHasName(ModItems.INSPIRATION.get()), has(ModItems.INSPIRATION.get()))
+                .save(recipeOutput);
         // 灵感 -> 4 瓶经验瓶（默认 ID "experience_bottle"）
         ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, Items.EXPERIENCE_BOTTLE, 4)
                 .requires(ModItems.INSPIRATION.get())
@@ -306,5 +327,24 @@ public class ModRecipesProvider extends RecipeProvider implements IConditionBuil
                         RecipeCategory.TOOLS, ModItems.WORLD_BREAKER.get())
                 .unlocks("has_extreme_alloy", has(ModItems.EXTREME_ALLOY.get()))
                 .save(recipeOutput,"world_breaker_smithing");
+
+        RightClickBlockRecipeBuilder.recipe(Blocks.DIRT, Blocks.GRASS_BLOCK, ModItems.SOD.toStack())
+                .unlockedBy("has_sod", has(ModItems.SOD))
+                .save(recipeOutput, ResourceLocation.fromNamespaceAndPath(Inspiration.MODID, "sod_grass"));
+        RightClickBlockRecipeBuilder.recipe(Blocks.ICE, Blocks.PACKED_ICE, ModItems.INSPIRATION.toStack())
+                .unlockedBy("has_inspiration", has(ModItems.INSPIRATION))
+                .save(recipeOutput, ResourceLocation.fromNamespaceAndPath(Inspiration.MODID, "insp_ice"));
+        RightClickBlockRecipeBuilder.recipe(Blocks.PACKED_ICE, Blocks.BLUE_ICE, ModItems.INSPIRATION.toStack())
+                .unlockedBy("has_inspiration", has(ModItems.INSPIRATION))
+                .save(recipeOutput, ResourceLocation.fromNamespaceAndPath(Inspiration.MODID, "insp_ice_blue"));
+        RightClickBlockRecipeBuilder.recipe(Blocks.LAVA, Blocks.MAGMA_BLOCK, ModItems.INSPIRATION.toStack())
+                .unlockedBy("has_inspiration", has(ModItems.INSPIRATION))
+                .save(recipeOutput, ResourceLocation.fromNamespaceAndPath(Inspiration.MODID, "insp_lava"));
+        RightClickBlockRecipeBuilder.recipe(Blocks.MAGMA_BLOCK,Blocks.LAVA, ModItems.INSPIRATION.toStack())
+                .unlockedBy("has_inspiration", has(ModItems.INSPIRATION))
+                .save(recipeOutput, ResourceLocation.fromNamespaceAndPath(Inspiration.MODID, "insp_lava_inv"));
+        RightClickBlockRecipeBuilder.recipe(Blocks.COBBLESTONE,Blocks.MOSSY_COBBLESTONE, ModItems.SOD.toStack())
+                .unlockedBy("has_sod", has(ModItems.SOD))
+                .save(recipeOutput, ResourceLocation.fromNamespaceAndPath(Inspiration.MODID, "sod_moss"));
     }
 }

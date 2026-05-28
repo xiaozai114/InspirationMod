@@ -3,6 +3,7 @@ package com.starcrosser.inspiration.datagen;
 
 import com.starcrosser.inspiration.Inspiration;
 import com.starcrosser.inspiration.block.ModBlocks;
+import com.starcrosser.inspiration.fluid.ModFluids;
 import com.starcrosser.inspiration.item.ModItems;
 import net.minecraft.data.PackOutput;
 import net.neoforged.neoforge.common.data.LanguageProvider;
@@ -41,6 +42,10 @@ public class ModZhCnLangProvider extends LanguageProvider {
         add(ModItems.CESIUM_SALT.get(), "铯盐");
         add(ModBlocks.CESIUM_SALT_ORE.get(), "铯盐矿");
         add(ModItems.RAW_CESIUM_SALT.get(), "粗铯盐");
+        add(ModItems.EXPLODING_CANDY.get(),"跳跳糖");
+        add(ModBlocks.MIND_FLUID_BLOCK.get(),"思维流体");
+        add(ModItems.MIND_FLUID_BUCKET.get(),"思维流体桶");
+        add(ModItems.POWER_BEACON.get(),"动力信标");
 
         // 方块
         add(ModBlocks.REDSTONE_INGOT_BLOCK.get(), "红石锭方块");
@@ -55,7 +60,7 @@ public class ModZhCnLangProvider extends LanguageProvider {
         add("tooltip.inspiration.storm_sowrd.description", "右键发射风弹攻击");
         add("tooltip.inspiration.sticky_axe.description", "为什么要给树木去皮？");
         add("tooltip.inspiration.exp_pickaxe.description", "挖掘时掉落经验球");
-
+        add("tooltip.inspiration.exploding_candy.description", "好吃到爆炸！");
         // 物品组
         add("itemGroup.inspire_tab", "灵感");
 

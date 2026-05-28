@@ -26,6 +26,7 @@ public class ModBlockStatesProvider extends BlockStateProvider {
         // 无恒矿石
         simpleBlock(ModBlocks.EPHEMERAL_ORE.get(), cubeAll(ModBlocks.EPHEMERAL_ORE.get()));
         simpleBlock(ModBlocks.CESIUM_SALT_ORE.get(), cubeAll(ModBlocks.CESIUM_SALT_ORE.get()));
+        simpleBlock(ModBlocks.MIND_FLUID_BLOCK.get(), cubeAll(ModBlocks.MIND_FLUID_BLOCK.get()));
         IntensifiedTNTBlock();
     }
 
