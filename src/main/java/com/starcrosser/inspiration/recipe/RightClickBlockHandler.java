@@ -53,9 +53,7 @@ public class RightClickBlockHandler {
                 level.setBlock(pos, recipe.outputBlock().defaultBlockState(), Block.UPDATE_ALL);
                 ItemStack outputItem = recipe.outputItem();
                 if (!outputItem.isEmpty()) {
-                    // 尝试加入玩家背包，如果背包满了则掉落在地
-                    player.getInventory().add(outputItem.copy());
-                    // 或者直接掉落：Block.popResource(level, pos.above(), outputItem.copy());
+                    Block.popResource(level, pos.above(), outputItem.copy());
                 }
                 for (int i = 0; i < 40; i++) {
                     Vec3 motion = VecHelper.offsetRandomly(Vec3.ZERO, level.random, .125f);

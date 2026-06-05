@@ -18,6 +18,11 @@ public class ModItems {
             ITEMS.register("inspiration", () ->new Item(new Item.Properties()));
     public static final DeferredItem<Item> CESIUM_SALT=
             ITEMS.register("cesium_salt", () ->new Item(new Item.Properties()));
+
+    public static final DeferredItem<Item> CALCIUM_HYDROXIDE_DUST=
+            ITEMS.register("calcium_hydroxide_dust", () ->new Item(new Item.Properties()));
+    public static final DeferredItem<Item> CALCIUM_DUST=
+            ITEMS.register("calcium_dust", () ->new AlkaliItem(new Item.Properties(),ModItems.CALCIUM_HYDROXIDE_DUST.get(),0.1f));
     public static final DeferredItem<Item> RAW_CESIUM_SALT=
             ITEMS.register("raw_cesium_salt", () ->new Item(new Item.Properties()));
     public static final DeferredItem<Item> COOKED_INSPIRATION=

@@ -7,6 +7,7 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.*;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -346,5 +347,11 @@ public class ModRecipesProvider extends RecipeProvider implements IConditionBuil
         RightClickBlockRecipeBuilder.recipe(Blocks.COBBLESTONE,Blocks.MOSSY_COBBLESTONE, ModItems.SOD.toStack())
                 .unlockedBy("has_sod", has(ModItems.SOD))
                 .save(recipeOutput, ResourceLocation.fromNamespaceAndPath(Inspiration.MODID, "sod_moss"));
+        RightClickBlockRecipeBuilder.recipe(Blocks.OAK_LEAVES,Blocks.AIR, ModItems.INSPIRATION.toStack(),new ItemStack(Items.APPLE))
+                .unlockedBy("has_inspiration", has(ModItems.INSPIRATION))
+                .save(recipeOutput, ResourceLocation.fromNamespaceAndPath(Inspiration.MODID, "insp_apple"));
+        RightClickBlockRecipeBuilder.recipe(Blocks.BONE_BLOCK,Blocks.AIR, ModItems.INSPIRATION.toStack(),new ItemStack(ModItems.CALCIUM_DUST.get()))
+                .unlockedBy("has_inspiration", has(ModItems.INSPIRATION))
+                .save(recipeOutput, ResourceLocation.fromNamespaceAndPath(Inspiration.MODID, "insp_calcium"));
     }
 }

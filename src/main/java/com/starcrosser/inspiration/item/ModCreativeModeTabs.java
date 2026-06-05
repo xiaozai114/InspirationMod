@@ -51,6 +51,8 @@ public class ModCreativeModeTabs {
                         output.accept(ModItems.EXPLODING_CANDY);
                         output.accept(ModItems.MIND_FLUID_BUCKET.get());
                         output.accept(ModItems.POWER_BEACON);
+                        output.accept(ModItems.CALCIUM_HYDROXIDE_DUST);
+                        output.accept(ModItems.CALCIUM_DUST);
                     })
                     .build());
     public static void register(IEventBus eventBus) {

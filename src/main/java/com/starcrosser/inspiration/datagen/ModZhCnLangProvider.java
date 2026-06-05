@@ -46,6 +46,8 @@ public class ModZhCnLangProvider extends LanguageProvider {
         add(ModBlocks.MIND_FLUID_BLOCK.get(),"思维流体");
         add(ModItems.MIND_FLUID_BUCKET.get(),"思维流体桶");
         add(ModItems.POWER_BEACON.get(),"动力信标");
+        add(ModItems.CALCIUM_HYDROXIDE_DUST.get(),"氢氧化钙粉");
+        add(ModItems.CALCIUM_DUST.get(),"钙粉");
 
         // 方块
         add(ModBlocks.REDSTONE_INGOT_BLOCK.get(), "红石锭方块");
