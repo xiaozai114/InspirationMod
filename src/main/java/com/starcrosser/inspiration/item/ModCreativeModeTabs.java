@@ -53,6 +53,16 @@ public class ModCreativeModeTabs {
                         output.accept(ModItems.POWER_BEACON);
                         output.accept(ModItems.CALCIUM_HYDROXIDE_DUST);
                         output.accept(ModItems.CALCIUM_DUST);
+                        output.accept(ModItems.REDUCTION_POWDER);
+                        output.accept(ModItems.CESIUM_DUST);
+                        output.accept(ModBlocks.CESIUM_SALT_BLOCK);
+                        output.accept(ModBlocks.CESIUM_BLOCK);
+                        output.accept(ModItems.CESIUM_INGOT);
+                        output.accept(ModItems.ROUGH_JADE_STEEL);
+                        output.accept(ModItems.JADE_STEEL_INGOT);
+                        output.accept(ModBlocks.JADE_STEEL_ORE);
+                        output.accept(ModBlocks.DEEPSLATE_JADE_STEEL_ORE);
+                        output.accept(ModBlocks.EMPOWERED_TNT_ITEM);
                     })
                     .build());
     public static void register(IEventBus eventBus) {

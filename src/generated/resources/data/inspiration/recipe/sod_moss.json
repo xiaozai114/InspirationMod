@@ -1,0 +1,9 @@
+{
+  "type": "inspiration:right_click_block",
+  "input_block": "minecraft:cobblestone",
+  "input_item": {
+    "count": 1,
+    "id": "inspiration:sod"
+  },
+  "output_block": "minecraft:mossy_cobblestone"
+}

@@ -48,6 +48,16 @@ public class ModZhCnLangProvider extends LanguageProvider {
         add(ModItems.POWER_BEACON.get(),"动力信标");
         add(ModItems.CALCIUM_HYDROXIDE_DUST.get(),"氢氧化钙粉");
         add(ModItems.CALCIUM_DUST.get(),"钙粉");
+        add(ModItems.CESIUM_DUST.get(),"铯粉");
+        add(ModItems.CESIUM_INGOT.get(),"铯锭");
+        add(ModItems.REDUCTION_POWDER.get(),"还原粉");
+        add(ModItems.ROUGH_JADE_STEEL.get(),"粗翡翠钢");
+        add(ModItems.JADE_STEEL_INGOT.get(),"翡翠钢锭");
+        add(ModBlocks.CESIUM_SALT_BLOCK.get(),"铯盐块");
+        add(ModBlocks.CESIUM_BLOCK.get(),"铯块");
+        add(ModBlocks.JADE_STEEL_ORE.get(),"翡翠钢矿石");
+        add(ModBlocks.DEEPSLATE_JADE_STEEL_ORE.get(),"深层翡翠钢矿石");
+        add(ModBlocks.EMPOWERED_TNT_ITEM.get(),"强能TNT");
 
         // 方块
         add(ModBlocks.REDSTONE_INGOT_BLOCK.get(), "红石锭方块");

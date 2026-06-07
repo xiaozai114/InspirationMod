@@ -20,6 +20,16 @@ public class ModEntities {
                             .clientTrackingRange(10) // 客户端追踪距离
                             .updateInterval(10) // 更新间隔
                             .fireImmune() // 爆炸物自然免疫火焰伤害
-                            .build("intensified_tnt") // 构建并返回EntityType实例
-            );
+                            .build("intensified_tnt"));
+    public static final DeferredHolder<EntityType<?>, EntityType<EmpoweredTNTEntity>> EMPOWERED_TNT =
+            ENTITIES.register(
+                    "empowered_tnt",
+                    () -> EntityType.Builder.<EmpoweredTNTEntity>of(EmpoweredTNTEntity::new, MobCategory.MISC)
+                            .sized(0.98F, 0.98F)
+                            .clientTrackingRange(10)
+                            .updateInterval(10)
+                            .fireImmune()
+                            .build("empowered_tnt")
+            ); // 构建并返回EntityType实例
+
 }

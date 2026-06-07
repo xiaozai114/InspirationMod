@@ -3,6 +3,7 @@ package com.starcrosser.inspiration.block;
 import com.starcrosser.inspiration.Inspiration;
 import com.starcrosser.inspiration.fluid.ModFluids;
 import com.starcrosser.inspiration.item.ModItems;
+import com.starcrosser.inspiration.item.custom.AlkaliBlockItem;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.BlockItem;
@@ -69,6 +70,32 @@ public class ModBlocks {
                             .sound(SoundType.EMPTY)
             )
     );
+        public static final DeferredBlock<Block> CESIUM_SALT_BLOCK =
+            registerBlocks("cesium_salt_block", () ->new Block(BlockBehaviour.Properties.of()
+                    .strength(2.0F, 6.0F).requiresCorrectToolForDrops()));
+    public static final DeferredBlock<Block> CESIUM_BLOCK =
+            registerBlocks("cesium_block", () ->new Block(BlockBehaviour.Properties.of()
+                    .strength(2.5F, 6.0F).requiresCorrectToolForDrops()));
+    public static final DeferredBlock<Block> JADE_STEEL_ORE =
+            registerBlocks("jade_steel_ore", () ->new Block(BlockBehaviour.Properties.of()
+                    .strength(3.0F, 9.0F).requiresCorrectToolForDrops()));
+    public static final DeferredBlock<Block> DEEPSLATE_JADE_STEEL_ORE =
+            registerBlocks("deepslate_jade_steel_ore", () ->new Block(BlockBehaviour.Properties.of()
+                    .strength(4.5F, 9.0F).requiresCorrectToolForDrops().sound(SoundType.DEEPSLATE)));
+
+    public static final DeferredBlock<EmpoweredTNTBlock> EMPOWERED_TNT =
+            BLOCKS.register("empowered_tnt", () -> new EmpoweredTNTBlock(
+                    BlockBehaviour.Properties.of().strength(0.0F, 0.0F)
+            ));
+
+        public static final DeferredItem<Item> EMPOWERED_TNT_ITEM =
+            ModItems.ITEMS.register("empowered_tnt", () -> new AlkaliBlockItem(
+                    EMPOWERED_TNT.get(),
+                    new Item.Properties(),
+                    ModItems.CESIUM_SALT.get(),
+                    6.0f
+            ));
+
     public static void register(IEventBus eventBus) {
         BLOCKS.register(eventBus);
     }

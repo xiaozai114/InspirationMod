@@ -59,7 +59,53 @@ public class ModRecipesProvider extends RecipeProvider implements IConditionBuil
                 .unlockedBy(getHasName(ModBlocks.CESIUM_SALT_ORE.get()), has(ModItems.RAW_CESIUM_SALT.get()))
                 .save(recipeOutput, "cesium_salt_from_raw");
 
+        // 粗翡翠钢 -> 翡翠钢锭（熔炉）
+        SimpleCookingRecipeBuilder.smelting(Ingredient.of(ModItems.ROUGH_JADE_STEEL.get()), RecipeCategory.MISC,
+                        ModItems.JADE_STEEL_INGOT.get(), 1.5f, 200)
+                .unlockedBy(getHasName(ModItems.ROUGH_JADE_STEEL.get()), has(ModItems.ROUGH_JADE_STEEL.get()))
+                .save(recipeOutput);
+        // 铯粉 -> 铯锭（高炉）
+        SimpleCookingRecipeBuilder.blasting(Ingredient.of(ModItems.CESIUM_DUST.get()), RecipeCategory.MISC,
+                        ModItems.CESIUM_INGOT.get(), 0.8f, 100)
+                .unlockedBy(getHasName(ModItems.CESIUM_DUST.get()), has(ModItems.CESIUM_DUST.get()))
+                .save(recipeOutput);
+
         // ========== 有序合成配方 ==========
+
+        //         // 还原粉：焦煤+钙粉+灵感
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ModItems.REDUCTION_POWDER.get(), 3)
+                .requires(ModItems.COKE.get())
+                .requires(ModItems.CALCIUM_DUST.get())
+                .requires(ModItems.INSPIRATION.get())
+                .unlockedBy(getHasName(ModItems.COKE.get()), has(ModItems.COKE.get()))
+                .save(recipeOutput);
+
+        // 铯盐块
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModBlocks.CESIUM_SALT_BLOCK.get())
+                .pattern("###")
+                .pattern("###")
+                .pattern("###")
+                .define('#', ModItems.CESIUM_SALT.get())
+                .unlockedBy(getHasName(ModItems.CESIUM_SALT.get()), has(ModItems.CESIUM_SALT.get()))
+                .save(recipeOutput);
+
+        // 铯块
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModBlocks.CESIUM_BLOCK.get())
+                .pattern("###")
+                .pattern("###")
+                .pattern("###")
+                .define('#', ModItems.CESIUM_INGOT.get())
+                .unlockedBy(getHasName(ModItems.CESIUM_INGOT.get()), has(ModItems.CESIUM_INGOT.get()))
+                .save(recipeOutput);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModBlocks.EMPOWERED_TNT_ITEM.get())
+                .pattern("Y#Y")
+                .pattern("#Y#")
+                .pattern("Y#Y")
+                .define('#', Blocks.SAND)
+                .define('Y', ModItems.CESIUM_DUST.get())
+                .unlockedBy(getHasName(ModItems.CESIUM_DUST.get()), has(ModItems.CESIUM_DUST.get()))
+                .save(recipeOutput, "empowered_tnt");
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModBlocks.INTENSIFIED_TNT.get())
                 .pattern("Y#Y")
                 .pattern("#Y#")
@@ -214,6 +260,31 @@ public class ModRecipesProvider extends RecipeProvider implements IConditionBuil
                 .save(recipeOutput);
 
         // ========== 无序合成配方 ==========
+
+        // 铯盐块 -> 铯盐
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ModItems.CESIUM_SALT.get(), 9)
+                .requires(ModBlocks.CESIUM_SALT_BLOCK.get())
+                .unlockedBy(getHasName(ModBlocks.CESIUM_SALT_BLOCK.get()), has(ModBlocks.CESIUM_SALT_BLOCK.get()))
+                .save(recipeOutput, "cesium_salt_from_block");
+
+        // 铯块 -> 铯锭
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ModItems.CESIUM_INGOT.get(), 9)
+                .requires(ModBlocks.CESIUM_BLOCK.get())
+                .unlockedBy(getHasName(ModBlocks.CESIUM_BLOCK.get()), has(ModBlocks.CESIUM_BLOCK.get()))
+                .save(recipeOutput, "cesium_ingot_from_block");
+
+        //         // 绿宝石矿：灵感+绿宝石+石头
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, Blocks.EMERALD_ORE)
+                .pattern("SES")
+                .pattern("EIE")
+                .pattern("SES")
+                .define('S', Items.STONE)
+                .define('E', Items.EMERALD)
+                .define('I', ModItems.INSPIRATION.get())
+                .unlockedBy(getHasName(ModItems.INSPIRATION.get()), has(ModItems.INSPIRATION.get()))
+                .save(recipeOutput, "emerald_ore_from_inspiration");
+
+
         ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ModItems.EXPLODING_CANDY, 3)
                 .requires(ModItems.CESIUM_SALT.get())
                 .requires(ModItems.INSPIRATION.get())
@@ -328,6 +399,22 @@ public class ModRecipesProvider extends RecipeProvider implements IConditionBuil
                         RecipeCategory.TOOLS, ModItems.WORLD_BREAKER.get())
                 .unlocks("has_extreme_alloy", has(ModItems.EXTREME_ALLOY.get()))
                 .save(recipeOutput,"world_breaker_smithing");
+
+        // 还原粉右键转换
+        RightClickBlockRecipeBuilder.recipe(ModBlocks.CESIUM_SALT_BLOCK.get(), ModBlocks.CESIUM_BLOCK.get(),
+                        new ItemStack(ModItems.REDUCTION_POWDER.get()))
+                .unlockedBy("has_reduction_powder", has(ModItems.REDUCTION_POWDER.get()))
+                .save(recipeOutput, ResourceLocation.fromNamespaceAndPath(Inspiration.MODID, "cesium_block_from_salt"));
+
+        RightClickBlockRecipeBuilder.recipe(Blocks.EMERALD_ORE, ModBlocks.JADE_STEEL_ORE.get(),
+                        new ItemStack(ModItems.REDUCTION_POWDER.get()))
+                .unlockedBy("has_reduction_powder", has(ModItems.REDUCTION_POWDER.get()))
+                .save(recipeOutput, ResourceLocation.fromNamespaceAndPath(Inspiration.MODID, "jade_steel_ore_from_emerald"));
+
+        RightClickBlockRecipeBuilder.recipe(Blocks.DEEPSLATE_EMERALD_ORE, ModBlocks.DEEPSLATE_JADE_STEEL_ORE.get(),
+                        new ItemStack(ModItems.REDUCTION_POWDER.get()))
+                .unlockedBy("has_reduction_powder", has(ModItems.REDUCTION_POWDER.get()))
+                .save(recipeOutput, ResourceLocation.fromNamespaceAndPath(Inspiration.MODID, "deepslate_jade_steel_ore_from_emerald"));
 
         RightClickBlockRecipeBuilder.recipe(Blocks.DIRT, Blocks.GRASS_BLOCK, ModItems.SOD.toStack())
                 .unlockedBy("has_sod", has(ModItems.SOD))

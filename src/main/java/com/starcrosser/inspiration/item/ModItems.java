@@ -23,6 +23,11 @@ public class ModItems {
             ITEMS.register("calcium_hydroxide_dust", () ->new Item(new Item.Properties()));
     public static final DeferredItem<Item> CALCIUM_DUST=
             ITEMS.register("calcium_dust", () ->new AlkaliItem(new Item.Properties(),ModItems.CALCIUM_HYDROXIDE_DUST.get(),0.1f));
+    public static final DeferredItem<Item> CESIUM_DUST=
+            ITEMS.register("cesium_dust", () ->new AlkaliItem(new Item.Properties(),ModItems.CESIUM_SALT.get(),4f));
+    public static final DeferredItem<Item> CESIUM_INGOT=
+            ITEMS.register("cesium_ingot", () ->new AlkaliItem(new Item.Properties(),ModItems.CESIUM_SALT.get(),4f));
+
     public static final DeferredItem<Item> RAW_CESIUM_SALT=
             ITEMS.register("raw_cesium_salt", () ->new Item(new Item.Properties()));
     public static final DeferredItem<Item> COOKED_INSPIRATION=
@@ -76,6 +81,13 @@ public class ModItems {
     public static final DeferredItem<Item> EXP_HOE=
             ITEMS.register("exp_hoe", () ->new ExperienceHoe(Tiers.IRON, -2.0F,-0.0F,
                     new Item.Properties().durability(899).rarity(Rarity.RARE)));
+    public static final DeferredItem<Item> REDUCTION_POWDER=
+            ITEMS.register("reduction_powder", () ->new Item(new Item.Properties()));
+    public static final DeferredItem<Item> ROUGH_JADE_STEEL=
+            ITEMS.register("rough_jade_steel", () ->new Item(new Item.Properties()));
+    public static final DeferredItem<Item> JADE_STEEL_INGOT=
+            ITEMS.register("jade_steel_ingot", () ->new Item(new Item.Properties()));
+
     public static final DeferredItem<Item> SCYTHE_OF_DEATH=
             ITEMS.register("scythe_of_death", () ->new Scythe(Tiers.DIAMOND, 3.0F,-2.8F,
                     new Item.Properties().durability(1799).rarity(Rarity.EPIC)));

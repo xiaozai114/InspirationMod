@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/cube_bottom_top",
+  "textures": {
+    "bottom": "inspiration:block/empowered_tnt_block_top_bottom",
+    "side": "inspiration:block/empowered_tnt_block_side",
+    "top": "inspiration:block/empowered_tnt_block_top_bottom"
+  }
+}

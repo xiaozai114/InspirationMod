@@ -43,12 +43,26 @@ public class ModEnUsLangProvider extends LanguageProvider {
         add(ModItems.RAW_CESIUM_SALT.get(), "Raw Cesium Salt");
         add(ModItems.EXPLODING_CANDY.get(),"Exploding Candy");
         add(ModItems.POWER_BEACON.get(), "Power Beacon");
+        add(ModItems.MIND_FLUID_BUCKET.get(), "Mind Fluid Bucket");
+        add(ModItems.CALCIUM_HYDROXIDE_DUST.get(), "Calcium Hydroxide");
+        add(ModItems.CALCIUM_DUST.get(), "Calcium Dust");
+        add(ModItems.CESIUM_DUST.get(), "Cesium Dust");
+        add(ModItems.CESIUM_INGOT.get(), "Cesium Ingot");
+        add(ModItems.REDUCTION_POWDER.get(), "Reduction Powder");
+        add(ModItems.ROUGH_JADE_STEEL.get(), "Rough Jade Steel");
+        add(ModItems.JADE_STEEL_INGOT.get(), "Jade Steel Ingot");
+        add(ModBlocks.CESIUM_SALT_BLOCK.get(), "Cesium Salt Block");
+        add(ModBlocks.CESIUM_BLOCK.get(), "Cesium Block");
+        add(ModBlocks.JADE_STEEL_ORE.get(), "Jade Steel Ore");
+        add(ModBlocks.DEEPSLATE_JADE_STEEL_ORE.get(), "Deepslate Jade Steel Ore");
+        add(ModBlocks.EMPOWERED_TNT_ITEM.get(), "Empowered TNT");
         // 方块
         add(ModBlocks.REDSTONE_INGOT_BLOCK.get(), "Redstone Ingot Block");
         add(ModBlocks.LAPIS_INGOT_BLOCK.get(), "Lapis Ingot Block");
         add(ModBlocks.LIGNITE_BLOCK.get(), "lignite block");
         add(ModBlocks.INTENSIFIED_TNT.get(), "intensified_tnt");
         add(ModBlocks.EPHEMERAL_ORE.get(), "§5Ephemeral Ore");
+        add(ModBlocks.MIND_FLUID_BLOCK.get(), "Mind Fluid");
 
         // 工具提示
         add("tooltip.inspiration.exp_sword.description", "Create experience orb when attack");

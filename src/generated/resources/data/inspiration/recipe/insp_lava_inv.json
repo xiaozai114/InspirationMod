@@ -1,0 +1,9 @@
+{
+  "type": "inspiration:right_click_block",
+  "input_block": "minecraft:magma_block",
+  "input_item": {
+    "count": 1,
+    "id": "inspiration:inspiration"
+  },
+  "output_block": "minecraft:lava"
+}

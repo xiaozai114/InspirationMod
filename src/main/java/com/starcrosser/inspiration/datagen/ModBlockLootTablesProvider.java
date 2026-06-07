@@ -24,6 +24,11 @@ public class ModBlockLootTablesProvider extends BlockLootSubProvider {
         dropSelf(ModBlocks.LIGNITE_BLOCK.get());
         dropSelf(ModBlocks.LAPIS_INGOT_BLOCK.get());
         dropSelf(ModBlocks.INTENSIFIED_TNT.get());
+        dropSelf(ModBlocks.CESIUM_SALT_BLOCK.get());
+        dropSelf(ModBlocks.CESIUM_BLOCK.get());
+        dropOther(ModBlocks.JADE_STEEL_ORE.get(), ModItems.ROUGH_JADE_STEEL.get());
+        dropOther(ModBlocks.DEEPSLATE_JADE_STEEL_ORE.get(), ModItems.ROUGH_JADE_STEEL.get());
+        dropSelf(ModBlocks.EMPOWERED_TNT.get());
         dropSelf(ModBlocks.REDSTONE_INGOT_BLOCK.get());
 
         dropOther(ModBlocks.EPHEMERAL_ORE.get(), ModItems.EPHEMERAL_MATERIAL.get());

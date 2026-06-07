@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "inspiration:item/rough_jade_steel"
+  }
+}

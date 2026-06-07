@@ -1,0 +1,28 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "group": "power_beacon",
+  "key": {
+    "#": {
+      "item": "inspiration:cesium_salt"
+    },
+    "X": {
+      "item": "inspiration:ephemeral_material"
+    },
+    "Y": {
+      "item": "minecraft:wither_skeleton_skull"
+    },
+    "Z": {
+      "item": "inspiration:empty_beacon"
+    }
+  },
+  "pattern": [
+    "#Y#",
+    "#Z#",
+    "XXX"
+  ],
+  "result": {
+    "count": 1,
+    "id": "inspiration:power_beacon"
+  }
+}

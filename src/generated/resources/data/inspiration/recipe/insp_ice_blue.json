@@ -1,0 +1,9 @@
+{
+  "type": "inspiration:right_click_block",
+  "input_block": "minecraft:packed_ice",
+  "input_item": {
+    "count": 1,
+    "id": "inspiration:inspiration"
+  },
+  "output_block": "minecraft:blue_ice"
+}

@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_inspiration": {
+      "conditions": {
+        "items": [
+          {
+            "items": "inspiration:inspiration"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "inspiration:exploding_candy"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_inspiration"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "inspiration:exploding_candy"
+    ]
+  }
+}

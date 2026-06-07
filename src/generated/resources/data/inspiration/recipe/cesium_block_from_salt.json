@@ -1,0 +1,9 @@
+{
+  "type": "inspiration:right_click_block",
+  "input_block": "inspiration:cesium_salt_block",
+  "input_item": {
+    "count": 1,
+    "id": "inspiration:reduction_powder"
+  },
+  "output_block": "inspiration:cesium_block"
+}

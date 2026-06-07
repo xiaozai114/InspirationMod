@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "inspiration:coke"
+    },
+    {
+      "item": "inspiration:calcium_dust"
+    },
+    {
+      "item": "inspiration:inspiration"
+    }
+  ],
+  "result": {
+    "count": 3,
+    "id": "inspiration:reduction_powder"
+  }
+}

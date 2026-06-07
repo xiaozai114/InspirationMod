@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_cesium_dust": {
+      "conditions": {
+        "items": [
+          {
+            "items": "inspiration:cesium_dust"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "inspiration:cesium_ingot"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_cesium_dust"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "inspiration:cesium_ingot"
+    ]
+  }
+}

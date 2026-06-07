@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "E": {
+      "item": "minecraft:emerald"
+    },
+    "I": {
+      "item": "inspiration:inspiration"
+    },
+    "S": {
+      "item": "minecraft:stone"
+    }
+  },
+  "pattern": [
+    "SES",
+    "EIE",
+    "SES"
+  ],
+  "result": {
+    "count": 1,
+    "id": "minecraft:emerald_ore"
+  }
+}

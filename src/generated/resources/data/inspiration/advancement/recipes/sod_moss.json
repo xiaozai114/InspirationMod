@@ -1,0 +1,24 @@
+{
+  "criteria": {
+    "has_sod": {
+      "conditions": {
+        "items": [
+          {
+            "items": "inspiration:sod"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "has_sod"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "inspiration:sod_moss"
+    ]
+  }
+}

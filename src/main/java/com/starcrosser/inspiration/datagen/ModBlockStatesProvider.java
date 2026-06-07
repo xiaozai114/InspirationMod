@@ -27,7 +27,12 @@ public class ModBlockStatesProvider extends BlockStateProvider {
         simpleBlock(ModBlocks.EPHEMERAL_ORE.get(), cubeAll(ModBlocks.EPHEMERAL_ORE.get()));
         simpleBlock(ModBlocks.CESIUM_SALT_ORE.get(), cubeAll(ModBlocks.CESIUM_SALT_ORE.get()));
         simpleBlock(ModBlocks.MIND_FLUID_BLOCK.get(), cubeAll(ModBlocks.MIND_FLUID_BLOCK.get()));
+        simpleBlock(ModBlocks.CESIUM_SALT_BLOCK.get(), cubeAll(ModBlocks.CESIUM_SALT_BLOCK.get()));
+        simpleBlock(ModBlocks.CESIUM_BLOCK.get(), cubeAll(ModBlocks.CESIUM_BLOCK.get()));
+        simpleBlock(ModBlocks.JADE_STEEL_ORE.get(), cubeAll(ModBlocks.JADE_STEEL_ORE.get()));
+        simpleBlock(ModBlocks.DEEPSLATE_JADE_STEEL_ORE.get(), cubeAll(ModBlocks.DEEPSLATE_JADE_STEEL_ORE.get()));
         IntensifiedTNTBlock();
+        EmpoweredTNTBlock();
     }
 
     private void IntensifiedTNTBlock() {
@@ -48,5 +53,24 @@ public class ModBlockStatesProvider extends BlockStateProvider {
         // 3. 生成方块状态文件和物品模型
         simpleBlock(ModBlocks.INTENSIFIED_TNT.get(), modelFile);
         simpleBlockItem(ModBlocks.INTENSIFIED_TNT.get(), modelFile);
+    }
+
+
+
+    private void EmpoweredTNTBlock() {
+        TextureMapping textures = new TextureMapping()
+                .put(TextureSlot.TOP, modLoc("block/empowered_tnt_block_top_bottom"))
+                .put(TextureSlot.BOTTOM, modLoc("block/empowered_tnt_block_top_bottom"))
+                .put(TextureSlot.SIDE, modLoc("block/empowered_tnt_block_side"));
+
+        ModelFile modelFile = models().cubeBottomTop(
+                "empowered_tnt",
+                textures.get(TextureSlot.SIDE),
+                textures.get(TextureSlot.BOTTOM),
+                textures.get(TextureSlot.TOP)
+        );
+
+        simpleBlock(ModBlocks.EMPOWERED_TNT.get(), modelFile);
+        simpleBlockItem(ModBlocks.EMPOWERED_TNT.get(), modelFile);
     }
 }

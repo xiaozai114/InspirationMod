@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "#": {
+      "item": "minecraft:sand"
+    },
+    "Y": {
+      "item": "inspiration:cesium_salt"
+    }
+  },
+  "pattern": [
+    "Y#Y",
+    "#Y#",
+    "Y#Y"
+  ],
+  "result": {
+    "count": 1,
+    "id": "inspiration:intensified_tnt"
+  }
+}

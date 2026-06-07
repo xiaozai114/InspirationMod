@@ -41,6 +41,11 @@ public class ModItemModelsProvider extends ItemModelProvider {
         basicItem(ModItems.MIND_FLUID_BUCKET.get());
         basicItem(ModItems.CALCIUM_HYDROXIDE_DUST.get());
         basicItem(ModItems.CALCIUM_DUST.get());
+        basicItem(ModItems.CESIUM_DUST.get());
+        basicItem(ModItems.CESIUM_INGOT.get());
+        basicItem(ModItems.REDUCTION_POWDER.get());
+        basicItem(ModItems.ROUGH_JADE_STEEL.get());
+        basicItem(ModItems.JADE_STEEL_INGOT.get());
 
         // ========== 手持物品（handheld）直接使用父类方法 ==========
         handheldItem(ModItems.STICKY_AXE.get());
@@ -56,6 +61,11 @@ public class ModItemModelsProvider extends ItemModelProvider {
         blockItem(ModBlocks.EPHEMERAL_ORE.get());
         blockItem(ModBlocks.CESIUM_SALT_ORE.get());
         blockItem(ModBlocks.INTENSIFIED_TNT.get());
+        blockItem(ModBlocks.CESIUM_SALT_BLOCK.get());
+        blockItem(ModBlocks.CESIUM_BLOCK.get());
+        blockItem(ModBlocks.JADE_STEEL_ORE.get());
+        blockItem(ModBlocks.DEEPSLATE_JADE_STEEL_ORE.get());
+        blockItem(ModBlocks.EMPOWERED_TNT.get());
 
     }
 
