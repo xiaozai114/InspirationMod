@@ -1,0 +1,15 @@
+{
+  "type": "inspiration:twisting",
+  "input": [
+    {
+      "item": "minecraft:copper_ore"
+    },
+    {
+      "item": "minecraft:deepslate_copper_ore"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "minecraft:raw_copper"
+  }
+}

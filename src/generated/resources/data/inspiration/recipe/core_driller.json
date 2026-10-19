@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "C": {
+      "item": "inspiration:powerful_core"
+    },
+    "M": {
+      "item": "inspiration:jade_steel_ingot"
+    },
+    "S": {
+      "item": "inspiration:mind_matrix_ingot"
+    },
+    "X": {
+      "item": "inspiration:jade_steel_ingot"
+    }
+  },
+  "pattern": [
+    "MSM",
+    "SCS",
+    "MXM"
+  ],
+  "result": {
+    "count": 1,
+    "id": "inspiration:core_driller"
+  }
+}

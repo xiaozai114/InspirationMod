@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "subfacing=east": {
+      "model": "inspiration:block/inspiration_assembler",
+      "y": 90
+    },
+    "subfacing=north": {
+      "model": "inspiration:block/inspiration_assembler"
+    },
+    "subfacing=south": {
+      "model": "inspiration:block/inspiration_assembler",
+      "y": 180
+    },
+    "subfacing=west": {
+      "model": "inspiration:block/inspiration_assembler",
+      "y": 270
+    }
+  }
+}

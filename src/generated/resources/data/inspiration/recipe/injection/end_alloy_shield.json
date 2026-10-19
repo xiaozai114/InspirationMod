@@ -1,0 +1,15 @@
+{
+  "type": "inspiration:injection",
+  "base": {
+    "item": "minecraft:shield"
+  },
+  "inject": {
+    "item": "inspiration:end_alloy"
+  },
+  "max_energy": 1500000,
+  "min_energy": 500000,
+  "result": {
+    "count": 1,
+    "id": "inspiration:end_alloy_shield"
+  }
+}

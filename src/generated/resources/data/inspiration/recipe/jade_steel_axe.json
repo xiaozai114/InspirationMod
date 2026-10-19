@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:smithing_transform",
+  "addition": {
+    "item": "inspiration:jade_steel_ingot"
+  },
+  "base": {
+    "item": "inspiration:sticky_axe"
+  },
+  "result": {
+    "count": 1,
+    "id": "inspiration:jade_steel_axe"
+  },
+  "template": {
+    "item": "inspiration:jade_steel_upgrade_template"
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "type": "inspiration:twisting",
+  "input": {
+    "item": "minecraft:nether_quartz_ore"
+  },
+  "result": {
+    "count": 1,
+    "id": "minecraft:quartz"
+  }
+}

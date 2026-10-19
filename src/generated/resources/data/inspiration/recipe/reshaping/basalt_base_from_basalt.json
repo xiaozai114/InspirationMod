@@ -1,0 +1,12 @@
+{
+  "type": "inspiration:reshaping",
+  "duration": 200,
+  "energy_per_tick": 80,
+  "input": {
+    "item": "minecraft:basalt"
+  },
+  "result": {
+    "count": 1,
+    "id": "inspiration:basalt_base"
+  }
+}

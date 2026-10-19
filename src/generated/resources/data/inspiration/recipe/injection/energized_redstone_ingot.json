@@ -1,0 +1,15 @@
+{
+  "type": "inspiration:injection",
+  "base": {
+    "item": "inspiration:redstone_ingot"
+  },
+  "inject": {
+    "item": "inspiration:inspiration"
+  },
+  "max_energy": 300000,
+  "min_energy": 150000,
+  "result": {
+    "count": 1,
+    "id": "inspiration:energized_redstone_ingot"
+  }
+}

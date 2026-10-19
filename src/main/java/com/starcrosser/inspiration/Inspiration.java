@@ -1,9 +1,15 @@
 package com.starcrosser.inspiration;
 
 import com.starcrosser.inspiration.block.ModBlocks;
+import com.starcrosser.inspiration.entity.ModEntities;
 import com.starcrosser.inspiration.fluid.ModFluids;
+import com.starcrosser.inspiration.guide.ModGuideMenus;
 import com.starcrosser.inspiration.item.ModCreativeModeTabs;
+import com.starcrosser.inspiration.injection.ModInjection;
 import com.starcrosser.inspiration.item.ModItems;
+import com.starcrosser.inspiration.machine.ModMachines;
+import com.starcrosser.inspiration.multiblock.ModMultiblocks;
+import com.starcrosser.inspiration.radiation.RadiationAttachments;
 import com.starcrosser.inspiration.recipe.ModRecipes;
 import com.starcrosser.inspiration.recipe.RightClickBlockHandler;
 import org.slf4j.Logger;
@@ -52,9 +58,20 @@ public class Inspiration {
         modEventBus.addListener(this::commonSetup);
 
         ModItems.register(modEventBus);
+        // 指导书界面（空菜单）
+        ModGuideMenus.register(modEventBus);
+        // 玩家体内累积的辐射值挂在实体 attachment 上，注册表是 NeoForge 的
+        RadiationAttachments.register(modEventBus);
         ModFluids.register(modEventBus);
         ModCreativeModeTabs.register(modEventBus);
         ModBlocks.register(modEventBus);
+        // 强化/强能 TNT 点燃后生成的实体类型，必须注册，否则客户端绑定渲染器时拿到的是未绑定值
+        ModEntities.ENTITIES.register(modEventBus);
+        ModMachines.register();
+        // 注入结构（物质束缚器 + 注入枪）同样是 Titanium 方块，单独一组注册
+        ModInjection.register();
+        // 结构模拟机的控制器与五种仓室（多方块，结构校验走 MBD2 的结构层）
+        ModMultiblocks.register();
         // Register ourselves for server and other game events we are interested in.
         // Note that this is necessary if and only if we want *this* class (Inspiration) to respond directly to events.
         // Do not add this line if there are no @SubscribeEvent-annotated functions in this class, like onServerStarting() below.

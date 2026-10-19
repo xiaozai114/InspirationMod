@@ -3,7 +3,10 @@ package com.starcrosser.inspiration.datagen;
 
 import com.starcrosser.inspiration.Inspiration;
 import com.starcrosser.inspiration.block.ModBlocks;
+import com.starcrosser.inspiration.injection.ModInjection;
 import com.starcrosser.inspiration.item.ModItems;
+import com.starcrosser.inspiration.machine.ModMachines;
+import com.starcrosser.inspiration.multiblock.ModMultiblocks;
 import net.minecraft.data.PackOutput;
 import net.neoforged.neoforge.common.data.LanguageProvider;
 
@@ -36,6 +39,7 @@ public class ModEnUsLangProvider extends LanguageProvider {
         add(ModItems.EPHEMERAL_MATERIAL.get(), "§5Ephemeral Material");
         add(ModItems.SOD.get(), "Sod");
         add(ModItems.EXP_HOE.get(), "Inspiration Hoe");
+        add(ModItems.EXP_SHOVEL.get(), "Inspiration Shovel");
         add(ModItems.SCYTHE_OF_DEATH.get(), "Scythe of Death");
         add(ModItems.EMPTY_BEACON.get(), "Empty Beacon");
         add(ModItems.CESIUM_SALT.get(), "Cesium Salt");
@@ -49,13 +53,95 @@ public class ModEnUsLangProvider extends LanguageProvider {
         add(ModItems.CESIUM_DUST.get(), "Cesium Dust");
         add(ModItems.CESIUM_INGOT.get(), "Cesium Ingot");
         add(ModItems.REDUCTION_POWDER.get(), "Reduction Powder");
-        add(ModItems.ROUGH_JADE_STEEL.get(), "Rough Jade Steel");
         add(ModItems.JADE_STEEL_INGOT.get(), "Jade Steel Ingot");
+        add(ModItems.BASALT_ALLOY.get(), "Basalt Alloy");
+        add(ModItems.REINFORCED_CORE.get(), "Reinforced Core");
+        add(ModItems.POWERFUL_CORE.get(), "Powerful Core");
+        add(ModItems.HIGH_ENERGY_CORE.get(), "High-Energy Core");
+        add(ModItems.GENERATION_CORE.get(), "Generation Core");
+        add(ModItems.REACTION_CORE.get(), "Reaction Core");
+        add(ModItems.NUCLEAR_WASTE.get(), "Nuclear Waste");
+        add(ModItems.JADE_STEEL_UPGRADE_TEMPLATE.get(), "Jade Steel Upgrade Template");
+        add(ModItems.BASALT_ALLOY_FIRESTRIKER.get(), "Basalt Alloy Firestriker");
+        add(ModItems.BASALT_ALLOY_DRILL_BIT.get(), "Basalt Alloy Drill Bit");
+        add(ModItems.PLASMA_INGOT.get(), "Plasma Ingot");
+        add(ModItems.CAPACITOR_PLUGIN.get(), "Capacitor Plugin");
+        add(ModItems.INSPIRATION_PLUGIN.get(), "Inspiration Plugin");
+        add(ModItems.SPEED_PLUGIN.get(), "Speed Plugin");
+        add(ModItems.CAPACITOR_DOWNGRADE_PLUGIN.get(), "Capacitor Downgrade Plugin");
+        add(ModItems.INSPIRATION_SHARD.get(), "Inspiration Shard");
+        add(ModItems.MIND_CRYSTAL.get(), "Mind Crystal");
+        add(ModItems.MIND_MATRIX_INGOT.get(), "Mind Matrix Ingot");
+        add(ModItems.JADE_STEEL_SWORD.get(), "Jade Steel Sword");
+        add(ModItems.JADE_STEEL_AXE.get(), "Jade Steel Axe");
+        add(ModItems.JADE_STEEL_PICKAXE.get(), "Jade Steel Pickaxe");
+        add(ModItems.JADE_STEEL_HOE.get(), "Jade Steel Hoe");
+        add(ModItems.JADE_STEEL_SHOVEL.get(), "Jade Steel Shovel");
+        add(ModItems.ENERGIZED_JADE_STEEL_UPGRADE_TEMPLATE.get(), "Energized Jade Steel Upgrade Template");
+        add(ModItems.ENERGIZED_JADE_STEEL_SWORD.get(), "Energized Jade Steel Sword");
+        add(ModItems.ENERGIZED_JADE_STEEL_AXE.get(), "Energized Jade Steel Axe");
+        add(ModItems.ENERGIZED_JADE_STEEL_PICKAXE.get(), "Energized Jade Steel Pickaxe");
+        add(ModItems.ENERGIZED_JADE_STEEL_HOE.get(), "Energized Jade Steel Hoe");
+        add(ModItems.ENERGIZED_JADE_STEEL_SHOVEL.get(), "Energized Jade Steel Shovel");
+        add(ModItems.SCULK_ALLOY.get(), "Sculk Alloy");
+        add(ModBlocks.DILUTED_INSPIRATION_CRYSTAL.get(), "Diluted Inspiration Crystal");
+        add(ModBlocks.CONCENTRATED_INSPIRATION_CRYSTAL.get(), "Concentrated Inspiration Crystal");
+        add(ModBlocks.INSPIRATION_GEL.get(), "Inspiration Gel");
+        add(ModBlocks.MIND_CRYSTAL_ROCK.get(), "Mind Crystal Rock");
         add(ModBlocks.CESIUM_SALT_BLOCK.get(), "Cesium Salt Block");
         add(ModBlocks.CESIUM_BLOCK.get(), "Cesium Block");
-        add(ModBlocks.JADE_STEEL_ORE.get(), "Jade Steel Ore");
-        add(ModBlocks.DEEPSLATE_JADE_STEEL_ORE.get(), "Deepslate Jade Steel Ore");
         add(ModBlocks.EMPOWERED_TNT_ITEM.get(), "Empowered TNT");
+        // 注入合成
+        add(ModBlocks.BASALT_ALLOY_BLOCK.get(), "Basalt Alloy Block");
+        add(ModBlocks.SCULK_ALLOY_BLOCK.get(), "Sculk Alloy Block");
+        add(ModInjection.MATTER_BINDER.getBlock(), "Matter Binder");
+        add(ModInjection.INJECTION_GUN.getBlock(), "Injection Gun");
+        add(ModItems.BINDING_WAND.get(), "Binding Wand");
+        add(ModItems.BASALT_BASE.get(), "Basalt Base");
+        add(ModItems.ENERGIZED_JADE_STEEL.get(), "Energized Jade Steel");
+        // 辐射：钫盐系列与盖革计数器
+        add(ModBlocks.FRANCIUM_SALT_ORE.get(), "Francium Salt Ore");
+        add(ModItems.RAW_FRANCIUM_SALT.get(), "Raw Francium Salt");
+        add(ModItems.FRANCIUM_SALT.get(), "Francium Salt");
+        add(ModBlocks.FRANCIUM_SALT_BLOCK.get(), "Francium Salt Block");
+        add(ModItems.FRANCIUM_DUST.get(), "Francium Dust");
+        add(ModBlocks.FRANCIUM_BLOCK.get(), "Francium Block");
+        add(ModItems.FRANCIUM_INGOT.get(), "Francium Ingot");
+        add(ModItems.GEIGER_COUNTER.get(), "Geiger Counter");
+        add(ModItems.END_ALLOY.get(), "End Alloy");
+        add(ModItems.EPHEMERAL_ALLOY.get(), "§dEphemeral Alloy");
+        add(ModItems.END_ALLOY_SHIELD.get(), "End Alloy Shield");
+        add(ModItems.WORLD_DATA_DETECTOR.get(), "World Data Detector");
+        add(ModItems.GUIDE_BOOK.get(), "Inspiration Guide");
+        // 高能阶段
+        add(ModItems.ENERGIZED_LAPIS_INGOT.get(), "Energized Lapis Ingot");
+        add(ModItems.ENERGIZED_PLASMA_INGOT.get(), "Energized Plasma Ingot");
+        add(ModItems.ENERGIZED_REDSTONE_INGOT.get(), "Energized Redstone Ingot");
+        // 多方块：结构模拟机
+        add(ModBlocks.HIGH_ENERGY_MACHINE_CASING.get(), "High-Energy Machine Casing");
+        add(ModMultiblocks.INPUT_HATCH.getBlock(), "Input Hatch");
+        add(ModMultiblocks.OUTPUT_HATCH.getBlock(), "Output Hatch");
+        add(ModMultiblocks.ENERGY_PORT.getBlock(), "Energy Port");
+        add(ModMultiblocks.INSPIRATION_HATCH.getBlock(), "Inspiration Hatch");
+        add(ModMultiblocks.DATA_HATCH.getBlock(), "Data Hatch");
+        add(ModItems.BLANK_DATA.get(), "Blank Data");
+        add(ModItems.SHIPWRECK_DATA.get(), "Shipwreck Data");
+        add(ModItems.PROJECTOR.get(), "Structure Projector");
+        // 机器
+        add(ModMachines.MATTER_FUSION_MACHINE.getBlock(), "Matter Fusion Machine");
+        add(ModMachines.ENERGIZED_MATTER_FUSION_MACHINE.getBlock(), "Energized Matter Fusion Machine");
+        add(ModMachines.MATTER_RESHAPER.getBlock(), "Matter Reshaper");
+        add(ModMachines.MINERAL_TWISTER.getBlock(), "Mineral Twister");
+        add(ModMachines.INSPIRATION_ASSEMBLER.getBlock(), "Inspiration Assembler");
+        add(ModMachines.CORE_DRILLER.getBlock(), "Core Driller");
+        add(ModMachines.HIGH_ENERGY_MINERAL_TWISTER.getBlock(), "High-Energy Mineral Twister");
+        add(ModMachines.HIGH_ENERGY_INSPIRATION_ASSEMBLER.getBlock(), "High-Energy Inspiration Assembler");
+        add(ModMachines.HIGH_ENERGY_MATTER_RESHAPER.getBlock(), "High-Energy Matter Reshaper");
+        add(ModMachines.ALKALINE_REACTOR.getBlock(), "Alkaline Generator");
+        add(ModMachines.RTG_GENERATOR.getBlock(), "RTG Reactor");
+        add(ModMultiblocks.STRUCTURE_SIMULATOR.getBlock(), "Structure Simulator");
+        // 流体
+        add("fluid_type.inspiration.inspiration_charge", "Inspiration Charge");
         // 方块
         add(ModBlocks.REDSTONE_INGOT_BLOCK.get(), "Redstone Ingot Block");
         add(ModBlocks.LAPIS_INGOT_BLOCK.get(), "Lapis Ingot Block");
@@ -64,12 +150,206 @@ public class ModEnUsLangProvider extends LanguageProvider {
         add(ModBlocks.EPHEMERAL_ORE.get(), "§5Ephemeral Ore");
         add(ModBlocks.MIND_FLUID_BLOCK.get(), "Mind Fluid");
 
+        // JEI 配方分类
+        add("jei.inspiration.fusion", "Matter Fusion");
+        add("jei.inspiration.reshaping", "Matter Reshaping");
+        add("jei.inspiration.right_click_block", "Right-Click Conversion");
+        add("jei.inspiration.right_click_block.hint", "Right-click the block while holding the item");
+        add("jei.inspiration.right_click_block.consume", "Consumes %s item(s) each time");
+        add("jei.inspiration.twisting", "Mineral Twisting");
+        add("jei.inspiration.twisting.fortune", "Fortune %s: yields %s-%s, avg %s");
+        add("jei.inspiration.assembling", "Inspiration Assembling");
+        add("jei.inspiration.assembling.fluid", "Fluid input: %s mB %s");
+        // 单方块机器共用的两行：基准耗时与基准每刻耗电
+        add("jei.inspiration.machine.duration", "Time: %s ticks");
+        add("jei.inspiration.machine.energy_per_tick", "Energy: %s FE/t");
+        add("jei.inspiration.injection", "Matter Injection");
+        add("jei.inspiration.injection.role_inject", "Injected material");
+        add("jei.inspiration.injection.role_base", "Base material");
+        add("jei.inspiration.injection.tier", "Tier %s");
+        add("jei.inspiration.injection.min_energy", "Min energy: %s FE");
+        add("jei.inspiration.injection.max_energy", "Max energy: %s FE");
+
+        // 侧向配置按钮上方的短标签；必须压在三个字符内，否则会挤到隔壁按钮
+        add("gui.inspiration.facing.input", "In");
+        add("gui.inspiration.facing.output", "Out");
+        add("gui.inspiration.facing.inspiration", "Spr");
+        add("gui.inspiration.facing.inspiration_charge", "Chg");
+        add("gui.inspiration.facing.fluid_input", "Flu");
+        add("gui.inspiration.facing.fluid_input_2", "Flu");
+        add("gui.inspiration.facing.drill", "Bit");
+        add("gui.inspiration.facing.fuel", "Fuel");
+        // Titanium 悬停提示：键是 tooltip.titanium.facing_handler.<组件名小写>
+        add("tooltip.titanium.facing_handler.input", "Item input");
+        add("tooltip.titanium.facing_handler.output", "Item output");
+        add("tooltip.titanium.facing_handler.inspiration", "Inspiration item");
+        add("tooltip.titanium.facing_handler.inspiration_charge", "Inspiration charge tank");
+        add("tooltip.titanium.facing_handler.fluid_input", "Fluid input");
+        add("tooltip.titanium.facing_handler.fluid_input_2", "Second fluid input");
+        add("tooltip.titanium.facing_handler.drill", "Drill bit");
+        add("tooltip.titanium.facing_handler.fuel", "Fuel input");
+        add("tooltip.titanium.facing_handler.inject", "Material to inject");
+        add("tooltip.titanium.facing_handler.base", "Base material");
+
         // 工具提示
-        add("tooltip.inspiration.exp_sword.description", "Create experience orb when attack");
+        add("tooltip.inspiration.exp_sword.description", "Drops %s experience per hit");
         add("tooltip.inspiration.storm_sowrd.description", "Right click for windburst");
         add("tooltip.inspiration.sticky_axe.description", "Try Stripping some wood?");
-        add("tooltip.inspiration.exp_pickaxe.description", "Create experience orb when mining");
+        add("tooltip.inspiration.sticky_axe.experience", "Drops %s experience when stripping");
+        add("tooltip.inspiration.exp_pickaxe.description", "Drops %s experience per block mined");
+        add("tooltip.inspiration.exp_hoe.description", "Grass blocks yield sod and %s experience");
+        add("tooltip.inspiration.exp_shovel.description", "Pathing grass yields sod and %s experience");
+        add("tooltip.inspiration.energized_jade_steel.charged_buff",
+                "Hold right-click for 1.5s to gain %s (costs %s experience, lasts %s s)");
         add("tooltip.inspiration.exploding_candy.description", " ");
+        add("tooltip.inspiration.inspiration_shard.description", "Insert into a machine's inspiration slot for %s mB of charge");
+
+        // 绑定器
+        add("tooltip.inspiration.binding_wand.description", "Right-click a Matter Binder to select it, then right-click an Injection Gun to link them; sneak-right-click the gun to unlink");
+        add("tooltip.inspiration.binding_wand.none", "No Matter Binder selected");
+        add("tooltip.inspiration.binding_wand.selected", "Selected: (%s, %s, %s)");
+        add("message.inspiration.binding_wand.selected", "Matter Binder recorded at (%s, %s, %s)");
+        add("message.inspiration.binding_wand.bound", "Injection Gun linked to the Matter Binder at (%s, %s, %s)");
+        add("message.inspiration.binding_wand.unbound", "Injection Gun unlinked");
+        add("message.inspiration.binding_wand.not_bound", "This Injection Gun is not linked to any Matter Binder");
+        add("message.inspiration.binding_wand.no_selection", "Right-click a Matter Binder with the wand first");
+        add("message.inspiration.binding_wand.out_of_range", "Outside the %s area around the Matter Binder");
+        add("message.inspiration.binding_wand.target_lost", "The selected Matter Binder no longer exists");
+
+        // 翡翠钢升级模板（文案结构对齐下界合金升级模板）
+        add("upgrade.inspiration.jade_steel_upgrade", "Jade Steel Upgrade");
+        add("item.inspiration.energized_jade_steel_upgrade.applies_to",
+                "Jade Steel Sword, Axe, Pickaxe, Shovel and Hoe");
+        add("item.inspiration.energized_jade_steel_upgrade.ingredients", "Energized Jade Steel");
+        add("item.inspiration.energized_jade_steel_upgrade.base_slot_description", "Add a jade steel tool");
+        add("item.inspiration.energized_jade_steel_upgrade.additions_slot_description", "Add Energized Jade Steel");
+        add("upgrade.inspiration.energized_jade_steel_upgrade", "Energized Jade Steel Upgrade");
+        add("item.inspiration.jade_steel_upgrade.applies_to", "Inspiration Sword, Axe, Pickaxe, Shovel and Hoe");
+        add("item.inspiration.jade_steel_upgrade.ingredients", "Jade Steel Ingot");
+        add("item.inspiration.jade_steel_upgrade.base_slot_description", "Add an inspiration tool");
+        add("item.inspiration.jade_steel_upgrade.additions_slot_description", "Add a Jade Steel Ingot");
+
+        // 机器插件
+        add("tooltip.inspiration.plugin.slot", "Insert into a plugin slot on the right of a machine");
+        add("tooltip.inspiration.plugin.energy_capacity", "Machine energy capacity x2");
+        add("tooltip.inspiration.plugin.charge_capacity", "Machine inspiration charge capacity x2");
+        add("tooltip.inspiration.plugin.speed", "Speed x2, energy per tick x4, charge per tick x2");
+        add("tooltip.inspiration.plugin.energy_capacity_downgrade", "Machine energy capacity x0.67");
+        add("tooltip.inspiration.plugin.stack", "Same-type plugins stack, each x%s");
+
+        // 辐射机制
+        add("tooltip.inspiration.radiation", "Radiation: %s /s");
+        // 碱性值（碱性发电机的燃料强度）
+        add("tooltip.inspiration.alkalinity", "Alkalinity: %s");
+
+        // 机器 tooltip：加工类写配方类型，发电类写发电机制；一个键可写多行，用 \n 分隔
+        add("tooltip.inspiration.machine.matter_fusion_machine",
+                "Recipe type: Matter Fusion");
+        add("tooltip.inspiration.machine.energized_matter_fusion_machine",
+                "Recipe type: Matter Fusion\nA third input slot unlocks 3-ingredient recipes; 2x speed.");
+        add("tooltip.inspiration.machine.matter_reshaper",
+                "Recipe type: Matter Reshaping\nAlso performs right-click conversion recipes.");
+        add("tooltip.inspiration.machine.mineral_twister",
+                "Recipe type: Mineral Twisting");
+        add("tooltip.inspiration.machine.inspiration_assembler",
+                "Recipe type: Inspiration Assembling");
+        add("tooltip.inspiration.machine.core_driller",
+                "Once powered, drains all stored energy and drill durability to dig straight down until it hits an unbreakable block.\nCan mine Reinforced Deepslate.");
+        add("tooltip.inspiration.machine.high_energy_matter_reshaper",
+                "Recipe type: Matter Reshaping\nAlso performs right-click conversion recipes; 2x speed.");
+        add("tooltip.inspiration.machine.high_energy_mineral_twister",
+                "Recipe type: Mineral Twisting\nOutput equals Fortune 12; 2x speed.");
+        add("tooltip.inspiration.machine.high_energy_inspiration_assembler",
+                "Recipe type: Inspiration Assembling\nSix input slots and two fluid tanks unlock bigger recipes; 2x speed.");
+        add("tooltip.inspiration.machine.alkaline_reactor",
+                "Burns alkaline items to generate power.\nOutput: 100x FE/tick; burn time: 12000 ticks.\nx is the item's alkalinity");
+        add("tooltip.inspiration.machine.rtg_generator",
+                "Burns radioactive items to generate power.\nOutput: 1000x FE/tick; burn time: 24000 ticks.\nx is the item's radiation value\nEvery minute it leaks (x-1)^3 radiation into its chunk; if x>9 it also has a (x-9)/1000 chance to explode.\nProduces x Nuclear Waste when finished.");
+        add("tooltip.inspiration.machine.structure_simulator",
+                "Runs a structure data to simulate its loot.\nInspiration charge: 8 mB/tick; power use depends on the data.\nBuild a hollow 4x3x3 shell of High-Energy Machine Casing and fit all five hatches (the two inner cells may be left empty or filled).");
+        // ===================== Structure Simulator =====================
+        add("tooltip.inspiration.structure_data.duration", "Duration: %s ticks");
+        add("tooltip.inspiration.structure_data.energy", "Power: %s FE/tick");
+        add("tooltip.inspiration.structure_data.charge", "Inspiration charge: %s mB/tick");
+        add("tooltip.inspiration.structure_data.unconsumed", "Runs from the data hatch without being consumed");
+        // 结构投影仪
+        add("tooltip.inspiration.projector.usage", "Right-click the Structure Simulator controller to project the full structure.");
+        add("tooltip.inspiration.projector.duration", "The ghost stays for 30 seconds; the projector is not consumed.");
+        // JEI 里的结构预览：每层一页
+        add("jei.inspiration.structure_preview", "Structure Simulator Structure");
+        add("jei.inspiration.structure_preview.layer", "Layer %s/%s · %s");
+        add("jei.inspiration.structure_preview.layer.0", "Back");
+        add("jei.inspiration.structure_preview.layer.1", "Middle");
+        add("jei.inspiration.structure_preview.layer.2", "Front");
+        // 主方块界面上的运行状态（顺序即优先级，见 SimulatorStatus）
+        add("gui.inspiration.structure_simulator.status.not_formed", "Structure not formed");
+        add("gui.inspiration.structure_simulator.status.no_data", "No structure data in the data hatch");
+        add("gui.inspiration.structure_simulator.status.no_energy", "Not enough power");
+        add("gui.inspiration.structure_simulator.status.no_charge", "Not enough inspiration charge");
+        add("gui.inspiration.structure_simulator.status.output_full", "Output hatch is full");
+        add("gui.inspiration.structure_simulator.status.working", "Simulating");
+        add("tooltip.inspiration.drill_bit.description", "Consumable for the Core Driller: each operation costs 1 durability");
+        add("item.inspiration.geiger_counter.desc", "Right-click while holding to measure this chunk");
+        add("item.inspiration.geiger_counter.reading", "Chunk %s ・ Body %s (%s)");
+        add("item.inspiration.world_data_detector.desc", "Creative only. Right-click to read this world's seeded injection windows");
+        add("item.inspiration.world_data_detector.header", "Seed-randomised injection energy (world seed %s):");
+        add("item.inspiration.world_data_detector.line", "%s: %s");
+        add("item.inspiration.world_data_detector.empty", "This world has no seed-randomised injection recipe.");
+        // ===================== Guide book =====================
+        add("container.inspiration.guide_book", "Inspiration Guide");
+        add("guide.inspiration.chapter.inspiration", "Inspiration");
+        add("guide.inspiration.chapter.inspiration.body",
+                "Inspiration is the player's own will made solid://n"
+                        + "a thought that refuses to stay a thought,\n"
+                        + "condensed into something you can hold.\n\n"
+                        + "It is both a crafting material and machine fuel -\n"
+                        + "without it, a machine with power still will not run.");
+        add("guide.inspiration.chapter.machines", "The Machines");
+        add("guide.inspiration.chapter.machines.body",
+                "Matter Fusion Machine: fuses materials into one.\n"
+                        + "Energized Fusion Machine: the upgraded fusion machine.\n"
+                        + "Matter Reshaper: reshapes one material into another.\n"
+                        + "Mineral Twister: twists ore, yields are random.\n"
+                        + "Inspiration Assembler: assembles parts into a product.\n"
+                        + "Core Driller: sinks a shaft straight down.\n\n"
+                        + "Every machine only consumes power, never produces it,\n"
+                        + "and most also drink inspiration charge.");
+        add("guide.inspiration.chapter.energy", "Power and Charge");
+        add("guide.inspiration.chapter.energy.body",
+                "The energy bar on a machine only ever goes down,\n"
+                        + "so power has to be fed in from outside.\n\n"
+                        + "Inspiration charge lives in its own tank://n"
+                        + "1 inspiration = 1000 mB, 1 shard = 100 mB.\n"
+                        + "Run dry and progress halts,\n"
+                        + "but nothing already inserted is lost.");
+        add("guide.inspiration.chapter.plugins", "Plugins");
+        add("guide.inspiration.chapter.plugins.body",
+                "Each machine has four plugin slots on the right.\n\n"
+                        + "Speed Plugin: twice the speed, more power and charge.\n"
+                        + "Capacity Plugin: raises the energy buffer.\n"
+                        + "Capacitor Downgrade: caps the buffer at 67%.\n"
+                        + "Not a downgrade - it shrinks a single discharge.");
+        add("guide.inspiration.chapter.injection", "Injection");
+        add("guide.inspiration.chapter.injection.body",
+                "Set a tier base under the Matter Binder, ring it\n"
+                        + "with Injection Guns, and the structure is built.\n\n"
+                        + "Base material goes in the binder, the injectant in the guns,\n"
+                        + "and a redstone pulse fires one discharge.\n\n"
+                        + "The discharge must land inside the recipe window://n"
+                        + "too low and nothing happens, too high and it explodes.");
+        add("guide.inspiration.chapter.radiation", "Radiation");
+        add("guide.inspiration.chapter.radiation.body",
+                "Francium materials leak radiation into the chunk,\n"
+                        + "and it builds up inside you as well.\n\n"
+                        + "Leave the salt ore in the Nether, do not linger,\n"
+                        + "and carry a Geiger Counter to read both numbers.");
+
+        add("radiation.inspiration.severity.0", "healthy");
+        add("radiation.inspiration.severity.1", "mild sickness");
+        add("radiation.inspiration.severity.2", "moderate sickness");
+        add("radiation.inspiration.severity.3", "severe sickness");
+        add("radiation.inspiration.severity.4", "acute sickness");
+        add("radiation.inspiration.severity.5", "lethal sickness");
 
         // 物品组
         add("itemGroup.inspire_tab", "Inspiration");

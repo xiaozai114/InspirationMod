@@ -1,0 +1,15 @@
+{
+  "type": "inspiration:injection",
+  "base": {
+    "item": "minecraft:iron_ingot"
+  },
+  "inject": {
+    "item": "inspiration:mind_matrix_ingot"
+  },
+  "max_energy": 150000,
+  "min_energy": 50000,
+  "result": {
+    "count": 1,
+    "id": "inspiration:projector"
+  }
+}

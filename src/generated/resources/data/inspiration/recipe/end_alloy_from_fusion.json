@@ -1,0 +1,20 @@
+{
+  "type": "inspiration:fusion",
+  "duration": 800,
+  "energy_per_tick": 600,
+  "first_count": 4,
+  "first_input": {
+    "item": "minecraft:obsidian"
+  },
+  "result": {
+    "count": 1,
+    "id": "inspiration:end_alloy"
+  },
+  "second_input": {
+    "item": "minecraft:ender_pearl"
+  },
+  "third_count": 4,
+  "third_input": {
+    "item": "minecraft:purpur_block"
+  }
+}

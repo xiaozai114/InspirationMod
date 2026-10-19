@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "minecraft:book"
+    },
+    {
+      "item": "inspiration:inspiration"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "inspiration:guide_book"
+  }
+}

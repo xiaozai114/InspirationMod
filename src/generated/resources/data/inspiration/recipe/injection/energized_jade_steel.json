@@ -1,0 +1,15 @@
+{
+  "type": "inspiration:injection",
+  "base": {
+    "item": "inspiration:jade_steel_ingot"
+  },
+  "inject": {
+    "item": "inspiration:inspiration"
+  },
+  "max_energy": 150000,
+  "min_energy": 50000,
+  "result": {
+    "count": 1,
+    "id": "inspiration:energized_jade_steel"
+  }
+}

@@ -88,6 +88,31 @@ config="${mod_id}.mixins.json"
     ordering="NONE"
     side="BOTH"
 
+# Titanium：机器 GUI / 能量框架依赖
+[[dependencies.${mod_id}]]
+    modId="titanium"
+    type="required"
+    versionRange="[4.0.50,)"
+    ordering="AFTER"
+    side="BOTH"
+
+# Multiblocked2：结构模拟机的多方块成型校验依赖它的结构层（BlockPattern / Predicates）。
+# 官方明确禁止 shade 与 jar-in-jar，只能声明为 required。LDLib2 是它的必需依赖，
+# 本模组直接用到了其中的 BlockInfo，所以也一并声明。
+[[dependencies.${mod_id}]]
+    modId="mbd2"
+    type="required"
+    versionRange="[21.1.1,)"
+    ordering="AFTER"
+    side="BOTH"
+
+[[dependencies.${mod_id}]]
+    modId="ldlib2"
+    type="required"
+    versionRange="[2.2.39.a,)"
+    ordering="AFTER"
+    side="BOTH"
+
 # Features are specific properties of the game environment, that you may want to declare you require. This example declares
 # that your mod requires GL version 3.2 or higher. Other features will be added. They are side aware so declaring this won't
 # stop your mod loading on the server for example.

@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/orientable",
+  "textures": {
+    "front": "inspiration:block/structure_simulator_front",
+    "side": "inspiration:block/structure_simulator_side",
+    "top": "inspiration:block/structure_simulator_top"
+  }
+}

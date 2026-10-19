@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:smithing_transform",
+  "addition": {
+    "item": "inspiration:jade_steel_ingot"
+  },
+  "base": {
+    "item": "inspiration:exp_sword"
+  },
+  "result": {
+    "count": 1,
+    "id": "inspiration:jade_steel_sword"
+  },
+  "template": {
+    "item": "inspiration:jade_steel_upgrade_template"
+  }
+}

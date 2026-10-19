@@ -1,0 +1,12 @@
+{
+  "type": "inspiration:reshaping",
+  "duration": 160,
+  "energy_per_tick": 60,
+  "input": {
+    "item": "minecraft:diamond_boots"
+  },
+  "result": {
+    "count": 4,
+    "id": "minecraft:diamond"
+  }
+}

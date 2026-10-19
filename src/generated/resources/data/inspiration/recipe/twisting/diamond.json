@@ -1,0 +1,17 @@
+{
+  "type": "inspiration:twisting",
+  "duration": 600,
+  "energy_per_tick": 400,
+  "input": [
+    {
+      "item": "minecraft:diamond_ore"
+    },
+    {
+      "item": "minecraft:deepslate_diamond_ore"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "minecraft:diamond"
+  }
+}

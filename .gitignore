@@ -16,6 +16,8 @@ out
 # gradle
 build
 .gradle
+# datagen 的增量缓存，不是源码
+src/generated/resources/.cache
 
 # other
 eclipse

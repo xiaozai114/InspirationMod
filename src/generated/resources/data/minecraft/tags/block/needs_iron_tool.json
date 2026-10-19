@@ -1,6 +1,24 @@
 {
   "values": [
+    "inspiration:francium_salt_ore",
+    "inspiration:concentrated_inspiration_crystal",
+    "inspiration:mind_crystal_rock",
     "inspiration:lapis_ingot_block",
-    "inspiration:redstone_ingot_block"
+    "inspiration:redstone_ingot_block",
+    "inspiration:matter_fusion_machine",
+    "inspiration:energized_matter_fusion_machine",
+    "inspiration:matter_reshaper",
+    "inspiration:mineral_twister",
+    "inspiration:inspiration_assembler",
+    "inspiration:core_driller",
+    "inspiration:high_energy_mineral_twister",
+    "inspiration:high_energy_inspiration_assembler",
+    "inspiration:high_energy_matter_reshaper",
+    "inspiration:alkaline_reactor",
+    "inspiration:rtg_generator",
+    "inspiration:basalt_alloy_block",
+    "inspiration:sculk_alloy_block",
+    "inspiration:matter_binder",
+    "inspiration:injection_gun"
   ]
 }

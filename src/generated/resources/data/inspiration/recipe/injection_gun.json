@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "D": {
+      "item": "minecraft:dispenser"
+    },
+    "J": {
+      "item": "inspiration:jade_steel_ingot"
+    }
+  },
+  "pattern": [
+    " J ",
+    "JDJ",
+    " J "
+  ],
+  "result": {
+    "count": 1,
+    "id": "inspiration:injection_gun"
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "type": "inspiration:twisting",
+  "input": [
+    {
+      "item": "minecraft:redstone_ore"
+    },
+    {
+      "item": "minecraft:deepslate_redstone_ore"
+    }
+  ],
+  "result": {
+    "count": 4,
+    "id": "minecraft:redstone"
+  }
+}

@@ -1,7 +1,7 @@
 plugins {
     id 'java-library'
     id 'maven-publish'
-    id 'net.neoforged.moddev' version '2.0.137'
+    id 'net.neoforged.moddev' version '2.0.148'
     id 'idea'
 }
 
@@ -18,6 +18,7 @@ version = mod_version
 group = mod_group_id
 
 repositories {
+    mavenCentral()
     // ... 其他仓库 ...
     maven {
         // JEI 的官方 Maven 仓库（推荐）
@@ -30,6 +31,19 @@ repositories {
         content {
             includeGroup "curse.maven"
         }
+    }
+    maven {
+        // Modrinth 的 Maven 仓库（用于 Titanium 机器库）
+        name = "Modrinth"
+        url = "https://api.modrinth.com/maven"
+        content {
+            includeGroup "maven.modrinth"
+        }
+    }
+    maven {
+        // Multiblocked2 / LDLib2 的官方仓库（只有 snapshots 这一个来源）
+        name = "FirstDark snapshots"
+        url = uri("https://maven.firstdark.dev/snapshots")
     }
 }
 
@@ -124,6 +138,15 @@ configurations {
 }
 
 dependencies {
+    // Titanium：机器库，提供带 GUI / 能量 / 进度条的机器方块实体基类
+    implementation "maven.modrinth:titanium:${titanium_version}"
+
+    // Multiblocked2：多方块结构框架，结构模拟机的控制器 / 部件 / 结构成型都靠它。
+    // LDLib2 是它的必需依赖，必须显式 pin —— MBD2 只声明了下界 [2.2.39.a,)，不 pin 会飘。
+    // 两者都禁止 shade / jar-in-jar，只能在 neoforge.mods.toml 里声明为 required。
+    implementation "com.lowdragmc.multiblocked2:Multiblocked2-1.21-${minecraft_version}:${mbd2_version}"
+    implementation "com.lowdragmc.ldlib2:ldlib2-neoforge-${minecraft_version}:${ldlib2_version}:all"
+
     // Example optional mod dependency with JEI
     // The JEI API is declared for compile time use, while the full JEI artifact is used at runtime
     compileOnly "mezz.jei:jei-${minecraft_version}-common-api:${jei_version}"
@@ -145,6 +168,16 @@ dependencies {
     // For more info:
     // http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html
     // http://www.gradle.org/docs/current/userguide/dependency_management.html
+}
+
+// kotlin-stdlib（MBD2 / LDLib2 的传递依赖）会要求 org.jetbrains:annotations:13.0。
+// 这个版本本地从没下载过，于是任何需要解析它的场合（离线 build、IDEA 同步）都会卡在下载上。
+// 26.1.0 早已被 NeoForge 拉进项目、缓存里 jar/pom/module 都齐全，注解类本身向后兼容，
+// 统一到它就不再需要联网拿 13.0。
+configurations.configureEach {
+    resolutionStrategy {
+        force 'org.jetbrains:annotations:26.1.0'
+    }
 }
 
 // This block of code expands all declared replace properties in the specified resource targets.
@@ -188,6 +221,13 @@ publishing {
 tasks.withType(JavaCompile).configureEach {
     options.encoding = 'UTF-8' // Use the UTF-8 charset for Java compilation
 }
+
+// 本项目没有 src/test，但 testCompileClasspath 默认继承 implementation，
+// 于是它会把 MBD2 / LDLib2 传递过来的 kotlin-stdlib -> org.jetbrains:annotations:13.0
+// 也拉进来解析。这个版本从未被下载过，离线构建会直接失败、IDEA 同步也会卡在这一步。
+// 没有测试源码就没有编译测试的必要，直接关掉这两个任务，不做无谓的依赖解析。
+tasks.named('compileTestJava') { enabled = false }
+tasks.named('test') { enabled = false }
 
 // IDEA no longer automatically downloads sources/javadoc jars for dependencies, so we need to explicitly enable the behavior.
 idea {

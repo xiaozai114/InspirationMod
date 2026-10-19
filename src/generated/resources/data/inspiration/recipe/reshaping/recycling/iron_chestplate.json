@@ -1,0 +1,12 @@
+{
+  "type": "inspiration:reshaping",
+  "duration": 160,
+  "energy_per_tick": 60,
+  "input": {
+    "item": "minecraft:iron_chestplate"
+  },
+  "result": {
+    "count": 8,
+    "id": "minecraft:iron_ingot"
+  }
+}

@@ -2,6 +2,7 @@ package com.starcrosser.inspiration.recipe;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import com.starcrosser.inspiration.util.BlockItemLookup;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.RegistryFriendlyByteBuf;
@@ -48,6 +49,40 @@ public record RightClickBlockRecipe(Block inputBlock, Block outputBlock, ItemSta
     public RecipeType<?> getType() {
         return ModRecipes.RIGHT_CLICK_BLOCK_TYPE.get();
     }
+
+    /**
+     * 判断机器输入是否满足本配方。
+     * <p>
+     * 与 {@link #matches} 语义一致，区别在于方块用其物品形态（见
+     * {@link com.starcrosser.inspiration.util.BlockItemLookup}）比对，供机器与 JEI 复用。
+     *
+     * @param blockStack 第一个槽位：待转化的方块（物品形态）
+     * @param toolStack  第二个槽位：手持物品
+     */
+    public boolean matchesStacks(ItemStack blockStack, ItemStack toolStack) {
+        if (blockStack.isEmpty() || toolStack.isEmpty()) {
+            return false;
+        }
+        ItemStack blockIcon = BlockItemLookup.iconOf(inputBlock);
+        if (blockIcon.isEmpty() || !ItemStack.isSameItem(blockStack, blockIcon)) {
+            return false;
+        }
+        return ItemStack.isSameItemSameComponents(toolStack, inputItem)
+                && toolStack.getCount() >= inputItem.getCount();
+    }
+
+    /**
+     * 配方的展示用产物。
+     * <p>
+     * 结果有两种表达方式：替换成的方块，或直接掉落的物品；掉落物优先，两者都为空时返回空物品。
+     */
+    public ItemStack displayResult() {
+        if (!outputItem.isEmpty()) {
+            return outputItem;
+        }
+        return BlockItemLookup.iconOf(outputBlock);
+    }
+
     public record RightClickBlockRecipeInput(Block block, ItemStack itemStack) implements net.minecraft.world.item.crafting.RecipeInput {
         @Override
         public int size() {

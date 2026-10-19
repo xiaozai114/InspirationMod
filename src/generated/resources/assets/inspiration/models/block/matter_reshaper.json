@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/orientable",
+  "textures": {
+    "front": "inspiration:block/matter_reshaper_front",
+    "side": "inspiration:block/matter_reshaper_side",
+    "top": "inspiration:block/matter_reshaper_top"
+  }
+}

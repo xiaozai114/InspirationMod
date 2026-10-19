@@ -1,0 +1,12 @@
+{
+  "type": "inspiration:reshaping",
+  "duration": 800,
+  "energy_per_tick": 600,
+  "input": {
+    "item": "inspiration:high_energy_core"
+  },
+  "result": {
+    "count": 1,
+    "id": "inspiration:reaction_core"
+  }
+}

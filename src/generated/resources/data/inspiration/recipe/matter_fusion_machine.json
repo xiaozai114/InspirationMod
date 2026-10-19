@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "C": {
+      "item": "inspiration:reinforced_core"
+    },
+    "M": {
+      "item": "minecraft:iron_ingot"
+    },
+    "S": {
+      "item": "inspiration:redstone_ingot"
+    },
+    "X": {
+      "item": "minecraft:iron_ingot"
+    }
+  },
+  "pattern": [
+    "MSM",
+    "SCS",
+    "MXM"
+  ],
+  "result": {
+    "count": 1,
+    "id": "inspiration:matter_fusion_machine"
+  }
+}

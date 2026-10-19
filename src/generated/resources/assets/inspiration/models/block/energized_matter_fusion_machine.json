@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/orientable",
+  "textures": {
+    "front": "inspiration:block/energized_matter_fusion_machine_front",
+    "side": "inspiration:block/energized_matter_fusion_machine_side",
+    "top": "inspiration:block/energized_matter_fusion_machine_top"
+  }
+}

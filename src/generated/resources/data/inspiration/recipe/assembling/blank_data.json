@@ -1,0 +1,31 @@
+{
+  "type": "inspiration:assembling",
+  "counts": [
+    1,
+    1,
+    1,
+    1,
+    1
+  ],
+  "ingredients": [
+    {
+      "item": "minecraft:quartz"
+    },
+    {
+      "item": "inspiration:plasma_ingot"
+    },
+    {
+      "item": "inspiration:mind_matrix_ingot"
+    },
+    {
+      "item": "minecraft:glass"
+    },
+    {
+      "item": "inspiration:ephemeral_material"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "inspiration:blank_data"
+  }
+}

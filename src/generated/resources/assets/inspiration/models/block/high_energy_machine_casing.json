@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "all": "inspiration:block/high_energy_machine_casing"
+  }
+}

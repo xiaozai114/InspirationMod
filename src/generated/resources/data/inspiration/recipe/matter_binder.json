@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "C": {
+      "item": "inspiration:unstable_core"
+    },
+    "P": {
+      "item": "inspiration:plasma_ingot"
+    }
+  },
+  "pattern": [
+    "PPP",
+    "PCP",
+    "PPP"
+  ],
+  "result": {
+    "count": 1,
+    "id": "inspiration:matter_binder"
+  }
+}

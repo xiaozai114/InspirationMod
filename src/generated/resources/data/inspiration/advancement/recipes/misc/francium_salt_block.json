@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_francium_salt": {
+      "conditions": {
+        "items": [
+          {
+            "items": "inspiration:francium_salt"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "inspiration:francium_salt_block"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_francium_salt"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "inspiration:francium_salt_block"
+    ]
+  }
+}

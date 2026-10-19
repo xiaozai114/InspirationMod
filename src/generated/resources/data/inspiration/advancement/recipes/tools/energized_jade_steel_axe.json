@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_jade_steel_axe": {
+      "conditions": {
+        "items": [
+          {
+            "items": "inspiration:jade_steel_axe"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "inspiration:energized_jade_steel_axe"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_jade_steel_axe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "inspiration:energized_jade_steel_axe"
+    ]
+  }
+}

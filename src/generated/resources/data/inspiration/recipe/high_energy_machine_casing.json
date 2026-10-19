@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "I": {
+      "item": "minecraft:iron_block"
+    },
+    "X": {
+      "item": "inspiration:ephemeral_material"
+    }
+  },
+  "pattern": [
+    "III",
+    "IXI",
+    "III"
+  ],
+  "result": {
+    "count": 8,
+    "id": "inspiration:high_energy_machine_casing"
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "type": "inspiration:reshaping",
+  "duration": 200,
+  "energy_per_tick": 80,
+  "input": {
+    "item": "minecraft:coal"
+  },
+  "result": {
+    "count": 2,
+    "id": "inspiration:lignite"
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "type": "inspiration:reshaping",
+  "duration": 400,
+  "energy_per_tick": 200,
+  "input": {
+    "tag": "minecraft:trim_templates"
+  },
+  "result": {
+    "count": 1,
+    "id": "inspiration:jade_steel_upgrade_template"
+  }
+}

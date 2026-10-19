@@ -1,0 +1,15 @@
+{
+  "type": "inspiration:fusion",
+  "duration": 400,
+  "energy_per_tick": 200,
+  "first_input": {
+    "item": "minecraft:echo_shard"
+  },
+  "result": {
+    "count": 2,
+    "id": "inspiration:sculk_alloy"
+  },
+  "second_input": {
+    "item": "minecraft:reinforced_deepslate"
+  }
+}

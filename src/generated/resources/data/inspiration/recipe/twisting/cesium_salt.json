@@ -1,0 +1,10 @@
+{
+  "type": "inspiration:twisting",
+  "input": {
+    "item": "inspiration:cesium_salt_ore"
+  },
+  "result": {
+    "count": 1,
+    "id": "inspiration:raw_cesium_salt"
+  }
+}

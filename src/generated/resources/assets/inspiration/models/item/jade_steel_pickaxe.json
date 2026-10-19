@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "inspiration:item/jade_steel_pickaxe"
+  }
+}

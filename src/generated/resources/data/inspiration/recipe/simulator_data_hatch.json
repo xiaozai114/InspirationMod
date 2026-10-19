@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "B": {
+      "item": "inspiration:high_energy_machine_casing"
+    },
+    "T": {
+      "item": "inspiration:blank_data"
+    }
+  },
+  "pattern": [
+    "T",
+    "B"
+  ],
+  "result": {
+    "count": 1,
+    "id": "inspiration:simulator_data_hatch"
+  }
+}

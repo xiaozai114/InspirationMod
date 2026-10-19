@@ -1,0 +1,12 @@
+{
+  "type": "inspiration:reshaping",
+  "duration": 160,
+  "energy_per_tick": 60,
+  "input": {
+    "item": "minecraft:iron_leggings"
+  },
+  "result": {
+    "count": 7,
+    "id": "minecraft:iron_ingot"
+  }
+}

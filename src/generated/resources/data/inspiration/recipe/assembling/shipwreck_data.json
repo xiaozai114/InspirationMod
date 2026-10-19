@@ -1,0 +1,29 @@
+{
+  "type": "inspiration:assembling",
+  "counts": [
+    1,
+    64
+  ],
+  "duration": 600,
+  "energy_per_tick": 400,
+  "fluids": [
+    {
+      "amount": 4000,
+      "ingredient": {
+        "fluid": "minecraft:water"
+      }
+    }
+  ],
+  "ingredients": [
+    {
+      "item": "inspiration:blank_data"
+    },
+    {
+      "tag": "minecraft:planks"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "inspiration:shipwreck_data"
+  }
+}

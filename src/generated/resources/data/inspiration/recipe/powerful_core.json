@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "item": "inspiration:basalt_alloy"
+    },
+    "C": {
+      "item": "inspiration:cesium_ingot"
+    },
+    "P": {
+      "item": "inspiration:reinforced_core"
+    }
+  },
+  "pattern": [
+    "CAC",
+    "APA",
+    "CAC"
+  ],
+  "result": {
+    "count": 1,
+    "id": "inspiration:powerful_core"
+  }
+}

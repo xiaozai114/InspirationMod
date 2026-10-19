@@ -1,0 +1,15 @@
+{
+  "type": "inspiration:injection",
+  "base": {
+    "item": "minecraft:flint_and_steel"
+  },
+  "inject": {
+    "item": "inspiration:basalt_alloy"
+  },
+  "max_energy": 50000,
+  "min_energy": 25000,
+  "result": {
+    "count": 1,
+    "id": "inspiration:basalt_alloy_firestriker"
+  }
+}

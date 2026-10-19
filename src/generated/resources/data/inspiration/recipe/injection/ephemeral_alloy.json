@@ -1,0 +1,14 @@
+{
+  "type": "inspiration:injection",
+  "base": {
+    "item": "inspiration:end_alloy"
+  },
+  "inject": {
+    "item": "inspiration:ephemeral_material"
+  },
+  "result": {
+    "count": 1,
+    "id": "inspiration:ephemeral_alloy"
+  },
+  "seeded_energy": true
+}

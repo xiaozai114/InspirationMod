@@ -1,0 +1,15 @@
+{
+  "type": "inspiration:twisting",
+  "input": [
+    {
+      "item": "minecraft:iron_ore"
+    },
+    {
+      "item": "minecraft:deepslate_iron_ore"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "minecraft:raw_iron"
+  }
+}

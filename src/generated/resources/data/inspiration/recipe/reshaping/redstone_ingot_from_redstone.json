@@ -1,0 +1,13 @@
+{
+  "type": "inspiration:reshaping",
+  "duration": 200,
+  "energy_per_tick": 80,
+  "input": {
+    "item": "minecraft:redstone"
+  },
+  "input_count": 3,
+  "result": {
+    "count": 1,
+    "id": "inspiration:redstone_ingot"
+  }
+}

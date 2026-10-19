@@ -1,0 +1,18 @@
+{
+  "type": "inspiration:fusion",
+  "duration": 600,
+  "energy_per_tick": 300,
+  "first_input": {
+    "item": "inspiration:mind_crystal"
+  },
+  "result": {
+    "count": 1,
+    "id": "inspiration:mind_matrix_ingot"
+  },
+  "second_input": {
+    "item": "minecraft:amethyst_shard"
+  },
+  "third_input": {
+    "item": "minecraft:quartz"
+  }
+}

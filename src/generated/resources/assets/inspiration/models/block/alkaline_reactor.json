@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/orientable",
+  "textures": {
+    "front": "inspiration:block/alkaline_reactor_front",
+    "side": "inspiration:block/alkaline_reactor_side",
+    "top": "inspiration:block/alkaline_reactor_top"
+  }
+}

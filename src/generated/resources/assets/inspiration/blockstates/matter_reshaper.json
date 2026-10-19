@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "subfacing=east": {
+      "model": "inspiration:block/matter_reshaper",
+      "y": 90
+    },
+    "subfacing=north": {
+      "model": "inspiration:block/matter_reshaper"
+    },
+    "subfacing=south": {
+      "model": "inspiration:block/matter_reshaper",
+      "y": 180
+    },
+    "subfacing=west": {
+      "model": "inspiration:block/matter_reshaper",
+      "y": 270
+    }
+  }
+}

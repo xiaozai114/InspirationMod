@@ -1,9 +1,0 @@
-{
-  "type": "inspiration:right_click_block",
-  "input_block": "minecraft:emerald_ore",
-  "input_item": {
-    "count": 1,
-    "id": "inspiration:reduction_powder"
-  },
-  "output_block": "inspiration:jade_steel_ore"
-}

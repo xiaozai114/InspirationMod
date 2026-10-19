@@ -1,0 +1,23 @@
+{
+  "type": "inspiration:assembling",
+  "counts": [
+    1,
+    1,
+    1
+  ],
+  "ingredients": [
+    {
+      "item": "inspiration:powerful_core"
+    },
+    {
+      "item": "inspiration:francium_salt"
+    },
+    {
+      "item": "minecraft:reinforced_deepslate"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "inspiration:high_energy_core"
+  }
+}

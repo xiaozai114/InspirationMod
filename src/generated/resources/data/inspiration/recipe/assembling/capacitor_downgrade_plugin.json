@@ -1,0 +1,19 @@
+{
+  "type": "inspiration:assembling",
+  "counts": [
+    1,
+    1
+  ],
+  "ingredients": [
+    {
+      "item": "inspiration:plasma_ingot"
+    },
+    {
+      "item": "minecraft:iron_ingot"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "inspiration:capacitor_downgrade_plugin"
+  }
+}

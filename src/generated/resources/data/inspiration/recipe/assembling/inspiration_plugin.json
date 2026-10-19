@@ -1,0 +1,19 @@
+{
+  "type": "inspiration:assembling",
+  "counts": [
+    1,
+    1
+  ],
+  "ingredients": [
+    {
+      "item": "inspiration:plasma_ingot"
+    },
+    {
+      "item": "inspiration:inspiration"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "inspiration:inspiration_plugin"
+  }
+}

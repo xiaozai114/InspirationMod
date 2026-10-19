@@ -1,0 +1,12 @@
+{
+  "type": "inspiration:reshaping",
+  "duration": 160,
+  "energy_per_tick": 60,
+  "input": {
+    "item": "minecraft:netherite_boots"
+  },
+  "result": {
+    "count": 4,
+    "id": "minecraft:netherite_ingot"
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_reinforced_core": {
+      "conditions": {
+        "items": [
+          {
+            "items": "inspiration:reinforced_core"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "inspiration:matter_fusion_machine"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_reinforced_core"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "inspiration:matter_fusion_machine"
+    ]
+  }
+}

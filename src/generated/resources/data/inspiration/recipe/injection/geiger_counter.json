@@ -1,0 +1,15 @@
+{
+  "type": "inspiration:injection",
+  "base": {
+    "item": "minecraft:iron_ingot"
+  },
+  "inject": {
+    "item": "inspiration:cesium_ingot"
+  },
+  "max_energy": 250000,
+  "min_energy": 150000,
+  "result": {
+    "count": 1,
+    "id": "inspiration:geiger_counter"
+  }
+}

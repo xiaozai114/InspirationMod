@@ -1,0 +1,10 @@
+{
+  "type": "inspiration:twisting",
+  "input": {
+    "item": "inspiration:francium_salt_ore"
+  },
+  "result": {
+    "count": 1,
+    "id": "inspiration:raw_francium_salt"
+  }
+}

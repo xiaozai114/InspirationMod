@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "C": {
+      "item": "inspiration:reaction_core"
+    },
+    "M": {
+      "item": "inspiration:ephemeral_alloy"
+    },
+    "S": {
+      "item": "inspiration:energized_redstone_ingot"
+    },
+    "X": {
+      "item": "inspiration:ephemeral_alloy"
+    }
+  },
+  "pattern": [
+    "MSM",
+    "SCS",
+    "MXM"
+  ],
+  "result": {
+    "count": 1,
+    "id": "inspiration:rtg_generator"
+  }
+}

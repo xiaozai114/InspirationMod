@@ -1,0 +1,15 @@
+{
+  "type": "inspiration:fusion",
+  "duration": 400,
+  "energy_per_tick": 120,
+  "first_input": {
+    "item": "minecraft:basalt"
+  },
+  "result": {
+    "count": 2,
+    "id": "inspiration:basalt_alloy"
+  },
+  "second_input": {
+    "item": "minecraft:ancient_debris"
+  }
+}

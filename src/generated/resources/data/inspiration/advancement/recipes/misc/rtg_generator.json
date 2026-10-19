@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_reaction_core": {
+      "conditions": {
+        "items": [
+          {
+            "items": "inspiration:reaction_core"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "inspiration:rtg_generator"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_reaction_core"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "inspiration:rtg_generator"
+    ]
+  }
+}

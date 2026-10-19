@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "I": {
+      "item": "inspiration:inspiration"
+    },
+    "J": {
+      "item": "inspiration:jade_steel_ingot"
+    },
+    "S": {
+      "item": "minecraft:slime_ball"
+    }
+  },
+  "pattern": [
+    "J",
+    "I",
+    "S"
+  ],
+  "result": {
+    "count": 1,
+    "id": "inspiration:exp_shovel"
+  }
+}

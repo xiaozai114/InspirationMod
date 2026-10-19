@@ -23,6 +23,14 @@ public class ModFluids {
                 "mind_fluid",
                 () -> new MindFluid.Source(MindFluid.PROPERTIES)
         );
+        public static final DeferredHolder<Fluid, BaseFlowingFluid.Flowing> FLOWING_INSPIRATION_CHARGE = FLUIDS.register(
+                "flowing_inspiration_charge",
+                () -> new InspirationChargeFluid.Flowing(InspirationChargeFluid.PROPERTIES)
+        );
+        public static final DeferredHolder<Fluid, BaseFlowingFluid.Source> INSPIRATION_CHARGE = FLUIDS.register(
+                "inspiration_charge",
+                () -> new InspirationChargeFluid.Source(InspirationChargeFluid.PROPERTIES)
+        );
     }
 
     public static class FluidsTypes {
@@ -31,6 +39,11 @@ public class ModFluids {
                 "mind_fluid",
                 MindFluidType::new
         );
+        public static final DeferredHolder<FluidType, InspirationChargeFluidType> INSPIRATION_CHARGE_TYPE =
+                FLUID_TYPES.register(
+                        "inspiration_charge",
+                        InspirationChargeFluidType::new
+                );
     }
     
     public static void register(IEventBus bus) {

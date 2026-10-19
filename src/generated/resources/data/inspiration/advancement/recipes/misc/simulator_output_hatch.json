@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_high_energy_machine_casing": {
+      "conditions": {
+        "items": [
+          {
+            "items": "inspiration:high_energy_machine_casing"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "inspiration:simulator_output_hatch"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_high_energy_machine_casing"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "inspiration:simulator_output_hatch"
+    ]
+  }
+}

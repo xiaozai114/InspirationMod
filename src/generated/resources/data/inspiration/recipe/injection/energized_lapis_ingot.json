@@ -1,0 +1,15 @@
+{
+  "type": "inspiration:injection",
+  "base": {
+    "item": "inspiration:lapis_ingot"
+  },
+  "inject": {
+    "item": "inspiration:inspiration"
+  },
+  "max_energy": 15000,
+  "min_energy": 10000,
+  "result": {
+    "count": 1,
+    "id": "inspiration:energized_lapis_ingot"
+  }
+}

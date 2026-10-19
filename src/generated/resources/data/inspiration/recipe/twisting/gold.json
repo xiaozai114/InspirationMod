@@ -1,0 +1,17 @@
+{
+  "type": "inspiration:twisting",
+  "duration": 600,
+  "energy_per_tick": 400,
+  "input": [
+    {
+      "item": "minecraft:gold_ore"
+    },
+    {
+      "item": "minecraft:deepslate_gold_ore"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "minecraft:raw_gold"
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "inspiration:block/simulator_output_hatch"
+    }
+  }
+}

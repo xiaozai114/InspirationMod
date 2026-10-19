@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "C": {
+      "item": "inspiration:high_energy_core"
+    },
+    "M": {
+      "item": "inspiration:ephemeral_alloy"
+    },
+    "S": {
+      "item": "inspiration:energized_plasma_ingot"
+    },
+    "X": {
+      "item": "inspiration:inspiration_assembler"
+    }
+  },
+  "pattern": [
+    "MSM",
+    "SCS",
+    "MXM"
+  ],
+  "result": {
+    "count": 1,
+    "id": "inspiration:high_energy_inspiration_assembler"
+  }
+}

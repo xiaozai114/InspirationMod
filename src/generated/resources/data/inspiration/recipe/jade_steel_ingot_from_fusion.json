@@ -1,0 +1,13 @@
+{
+  "type": "inspiration:fusion",
+  "first_input": {
+    "item": "minecraft:emerald"
+  },
+  "result": {
+    "count": 2,
+    "id": "inspiration:jade_steel_ingot"
+  },
+  "second_input": {
+    "item": "minecraft:iron_ingot"
+  }
+}
