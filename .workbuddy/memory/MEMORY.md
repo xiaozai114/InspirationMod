@@ -127,9 +127,11 @@
     （离线连本地明明有的 parchment zip 都解析不了），别为了绕网络去改仓库配置。
 20. **Git 远程**：`origin = https://github.com/xiaozai114/InspirationMod`（私有）。
     旧远程 `Asp4rtatE/inspiration-1.21.1` 已 **404**（账号弃用）。代理 `http://127.0.0.1:19204`
-    对 **github.com:443 的 CONNECT 间歇性 502** —— `git push` 报
-    `CONNECT tunnel failed, response 502` 时**别改配置，直接重试**（实测第一次失败第二次成功）。
-    直连（`--noproxy '*'`）访问 github 会超时，必须走代理。
+    对 **github.com:443 的 CONNECT 间歇性/持续性 502**，而 `api.github.com` 始终 200。
+    `git push` 报 502 时先重试几次；**持续失败就走 API 兜底**：`git credential fill` 取 token →
+    POST `/repos/{r}/git/trees`（带 `base_tree`）→ POST `/git/commits` → PATCH `/git/refs/heads/master`。
+    API 建的 commit 与本地**内容相同但 sha 不同**，必须 `git fetch` + `git reset origin/master` 对齐
+    （reset 前先 `git diff --stat origin/master` 确认为空）。SSH over 443 **不通**（代理切非 TLS 流量）。
 
 ## 重构
 
