@@ -77,8 +77,10 @@ public final class ProjectorPreviewHandler {
             return;
         }
         anchor = pos.immutable();
-        // 朝向取玩家的水平朝向：结构从主方块朝**远离玩家**的方向展开，正面那一层正对玩家。
-        facing = event.getEntity().getDirection();
+        // 结构沿 -facing 方向展开（正面那一层就在主方块这一层，见 SimulatorPattern#previewCells），
+        // 所以要取玩家朝向的**反**方向：玩家面朝主方块时，结构才会朝他视线的方向延伸（远离玩家），
+        // 而不是朝玩家自己身上长。
+        facing = event.getEntity().getDirection().getOpposite();
         expiresAt = level.getGameTime() + PREVIEW_TICKS;
         previewLevel = level;
     }

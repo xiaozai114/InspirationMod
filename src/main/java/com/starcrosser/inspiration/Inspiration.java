@@ -11,7 +11,6 @@ import com.starcrosser.inspiration.machine.ModMachines;
 import com.starcrosser.inspiration.multiblock.ModMultiblocks;
 import com.starcrosser.inspiration.radiation.RadiationAttachments;
 import com.starcrosser.inspiration.recipe.ModRecipes;
-import com.starcrosser.inspiration.recipe.RightClickBlockHandler;
 import org.slf4j.Logger;
 
 import com.mojang.logging.LogUtils;
@@ -85,8 +84,6 @@ public class Inspiration {
         ModRecipes.TYPES.register(modEventBus);
         ModRecipes.SERIALIZERS.register(modEventBus);
 
-        // 注册事件处理器
-        NeoForge.EVENT_BUS.register(RightClickBlockHandler.class);
     }
 
     private void commonSetup(FMLCommonSetupEvent event) {

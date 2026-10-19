@@ -112,18 +112,18 @@ com.starcrosser.inspiration
 
 | # | 问题 | 位置 | 为什么严重 | 修法 |
 | --- | --- | --- | --- | --- |
-| A1 | `StormSword` 用**实例字段**存冷却时间 | `item/custom/StormSword.java:29-30` | `Item` 是单例，字段被所有玩家共享 → 多人服互相串冷却 | 改用 `player.getCooldowns().addCooldown(...)`（原版机制，单人多人都对） |
-| A2 | `BedrockPickaxe.useOn` 对**任何方块**生效 | `item/custom/BedrockPickaxe.java:33` 起 | 右键箱子/机器就毁掉它 | 加方块白名单（tag 或硬编码列表），非白名单直接 `PASS` |
-| A3 | 注入中间态**没有 `@Save`** | `injection/blockentity/InjectionGunTile.java`（仅 76、79 两处 `@Save`） | 材料已扣、进度没存 → 中途卸载/退出，进度和材料一起没了 | 给进度、当前配方、已注入能量等字段补 `@Save` |
-| A4 | `pendingOutput` 没有 `@Save` | `multiblock/blockentity/StructureSimulatorTile.java`（仅 87、100 两处 `@Save`） | 已产出的战利品丢失 | 补 `@Save`（注意 `ItemStack` 列表要自己写序列化） |
-| A5 | 投影仪虚影朝向存疑 + 用 **static** 字段存状态 | `multiblock/client/ProjectorPreviewHandler.java:33-35`、`facing = event.getEntity().getDirection()`（第 81 行） | ① 可能与实际成型方向相反，玩家照着虚影搭却成型不了；② static 状态在切维度/多人下不可靠 | 与 `SimulatorPattern` 对齐后确认是否要 `.getOpposite()`；状态改为按维度 + 玩家的实例数据 |
-| A6 | `getErrorPos()` 恒返回 null | `multiblock/blockentity/StructureSimulatorTile.java`（约 174-188、434-437） | 玩家搭错了不知道错在哪一格，只能瞎试 | MBD2 的 `checkPatternAt` 能拿到不匹配的位置，把第一个不匹配的格子返回出去 |
+| A1 | `StormSword` 用**实例字段**存冷却时间 | `item/custom/StormSword.java:29-30` | `Item` 是单例，字段被所有玩家共享 → 多人服互相串冷却 | 存到 `player.getPersistentData()`（**没用** `getCooldowns()`：那会在物品上画出原版冷却遮罩，改变外观；而且这把剑左右键是两条独立冷却，原版冷却机制表达不了） |
+| A2 | `BedrockPickaxe.useOn` 对**任何方块**生效 | `item/custom/BedrockPickaxe.java:33` 起 | 右键箱子/机器就毁掉它 | 只对 `Blocks.BEDROCK` 生效，其余走 `super.useOn(context)`（比白名单更窄，也正合这把镐的定位） |
+| A3 | 注入中间态**没有落盘** | `injection/blockentity/InjectionGunTile.java` | 材料已扣、进度没存 → 中途卸载/退出，进度和材料一起没了 | 手写 `saveAdditional/loadAdditional`：存 `remainingTicks` + 结果枚举名 + **配方 id**。⚠️ 不能简单地用 `@Save`：`InjectionRecipe` 对象读档时拿不到（`RecipeManager` 在那时还没就绪），所以只存 id、在第一次 `serverTick` 里按 id 找回；找不到就作废这次注入（**不补触发结算**，否则会在玩家不知情时凭空爆炸） |
+| A4 | `pendingOutput` / `facing` 没有落盘 | `multiblock/blockentity/StructureSimulatorTile.java` | 已产出的战利品丢失；重启后朝向重置 | 手写 `saveAdditional/loadAdditional`，`ItemStack` 用 `save/parseOptional` + `ListTag`（`@Save` 不支持 `List<ItemStack>`） |
+| A5 | 投影仪虚影**几何与成型判定不同源** | `multiblock/pattern/SimulatorPattern.java`（自研 `rotate()`）、`multiblock/client/ProjectorPreviewHandler.java:83` | 玩家照虚影搭出来却永远成型不了（**这是最严重的一个**） | ① `previewCells()` 不再自己推几何，改为直接调 MBD2 的 `collectTrackedPositions(ZERO, facing)`，与成型判定同源；② `ProjectorPreviewHandler` 的 facing 取 `.getOpposite()`（结构沿 `-facing` 展开）；③ static 状态**不改**：它是纯客户端单例，且已有 `previewLevel` 维度校验，够用 |
+| A6 | `getErrorPos()` 恒返回 null | `multiblock/blockentity/StructureSimulatorTile.java` | 玩家搭错了不知道错在哪一格，只能瞎试 | 加 `failedState` 字段留住「匹配格子最多的那次失败状态」，返回 `PatternError.getPos()`；另加 `errorPosPacked` + `getSyncedErrorPos()` 同步给客户端（服务端字段客户端读不到） |
 | A7 | 英文指导书 3 处 `://n` | `datagen/ModEnUsLangProvider.java`（约 302、321、338） | 应为 `\n`，现在会显示成字面量 | 直接替换 |
 | A8 | `RightClickBlockHandler` **被注册两次** | `recipe/RightClickBlockHandler.java` 的注解 + `Inspiration.java`（约第 89 行）手工注册 | 每次右键事件跑两遍、刷 4 条日志 | 删掉手工注册那一行，只留注解 |
 | A9 | `world_breaker` 未进创造模式物品栏 | `item/ModCreativeModeTabs.java` | 有配方有模型，玩家却拿不到 | 加入创造栏列表 |
-| A10 | 机器状态用 enum **ordinal** 存盘 | `multiblock/blockentity/StructureSimulatorTile.java`（约 100-101） | 以后调整枚举顺序 → 老存档读成别的状态 | 存 `name()` 或显式 int id |
-| A11 | `Config` 在 `SPEC = BUILDER.build()` **之后**又定义了 18 项 | `Config.java`（约 38 行 vs 44-61 行） | 这 18 项不会生效，是个安静的坑 | 全部移到 `build()` 之前 |
-| A12 | 调试配方进了游戏 | `src/generated/resources/data/inspiration/recipe/testrecipe.json` | 玩家能看到一个测试配方 | 从 datagen 里删掉生成代码 + 删除文件 |
+| A10 | 机器状态用 enum **ordinal** 存盘 | `multiblock/blockentity/StructureSimulatorTile.java` | 以后调整枚举顺序 → 老存档读成别的状态 | `SimulatorStatus` 加显式 `id()` + `fromId()`（未知 id 退化成 `NOT_FORMED`）。⚠️ 注意**状态枚举顺序即优先级**，别为了好看重排 |
+| A11 | `Config` 在 `SPEC = BUILDER.build()` **之后**又定义了 18 项 | `Config.java` | 这 18 项不会生效，是个安静的坑 | 这 18 项是从别的 mod 抄来的 `CF_*`/`FLOOD_*`，全项目无引用 → **直接删掉**（不是移到 build 前），并加注释说明「所有 define 必须在 build() 之前」 |
+| A12 | 调试配方进了游戏 | `src/main/resources/data/inspiration/recipe/testrecipe.json` | 玩家能看到一个 barrier→cobblestone 的测试配方 | `git rm` 删掉（它在 `src/main/resources`，是手写的，**不是** datagen 产物，所以不用改 datagen 代码） |
 
 ### 3.2 B 类：结构性问题（按影响排序）
 
@@ -182,6 +182,48 @@ com.starcrosser.inspiration
 - 客户端实测 4 项：虚影朝向与成型一致、StormSword 冷却不串、注入中途退出不丢材料、搭错时能看到错误位置提示
 
 **回滚点**：`git tag p0-start` → 完成后 `git tag p0-done`
+
+---
+
+### P0 执行结果（实测，已全部做完并验证）
+
+A1~A12 **全部改完**（13 个文件，+235/−78）。C 类死代码**本轮不动**——删除要逐项 `git rm` 后重跑
+`runServer` 确认无引用，成本不低且收益是「代码干净」，与"止血"无关，留给 P2/P3 顺手做。
+
+| 项 | 验证方式 | 结果 |
+| --- | --- | --- |
+| A5 虚影几何 / 成型 | 服务端自检：按 `previewCells(facing)` 摆 4 座结构 | ✅ north/east/south/west **全部成型**，且 Tile 识别到的朝向与摆放朝向一致 |
+| A6 错误位置 | 同上场景里的「孤零零一个控制器」 | ✅ 不成型，`getErrorPos()` 返回了具体坐标（不再是 null） |
+| A10 状态 id | `SimulatorStatus` 全部枚举 `id()` → `fromId()` round-trip，外加未知 id=999 | ✅ 一致，且 999 退化成 `NOT_FORMED` |
+| A1 / A2 / A3 / A4 / A7 / A8 / A9 / A11 / A12 | 静态审查 + `compileJava` + `runData` | ✅ 编译通过；`runData` 生成资源**只变 1 个文件**（en_us.json 的 3 处 `://n`），符合预期 |
+| 客户端 4 项目视 | 需要进游戏看 | ⚠️ **未做**：虚影朝向、StormSword 冷却、注入中途退出、错误位置提示的界面显示 |
+
+#### ⚠️ 自检踩到的坑（下次写自检前先读这段）
+
+**没有玩家在线时，服务器只 tick 出生点区块**。自检第一版把结构摆在 `(0,100,0)`，
+结果 5 座结构**一座都没成型**，我一度以为是成型逻辑错了，反复改了 3 版判定代码——
+实际那个世界的出生点是 `(-112, 75, -336)`，`(0,100,0)` 所在区块压根没被 tick，
+`serverTick` 一次都没进（加一行无条件日志才看出来）。
+
+正确做法（已写进 `P0SelfCheck` 的注释）：
+
+```java
+BlockPos spawn = level.getSharedSpawnPos();          // 别硬编码 (0, y, 0)
+...
+level.setChunkForced(base.getX() >> 4, base.getZ() >> 4, true);  // 强制加载，否则不 tick
+```
+
+判定顺序也别搞反：**先确认 `serverTick` 有被调用，再看成型结果**。跳过第一步就会像我一样
+在错误的方向上改代码。
+
+#### 另两条实测确认的事实（写进代码注释了）
+
+1. **成型锚点就是控制器自己的位置**。MBD2 的 `centerOffset` 只有在图案里存在 `controller`
+   谓词时才会被填成控制器格的图案坐标；`checkPatternAtWithoutController(state, facing)`
+   内部用的锚点就是 `state.controllerPos`。别改成「图案原点」，否则整体平移。
+2. **虚影几何必须问 MBD2**（`collectTrackedPositions`），不能另算一套。之前自己按
+   `structureDir = {LEFT, UP, FRONT}` 推的 `rotate()` 与 MBD2 实际方向对不上（列方向是反的），
+   正是"照着虚影搭却成型不了"的根因。
 
 ---
 
@@ -269,6 +311,119 @@ public final class MachineRegistry {
 保证"谁监听了什么"一眼可见。同时**确保没有任何处理器被注册两次**（A8 的教训）。
 
 **回滚点**：`git tag p2-start` → `git tag p2-done`
+
+---
+
+### P2.5 — 材料系统统一：`InspirationMaterial`（新增需求）
+
+> 用户诉求：把**碱性和辐射收进同一个类**，锭类材料统一由 `InspirationMaterial` 注册，
+> 注册时填好碱性/辐射（**0 = 不显示、不触发**），自动注册**方块**和**流体形态**，
+> 并用两个可选开关决定是否生成**粒（nugget）**与**尘埃（dust）**。
+
+#### 为什么现在必须做（可数的现状）
+
+| 事实 | 数字 |
+| --- | --- |
+| 锭类材料 | **16 个**（10 个 `_ingot` + 6 个合金） |
+| 每个锭的物品注册 | 2 行，样式完全一致（只有 `rarity` / 是否 `AlkaliItem` 的差别） |
+| **注册一个「带方块的锭」要动** | **10 个文件 / 15 条语句 / 2 张贴图 = 17 处** |
+| 若还要碱性 + 辐射 | 再手写 3 个 `data_maps` JSON → **20 处** |
+| 注册一个「不带方块的锭」 | 6 个文件 + 1 张贴图 = 7 处 |
+| data_maps | **100% 手写**，不走 datagen（`alkalinity.json` 5 条、`radiation.json` item 9 条 / block 3 条） |
+| 碱性消费点 | 1 处（`AlkalineReactorTile`），另有一套**平行的** `AlkaliItem` 遇水爆炸参数 |
+| 辐射消费点 | 6 处（RTG、`RadiationTicker`、`RadiationBlockTracker`、`RadiationEvents`、tooltip、盖革计数器） |
+| 现有 nugget / molten 流体 | **0 个 / 0 个**（体系里的空白） |
+| 现有 dust | 4 个（`calcium_dust`、`calcium_hydroxide_dust`、`cesium_dust`、`francium_dust`）+ `reduction_powder` |
+
+另外 `AlkalinityTooltips` 与 `RadiationTooltips` 是**逐字同构**的两份代码（连注释都互相引用），
+是本次合并的天然目标。
+
+#### 目标形态：一个材料 = 一次声明
+
+```java
+public static final InspirationMaterial CESIUM = InspirationMaterial.create("cesium")
+        .alkalinity(4)          // 0 = 无碱性：不进 data_map、不显示 tooltip、不能当碱性发电机燃料
+        .radiation(0)           // 0 = 无辐射：不进 data_map、不显示 tooltip、不能当 RTG 燃料
+        .nugget(true)           // 生成 cesium_nugget
+        .dust(true)             // 生成 cesium_dust
+        .color(0xC8C8D0)        // 贴图脚本按颜色生成块/流体贴图
+        .hardness(2.5f, 6.0f)
+        .rarity(Rarity.UNCOMMON)
+        .register();            // 一次性把下面所有东西都注册掉
+```
+
+**`register()` 自动生成的清单**：
+
+| 类别 | 产出 | 条件 |
+| --- | --- | --- |
+| 物品 | `<id>_ingot` | 总是 |
+| 物品 | `<id>_nugget` | `nugget(true)` |
+| 物品 | `<id>_dust` | `dust(true)` |
+| 方块 | `<id>_block` + 方块物品 | 总是（特殊材料可 `.skipBlock()`） |
+| 流体 | `molten_<id>`（类型 + 源 + 流动） | 总是（方块/桶默认**不**生成，见下方取舍） |
+| data_map | `alkalinity` | **仅当 `alkalinity > 0`** |
+| data_map | `radiation`（item 表 + block 表） | **仅当 `radiation > 0`** |
+| 配方 | 9 尘 → 1 粒、9 粒 → 1 锭、9 锭 ↔ 1 块 | 按开关各自生成 |
+| 资源 | 中英语言、item model、blockstate、block model、战利品表、挖掘等级标签、创造栏 | 总是 |
+| 贴图 | 锭 / 块 / 流体（still + flowing） | 由 `tools/textures/` 下的 python 脚本按 `color` 生成 |
+
+#### 「0」的语义（关键约定）
+
+| 值 | 是否写进 data_map | tooltip | 发电机 |
+| --- | --- | --- | --- |
+| `alkalinity = 0` | **不写条目**（`getData` 返回 null → `Alkalinity.of` = 0） | 不显示 | `AlkalineReactorTile.isFuel` = false |
+| `radiation = 0` | **不写条目** | 不显示 | `RtgGeneratorTile.isFuel` = false |
+
+> 好处：不用在 data_map 里塞一堆 0，也不用改运行时的判断逻辑
+> （现有的 `value <= 0 → return` 与 `> 0` 判断天然成立）。
+
+#### 运行时 API 保持不变
+
+`Alkalinity.of(...)` / `Radiation.of(...)` / `Radiation.ofStack(...)` **签名与语义全部不动**，
+6 个辐射消费点和 1 个碱性消费点**一行都不用改**。变的只是数据来源：
+
+```
+现在：手写 alkalinity.json / radiation.json  →  DataMap
+改后：InspirationMaterial 清单  →  datagen 生成同样的 json  →  DataMap
+```
+
+**验收**：迁移后 `git diff` 那三个 json 必须**只多不少、值完全相同**（除了新增材料的条目）。
+
+#### 三个取舍（需要你拍板）
+
+1. **流体要不要带方块和桶？**
+   一个"完整流体"（类型+源+流动+方块+桶+贴图+语言+客户端扩展）要动约 10 处。
+   16 个材料全量生成 = 16 套流体，体量和注册上限都不划算。
+   **建议**：默认只生成「熔融流体本体」（类型 + 源 + 流动），**不生成流体方块和桶**；
+   确实需要的材料再单独开 `.withFluidBucket()`。
+2. **粒 / 尘埃的换算链**：你说的是「9 尘埃 → 1 粒」。那「粒 → 锭」按 9:1 还是别的值？
+   **默认按 9 尘 = 1 粒、9 粒 = 1 锭**（与原版金粒/铁粒一致），若你要别的比例告诉我。
+   另外：现有 4 个 dust（钙/氢氧化钙/铯/钫）是否要**并入**新体系、还是保持现状？
+3. **贴图**：项目已有 `tools/textures/gen_*.py` 的脚本惯例（如 `gen_ingot_textures.py`）。
+   新材料的锭/块/流体贴图建议**脚本按 `color` 统一生成**，而不是手画 16 套。
+
+#### 迁移步骤（建议分三步，别一次全迁）
+
+1. **P2.5a**：建 `InspirationMaterial` 类 + 一个可遍历的材料清单，先只做「物品 + 方块 + data_maps + 语言 + model」，
+   **暂不**生成粒/尘/流体。挑 **铯**（有碱性、有块、有尘）做试点，验证生成的 json 与手写版一致。
+2. **P2.5b**：开粒 / 尘 / 流体开关，补齐配方与贴图脚本。
+3. **P2.5c**：把剩下 15 个锭类材料逐个迁进来，删除手写 `data_maps` 里的对应条目。
+
+#### 边界：这些**不**进 `InspirationMaterial`
+
+| 例外 | 原因 |
+| --- | --- |
+| 核废料 `nuclear_waste`、`reduction_powder` | 不是锭类材料，只是带辐射/化学属性的物品 |
+| 注能三锭（`energized_*`） | 来源是**注入**而非熔炼，且没有对应方块；能量窗口各不相同 |
+| 产量 ≠ 1 的合金（幽匿 ×2、翡翠钢 ×2、玄武岩合金 ×2、褐煤 ×2、末地合金 4/1/4） | 需要在融合配方里指定 count，统一模板要留 `productCount` 字段 |
+| `AlkaliItem`（铯锭/钫锭/两种尘） | 多了一整套「遇水爆炸并变回某物品」的行为，需要 `.alkaliBehavior(target, range)` 钩子 |
+| 原版材料链（铁锭、钻石、绿宝石、远古残骸、回响碎片、强化深板岩） | 不是本 mod 注册的，走不了统一注册，但可以在 data_maps 里登记辐射/碱性 |
+| 幽匿合金块 / 玄武岩合金块 | 除了是材料块，还是**注入结构的 1/2 级底座**，标签要额外照顾 |
+
+**回滚点**：`git tag p2.5-start` → `git tag p2.5-done`
+
+> ⚠️ 这一期会**新增游戏内容**（nugget / dust / molten 流体），与红线「不同 commit 混改结构和加内容」
+> 冲突 → 拆成 a/b/c 三个 commit，**每个 commit 只做一件事**，且都在 `p2.5` 这个 tag 区间内。
 
 ---
 

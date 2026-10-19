@@ -87,6 +87,9 @@ public final class SimulatorPattern {
         }
         return factory
                 .where('C', Predicates.custom(SimulatorPattern::isShell, SimulatorPattern::shellPreview))
+                // ⚠️ 必须用 controller 谓词：MBD2 的 centerOffset 只在图案里存在 controller 谓词时
+                // 才会被填成「控制器格在图案中的坐标」(1,1,2)。没了它 centerOffset 就是全 0，
+                // 于是传入的位置会被当成图案原点，整座结构整体平移 → 怎么搭都成型不了。
                 .where('M', Predicates.controller(
                         Predicates.blocks(ModMultiblocks.STRUCTURE_SIMULATOR.getBlock())))
                 // 内部两格用 any：留空、塞满外壳、放别的杂物都算成型。
@@ -144,52 +147,21 @@ public final class SimulatorPattern {
     /**
      * 按给定朝向列出结构里每一格（空腔跳过）相对主方块的位置。
      * <p>
-     * 图案坐标 → 世界坐标那一步用的是 MBD2
-     * {@code BlockPattern#setActualRelativeOffset} 的同一套公式
-     * （{@code structureDir = {LEFT, UP, FRONT}}）：列沿 {@code LEFT}、行沿 {@code UP}、
-     * 层沿 {@code FRONT}，四个水平朝向只是把这三个轴重新贴到世界的 X/Y/Z 上。
+     * ⚠️ 几何**必须**由 MBD2 自己给（{@code collectTrackedPositions}），不能另算一套。
+     * 之前这里自己按 "{@code structureDir = {LEFT, UP, FRONT}}" 推了一套 rotate，
+     * 与 MBD2 实际的列/行方向对不上（实测列方向是反的），结果就是
+     * 「玩家照着虚影搭出来却永远成型不了」。
+     * <p>
+     * 传 {@link BlockPos#ZERO} 时返回的就是**相对主方块**的偏移，其中 (0,0,0) 是主方块自己。
      */
     public static List<PreviewCell> previewCells(Direction facing) {
         BlockState casing = ModBlocks.HIGH_ENERGY_MACHINE_CASING.get().defaultBlockState();
         BlockState controller = ModMultiblocks.STRUCTURE_SIMULATOR.getBlock().defaultBlockState();
         List<PreviewCell> cells = new ArrayList<>();
-        for (int layer = 0; layer < DEPTH; layer++) {
-            for (int row = 0; row < HEIGHT; row++) {
-                for (int column = 0; column < WIDTH; column++) {
-                    char symbol = SHAPE[layer][row].charAt(column);
-                    if (symbol == ' ') {
-                        continue;
-                    }
-                    BlockPos patternOffset = new BlockPos(
-                            column - CONTROLLER.getX(),
-                            row - CONTROLLER.getY(),
-                            layer - CONTROLLER.getZ());
-                    cells.add(new PreviewCell(rotate(patternOffset, facing),
-                            symbol == 'M' ? controller : casing));
-                }
-            }
+        for (long packed : get().collectTrackedPositions(BlockPos.ZERO, facing)) {
+            BlockPos offset = BlockPos.of(packed);
+            cells.add(new PreviewCell(offset, offset.equals(BlockPos.ZERO) ? controller : casing));
         }
         return cells;
-    }
-
-    /** 与 MBD2 的 {@code setActualRelativeOffset} 等价：把图案坐标按朝向贴到世界坐标上。 */
-    private static BlockPos rotate(BlockPos offset, Direction facing) {
-        Direction left = facing.getCounterClockWise();
-        int[] out = new int[3];
-        putAxis(out, left, offset.getX());
-        out[1] = offset.getY();
-        putAxis(out, facing, offset.getZ());
-        return new BlockPos(out[0], out[1], out[2]);
-    }
-
-    private static void putAxis(int[] out, Direction dir, int value) {
-        switch (dir) {
-            case UP -> out[1] = value;
-            case DOWN -> out[1] = -value;
-            case WEST -> out[0] = -value;
-            case EAST -> out[0] = value;
-            case NORTH -> out[2] = -value;
-            case SOUTH -> out[2] = value;
-        }
     }
 }

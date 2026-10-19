@@ -4,7 +4,6 @@ import com.starcrosser.inspiration.Inspiration;
 import com.starcrosser.inspiration.control.VecHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -32,11 +31,6 @@ public class RightClickBlockHandler {
         BlockState state = level.getBlockState(pos);
         Block clickedBlock = state.getBlock();
         ItemStack heldItem = event.getItemStack();
-
-        // 调试日志：打印点击的方块和手持物品
-        Inspiration.LOGGER.info("Clicked block: {}, Held item: {}",
-                BuiltInRegistries.BLOCK.getKey(clickedBlock),
-                heldItem.getItem());
 
         RightClickBlockRecipe.RightClickBlockRecipeInput input = new RightClickBlockRecipe.RightClickBlockRecipeInput(clickedBlock, heldItem);
         Optional<RecipeHolder<RightClickBlockRecipe>> optionalHolder = level.getRecipeManager()
@@ -70,9 +64,6 @@ public class RightClickBlockHandler {
                 // 理论上不应该进入这里，但如果有 bug 则记录
                 Inspiration.LOGGER.warn("Recipe holder present but matches() returned false!");
             }
-        } else {
-            // 没有匹配的配方：绝对不取消事件
-            Inspiration.LOGGER.info("No recipe matched. Event not cancelled.");
         }
         // 注意：这里没有额外的 setCanceled}
     }

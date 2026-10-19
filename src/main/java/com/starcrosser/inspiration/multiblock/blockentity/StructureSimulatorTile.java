@@ -6,6 +6,7 @@ import com.hrznstudio.titanium.block.tile.MachineTile;
 import com.hrznstudio.titanium.component.progress.ProgressBarComponent;
 import com.lowdragmc.mbd2.api.pattern.BlockPattern;
 import com.lowdragmc.mbd2.api.pattern.MultiblockState;
+import com.lowdragmc.mbd2.api.pattern.error.PatternError;
 import com.starcrosser.inspiration.multiblock.ModMultiblocks;
 import com.starcrosser.inspiration.multiblock.SimulatorStatus;
 import com.starcrosser.inspiration.multiblock.blockentity.part.DataHatchTile;
@@ -18,6 +19,11 @@ import com.starcrosser.inspiration.multiblock.item.ProjectorItem;
 import com.starcrosser.inspiration.multiblock.pattern.SimulatorPattern;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.Tag;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -79,6 +85,14 @@ public class StructureSimulatorTile extends MachineTile<StructureSimulatorTile> 
     /** 上一次校验得到的多方块状态，里面保存着成员位置与错误信息。 */
     private MultiblockState multiblockState;
 
+    /**
+     * 校验失败时留住的那一次状态（取匹配到格子最多的一次）。
+     * <p>
+     * 以前失败就直接把 multiblockState 置 null，于是 {@link #getErrorPos()} 永远是 null，
+     * 玩家搭错了只能瞎试。MBD2 在第一次不匹配的格子上会记录 {@code error}，留住它就能指出位置。
+     */
+    private MultiblockState failedState;
+
     private boolean formed;
 
     /** 成型后确定的结构朝向。 */
@@ -98,7 +112,15 @@ public class StructureSimulatorTile extends MachineTile<StructureSimulatorTile> 
 
     /** 供界面读取的状态；每次重算后由 {@code markForUpdate} 推给客户端。 */
     @Save
-    private int status = SimulatorStatus.NOT_FORMED.ordinal();
+    private int status = SimulatorStatus.NOT_FORMED.id();
+
+    /**
+     * 同步给客户端的错误位置（{@code BlockPos.asLong()}），没有错误就是 {@link Long#MIN_VALUE}。
+     * <p>
+     * {@link #failedState} 只在服务端存在，客户端的界面读不到，所以另存一份随更新包推过去。
+     */
+    @Save
+    private long errorPosPacked = Long.MIN_VALUE;
 
     public StructureSimulatorTile(BlockPos pos, BlockState state) {
         super((BasicTileBlock<StructureSimulatorTile>) ModMultiblocks.STRUCTURE_SIMULATOR.getBlock(),
@@ -162,18 +184,29 @@ public class StructureSimulatorTile extends MachineTile<StructureSimulatorTile> 
     /** 用 MBD2 的结构层校验一次，成功就收集仓室。 */
     private void checkStructure() {
         MultiblockState matched = null;
-        for (Direction facing : Direction.Plane.HORIZONTAL) {
+        MultiblockState closest = null;
+        int closestMatched = -1;
+        for (Direction candidate : Direction.Plane.HORIZONTAL) {
+            // 锚点就是控制器自己的位置：MBD2 用图案里的 controller 谓词算 centerOffset，
+            // 会自己把 (1,1,2) 那一格对齐到这里。别改成「图案原点」，否则整体平移匹配不上。
             MultiblockState state = new MultiblockState(level, worldPosition);
-            state.setCheckingFacing(facing);
-            if (getPattern().checkPatternAtWithoutController(state, facing)) {
+            state.setCheckingFacing(candidate);
+            if (getPattern().checkPatternAtWithoutController(state, candidate)) {
                 matched = state;
-                this.facing = facing;
+                this.facing = candidate;
                 break;
+            }
+            // 没成型也留住「匹配到最多格子」的那一次，好告诉玩家错在哪一格
+            int count = state.getCache() == null ? 0 : state.getCache().size();
+            if (count > closestMatched) {
+                closestMatched = count;
+                closest = state;
             }
         }
         if (matched != null) {
             boolean wasFormed = formed;
             this.multiblockState = matched;
+            this.failedState = null;
             this.formed = true;
             collectHatches(matched);
             if (!wasFormed) {
@@ -181,12 +214,20 @@ public class StructureSimulatorTile extends MachineTile<StructureSimulatorTile> 
             }
         } else {
             this.multiblockState = null;
+            this.failedState = closest;
             if (formed) {
                 this.formed = false;
                 clearHatches();
             }
         }
+        BlockPos error = getErrorPos();
+        this.errorPosPacked = error == null ? Long.MIN_VALUE : error.asLong();
         updateStatus();
+    }
+
+    /** 客户端可见的错误位置（服务端算好后同步过来）；没有错误就是 null。 */
+    public BlockPos getSyncedErrorPos() {
+        return errorPosPacked == Long.MIN_VALUE ? null : BlockPos.of(errorPosPacked);
     }
 
     /** 把结构里的仓室按类型分好类。位置来自 MBD2 记录的匹配结果。 */
@@ -410,15 +451,15 @@ public class StructureSimulatorTile extends MachineTile<StructureSimulatorTile> 
         } else {
             next = SimulatorStatus.WORKING;
         }
-        if (next.ordinal() != this.status) {
-            this.status = next.ordinal();
+        if (next.id() != this.status) {
+            this.status = next.id();
             markForUpdate();
         }
     }
 
     /** 当前状态，界面与自检都读它。 */
     public SimulatorStatus getStatus() {
-        return SimulatorStatus.fromOrdinal(status);
+        return SimulatorStatus.fromId(status);
     }
 
     /** 进度条；界面与自检读它。 */
@@ -432,8 +473,27 @@ public class StructureSimulatorTile extends MachineTile<StructureSimulatorTile> 
 
     /** 结构校验失败的位置，界面上可以用来提示；没有错误就是 null。 */
     public BlockPos getErrorPos() {
-        return multiblockState == null || !multiblockState.hasError()
-                ? null : multiblockState.getPos();
+        MultiblockState state = failedState;
+        if (formed || state == null || !state.hasError()) {
+            return null;
+        }
+        PatternError error = state.error;
+        if (error != null) {
+            BlockPos pos = error.getPos();
+            if (pos != null) {
+                return pos;
+            }
+        }
+        return state.getPos();
+    }
+
+    /** 失败原因（"期望 X 但实际是 Y"），MBD2 自己拼好的；没有错误就是 null。 */
+    public Component getErrorInfo() {
+        MultiblockState state = failedState;
+        if (formed || state == null || !state.hasError() || state.error == null) {
+            return null;
+        }
+        return state.error.getErrorInfo();
     }
 
     /* ============================ MBD2 结构层 ============================ */
@@ -455,5 +515,43 @@ public class StructureSimulatorTile extends MachineTile<StructureSimulatorTile> 
     public void initClient() {
         super.initClient();
         addGuiAddonFactory(() -> new com.starcrosser.inspiration.multiblock.client.StatusAddon(this));
+    }
+
+    /* ============================ 持久化 ============================ */
+
+    /**
+     * 已经 roll 出来、但还没塞进输出仓的产物必须落盘：
+     * 否则重启或区块一卸载，这一轮的产出就凭空蒸发，玩家白跑一次模拟。
+     */
+    @Override
+    protected void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
+        super.saveAdditional(tag, registries);
+        tag.putString("SimulatorFacing", facing.getName());
+        if (!pendingOutput.isEmpty()) {
+            ListTag list = new ListTag();
+            for (ItemStack stack : pendingOutput) {
+                if (!stack.isEmpty()) {
+                    list.add(stack.save(registries));
+                }
+            }
+            tag.put("PendingOutput", list);
+        }
+    }
+
+    @Override
+    public void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
+        super.loadAdditional(tag, registries);
+        Direction saved = Direction.byName(tag.getString("SimulatorFacing"));
+        if (saved != null) {
+            this.facing = saved;
+        }
+        pendingOutput.clear();
+        ListTag list = tag.getList("PendingOutput", Tag.TAG_COMPOUND);
+        for (int i = 0; i < list.size(); i++) {
+            ItemStack stack = ItemStack.parseOptional(registries, list.getCompound(i));
+            if (!stack.isEmpty()) {
+                pendingOutput.add(stack);
+            }
+        }
     }
 }

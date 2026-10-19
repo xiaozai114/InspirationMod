@@ -299,7 +299,7 @@ public class ModEnUsLangProvider extends LanguageProvider {
         add("container.inspiration.guide_book", "Inspiration Guide");
         add("guide.inspiration.chapter.inspiration", "Inspiration");
         add("guide.inspiration.chapter.inspiration.body",
-                "Inspiration is the player's own will made solid://n"
+                "Inspiration is the player's own will made solid\n"
                         + "a thought that refuses to stay a thought,\n"
                         + "condensed into something you can hold.\n\n"
                         + "It is both a crafting material and machine fuel -\n"
@@ -318,7 +318,7 @@ public class ModEnUsLangProvider extends LanguageProvider {
         add("guide.inspiration.chapter.energy.body",
                 "The energy bar on a machine only ever goes down,\n"
                         + "so power has to be fed in from outside.\n\n"
-                        + "Inspiration charge lives in its own tank://n"
+                        + "Inspiration charge lives in its own tank\n"
                         + "1 inspiration = 1000 mB, 1 shard = 100 mB.\n"
                         + "Run dry and progress halts,\n"
                         + "but nothing already inserted is lost.");
@@ -335,7 +335,7 @@ public class ModEnUsLangProvider extends LanguageProvider {
                         + "with Injection Guns, and the structure is built.\n\n"
                         + "Base material goes in the binder, the injectant in the guns,\n"
                         + "and a redstone pulse fires one discharge.\n\n"
-                        + "The discharge must land inside the recipe window://n"
+                        + "The discharge must land inside the recipe window\n"
                         + "too low and nothing happens, too high and it explodes.");
         add("guide.inspiration.chapter.radiation", "Radiation");
         add("guide.inspiration.chapter.radiation.body",

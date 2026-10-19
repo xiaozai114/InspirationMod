@@ -25,6 +25,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -95,6 +96,16 @@ public class InjectionGunTile extends PoweredTile<InjectionGunTile> {
     @Nullable
     private InjectionOutcome activeOutcome;
     private int remainingTicks;
+
+    /**
+     * 进行中注入的配方 id，**只用于存档**。
+     * <p>
+     * 材料与能量在启动瞬间就扣掉了，所以「正在注入」必须能扛过重启，
+     * 否则玩家白扔一份材料。读档时 level 还没设好、拿不到 RecipeManager，
+     * 因此这里只存 id，配方对象在第一次 serverTick 里按 id 找回。
+     */
+    @Nullable
+    private ResourceLocation activeRecipeId;
 
     public InjectionGunTile(BlockPos pos, BlockState state) {
         super((BasicTileBlock<InjectionGunTile>) ModInjection.INJECTION_GUN.getBlock(),
@@ -243,8 +254,35 @@ public class InjectionGunTile extends PoweredTile<InjectionGunTile> {
         }
         powered = signal > 0;
         if (remainingTicks > 0) {
+            // 读档恢复的注入：配方对象还没解析出来，先按存档里的 id 找回
+            if (activeRecipe == null) {
+                this.activeRecipe = resolveActiveRecipe(level);
+                if (activeRecipe == null) {
+                    // 配方已经不存在了（数据包/配方被改）：这次注入作废。
+                    // 不补触发结算 —— 否则可能在玩家不知情时凭空爆炸。
+                    this.activeOutcome = null;
+                    this.activeRecipeId = null;
+                    this.remainingTicks = 0;
+                    return;
+                }
+            }
             advanceInjection(level, pos, state);
         }
+    }
+
+    /** 按存档里的配方 id 找回配方；找不到返回 null。 */
+    @Nullable
+    private InjectionRecipe resolveActiveRecipe(Level level) {
+        if (activeRecipeId == null) {
+            return null;
+        }
+        for (RecipeHolder<InjectionRecipe> holder : level.getRecipeManager()
+                .getAllRecipesFor(ModRecipes.INJECTION_TYPE.get())) {
+            if (holder.id().equals(activeRecipeId)) {
+                return holder.value();
+            }
+        }
+        return null;
     }
 
     /** 束缚器被拆掉时自动解除绑定，避免方块状态一直亮着骗人；还在的话把枪口重新对准它。 */
@@ -294,6 +332,7 @@ public class InjectionGunTile extends PoweredTile<InjectionGunTile> {
         injectSlot.extractItem(0, 1, false);
 
         this.activeRecipe = recipe;
+        this.activeRecipeId = holder.id();
         this.activeOutcome = InjectionOutcome.of(energy, window.min(), window.max());
         this.remainingTicks = Math.max(1, recipe.duration());
         level.playSound(null, pos, SoundEvents.BEACON_ACTIVATE, SoundSource.BLOCKS, 0.6F, 1.6F);
@@ -341,6 +380,7 @@ public class InjectionGunTile extends PoweredTile<InjectionGunTile> {
         InjectionRecipe recipe = activeRecipe;
         InjectionOutcome outcome = activeOutcome;
         this.activeRecipe = null;
+        this.activeRecipeId = null;
         this.activeOutcome = null;
         this.remainingTicks = 0;
         if (recipe == null || outcome == null) {
@@ -395,6 +435,14 @@ public class InjectionGunTile extends PoweredTile<InjectionGunTile> {
             tag.putLong("BinderPos", binderPos.asLong());
         }
         tag.putBoolean("Powered", powered);
+        // 进行中的注入：材料与能量已经扣了，不存的话重启后这次注入就凭空消失
+        tag.putInt("RemainingTicks", remainingTicks);
+        if (activeOutcome != null) {
+            tag.putString("ActiveOutcome", activeOutcome.name());
+        }
+        if (activeRecipeId != null) {
+            tag.putString("ActiveRecipe", activeRecipeId.toString());
+        }
     }
 
     @Override
@@ -402,5 +450,22 @@ public class InjectionGunTile extends PoweredTile<InjectionGunTile> {
         super.loadAdditional(tag, registries);
         this.binderPos = tag.contains("BinderPos") ? BlockPos.of(tag.getLong("BinderPos")) : null;
         this.powered = tag.getBoolean("Powered");
+        this.remainingTicks = tag.getInt("RemainingTicks");
+        this.activeOutcome = parseOutcome(tag.getString("ActiveOutcome"));
+        this.activeRecipeId = tag.contains("ActiveRecipe")
+                ? ResourceLocation.parse(tag.getString("ActiveRecipe"))
+                : null;
+        // activeRecipe 留给第一次 serverTick 按 id 解析（那时才有 RecipeManager）
+        this.activeRecipe = null;
+    }
+
+    @Nullable
+    private static InjectionOutcome parseOutcome(String name) {
+        for (InjectionOutcome outcome : InjectionOutcome.values()) {
+            if (outcome.name().equals(name)) {
+                return outcome;
+            }
+        }
+        return null;
     }
 }

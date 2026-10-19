@@ -9,22 +9,42 @@ package com.starcrosser.inspiration.multiblock;
 public enum SimulatorStatus {
 
     /** 结构没成型。 */
-    NOT_FORMED,
+    NOT_FORMED(0),
     /** 结构成型了但数据仓里没有结构数据。 */
-    NO_DATA,
+    NO_DATA(1),
     /** 缺电：能量端口抽不出这一刻要用的电。 */
-    NO_ENERGY,
+    NO_ENERGY(2),
     /** 缺灵感充能。 */
-    NO_CHARGE,
+    NO_CHARGE(3),
     /** 上一轮的产物还没塞进输出仓。 */
-    OUTPUT_FULL,
+    OUTPUT_FULL(4),
     /** 正在模拟。 */
-    WORKING;
+    WORKING(5);
 
-    private static final SimulatorStatus[] VALUES = values();
+    /**
+     * 存盘用的稳定编号。
+     * <p>
+     * 存档里存的是这个 id 而不是 {@code ordinal()}：以后调整枚举**顺序**（本枚举的顺序就是
+     * 优先级，很可能要调）也不会让老存档把状态读成另一个。
+     * 新增状态只能往末尾加编号，已有的编号永远不许改。
+     */
+    private final int id;
 
-    public static SimulatorStatus fromOrdinal(int ordinal) {
-        return ordinal >= 0 && ordinal < VALUES.length ? VALUES[ordinal] : NOT_FORMED;
+    SimulatorStatus(int id) {
+        this.id = id;
+    }
+
+    public int id() {
+        return id;
+    }
+
+    public static SimulatorStatus fromId(int id) {
+        for (SimulatorStatus status : values()) {
+            if (status.id == id) {
+                return status;
+            }
+        }
+        return NOT_FORMED;
     }
 
     /** 界面语言键。 */

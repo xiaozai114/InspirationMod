@@ -35,7 +35,13 @@ public class BedrockPickaxe extends PickaxeItem {
         BlockPos pos = context.getClickedPos();
         BlockState state = level.getBlockState(pos);
 
-        InteractionResult result = super.useOn(context);
+        // 只对基岩生效：否则右键箱子/机器/熔炉会把方块直接变成掉落物
+        if (!state.is(Blocks.BEDROCK)) {
+            return super.useOn(context);
+        }
+        if (level.isClientSide) {
+            return InteractionResult.SUCCESS;
+        }
         ItemEntity bedrockItem = new ItemEntity(
                     level,
                     pos.getX() + 0.5,
@@ -46,7 +52,7 @@ public class BedrockPickaxe extends PickaxeItem {
             level.addFreshEntity(bedrockItem);
             // 移除基岩方块
             level.removeBlock(pos, false);
-        return result;
+        return InteractionResult.SUCCESS;
 
 
     }

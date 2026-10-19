@@ -121,6 +121,7 @@ public class ModCreativeModeTabs {
                         output.accept(ModItems.EPHEMERAL_ALLOY);
                         output.accept(ModItems.END_ALLOY_SHIELD);
                         output.accept(ModItems.WORLD_DATA_DETECTOR);
+                        output.accept(ModItems.WORLD_BREAKER);
                         output.accept(ModItems.GUIDE_BOOK);
                         // 地核钻探者与其耗材
                         output.accept(ModMachines.CORE_DRILLER);
