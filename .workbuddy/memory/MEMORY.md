@@ -125,3 +125,17 @@
 19. **配置缓存是按「任务集」分别存条目的**：跑通 `help` 只帮到 `help`，`runClient`/`build`
     各自要成功写一次。**动仓库的 `content` / `metadataSources` 会让已缓存的解析结果失效**
     （离线连本地明明有的 parchment zip 都解析不了），别为了绕网络去改仓库配置。
+20. **Git 远程**：`origin = https://github.com/xiaozai114/InspirationMod`（私有）。
+    旧远程 `Asp4rtatE/inspiration-1.21.1` 已 **404**（账号弃用）。代理 `http://127.0.0.1:19204`
+    对 **github.com:443 的 CONNECT 间歇性 502** —— `git push` 报
+    `CONNECT tunnel failed, response 502` 时**别改配置，直接重试**（实测第一次失败第二次成功）。
+    直连（`--noproxy '*'`）访问 github 会超时，必须走代理。
+
+## 重构
+
+- 方案文档：**`docs/REFACTORING_PLAN.md`**，基线 commit **`5194af5`**。分 P0 止血（12 个真实 bug +
+  死代码）→ P1 消除重复（高能版钩子、四套配方基类、五件套工厂、仓室基类）→ P2 注册与资源统一
+  （`MachineRegistry` 解决「手写 9 遍」、拆 `ModRecipesProvider`、事件集中）→ P3 客户端隔离与命名统一。
+- **高能版复制粘贴的根因**：`InspiredMachineTile` 有 `baseSpeed()`/`baseChargeCapacity()`，
+  **唯独缺耗电倍率钩子** → 4 个高能版各写私有 `energyCost()`。补 `energyUseMultiplier()` 即可收敛。
+- 重构红线：**不动任何 `ResourceLocation`**（老存档靠 ID），同 commit 不混「改结构」与「加内容」。
