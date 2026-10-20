@@ -73,10 +73,6 @@ public abstract class InspiredMachineTile<T extends InspiredMachineTile<T>> exte
                                   BlockPos pos, BlockState state) {
         super(block, type, pos, state);
         this.spec = spec;
-        // ⚠️ 能量缓冲是在 PoweredTile 的**构造期**创建的，那时 spec 还没赋值，
-        // 所以缓冲是按「tier 1 基准值」建的。这里补一次等级修正。
-        // 子类字段此刻同样还没赋值，因此下面用到的取值方法只允许返回静态常量（见各自的注释）。
-        applyTier();
 
         SidedInventoryComponent<T> slot = new SidedInventoryComponent<>(
                 "inspiration", CHARGE_SLOT_X, CHARGE_SLOT_Y, 1, CHARGE_SLOT_POS);
@@ -103,6 +99,12 @@ public abstract class InspiredMachineTile<T extends InspiredMachineTile<T>> exte
         // Titanium 默认只允许带有 augment 数据组件的物品入槽，这里按本模组的插件要求重配一遍
         PluginInventory.configure(getAugmentInventory());
         this.plugins = new PluginHost(getAugmentInventory(), this::applyPlugins);
+
+        // ⚠️ 必须放在构造体**最后**：能量缓冲是 PoweredTile 在构造期建的，那时 spec 还没赋值，
+        // 只能先按「tier 1 基准值」建，等这里再补正。而充能罐是本类上面刚建好的字段，
+        // 在 super() 之后立刻补正的话 chargeTank 还是 null。
+        // 子类字段此刻同样还没赋值，所以 applyTier 用到的取值方法只允许返回静态常量。
+        applyTier();
     }
 
     /**
