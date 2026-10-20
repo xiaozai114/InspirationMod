@@ -4,10 +4,8 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.starcrosser.inspiration.recipe.ModRecipes;
-import net.minecraft.core.HolderLookup;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
@@ -25,7 +23,7 @@ import java.util.List;
  * 默认 1）：槽里必须一次攒够数量才匹配，作业结束时按各自数量扣除。
  * 数量只是**同一槽的堆叠**，不占用额外槽位 —— 三槽机型因此照样能做 4 + 1 + 4 这种偏重的配方。
  */
-public class FusionRecipe implements Recipe<FusionRecipeInput> {
+public class FusionRecipe extends InspiredRecipe<FusionRecipeInput> {
 
     public static final int DEFAULT_DURATION = 200;
     public static final int DEFAULT_ENERGY_PER_TICK = 40;
@@ -49,9 +47,6 @@ public class FusionRecipe implements Recipe<FusionRecipeInput> {
     private final int firstCount;
     private final Ingredient secondInput;
     private final int secondCount;
-    private final ItemStack result;
-    private final int duration;
-    private final int energyPerTick;
     private final Ingredient thirdInput;
     private final int thirdCount;
 
@@ -59,6 +54,7 @@ public class FusionRecipe implements Recipe<FusionRecipeInput> {
     public FusionRecipe(Ingredient firstInput, int firstCount, Ingredient secondInput, int secondCount,
                         ItemStack result, int duration, int energyPerTick,
                         Ingredient thirdInput, int thirdCount) {
+        super(result, duration, energyPerTick);
         if (firstCount < 1 || secondCount < 1 || thirdCount < 1) {
             throw new IllegalArgumentException(
                     "融合配方的材料数量至少为 1：" + firstCount + " / " + secondCount + " / " + thirdCount);
@@ -67,9 +63,6 @@ public class FusionRecipe implements Recipe<FusionRecipeInput> {
         this.firstCount = firstCount;
         this.secondInput = secondInput;
         this.secondCount = secondCount;
-        this.result = result;
-        this.duration = duration;
-        this.energyPerTick = energyPerTick;
         this.thirdInput = thirdInput;
         this.thirdCount = thirdCount;
     }
@@ -144,55 +137,19 @@ public class FusionRecipe implements Recipe<FusionRecipeInput> {
         if (filled != required.size()) {
             return null;
         }
-        int[] assignment = new int[required.size()];
-        return assign(required, counts(), slots, new boolean[slots.size()], assignment, 0) ? assignment : null;
-    }
-
-    /** 回溯求解：把第 index 种材料指派到一个还未被占用、且堆叠数量足够的槽位。 */
-    private static boolean assign(List<Ingredient> required, int[] counts, List<ItemStack> slots,
-                                  boolean[] used, int[] assignment, int index) {
-        if (index == required.size()) {
-            return true;
-        }
-        for (int slot = 0; slot < slots.size(); slot++) {
-            ItemStack stack = slots.get(slot);
-            if (used[slot] || stack.isEmpty() || stack.getCount() < counts[index]
-                    || !required.get(index).test(stack)) {
-                continue;
-            }
-            used[slot] = true;
-            assignment[index] = slot;
-            if (assign(required, counts, slots, used, assignment, index + 1)) {
-                return true;
-            }
-            used[slot] = false;
-        }
-        return false;
+        int[] counts = counts();
+        return RecipeSlotMatcher.assign(required.size(), slots.size(),
+                (material, slot) -> {
+                    ItemStack stack = slots.get(slot);
+                    return !stack.isEmpty()
+                            && stack.getCount() >= counts[material]
+                            && required.get(material).test(stack);
+                });
     }
 
     @Override
     public boolean matches(FusionRecipeInput input, Level level) {
         return resolveSlots(input.items()) != null;
-    }
-
-    @Override
-    public ItemStack assemble(FusionRecipeInput input, HolderLookup.Provider registries) {
-        return result.copy();
-    }
-
-    @Override
-    public boolean canCraftInDimensions(int width, int height) {
-        return true;
-    }
-
-    @Override
-    public ItemStack getResultItem(HolderLookup.Provider registries) {
-        return result;
-    }
-
-    @Override
-    public ItemStack getToastSymbol() {
-        return result;
     }
 
     @Override
@@ -227,17 +184,5 @@ public class FusionRecipe implements Recipe<FusionRecipeInput> {
 
     public int thirdCount() {
         return thirdCount;
-    }
-
-    public ItemStack result() {
-        return result;
-    }
-
-    public int duration() {
-        return duration;
-    }
-
-    public int energyPerTick() {
-        return energyPerTick;
     }
 }

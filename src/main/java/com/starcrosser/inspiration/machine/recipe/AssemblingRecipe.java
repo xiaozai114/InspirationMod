@@ -4,10 +4,8 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.starcrosser.inspiration.recipe.ModRecipes;
-import net.minecraft.core.HolderLookup;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
@@ -23,7 +21,7 @@ import java.util.List;
  * 结算时按实际分配到的槽位扣除。流体原料同样与罐位无关，最多两条
  * （普通装配台只有一个流体槽，因此两条流体的配方只有高能机型能做）。
  */
-public class AssemblingRecipe implements Recipe<AssemblingRecipeInput> {
+public class AssemblingRecipe extends InspiredRecipe<AssemblingRecipeInput> {
 
     public static final int DEFAULT_DURATION = 300;
     public static final int DEFAULT_ENERGY_PER_TICK = 200;
@@ -51,13 +49,11 @@ public class AssemblingRecipe implements Recipe<AssemblingRecipeInput> {
     /** 与 {@link #ingredients} 等长的每槽消耗量，缺省是 1。 */
     private final List<Integer> counts;
     private final List<FluidRequirement> fluids;
-    private final ItemStack result;
-    private final int duration;
-    private final int energyPerTick;
 
     public AssemblingRecipe(List<Ingredient> ingredients, List<Integer> counts,
                             List<FluidRequirement> fluids, ItemStack result,
                             int duration, int energyPerTick) {
+        super(result, duration, energyPerTick);
         if (ingredients.isEmpty() || ingredients.size() > MAX_INGREDIENTS) {
             throw new IllegalArgumentException(
                     "装配配方需要 1~" + MAX_INGREDIENTS + " 种材料，实际为 " + ingredients.size());
@@ -69,9 +65,6 @@ public class AssemblingRecipe implements Recipe<AssemblingRecipeInput> {
         this.ingredients = List.copyOf(ingredients);
         this.counts = normalizeCounts(counts, ingredients.size());
         this.fluids = List.copyOf(fluids);
-        this.result = result;
-        this.duration = duration;
-        this.energyPerTick = energyPerTick;
     }
 
     /** 把数量列表补齐/截断到材料条数，缺省与越界都按 1 处理。 */
@@ -111,30 +104,12 @@ public class AssemblingRecipe implements Recipe<AssemblingRecipeInput> {
      */
     @Nullable
     public int[] resolveSlots(List<ItemStack> stacks) {
-        int[] assignment = new int[ingredients.size()];
-        return assign(0, stacks, new boolean[stacks.size()], assignment) ? assignment : null;
-    }
-
-    private boolean assign(int index, List<ItemStack> stacks, boolean[] used, int[] assignment) {
-        if (index >= ingredients.size()) {
-            return true;
-        }
-        for (int slot = 0; slot < stacks.size(); slot++) {
-            if (used[slot] || stacks.get(slot).isEmpty()) {
-                continue;
-            }
-            if (!ingredients.get(index).test(stacks.get(slot))
-                    || stacks.get(slot).getCount() < countOf(index)) {
-                continue;
-            }
-            used[slot] = true;
-            assignment[index] = slot;
-            if (assign(index + 1, stacks, used, assignment)) {
-                return true;
-            }
-            used[slot] = false;
-        }
-        return false;
+        return RecipeSlotMatcher.assign(ingredients.size(), stacks.size(), (material, slot) -> {
+            ItemStack stack = stacks.get(slot);
+            return !stack.isEmpty()
+                    && stack.getCount() >= countOf(material)
+                    && ingredients.get(material).test(stack);
+        });
     }
 
     /**
@@ -147,46 +122,8 @@ public class AssemblingRecipe implements Recipe<AssemblingRecipeInput> {
         if (fluids.isEmpty()) {
             return new int[0];
         }
-        int[] assignment = new int[fluids.size()];
-        return assignFluid(0, tanks, new boolean[tanks.size()], assignment) ? assignment : null;
-    }
-
-    private boolean assignFluid(int index, List<FluidStack> tanks, boolean[] used, int[] assignment) {
-        if (index >= fluids.size()) {
-            return true;
-        }
-        for (int tank = 0; tank < tanks.size(); tank++) {
-            if (used[tank] || !fluids.get(index).matches(tanks.get(tank))) {
-                continue;
-            }
-            used[tank] = true;
-            assignment[index] = tank;
-            if (assignFluid(index + 1, tanks, used, assignment)) {
-                return true;
-            }
-            used[tank] = false;
-        }
-        return false;
-    }
-
-    @Override
-    public ItemStack assemble(AssemblingRecipeInput input, HolderLookup.Provider registries) {
-        return result.copy();
-    }
-
-    @Override
-    public boolean canCraftInDimensions(int width, int height) {
-        return true;
-    }
-
-    @Override
-    public ItemStack getResultItem(HolderLookup.Provider registries) {
-        return result;
-    }
-
-    @Override
-    public ItemStack getToastSymbol() {
-        return result;
+        return RecipeSlotMatcher.assign(fluids.size(), tanks.size(),
+                (requirement, tank) -> fluids.get(requirement).matches(tanks.get(tank)));
     }
 
     @Override
@@ -206,17 +143,5 @@ public class AssemblingRecipe implements Recipe<AssemblingRecipeInput> {
     /** 流体原料，不需要时为空列表。 */
     public List<FluidRequirement> fluids() {
         return fluids;
-    }
-
-    public ItemStack result() {
-        return result;
-    }
-
-    public int duration() {
-        return duration;
-    }
-
-    public int energyPerTick() {
-        return energyPerTick;
     }
 }
