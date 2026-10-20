@@ -38,6 +38,17 @@ public class PluginEnergyStorage<T extends IComponentHarness> extends EnergyStor
         }
     }
 
+    /**
+     * 设置每刻最大输入功率。
+     * <p>
+     * 存在的理由同 {@link #setCapacity}：上位机型的输入功率也要按等级放大，
+     * 而能量缓冲在 Titanium 的 {@code PoweredTile} **构造期**就被创建好了 ——
+     * 那时方块实体还没拿到自己的等级配置，只能在构造之后回头补这一刀。
+     */
+    public void setMaxReceive(int maxReceive) {
+        this.maxReceive = Math.max(0, maxReceive);
+    }
+
     @Override
     public List<IFactory<? extends IContainerAddon>> getContainerAddons() {
         List<IFactory<? extends IContainerAddon>> addons = new ArrayList<>(super.getContainerAddons());

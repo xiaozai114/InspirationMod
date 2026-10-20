@@ -5,8 +5,8 @@ import com.hrznstudio.titanium.block.BasicTileBlock;
 import com.hrznstudio.titanium.component.inventory.SidedInventoryComponent;
 import com.hrznstudio.titanium.component.progress.ProgressBarComponent;
 import com.starcrosser.inspiration.item.custom.DrillBitItem;
-import com.starcrosser.inspiration.machine.ModMachines;
 import com.starcrosser.inspiration.machine.plugin.PluginEnergyStorage;
+import com.starcrosser.inspiration.machine.spec.MachineSpec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
@@ -20,6 +20,7 @@ import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.item.enchantment.ItemEnchantments;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.api.distmarker.Dist;
@@ -88,9 +89,9 @@ public class CoreDrillerTile extends InspiredMachineTile<CoreDrillerTile> {
     /** 精准采集用的虚拟镐，绑定于当前维度，懒创建。 */
     private ItemStack silkTool;
 
-    public CoreDrillerTile(BlockPos pos, BlockState state) {
-        super((BasicTileBlock<CoreDrillerTile>) ModMachines.CORE_DRILLER.getBlock(),
-                ModMachines.CORE_DRILLER.type().get(), pos, state);
+    public CoreDrillerTile(MachineSpec spec, BasicTileBlock<CoreDrillerTile> block,
+                           BlockEntityType<?> type, BlockPos pos, BlockState state) {
+        super(spec, block, type, pos, state);
 
         SidedInventoryComponent<CoreDrillerTile> slot =
                 new SidedInventoryComponent<>("drill", 44, 30, 1, 0);
@@ -131,6 +132,11 @@ public class CoreDrillerTile extends InspiredMachineTile<CoreDrillerTile> {
     @Override
     protected int baseEnergyCapacity() {
         return ENERGY_CAPACITY;
+    }
+
+    @Override
+    protected int maxEnergyInput() {
+        return MAX_ENERGY_INPUT;
     }
 
     @Override

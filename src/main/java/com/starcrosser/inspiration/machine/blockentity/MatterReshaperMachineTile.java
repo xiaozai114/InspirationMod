@@ -4,12 +4,13 @@ import com.hrznstudio.titanium.annotation.Save;
 import com.hrznstudio.titanium.block.BasicTileBlock;
 import com.hrznstudio.titanium.component.inventory.SidedInventoryComponent;
 import com.hrznstudio.titanium.component.progress.ProgressBarComponent;
-import com.starcrosser.inspiration.machine.ModMachines;
 import com.starcrosser.inspiration.machine.plugin.PluginEnergyStorage;
 import com.starcrosser.inspiration.machine.recipe.ReshapingRecipe;
+import com.starcrosser.inspiration.machine.spec.MachineSpec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 
 import javax.annotation.Nonnull;
@@ -18,19 +19,24 @@ import net.neoforged.api.distmarker.OnlyIn;
 
 
 /**
- * 物质重塑机的方块实体。
+ * 物质重塑机一族的方块实体：物质重塑机（等级 1）与高能物质重塑机（等级 2）共用这一份实现。
  * <p>
- * 相比物质融合器：能量缓冲更大、输入功率更高，但配方耗时与每刻能耗都明显更高。
+ * 相比物质融合机：能量缓冲更大、输入功率更高，但配方耗时与每刻能耗都明显更高。
  * 可执行的配方有两类 —— 通用的右键转化配方，以及本机专属的「重塑配方」。
+ * <p>
+ * 两档机器**共用同一套配方**，差别只在等级倍率上（见 {@link MachineSpec#multiplier}）：
+ * 能量容量、输入功率、每刻耗电、充能消耗、运行速度全部按等级放大，没有本机专属效果。
  */
 public class MatterReshaperMachineTile extends InspiredMachineTile<MatterReshaperMachineTile> {
 
-    /** 能量缓冲：约为物质融合器的三倍。 */
-    public static final int ENERGY_CAPACITY = 200_000;
-    public static final int MAX_ENERGY_INPUT = 4_000;
+    /** tier 1 的能量缓冲容量（FE）。 */
+    public static final int BASE_ENERGY_CAPACITY = 200_000;
 
-    /** 本机每运行一刻消耗的灵感充能（mB），是物质融合器的两倍。 */
-    public static final int CHARGE_PER_TICK = 2;
+    /** tier 1 的每刻最大输入功率（FE）。 */
+    public static final int BASE_MAX_ENERGY_INPUT = 4_000;
+
+    /** tier 1 每刻消耗的灵感充能（mB）。 */
+    public static final int BASE_CHARGE_PER_TICK = 2;
 
     @Save
     private SidedInventoryComponent<MatterReshaperMachineTile> inputInventory;
@@ -44,9 +50,9 @@ public class MatterReshaperMachineTile extends InspiredMachineTile<MatterReshape
     private ItemStack cachedFirst = ItemStack.EMPTY;
     private ItemStack cachedSecond = ItemStack.EMPTY;
 
-    public MatterReshaperMachineTile(BlockPos pos, BlockState state) {
-        super((BasicTileBlock<MatterReshaperMachineTile>) ModMachines.MATTER_RESHAPER.getBlock(),
-                ModMachines.MATTER_RESHAPER.type().get(), pos, state);
+    public MatterReshaperMachineTile(MachineSpec spec, BasicTileBlock<MatterReshaperMachineTile> block,
+                                     BlockEntityType<?> type, BlockPos pos, BlockState state) {
+        super(spec, block, type, pos, state);
 
         SidedInventoryComponent<MatterReshaperMachineTile> inputs =
                 new SidedInventoryComponent<>("input", 44, 30, 2, 0);
@@ -68,7 +74,7 @@ public class MatterReshaperMachineTile extends InspiredMachineTile<MatterReshape
         ProgressBarComponent<MatterReshaperMachineTile> bar =
                 new ProgressBarComponent<>(78, 38, ReshapingRecipe.DEFAULT_DURATION);
         bar.setBarDirection(ProgressBarComponent.BarDirection.ARROW_RIGHT);
-        bar.setColor(DyeColor.GREEN);
+        bar.setColor(spec.barColor());
         bar.setCanIncrease(this::canProcess);
         bar.setCanReset(tile -> tile.isFinished() || tile.findTask() == null);
         bar.setOnTickWork(this::consumeEnergy);
@@ -80,18 +86,24 @@ public class MatterReshaperMachineTile extends InspiredMachineTile<MatterReshape
     @Nonnull
     @Override
     protected PluginEnergyStorage<MatterReshaperMachineTile> createEnergyStorage() {
-        // 只进不出：maxExtract 为 0，能量只能被机器自身消耗
-        return new PluginEnergyStorage<>(ENERGY_CAPACITY, MAX_ENERGY_INPUT, 0, 8, 14);
+        // 只进不出：maxExtract 为 0，能量只能被机器自身消耗。
+        // 容量是 tier 1 基准值，等级倍率由基类在构造末尾补正（见 InspiredMachineTile#applyTier）。
+        return new PluginEnergyStorage<>(BASE_ENERGY_CAPACITY, BASE_MAX_ENERGY_INPUT, 0, 8, 14);
     }
 
     @Override
     public int chargePerTick() {
-        return CHARGE_PER_TICK;
+        return BASE_CHARGE_PER_TICK;
     }
 
     @Override
     protected int baseEnergyCapacity() {
-        return ENERGY_CAPACITY;
+        return BASE_ENERGY_CAPACITY;
+    }
+
+    @Override
+    protected int maxEnergyInput() {
+        return BASE_MAX_ENERGY_INPUT;
     }
 
     @Override

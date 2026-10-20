@@ -5,36 +5,46 @@ import com.hrznstudio.titanium.block.BasicTileBlock;
 import com.hrznstudio.titanium.component.inventory.SidedInventoryComponent;
 import com.hrznstudio.titanium.component.progress.ProgressBarComponent;
 import com.starcrosser.inspiration.machine.plugin.PluginEnergyStorage;
-import com.starcrosser.inspiration.machine.ModMachines;
 import com.starcrosser.inspiration.machine.recipe.FusionRecipe;
 import com.starcrosser.inspiration.machine.recipe.FusionRecipeInput;
+import com.starcrosser.inspiration.machine.spec.MachineSpec;
 import com.starcrosser.inspiration.recipe.ModRecipes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeHolder;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 
 import javax.annotation.Nonnull;
+import java.util.ArrayList;
 import java.util.List;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 
 
 /**
- * 物质融合器的方块实体。
+ * 物质融合机一族的方块实体：物质融合机（等级 1）与强能物质融合机（等级 2）共用这一份实现。
  * <p>
- * 结构由 Titanium 的组件系统拼装：两个输入槽、一个输出槽、一个能量缓冲与一个进度条，
+ * 结构由 Titanium 的组件系统拼装：若干个输入槽、一个输出槽、一个能量缓冲与一个进度条，
  * 灵感充能槽与充能罐由 {@link InspiredMachineTile} 提供。
  * GUI 由 Titanium 的 {@code BasicAddonScreen} 依据这些组件自动生成。
+ * <p>
+ * **两档机器的差别全部由注册时的 {@link MachineSpec} 表达**：
+ * 等级决定能量容量、输入功率、每刻耗电、充能消耗与运行速度（倍率 {@code 2^(tier-1)}），
+ * 槽数决定一次能吃几种材料（2 槽 → 3 槽）。两者互相独立，所以本类里看不到任何
+ * 「高能」分支 —— 将来加等级 3 只要再注册一份配置。
  */
 public class MatterFusionMachineTile extends InspiredMachineTile<MatterFusionMachineTile> {
 
-    public static final int ENERGY_CAPACITY = 60_000;
-    public static final int MAX_ENERGY_INPUT = 1_000;
+    /** tier 1 的能量缓冲容量（FE）。 */
+    public static final int BASE_ENERGY_CAPACITY = 60_000;
 
-    /** 本机每运行一刻消耗的灵感充能（mB）。 */
-    public static final int CHARGE_PER_TICK = 1;
+    /** tier 1 的每刻最大输入功率（FE）。 */
+    public static final int BASE_MAX_ENERGY_INPUT = 1_000;
+
+    /** tier 1 每刻消耗的灵感充能（mB）。 */
+    public static final int BASE_CHARGE_PER_TICK = 1;
 
     @Save
     private SidedInventoryComponent<MatterFusionMachineTile> inputInventory;
@@ -45,13 +55,14 @@ public class MatterFusionMachineTile extends InspiredMachineTile<MatterFusionMac
 
     private FusionRecipe cachedRecipe;
 
-    public MatterFusionMachineTile(BlockPos pos, BlockState state) {
-        super((BasicTileBlock<MatterFusionMachineTile>) ModMachines.MATTER_FUSION_MACHINE.getBlock(),
-                ModMachines.MATTER_FUSION_MACHINE.type().get(), pos, state);
+    public MatterFusionMachineTile(MachineSpec spec, BasicTileBlock<MatterFusionMachineTile> block,
+                                   BlockEntityType<?> type, BlockPos pos, BlockState state) {
+        super(spec, block, type, pos, state);
 
+        int slots = spec.itemInputSlots();
         SidedInventoryComponent<MatterFusionMachineTile> inputs =
-                new SidedInventoryComponent<>("input", 44, 30, 2, 0);
-        inputs.setRange(1, 2);
+                new SidedInventoryComponent<>("input", 44, 30, slots, 0);
+        inputs.setRange(1, slots);
         inputs.setColor(DyeColor.LIGHT_BLUE);
         inputs.setFacingHandlerPos(8, 84);
         this.inputInventory = inputs;
@@ -69,7 +80,7 @@ public class MatterFusionMachineTile extends InspiredMachineTile<MatterFusionMac
         ProgressBarComponent<MatterFusionMachineTile> bar =
                 new ProgressBarComponent<>(78, 38, FusionRecipe.DEFAULT_DURATION);
         bar.setBarDirection(ProgressBarComponent.BarDirection.ARROW_RIGHT);
-        bar.setColor(DyeColor.LIGHT_BLUE);
+        bar.setColor(spec.barColor());
         bar.setCanIncrease(this::canProcess);
         bar.setCanReset(tile -> tile.isFinished() || !tile.hasRecipe());
         bar.setOnTickWork(this::consumeEnergy);
@@ -81,18 +92,24 @@ public class MatterFusionMachineTile extends InspiredMachineTile<MatterFusionMac
     @Nonnull
     @Override
     protected PluginEnergyStorage<MatterFusionMachineTile> createEnergyStorage() {
-        // 只进不出：maxExtract 为 0，能量只能被机器自身消耗
-        return new PluginEnergyStorage<>(ENERGY_CAPACITY, MAX_ENERGY_INPUT, 0, 8, 14);
+        // 只进不出：maxExtract 为 0，能量只能被机器自身消耗。
+        // 这里的容量是 tier 1 基准值，等级倍率由基类在构造末尾补正（见 InspiredMachineTile#applyTier）。
+        return new PluginEnergyStorage<>(BASE_ENERGY_CAPACITY, BASE_MAX_ENERGY_INPUT, 0, 8, 14);
     }
 
     @Override
     public int chargePerTick() {
-        return CHARGE_PER_TICK;
+        return BASE_CHARGE_PER_TICK;
     }
 
     @Override
     protected int baseEnergyCapacity() {
-        return ENERGY_CAPACITY;
+        return BASE_ENERGY_CAPACITY;
+    }
+
+    @Override
+    protected int maxEnergyInput() {
+        return BASE_MAX_ENERGY_INPUT;
     }
 
     @Override
@@ -143,7 +160,7 @@ public class MatterFusionMachineTile extends InspiredMachineTile<MatterFusionMac
         return current.getCount() + result.getCount() <= limit;
     }
 
-    /** 每刻同时扣电与扣充能，两者缺一机器都不会推进进度；两个数值都已计入插件加成。 */
+    /** 每刻同时扣电与扣充能，两者缺一机器都不会推进进度；两个数值都已计入等级与插件加成。 */
     private void consumeEnergy() {
         FusionRecipe recipe = findRecipe();
         if (recipe == null) {
@@ -168,8 +185,7 @@ public class MatterFusionMachineTile extends InspiredMachineTile<MatterFusionMac
             return;
         }
         outputInventory.insertItem(0, result.copy(), false);
-        int[] assignment = recipe.resolveSlots(List.of(
-                inputInventory.getStackInSlot(0), inputInventory.getStackInSlot(1)));
+        int[] assignment = recipe.resolveSlots(inputStacks());
         if (assignment != null) {
             // 每种材料按配方声明的数量扣除，指派顺序即材料下标
             for (int material = 0; material < assignment.length; material++) {
@@ -187,13 +203,22 @@ public class MatterFusionMachineTile extends InspiredMachineTile<MatterFusionMac
         return progressBar.getProgress() >= progressBar.getMaxProgress();
     }
 
+    /** 所有输入槽的当前内容，顺序与槽位序号一致。 */
+    private List<ItemStack> inputStacks() {
+        List<ItemStack> stacks = new ArrayList<>(inputInventory.getSlots());
+        for (int slot = 0; slot < inputInventory.getSlots(); slot++) {
+            stacks.add(inputInventory.getStackInSlot(slot));
+        }
+        return stacks;
+    }
+
     private FusionRecipe findRecipe() {
         if (level == null || level.isClientSide) {
             return null;
         }
-        FusionRecipeInput input = new FusionRecipeInput(List.of(
-                inputInventory.getStackInSlot(0), inputInventory.getStackInSlot(1)));
-        if (input.items().stream().allMatch(ItemStack::isEmpty)) {
+        List<ItemStack> stacks = inputStacks();
+        FusionRecipeInput input = new FusionRecipeInput(stacks);
+        if (stacks.stream().allMatch(ItemStack::isEmpty)) {
             cachedRecipe = null;
             return null;
         }

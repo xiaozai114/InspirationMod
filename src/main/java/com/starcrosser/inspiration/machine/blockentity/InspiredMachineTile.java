@@ -15,6 +15,7 @@ import com.starcrosser.inspiration.machine.plugin.PluginEnergyStorage;
 import com.starcrosser.inspiration.machine.plugin.PluginFluidTank;
 import com.starcrosser.inspiration.machine.plugin.PluginHost;
 import com.starcrosser.inspiration.machine.plugin.PluginInventory;
+import com.starcrosser.inspiration.machine.spec.MachineSpec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.ItemStack;
@@ -65,9 +66,17 @@ public abstract class InspiredMachineTile<T extends InspiredMachineTile<T>> exte
     /** 当前生效的插件倍率，由 {@link #applyPlugins} 写回。 */
     private PluginEffects pluginEffects = PluginEffects.NONE;
 
-    protected InspiredMachineTile(BasicTileBlock<T> block, BlockEntityType<?> type,
+    /** 本机在注册时填的等级与槽数配置。 */
+    private final MachineSpec spec;
+
+    protected InspiredMachineTile(MachineSpec spec, BasicTileBlock<T> block, BlockEntityType<?> type,
                                   BlockPos pos, BlockState state) {
         super(block, type, pos, state);
+        this.spec = spec;
+        // ⚠️ 能量缓冲是在 PoweredTile 的**构造期**创建的，那时 spec 还没赋值，
+        // 所以缓冲是按「tier 1 基准值」建的。这里补一次等级修正。
+        // 子类字段此刻同样还没赋值，因此下面用到的取值方法只允许返回静态常量（见各自的注释）。
+        applyTier();
 
         SidedInventoryComponent<T> slot = new SidedInventoryComponent<>(
                 "inspiration", CHARGE_SLOT_X, CHARGE_SLOT_Y, 1, CHARGE_SLOT_POS);
@@ -119,23 +128,87 @@ public abstract class InspiredMachineTile<T extends InspiredMachineTile<T>> exte
         FacingLabels.add(this, components);
     }
 
-    /** 本机每运行一刻消耗的灵感充能（mB），不含插件加成。 */
+    /**
+     * 本机每运行一刻消耗的灵感充能（mB），**tier 1 的基准值**。
+     * ⚠️ 只准返回静态常量：本方法会在构造期被调用（见 {@link #applyTier}）。
+     */
     public abstract int chargePerTick();
 
     /** 本机的进度条：插件要按倍率改写它的每刻推进量。 */
     protected abstract ProgressBarComponent<T> getProgressBar();
 
-    /** 本机的能量缓冲基准容量（不含插件加成）。 */
+    /**
+     * 本机的能量缓冲基准容量，**tier 1 的基准值**。
+     * ⚠️ 只准返回静态常量：本方法会在构造期被调用（见 {@link #applyTier}）。
+     */
     protected abstract int baseEnergyCapacity();
 
-    /** 本机的灵感充能槽基准容量（mB），不含插件加成；默认是 {@link InspirationCharge#TANK_CAPACITY}。 */
+    /**
+     * 本机每刻的最大输入功率，**tier 1 的基准值**。
+     * ⚠️ 只准返回静态常量：本方法会在构造期被调用（见 {@link #applyTier}）。
+     */
+    protected abstract int maxEnergyInput();
+
+    /**
+     * 本机的灵感充能槽基准容量（mB），**tier 1 的基准值**；默认是 {@link InspirationCharge#TANK_CAPACITY}。
+     * ⚠️ 只准返回静态常量：本方法会在构造期被调用（见 {@link #applyTier}）。
+     */
     protected int baseChargeCapacity() {
         return InspirationCharge.TANK_CAPACITY;
     }
 
-    /** 本机的基准运行速度，不含插件加成；默认是 1。 */
+    /**
+     * 本机的基准运行速度，**tier 1 的基准值**；默认是 1。
+     * ⚠️ 只准返回静态常量：本方法会在构造期被调用（见 {@link #applyTier}）。
+     */
     protected int baseSpeed() {
         return 1;
+    }
+
+    /* ============================ 等级换算 ============================ */
+
+    /** 本机的等级与槽数配置。 */
+    public final MachineSpec spec() {
+        return spec;
+    }
+
+    /** 含等级加成的能量容量（不含插件加成）。 */
+    protected final int tieredEnergyCapacity() {
+        return spec.scale(baseEnergyCapacity());
+    }
+
+    /** 含等级加成后每刻的最大输入功率。 */
+    protected final int tieredMaxEnergyInput() {
+        return spec.scale(maxEnergyInput());
+    }
+
+    /** 含等级加成的灵感罐容量（mB）。 */
+    protected final int tieredChargeCapacity() {
+        return spec.scale(baseChargeCapacity());
+    }
+
+    /** 含等级加成的运行速度。 */
+    protected final int tieredSpeed() {
+        return spec.scale(baseSpeed());
+    }
+
+    /** 含等级加成后每刻消耗的灵感充能（mB）。 */
+    protected final int tieredChargePerTick() {
+        return spec.scale(chargePerTick());
+    }
+
+    /**
+     * 把等级倍率补写到能量缓冲与灵感罐上。
+     * <p>
+     * 只在构造末尾调一次：因为 {@code PoweredTile} 在构造期就创建了能量缓冲，
+     * 那时 {@link #spec} 还是 null，容量只能按基准值建。
+     */
+    private void applyTier() {
+        if (getEnergyStorage() instanceof PluginEnergyStorage<?> storage) {
+            storage.setCapacity(tieredEnergyCapacity());
+            storage.setMaxReceive(tieredMaxEnergyInput());
+        }
+        setChargeCapacity(tieredChargeCapacity());
     }
 
     @Override
@@ -172,14 +245,14 @@ public abstract class InspiredMachineTile<T extends InspiredMachineTile<T>> exte
         plugins.refresh();
     }
 
-    /** 把当前倍率写回能量缓冲、灵感罐与进度条。 */
+    /** 把当前倍率写回能量缓冲、灵感罐与进度条。等级倍率已含在三个 tiered 取值里。 */
     private void applyPlugins(PluginEffects effects) {
         this.pluginEffects = effects;
         if (getEnergyStorage() instanceof PluginEnergyStorage<?> storage) {
-            storage.setCapacity(pluginEffects.energyCapacity(baseEnergyCapacity()));
+            storage.setCapacity(pluginEffects.energyCapacity(tieredEnergyCapacity()));
         }
-        setChargeCapacity(pluginEffects.chargeCapacity(baseChargeCapacity()));
-        getProgressBar().setProgressIncrease(pluginEffects.progressIncrease(baseSpeed()));
+        setChargeCapacity(pluginEffects.chargeCapacity(tieredChargeCapacity()));
+        getProgressBar().setProgressIncrease(pluginEffects.progressIncrease(tieredSpeed()));
         markForUpdate();
     }
 
@@ -197,14 +270,19 @@ public abstract class InspiredMachineTile<T extends InspiredMachineTile<T>> exte
         return pluginEffects;
     }
 
-    /** 含插件加成后每刻实际消耗的灵感充能（mB）。 */
+    /** 含等级与插件加成后每刻实际消耗的灵感充能（mB）。 */
     protected int effectiveChargePerTick() {
-        return pluginEffects.chargePerTick(chargePerTick());
+        return pluginEffects.chargePerTick(tieredChargePerTick());
     }
 
-    /** 含插件加成后每刻实际消耗的电量（FE）。 */
+    /**
+     * 含等级与插件加成后每刻实际消耗的电量（FE）。
+     * <p>
+     * 传进来的 {@code base} 是**配方声明的基准值**（不带机器等级），
+     * 等级倍率在这里统一乘上，所以上位机型不需要再自己写一份耗电倍率。
+     */
     protected int effectiveEnergyPerTick(int base) {
-        return pluginEffects.energyPerTick(base);
+        return pluginEffects.energyPerTick(spec.scale(base));
     }
 
     /* ============================ 充能读写 ============================ */

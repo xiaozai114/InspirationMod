@@ -130,8 +130,14 @@
     对 **github.com:443 的 CONNECT 间歇性/持续性 502**，而 `api.github.com` 始终 200。
     `git push` 报 502 时先重试几次；**持续失败就走 API 兜底**：`git credential fill` 取 token →
     POST `/repos/{r}/git/trees`（带 `base_tree`）→ POST `/git/commits` → PATCH `/git/refs/heads/master`。
-    API 建的 commit 与本地**内容相同但 sha 不同**，必须 `git fetch` + `git reset origin/master` 对齐
-    （reset 前先 `git diff --stat origin/master` 确认为空）。SSH over 443 **不通**（代理切非 TLS 流量）。
+    **改进版（推荐，能省掉对齐这一步）**：别自己拼 tree，**把本地 commit 对象的元数据原样发给
+    API** —— `git cat-file commit <sha>` 拆出 tree/parent/author/committer/message，POST
+    `/git/commits` 时一并传 `author`/`committer`，再 PATCH ref（带 `force:true`）。
+    这样远端生成的 **sha 与本地完全相同**，本地什么都不用 reset。
+    两个坑：① `date` 要用**该时区的本地时间**再贴偏移（`fromtimestamp(ts, timezone(±delta))`），
+    取 UTC 时间再贴 `+08:00` 会让绝对时间差 8 小时 → sha 对不上；
+    ② `git fetch` 同样会被 502 拦，`update-ref` 又因本地没有该对象而失败，所以别指望 fetch 兜底。
+    SSH over 443 **不通**（代理切非 TLS 流量）。
 
 ## 重构
 
