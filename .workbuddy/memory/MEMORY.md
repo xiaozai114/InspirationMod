@@ -52,6 +52,12 @@
 
 ## 配方 / JEI
 
+- **P1.2 后**：四种机器配方继承 `machine/recipe/InspiredRecipe`（持有 result/duration/energyPerTick，
+  实现 assemble/canCraftInDimensions/getResultItem/getToastSymbol），**`getSerializer`/`getType`
+  仍在子类**（返回各自注册条目）。槽位回溯统一在 `RecipeSlotMatcher`（判定条件由调用方传）。
+- ⚠️ **写 round-trip 校验不能直接比 tag**：`Ingredient.CONTENTS_STREAM_CODEC` 发到客户端时把
+  `tag:minecraft:planks` **展开成具体物品**，网络往返后的 JSON 与原始 JSON 天然不同。
+  材料按「接受哪些物品」语义比，标量按名字逐个比。
 - 一个自定义类型 = `XxxRecipe`（`MapCodec`）+ `XxxRecipeInput` + `XxxRecipeSerializer`；
   **≥7 字段必须手写 `StreamCodec.of(写,读)`**（`composite` 只重载到 6）。
 - `RecipeOutput#accept(id,recipe,null)`；**`save(output,"名字")` 落 `minecraft:` 命名空间**，

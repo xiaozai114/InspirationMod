@@ -282,15 +282,48 @@ MachineSpec FUSION_T2 = MachineSpec.of(2, 3, DyeColor.LIGHT_BLUE);  // 等级 2�
 
 #### P1.2 四套配方抽公共基类（B3）
 
-**改法**：抽 `InspiredRecipe`（抽象基类），收拢这四处逐字相同的样板：
+**状态**：✅ 已完成（commit `b912d86`），净减 86 行。
 
-- `assemble(...)`、`canCraftInDimensions(...)`、`getResultItem(...)`、`getToastSymbol()` 等
-- **回溯匹配算法**（现在写了 3 遍）统一到基类一个 `match(...)` 方法
-- `FusionRecipe` 的 9 字段手写 `encode/decode` → 改用统一的字段描述表（或至少加一条单元测试式自检，
-  编解码跑一遍 round-trip，防止字段顺序错位）
+**实际做法**（与原计划有两处出入，都写在下面）：
 
-**验收（关键）**：`runData` 后 `git diff --stat src/generated/resources/data/inspiration/recipe/` **必须为空**。
-只要有一个字节变化，就说明 codec 改错了 → 立刻回滚这一小步。
+1. 新增 `machine/recipe/InspiredRecipe` —— 抽象基类，持有 `result` / `duration` / `energyPerTick`
+   三个字段，实现 `assemble` / `canCraftInDimensions` / `getResultItem` / `getToastSymbol`。
+   ⚠️ `getSerializer()` / `getType()` **没有**收进基类：它们返回各自的注册条目，类型不同，
+   强行统一会把四个配方类型混成一个。
+2. 新增 `machine/recipe/RecipeSlotMatcher` —— 回溯匹配原先写了 **3 遍**（融合的物品、装配的物品、
+   装配的流体），抽成「回溯本身 + 调用方传判定条件 `Accepts`」。
+   **没放进基类**：它是纯静态工具，跟配方实例无关，单独成文件更符合「一个文件一个职责」。
+   求解顺序（需求从 0 起、槽位从 0 起）与原先逐字一致，因此指派结果不变。
+3. `FusionRecipe` 的 9 字段手写 streamCodec —— **保留手写，没有改成字段描述表**。
+   理由：改成描述表要动序列化本身，风险大于收益；改用「编解码 round-trip 自检」兜底更划算
+   （见下）。
+
+**两处行为差异按原样保留，没有跟着统一**：
+
+| 差异 | 融合 | 装配 |
+|---|---|---|
+| 多塞一个无关物品到空槽 | 不匹配（要求非空槽数 == 材料数） | 仍匹配 |
+| 流体需求为空 | — | 直接返回空数组，不走回溯 |
+
+**验收（关键，已通过）**：`runData` 后 `src/generated/` **零变化**。
+
+**自检结果（74 条配方，临时类跑完即删）**：
+
+```
+融合 5 / 重塑 50 / 扭曲 12 / 装配 7 条
+- JSON 往返（配方→tag→配方→tag）逐字节一致
+- 网络往返（配方→字节→配方）按字段逐个一致，且字节刚好读完
+- 材料换到任意槽位（全排列）都仍匹配，指派到的槽满足「种类 + 数量」
+- 数量不足时不匹配；严格 / 宽松两条填槽规则各自维持原样
+```
+
+**顺带查清的一条原版行为（不是 bug）**：`Ingredient.CONTENTS_STREAM_CODEC` 发到客户端时会把
+`tag:minecraft:planks` **展开成具体的 11 种木板**，所以网络往返后的 JSON 与原始 JSON 天然不同。
+自检第一版按「tag 逐字节比对」判它失败，改成按「接受哪些物品」语义比对后通过。
+**写这类 round-trip 校验时不能直接比 tag**。
+
+**留给 P2**：四个 `XxxRecipeSerializer` 仍是各自一份（每个约 50 行），
+可以在注册处统一成一个泛型序列化器，本次未动。
 
 #### P1.3 五件套工厂化（B4）
 
