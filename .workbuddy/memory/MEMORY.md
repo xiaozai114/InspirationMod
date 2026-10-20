@@ -7,6 +7,18 @@
 
 ## 机器（Titanium）
 
+- **机器等级化（P1.1 后）**：一台机器 = 一份 `machine/spec/MachineSpec`（等级 + 物品槽数 +
+  流体槽数 + 进度条颜色）。倍率 **2^(tier-1)**，统一作用于容量/输入功率/耗电/充能/罐容量/速度
+  六项；**槽数与等级独立**。同族两档共用一套 Tile+Block 类，差异全在注册处。
+  加新机型 = 加一条 `ModMachines` 注册，不用写新类。
+- ⚠️ **`createEnergyStorage()` 在 `PoweredTile` 构造期就被调用**（javap 字节码可见），
+  子类字段全是 null → 容量只能按 tier 1 基准建，再由 `applyTier()` 补正；
+  **`applyTier()` 必须在构造体最后一行**（放 super() 后立刻调会因 `chargeTank` 为 null 而 NPE 崩服）。
+- ⚠️ **Titanium `@Save` 不认 `List`**：NBT 处理器只有 BlockPos/数值/枚举/ItemStack/Tank/
+  INBTSerializable。可变数量的组件要手写 `saveAdditional`/`loadAdditional`。
+- ⚠️ 自检摆方块必须 `level.getSharedSpawnPos()` + `setChunkForced`：无玩家时**只有出生点
+  区块被 tick**，别处摆的方块实体一个 tick 都拿不到（表现为"永远不成型"的假失败）。
+
 - 继承 `InspiredMachineTile`（`BasicTile→ActiveTile→PoweredTile→MachineTile`），GUI 自动画
   （176×184：能量条 (8,14)、输入槽 (44,30)、输出槽 (116,39)、侧栏按钮 y=84、充能罐 (150,14)、
   充能槽 (150,74)）。`registerBlockWithTile` 一次注册方块/物品/BE/能力；**机器方块不在

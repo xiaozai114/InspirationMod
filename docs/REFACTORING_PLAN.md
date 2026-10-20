@@ -231,24 +231,54 @@ level.setChunkForced(base.getX() >> 4, base.getZ() >> 4, true);  // 强制加载
 
 > 这一期动的是**游戏逻辑**，风险中等。必须改完立刻跑 `runData` 对照生成文件。
 
-#### P1.1 高能机型合并（B2）
+#### P1.1 机器等级化（B2）—— **已完成（commit `5184ad2` + `e45e830`）**
+
+> 做法比原计划更进一步：不是"给基类补几个倍率钩子、让高能版继承"，
+> 而是把「高能」这个概念**彻底从事物里拿掉**，换成注册时的一份配置。
 
 **问题根因**：基类 `InspiredMachineTile` 已经提供了 `baseSpeed()`、`baseChargeCapacity()` 这类钩子，
 **唯独缺"耗电倍率"钩子**，于是 4 个高能版各自写了一个私有 `energyCost()`，连带把整段逻辑复制了一遍。
 
-**改法**：
+**最终形态**：一台机器 = 一份 {@link MachineSpec}（`machine/spec/MachineSpec.java`）
 
 ```java
-// 在 InspiredMachineTile 里补齐这组钩子（默认值 = 1.0）
-protected double speedMultiplier()     { return 1.0; }
-protected double capacityMultiplier()  { return 1.0; }
-protected double energyUseMultiplier() { return 1.0; }   // ★ 新增：这就是缺的那一个
+MachineSpec FUSION_T1 = MachineSpec.of(1, 2, DyeColor.LIGHT_BLUE);  // 等级 1，2 物品槽
+MachineSpec FUSION_T2 = MachineSpec.of(2, 3, DyeColor.LIGHT_BLUE);  // 等级 2，3 物品槽
 ```
 
-然后让高能版只覆写这三个方法（各 ×2），其余逻辑全部继承。
-**目标形态**：4 组 BE 从「两份 300+ 行」变成「一份基类 + 4 个 30 行子类」，净减约 400 行。
+- **等级只决定数值倍率**：`multiplier() = 2^(tier-1)`（tier 1=×1、2=×2、3=×4），
+  统一作用于能量容量、输入功率、每刻耗电、充能消耗、灵感罐容量、运行速度这六项；
+  矿物扭曲机的等效时运下限（6 → 12）也走同一套。
+- **槽数只决定能吃几条材料**：`itemInputSlots` / `fluidInputSlots`，与等级**互相独立**，
+  所以将来可以有「等级 3 但仍是 2 槽」的机型。
+- 加一台新机器 = 在 `ModMachines` 里加一条注册，**不用写新的方块实体类**。
 
-**验收**：`runServer` 自检里对比每台机器「放同一组插件 → 每刻耗电、速度、容量」与重构前一致。
+**结果**：4 组 BE 从「两份 300+ 行」合并为 4 个通用类（融合 / 重塑 / 扭曲 / 装配），
+删除 8 个文件（4 个 Tile + 4 个 Block），**净减 778 行**。方块 id 全部不变，老存档不受影响。
+
+**验收（已做）**：`runServer` 自检把 9 台机器摆进世界 tick，逐台比对
+能量容量 / 输入功率 / 灵感罐容量 / 每刻充能 / 运行速度 —— **与重构前完全一致，全部通过**。
+`runData` 生成资源**零变化**。
+
+#### ⚠️ P1.1 踩到的三个坑（改机器前必读）
+
+1. **`createEnergyStorage()` 在 `PoweredTile` 的构造期就被调用**（javap 看字节码确认：
+   第 16 行 `invokevirtual createEnergyStorage`），那时所有子类字段都是 null。
+   → 能量缓冲只能先按 tier 1 基准值创建，再在构造末尾补正（新增 `PluginEnergyStorage#setMaxReceive`）。
+2. **补正必须放在构造体最后一行**。我一开始写在 `super()` 之后立刻调用，
+   结果 `chargeTank`（本类自己的字段，在后面才创建）还是 null → 一放机器就 NPE 崩服。
+   这个 bug 是自检抓出来的，不是读代码发现的。
+3. **Titanium 的 `@Save` 不认 `List`**：它的 NBT 处理器只有 BlockPos / 数值 / 枚举 /
+   ItemStack / Tank / INBTSerializable 这些，**没有 List**。装配台的流体罐数量可变，
+   所以改成手写 `saveAdditional` / `loadAdditional`（罐体本身实现了 `INBTSerializable`）。
+
+#### P1.1 的两个遗留项
+
+- **配方类型还没进 `MachineSpec`**。四个族的配方 input 类型各不相同
+  （`FusionRecipeInput` / `AssemblingRecipeInput` / `ReshapingRecipe` 走 ReshaperTask / `TwistingRecipeInput`），
+  泛型上收不进同一份 spec。等 **P1.2 抽出公共配方基类** 之后，再把 `RecipeType` 收进去。
+- **物资重塑机两档的进度条颜色不同**（绿 / 紫）。经你确认按原样保留，
+  于是 `MachineSpec` 里多了一个 `barColor` 字段 —— 这是 spec 里唯一纯外观的字段，属于历史遗留。
 
 #### P1.2 四套配方抽公共基类（B3）
 
