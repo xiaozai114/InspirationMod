@@ -43,8 +43,13 @@
   `neoforge.mods.toml` 里 `required`（**写死版本号**，模板只展开固定几个键）。
 - `aisle(...)` **第一个字符串是最低那行**，调用顺序沿 FRONT 递增；虚影要照抄
   `setActualRelativeOffset`（`SimulatorPattern#rotate`），否则与成型对不上。
-- 仓室基类各走一条：要界面 → `HatchTile extends ActiveTile`（**只有它带 `openGui`**）；
-  能量端口 → `PoweredTile`；灵感罐 → `ActiveTile`。数据每周期重读、**不消耗**。
+- **P1.4 后仓室继承链**：`InventoryHatchTile` → `HatchTile` → `ActiveTile`。
+  `HatchTile` 只覆写 `onActivated` 去 `openGui`（**`ActiveTile` 以下没人调它**，直接继承
+  `ActiveTile` 的仓室右键毫无反应 —— 灵感提供仓原先就是这么打不开的）；
+  `InventoryHatchTile` 管「一个物品栏」，子类只传名字/位置/格数/排布/入槽过滤。
+  能量端口仍走 `PoweredTile`（能量缓冲只在那条链上）。数据每周期重读、**不消耗**。
+- ⚠️ **`@Save` 字段可以放基类**：Titanium 的 `NBTManager` 沿 `getSuperclass()` 递归扫父类
+  字段（已实测），不会漏。**存盘键是字段名不是组件名**（`inventory` 而非 `"input"`）。
 - 状态枚举**顺序即优先级**（`NOT_FORMED→NO_DATA→OUTPUT_FULL→NO_ENERGY→NO_CHARGE→WORKING`）。
   多方块**不装插件**（电/充能来自仓室）。
 - 虚影用 `AFTER_TRANSLUCENT_BLOCKS` + **独立的** `MultiBufferSource.immediate(...)`
