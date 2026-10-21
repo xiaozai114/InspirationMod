@@ -8,12 +8,10 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.state.BlockState;
 
 /**
- * 注意：这里继承 {@link PoweredTile} 而不是 {@link HatchTile} —— 能量缓冲只有
- * {@code PoweredTile} 那条链上有，而它不提供 {@code openGui}，正好这个仓室也不需要界面。
- */
-
-/**
  * 能量端口：结构模拟机唯一进电的地方。
+ * <p>
+ * 注意：这里继承 {@link PoweredTile} 而不是 {@link InventoryHatchTile} —— 能量缓冲只有
+ * {@code PoweredTile} 那条链上有，而它不提供 {@code openGui}，正好这个仓室也不需要界面。
  * <p>
  * 它是个纯缓冲 —— 控制器每刻从这里抽走本刻要用的电，抽不出来就停机等待，
  * 所以「电力不足」永远表现为进度条不动，而不是机器把电偷偷扣成负数。

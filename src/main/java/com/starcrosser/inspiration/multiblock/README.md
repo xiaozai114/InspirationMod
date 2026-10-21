@@ -58,16 +58,26 @@ SHAPE[层][行]（行自下而上，层自后往前）
 
 | 仓室 | 方块实体基类 | 提供 | 界面的必要性 |
 | --- | --- | --- | --- |
-| 输入仓 | `HatchTile`（`ActiveTile`） | 9 格物品 | 要，`openGui` |
-| 输出仓 | `HatchTile` | 18 格物品 | 要 |
-| 能量端口 | `PoweredTile` | 2,000,000 FE 缓冲 | 不要（罐子靠线缆灌） |
-| 灵感提供仓 | `ActiveTile` | 128,000 mB 充能罐 | 不要 |
-| 数据仓 | `HatchTile` | 1 格，只收 `StructureDataItem` | 要 |
+| 输入仓 | `InventoryHatchTile` | 9 格物品 | 要，`openGui` |
+| 输出仓 | `InventoryHatchTile` | 18 格物品 | 要 |
+| 能量端口 | `PoweredTile` | 2,000,000 FE 缓冲 | 不要（缓冲靠线缆灌） |
+| 灵感提供仓 | `InventoryHatchTile` | 1 格充能槽 + 128,000 mB 充能罐 | 要（放灵感换充能） |
+| 数据仓 | `InventoryHatchTile` | 1 格，只收 `StructureDataItem` | 要 |
 
-`HatchTile` 继承 `ActiveTile` 而不是 `BasicTile`：**只有 `ActiveTile` 带 `openGui`**。
-能量端口与灵感提供仓不需要界面，所以走了别的基类 —— 能量缓冲只在 `PoweredTile` 那条链上有。
+继承链是 `InventoryHatchTile` → `HatchTile` → `ActiveTile` → `BasicTile`：
+
+- `HatchTile` 只做一件事：覆写 `onActivated` 去调 `openGui`（**`ActiveTile` 以下没人调它**，
+  直接继承 `ActiveTile` 的仓室右键毫无反应 —— 灵感提供仓原先就是这么打不开的）。
+- `InventoryHatchTile` 管「一个物品栏」：把 `@Save` 字段、建 `InventoryComponent`、
+  `addInventory`、`getInventory` 收在一处，子类只传「名字 / 位置 / 格数 / 排布 / 入槽过滤」。
+- 能量端口不在这条链上：能量缓冲只在 `PoweredTile` 上有，而它不提供 `openGui`。
+
+⚠️ `@Save` 字段放在基类是**安全**的：Titanium 的 `NBTManager` 会沿 `getSuperclass()`
+一路往上扫父类字段，不会漏掉继承来的字段（已实测：存盘键 `inventory`，读回内容一致）。
 
 灵感提供仓的容量按「一份沉船数据跑完一整轮」定：12000 刻 × 8 mB = 96,000 mB，取 128,000。
+补充方式有两种：玩家右键开界面放灵感 / 灵感碎片（每刻按 `InspirationCharge` 折算），
+或管道直接灌灵感充能液体。
 罐体设成 `Action.FILL`，控制器抽的时候必须走 `drainForced`（普通 `drain` 会被动作校验拦掉）。
 
 ## 一轮模拟

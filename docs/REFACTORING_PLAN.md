@@ -328,17 +328,58 @@ MachineSpec FUSION_T2 = MachineSpec.of(2, 3, DyeColor.LIGHT_BLUE);  // 等级 2�
 #### P1.3 五件套工厂化（B4）
 
 `ChargedBuffTool` 接口已有 `default` 方法，但**打不过父类 `Item#use`**（Java 规则：类优先于接口），
-所以 5 个类各自写了 5 个转调方法。
+所以 5 个类各自写了 5 个转调方法（约 28 行 × 5 = 140 行）。
 
-**改法**：抽一个 `ChargedToolItem` 中间基类（extends `Item` implements `ChargedBuffTool`），
-在基类里一次性覆写那 5 个方法并转调接口；5 个具体类只保留各自的 Tier / 数值 / 行为差异。
+**状态**：❌ **不做**（原计划的改法不可行，已与用户确认）。
+
+**为什么不可行**：五件工具各继承**不同的父类** ——
+`ExperienceSword` / `StickyAxe` / `ExperiencePickaxe` / `ExperienceShovel` / `ExperienceHoe`，
+Java 是单继承，插不进一个统一的 `ChargedToolItem extends Item`。
+
+**为什么抽基类也没用**：每个族目前**只有一件**注能工具。抽 5 个「注能版基类」
+（如 `ChargedSwordItem extends ExperienceSword`）只是把这 140 行换个地方放，
+总量不减，还要多 5 个文件 —— 除非以后同族要再加注能工具，否则是净亏。
+
+**保留的做法**：转调逻辑已经全部收在 `ChargedBuff` 的静态方法里，五个类里每个方法都只有一行；
+`ChargedBuffTool` 的接口注释已写明「这 5 个转发是 Java 规则所迫，不是冗余」，
+避免以后有人当成重复代码又来删一次。
+
+**将来真要收敛的前提**：得先把「经验掉落 / 剥皮掉木棍」从继承改成事件驱动，
+五件工具才能统一继承 `ChargedSwordItem`（剑）与 `ChargedDiggerItem`（镐斧铲锄）两个基类。
+改动面不小、有行为风险，等确实要加同族注能工具时再做。
 
 #### P1.4 仓室抽公共基类
 
-5 个仓室 40~63 行，各自实现了一遍「找控制器 → 上报」。
-抽一个 `AbstractHatchTile`，把「向上报控制器、断线清理」收进去。
+**状态**：✅ 已完成。
 
-**回滚点**：`git tag p1-start` → 每小步一个 commit → `git tag p1-done`
+⚠️ **原计划的前提已经过时**：仓室并没有「各自实现一遍找控制器 → 上报」——
+控制器是主动扫描周围方块（`level.getBlockEntity(p) instanceof XxxHatchTile`）的，
+仓室自己完全被动，没有那段重复代码。
+
+**实际收的是另一处重复**：输入仓 / 输出仓 / 数据仓原先各写了一遍同样的四件套
+（`@Save` 字段、建 `InventoryComponent` 并设排布与过滤、`addInventory`、
+`getSelf` + `getInventory`），差别只有「名字 / 位置 / 格数 / 排布 / 能放什么」。
+
+新增 `multiblock/blockentity/part/InventoryHatchTile`（`HatchTile` → `InventoryHatchTile` → 四个仓室），
+把这些收成构造参数。`getSelf()` 用自限定泛型 `(T) this` 一次性实现。
+
+| | 改前 | 改后 |
+| --- | --- | --- |
+| 输入仓 | 41 行 | 24 行 |
+| 输出仓 | 40 行 | 23 行 |
+| 数据仓 | 40 行 | 23 行 |
+
+**关键风险点与验证**：`@Save` 字段搬到基类后会不会不再存盘？
+反编译确认 Titanium 的 `NBTManager` 沿 `getSuperclass()` 递归扫父类字段 → 安全。
+自检实测：存盘键 `inventory`，重新读回内容一致；四仓格数 9 / 18 / 1 / 1 与过滤规则不变。
+（灵感提供仓以前**根本没有物品栏**，所以不存在旧存档键名迁移的问题。）
+
+**没动的两处**：
+- 能量端口仍走 `PoweredTile`（能量缓冲只在那条链上），不在本次收敛范围内；
+- 四个具体仓室类**保留不动**：控制器靠 `instanceof InputHatchTile` 之类的判断收集仓室，
+  合并成一个类要连成型逻辑一起改，风险不划算。
+
+**回滚点**：`git tag p0-done` 已打；P1 每小步一个 commit。
 
 ---
 

@@ -3,7 +3,6 @@ package com.starcrosser.inspiration.multiblock.blockentity.part;
 import com.hrznstudio.titanium.annotation.Save;
 import com.hrznstudio.titanium.block.BasicTileBlock;
 import com.hrznstudio.titanium.component.fluid.FluidTankComponent;
-import com.hrznstudio.titanium.component.inventory.InventoryComponent;
 import com.starcrosser.inspiration.machine.charge.InspirationCharge;
 import com.starcrosser.inspiration.multiblock.ModMultiblocks;
 import net.minecraft.core.BlockPos;
@@ -28,7 +27,7 @@ import net.neoforged.neoforge.fluids.capability.IFluidHandler;
  * 因此它继承 {@link HatchTile} 而不是 {@code ActiveTile}：只有 {@code HatchTile}
  * 覆写了 {@code onActivated} 去调 {@code openGui}，否则右键没有任何反应。
  */
-public class InspirationHatchTile extends HatchTile<InspirationHatchTile> {
+public class InspirationHatchTile extends InventoryHatchTile<InspirationHatchTile> {
 
     public static final int CAPACITY = 128_000;
 
@@ -41,23 +40,14 @@ public class InspirationHatchTile extends HatchTile<InspirationHatchTile> {
     private static final int TANK_Y = 30;
 
     @Save
-    private final InventoryComponent<InspirationHatchTile> chargeSlot;
-
-    @Save
     private final FluidTankComponent<InspirationHatchTile> tank;
 
     public InspirationHatchTile(BlockPos pos, BlockState state) {
+        // 充能槽交给基类建（1 格、只收灵感 / 灵感碎片），本类只多一个罐子
         super((BasicTileBlock<InspirationHatchTile>) ModMultiblocks.INSPIRATION_HATCH.getBlock(),
-                ModMultiblocks.INSPIRATION_HATCH.type().get(), pos, state);
-
-        // 用不带侧向配置的 InventoryComponent：仓室不需要「每面单独设输入输出」的按钮，
-        // 而带侧向的版本会多出一组按钮和对应的语言键。代价是不能设槽位颜色
-        InventoryComponent<InspirationHatchTile> slot = new InventoryComponent<>(
-                "inspiration", CHARGE_SLOT_X, CHARGE_SLOT_Y, 1);
-        slot.setRange(1, 1);
-        slot.setInputFilter((stack, integer) -> InspirationCharge.isChargeSource(stack));
-        this.chargeSlot = slot;
-        addInventory(this.chargeSlot);
+                ModMultiblocks.INSPIRATION_HATCH.type().get(), pos, state,
+                "inspiration", CHARGE_SLOT_X, CHARGE_SLOT_Y, 1, 1, 1,
+                (stack, integer) -> InspirationCharge.isChargeSource(stack));
 
         // 注意参数顺序：容量在第 2 位（name, capacity, posX, posY），与 SidedFluidTankComponent 一致
         FluidTankComponent<InspirationHatchTile> tank = new FluidTankComponent<>(
@@ -67,11 +57,6 @@ public class InspirationHatchTile extends HatchTile<InspirationHatchTile> {
         tank.setValidator(InspirationCharge::isChargeFluid);
         this.tank = tank;
         addTank(this.tank);
-    }
-
-    @Override
-    public InspirationHatchTile getSelf() {
-        return this;
     }
 
     @Override
@@ -85,7 +70,7 @@ public class InspirationHatchTile extends HatchTile<InspirationHatchTile> {
      * 一次尽可能多转化，但不会超过罐体剩余容量，避免溢出丢失。
      */
     private void convertInspiration() {
-        ItemStack stack = chargeSlot.getStackInSlot(0);
+        ItemStack stack = getInventory().getStackInSlot(0);
         int perItem = InspirationCharge.chargeValue(stack);
         if (perItem <= 0) {
             return;
@@ -96,7 +81,7 @@ public class InspirationHatchTile extends HatchTile<InspirationHatchTile> {
             return;
         }
         tank.fill(InspirationCharge.stack(items * perItem), IFluidHandler.FluidAction.EXECUTE);
-        chargeSlot.extractItem(0, items, false);
+        getInventory().extractItem(0, items, false);
         markForUpdate();
     }
 
