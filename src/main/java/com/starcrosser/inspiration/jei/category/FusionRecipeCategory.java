@@ -1,12 +1,12 @@
 package com.starcrosser.inspiration.jei.category;
 
 import com.starcrosser.inspiration.jei.JeiLayout;
+import com.starcrosser.inspiration.jei.JeiSlots;
 import com.starcrosser.inspiration.jei.MachineRecipeText;
 import com.starcrosser.inspiration.jei.ModJeiRecipeTypes;
 import com.starcrosser.inspiration.machine.ModMachines;
 import com.starcrosser.inspiration.machine.recipe.FusionRecipe;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
-import mezz.jei.api.gui.builder.IRecipeSlotBuilder;
 import mezz.jei.api.gui.drawable.IDrawable;
 import mezz.jei.api.gui.placement.HorizontalAlignment;
 import mezz.jei.api.gui.widgets.IRecipeExtrasBuilder;
@@ -16,10 +16,8 @@ import mezz.jei.api.recipe.RecipeType;
 import mezz.jei.api.recipe.category.IRecipeCategory;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.Ingredient;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.Arrays;
 
 /**
  * 物质融合器的 JEI 分类。
@@ -76,31 +74,17 @@ public class FusionRecipeCategory implements IRecipeCategory<FusionRecipe> {
 
     @Override
     public void setRecipe(IRecipeLayoutBuilder builder, FusionRecipe recipe, IFocusGroup focuses) {
-        addInput(builder, JeiLayout.FIRST_INPUT_X, JeiLayout.SLOT_Y, recipe.firstInput(), recipe.firstCount());
-        addInput(builder, JeiLayout.SECOND_INPUT_X, JeiLayout.SLOT_Y, recipe.secondInput(), recipe.secondCount());
+        JeiSlots.input(builder, JeiLayout.FIRST_INPUT_X, JeiLayout.SLOT_Y,
+                recipe.firstInput(), recipe.firstCount());
+        JeiSlots.input(builder, JeiLayout.SECOND_INPUT_X, JeiLayout.SLOT_Y,
+                recipe.secondInput(), recipe.secondCount());
         builder.addOutputSlot(JeiLayout.OUTPUT_X, JeiLayout.SLOT_Y)
                 .setOutputSlotBackground()
                 .addItemStack(recipe.result());
         // 三材料配方（思维矩阵锭 / 末地合金）：第三个输入槽摆在两槽下方，只有强能机型有这个槽位
         if (recipe.hasThirdInput()) {
-            addInput(builder, JeiLayout.THIRD_INPUT_X, JeiLayout.THIRD_INPUT_Y,
+            JeiSlots.input(builder, JeiLayout.THIRD_INPUT_X, JeiLayout.THIRD_INPUT_Y,
                     recipe.thirdInput(), recipe.thirdCount());
-        }
-    }
-
-    /**
-     * 输入槽：一次要消耗多个时改用带数量的 {@link ItemStack} 展示 ——
-     * JEI 会在图标角上画出数字，玩家一眼能看到「这里要攒 4 个」；
-     * 只消耗 1 个时照旧交 {@link Ingredient}，保留标签类原料的多物品轮播。
-     */
-    private static void addInput(IRecipeLayoutBuilder builder, int x, int y, Ingredient ingredient, int count) {
-        IRecipeSlotBuilder slot = builder.addInputSlot(x, y).setStandardSlotBackground();
-        if (count > 1) {
-            slot.addItemStacks(Arrays.stream(ingredient.getItems())
-                    .map(stack -> stack.copyWithCount(count))
-                    .toList());
-        } else {
-            slot.addIngredients(ingredient);
         }
     }
 

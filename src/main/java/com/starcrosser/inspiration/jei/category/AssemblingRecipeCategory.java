@@ -1,6 +1,7 @@
 package com.starcrosser.inspiration.jei.category;
 
 import com.starcrosser.inspiration.jei.JeiLayout;
+import com.starcrosser.inspiration.jei.JeiSlots;
 import com.starcrosser.inspiration.jei.MachineRecipeText;
 import com.starcrosser.inspiration.jei.ModJeiRecipeTypes;
 import com.starcrosser.inspiration.machine.ModMachines;
@@ -89,9 +90,9 @@ public class AssemblingRecipeCategory implements IRecipeCategory<AssemblingRecip
     public void setRecipe(IRecipeLayoutBuilder builder, AssemblingRecipe recipe, IFocusGroup focuses) {
         int count = Math.min(recipe.ingredients().size(), SLOT_POSITIONS.length);
         for (int index = 0; index < count; index++) {
-            builder.addInputSlot(SLOT_POSITIONS[index][0], SLOT_POSITIONS[index][1])
-                    .setStandardSlotBackground()
-                    .addIngredients(recipe.ingredients().get(index));
+            // 走 JeiSlots：一次要消耗多个材料时（例如沉船数据要 64 个木板）在图标角画出数量
+            JeiSlots.input(builder, SLOT_POSITIONS[index][0], SLOT_POSITIONS[index][1],
+                    recipe.ingredients().get(index), recipe.countOf(index));
         }
         builder.addOutputSlot(JeiLayout.GRID_OUTPUT_X, JeiLayout.GRID_OUTPUT_Y)
                 .setOutputSlotBackground()

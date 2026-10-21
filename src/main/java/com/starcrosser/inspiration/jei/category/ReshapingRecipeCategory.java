@@ -1,6 +1,7 @@
 package com.starcrosser.inspiration.jei.category;
 
 import com.starcrosser.inspiration.jei.JeiLayout;
+import com.starcrosser.inspiration.jei.JeiSlots;
 import com.starcrosser.inspiration.jei.MachineRecipeText;
 import com.starcrosser.inspiration.jei.ModJeiRecipeTypes;
 import com.starcrosser.inspiration.machine.ModMachines;
@@ -19,8 +20,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 /**
@@ -74,9 +73,8 @@ public class ReshapingRecipeCategory implements IRecipeCategory<ReshapingRecipe>
 
     @Override
     public void setRecipe(IRecipeLayoutBuilder builder, ReshapingRecipe recipe, IFocusGroup focuses) {
-        IRecipeSlotBuilder firstSlot = builder.addInputSlot(JeiLayout.FIRST_INPUT_X, JeiLayout.SLOT_Y)
-                .setStandardSlotBackground();
-        addCountedIngredient(firstSlot, recipe.input(), recipe.inputCount());
+        JeiSlots.input(builder, JeiLayout.FIRST_INPUT_X, JeiLayout.SLOT_Y,
+                recipe.input(), recipe.inputCount());
 
         IRecipeSlotBuilder secondSlot = builder.addInputSlot(JeiLayout.SECOND_INPUT_X, JeiLayout.SLOT_Y)
                 .setStandardSlotBackground();
@@ -86,19 +84,6 @@ public class ReshapingRecipeCategory implements IRecipeCategory<ReshapingRecipe>
         builder.addOutputSlot(JeiLayout.OUTPUT_X, JeiLayout.SLOT_Y)
                 .setOutputSlotBackground()
                 .addItemStack(recipe.result());
-    }
-
-    /** 一次消耗多个材料的配方，槽位按实际消耗数量展示，避免玩家误以为只要 1 个。 */
-    private static void addCountedIngredient(IRecipeSlotBuilder slot, Ingredient ingredient, int count) {
-        if (count <= 1) {
-            slot.addIngredients(ingredient);
-            return;
-        }
-        List<ItemStack> stacks = new ArrayList<>();
-        for (ItemStack stack : ingredient.getItems()) {
-            stacks.add(stack.copyWithCount(count));
-        }
-        slot.addItemStacks(stacks);
     }
 
     @Override
