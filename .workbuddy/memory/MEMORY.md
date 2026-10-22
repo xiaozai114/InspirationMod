@@ -1,9 +1,9 @@
 # 项目长期备忘（Inspiration，NeoForge 1.21.1）
 
-> **必须 < 10KB**。细则在各包 `README.md`（`machine/`、`multiblock/`、`injection/`、`guide/`、
-> `fluid/`、`item/tool/`、`jei/`、`recipe/`、`datagen/`、`block/`、`radiation/`）；根 `README.md`
-> 管构建/验证。**改哪个包顺手更新那份**。本文件只放**踩坑与决策**。
-> P2 后新增：`registry/`、`datagen/recipe/`、`event/` 三处各自的 README。
+> **必须 < 12KB**，超了先合并同类条目、把细则挪进包 README，别硬删。
+> 细则在各包 `README.md`（`machine/`、`multiblock/`、`injection/`、`guide/`、`fluid/`、
+> `item/tool/`、`jei/`、`recipe/`、`datagen/`、`block/`、`radiation/`、`material/`）；
+> 根 `README.md` 管构建/验证。**改哪个包顺手更新那份**。本文件只放**踩坑与决策**。
 
 ## 机器（Titanium）
 
@@ -19,16 +19,13 @@
   中英语言 / 方块状态 / 挖掘标签 / 战利品表全部遍历清单。**创造栏与 JEI 映射仍手工**。
   **注册顺序 = 标签输出顺序**，别乱排。⚠️ `registerBlockWithTile` 第二参是
   `Supplier<BasicTileBlock<?>>`（**不变型**）。
-- 继承 `InspiredMachineTile`，GUI 自动画（176×184：能量条 (8,14)、输入槽 (44,30)、输出槽 (116,39)、
-  侧栏按钮 y=84、充能罐 (150,14)、充能槽 (150,74)）。侧向按钮标签只能画在按钮**上方**
-  （玩家背包从 **y=102** 起），间隔 18px → ≤ 两个汉字。
 - **只有 `MachineTile#onActivated` 会 `openGui()`**；直接继承 `ActiveTile/PoweredTile`（如仓室）
-  要自己覆写 —— 灵感提供仓打不开就是栽在这。
+  要自己覆写 —— 灵感提供仓打不开就是栽在这。GUI 坐标与侧栏标签限制见 `machine/README.md`。
 - 插件倍率只在 `MachinePluginType#multiplier()` + `PluginEffects`（同类叠乘，speed 派生
   `energyUse=speed²`、`chargeUse=speed`）；容量类只改容量、缩容要截断。
-- 发电类 `PowerGeneratorTile`：`maxReceive=0` + 每刻推六邻。两坑：燃料开工即扣、缓冲满时
-  进度条被打回 0 且**不回调 onFinishWork**。
-- tooltip `MachineTooltips`：**一个键可写多行**（值里 `\n`、代码 `split("\n")`）。
+- 发电类 `PowerGeneratorTile`：`maxReceive=0` + 每刻推六邻；两坑：燃料开工即扣、
+  缓冲满时进度条打回 0 且**不回调 onFinishWork**。
+- `MachineTooltips`：**一个键可写多行**（值里 `\n`、代码 `split("\n")`）。
 
 ## 多方块（结构模拟机）
 
@@ -40,7 +37,6 @@
 - **P1.4 后仓室继承链**：`InventoryHatchTile` → `HatchTile` → `ActiveTile`。`InventoryHatchTile`
   管「一个物品栏」，子类只传名字/位置/格数/排布/入槽过滤。能量端口仍走 `PoweredTile`。
 - 状态枚举**顺序即优先级**（`NOT_FORMED→…→WORKING`），存盘用 `id()`。多方块**不装插件**。
-- 虚影用 `AFTER_TRANSLUCENT_BLOCKS` + **独立的** `MultiBufferSource.immediate(...)`，每格缩 0.8。
 
 ## 配方 / JEI
 
@@ -49,16 +45,33 @@
 - ⚠️ **round-trip 校验不能直接比 tag**：`Ingredient.CONTENTS_STREAM_CODEC` 发到客户端时把
   `tag:minecraft:planks` **展开成具体物品**。材料按「接受哪些物品」语义比。
 - 一个自定义类型 = `XxxRecipe`（`MapCodec`）+ `XxxRecipeInput` + `XxxRecipeSerializer`；
-  **≥7 字段必须手写 `StreamCodec.of(写,读)`**。
-- `RecipeOutput#accept(id,recipe,null)`；**`save(output,"名字")` 落 `minecraft:` 命名空间**。
+  **≥7 字段必须手写 `StreamCodec.of(写,读)`**；`RecipeOutput#accept(id,recipe,null)`；
+  **`save(output,"名字")` 落 `minecraft:` 命名空间**。
 - **P2.2 后**配方按机制拆到 `datagen/recipe/`（11 个文件），`ModRecipesProvider` 只派活。
   ⚠️ `RecipeProvider#has`/`getHasName` 是 **protected static**，拆出去的子类用不了 →
   在 `datagen/recipe/RecipeUnlocks` 里**原样复刻**（照抄 `inventoryTrigger` 的触发器构造），
   各文件 `import static` 引入，调用处一字不改。
 - JEI 三步：`ModJeiRecipeTypes` → `category/XxxRecipeCategory` → `InspirationJeiPlugin`。要点：
   背景尺寸**必须等于 `getWidth()/getHeight()`**；贴图路径**必须带 `.png`**；`addText` 超 maxHeight
-  整段截断；**`MapCodec` 没有 `listOf()`**。自绘用 `draw(...)`（在槽位之后执行）。
+  整段截断；**`MapCodec` 没有 `listOf()`**；自绘用 `draw(...)`（在槽位之后执行）；
   **消耗 >1 个材料用 `jei/JeiSlots.input(builder,x,y,ing,count)`**。
+
+## 材料（`material/`，P2.5 后）
+
+- **一个锭类材料 = `ModMaterials` 里一行声明**：锭 + 方块 + 方块物品 + 碱性/辐射
+  data_map 条目一次注册完；中英语言/物品模型/方块状态/战利品表由各 Provider
+  遍历 `ModMaterials.ALL` 生成。**加材料只需改一处**。
+- **开关**：锭本体总是生成；`block` / `nugget` / `grit` / `molten` 各自一个开关，**默认全关**。
+  `molten(true)` 现在会**抛异常**（流体提取机那期才实现），避免开关存在却看不出没生效。
+- ⚠️ **ID 不带 `_ingot` 的材料必须显式 `.itemId(...)`**：`create("basalt_alloy")` 默认派生
+  `basalt_alloy_ingot`，忘了覆盖就注册出新 ID，而且配方 JSON 会**静默**改用新 ID。
+- 命名（用户拍板）：锭=`ingot`、粉=`dust`（**现有 4 个 `*_dust` ID 不动**）、尘=`grit`
+  （dust 已被粉占用）、粒=`nugget`。尘比粉粗（破碎矿石），粉是化学产物。
+- 碱性 `.alkalinity(int)` 与碱金属行为 `.alkaliRevert(target,radius)` **是两件事**
+  （钙粉碱性 1、半径 0.1f）。值 0 = 不写 data_map、不显示 tooltip、不能当燃料。
+- 有辐射且有方块时，方块与**方块物品**都要登记，值 = 物品值 × 9。
+- **data_maps 改由 `ModDataMapsProvider` 生成**，手写三份已删；**手写与生成不能并存**（同名文件撞），
+  不属于锭材料的条目（粉/盐/矿）在 Provider 里显式登记。
 
 ## 注入 / 材料 / 工具
 
@@ -66,14 +79,13 @@
   超 `max_energy` 在束缚器处 `explode`——**刻意设计，别加保护**。
 - 辐射值要在 **item 与 block 两表各登记一份**。幽匿合金 = 回响碎片 + 强化深板岩融合**得 2 个**。
 - 工具：**`Properties#durability` 对 `TieredItem` 无效** → 用 `ModToolTiers.withDurability`。
-  蓄力 buff 的接口 `default` **打不过父类 `Item#use`**，5 件工具都要显式覆写转调
-  （P1.3 结论：保持现状，Java 单继承无解）。
+  蓄力 buff 的接口 `default` **打不过父类 `Item#use`**（P1.3 结论：保持现状，单继承无解）。
 
 ## 事件
 
 - **P2.3 后** `event/` 放**纯玩法监听器**（不持状态、不被引用）：碎盾传送 / 挖掘掉经验 /
   掉头颅 / 右键方块转换。辐射与数据地图注册**留在原子系统**（是机制主体）。
-- **`event/README.md` 是 18 个订阅类的唯一权威清单**（类 / 总线 / 事件 / 干什么）。
+- **`event/README.md` 是订阅类的唯一权威清单**（类 / 总线 / 事件 / 干什么）。
 - ⚠️ **新版 FML 按事件类型自己分派总线**（`IModBusEvent` → mod 总线），**别写 `bus = Bus.MOD`**
   （已标记待删除）；游戏总线注解照样收得到 `RegisterDataMapTypesEvent`。
 - ⚠️ 一个类只能注册一次（A8：`RightClickBlockHandler` 曾被注解 + 手工各注册一遍）。
@@ -82,8 +94,8 @@
 
 - MC 1.21.1 / **NeoForge 21.1.256** / ModDevGradle **2.0.148** / Titanium 1.21-4.0.50 /
   **JEI 19.57.0.451**（`compileOnly + localRuntime`，**服务端也加载** → `runServer` 能验插件注册）。
-- 新方块要补 blockstates / loot / tags / `blockItem` / 创造页 / 中英语言，**物品本体别忘了
-  `basicItem`**；半透明加 `renderType("translucent")`；**流体方块用 `registerBlockOnly`**。
+- 新方块要补 blockstates / loot / tags / `blockItem` / 创造页 / 中英语言（**物品本体别忘了
+  `basicItem`**）；半透明加 `renderType("translucent")`；**流体方块用 `registerBlockOnly`**。
 - **jar 不随 compileJava 更新**；**`assets/` 只能在客户端校验**。
 - 自检 = 临时类 + `server.halt(false)`，跑完删掉、删 `run/crash-reports`。`server-port` 固定 **25599**。
 - **Gradle**：`gradle.properties` 写死 `org.gradle.java.home=...jdk-21`；**日常一律 `--offline`**
@@ -98,26 +110,25 @@
 3. `tile.getItemHandler(null)` 刚放下时可能为 null → 走
    `level.getCapability(Capabilities.ItemHandler.BLOCK,pos,side)`。
 4. 子类化原版方块注意 codec 泛型不变型；`BooleanProperty` 默认 true、`DirectionProperty` 默认
-   `DOWN`，都要 `registerDefaultState` 改。
-5. **忘了给 `DeferredRegister` 调 `register(modEventBus)` 不报编译错**，只在首次 `.get()` 抛
-   unbound value。配方一次消耗多个材料时 `canProcess` 要校验数量。
-6. **服务端引用客户端类会炸**，给方法标 `@OnlyIn(Dist.CLIENT)`。`TooltipContext` 是 `Item`
-   的嵌套类；`isValidRepairItem` 是 `Item` 的方法。
-7. 自检用 **`FakePlayer`**（`openMenu` 返回 empty）、**改经验调 `giveExperiencePoints`**；
-   **自检类必须带 `@EventBusSubscriber` 注解**，只写 `@SubscribeEvent` 不会挂上总线。
-8. **`testCompileClasspath` 继承 `implementation`**：禁用 `compileTestJava` **不够**
+   `DOWN`。**忘了给 `DeferredRegister` 调 `register(bus)` 不报编译错**，只在首次 `.get()` 抛
+   unbound value；配方一次消耗多个材料时 `canProcess` 要校验数量。
+5. **服务端引用客户端类会炸**，给方法标 `@OnlyIn(Dist.CLIENT)`。
+6. 自检用 **`FakePlayer`**（`openMenu` 返回 empty）、**改经验调 `giveExperiencePoints`**；
+   **自检类必须带 `@EventBusSubscriber` 注解**，只写 `@SubscribeEvent` 不会挂上总线；
+   **不能复用被测代码的坐标计算**（否则只证明「自己和自己一致」）。
+7. **`testCompileClasspath` 继承 `implementation`**：禁用 `compileTestJava` **不够**
    （配置缓存仍序列化它的 classpath），必须 `force`（见构建节）。
-9. **Titanium 组件构造参数顺序互不相同**：`InventoryComponent(name,x,y,slots)`、
+8. **Titanium 组件构造参数顺序互不相同**：`InventoryComponent(name,x,y,slots)`、
    `FluidTankComponent(name,capacity,x,y)`、`EnergyStorageComponent(cap,maxReceive,maxExtract,x,y)`。
    写错**不报编译错**。
-10. **物品栏黑紫棋盘格 = 缺 `models/item/<方块>.json`**（`ModItemModelsProvider` 补 `blockItem`）。
-11. **自检不能复用被测代码的坐标计算**，否则只证明「自己和自己一致」。
-12. **配置缓存按「任务集」分别存条目**；动仓库 `content`/`metadataSources` 会让已缓存解析失效。
-13. **Git 远程** `origin = https://github.com/xiaozai114/InspirationMod`（私有）。代理对
-    **github.com:443 间歇 502**。持续失败走 API 兜底：**把本地 commit 元数据原样发给 API**
-    （`git cat-file commit <sha>` 拆 tree/parent/author/committer/message → POST `/git/commits`
-    → PATCH ref 带 `force:true`）→ 远端 sha 与本地相同。坑：`date` 要用**该时区本地时间**
-    再贴偏移（取 UTC 再贴 `+08:00` 差 8 小时 → sha 对不上）。
+9. **物品栏黑紫棋盘格 = 缺 `models/item/<方块>.json`**（`ModItemModelsProvider` 补 `blockItem`）。
+10. **配置缓存按「任务集」分别存条目**；动仓库 `content`/`metadataSources` 会让已缓存解析失效。
+11. **Git 远程** `origin = https://github.com/xiaozai114/InspirationMod`（私有）。代理对
+    **github.com:443 间歇 502**。持续失败走 API 兜底：把本地 commit 元数据原样发给 API
+    （`git cat-file commit <sha>` → POST `/git/commits` → PATCH ref 带 `force:true`）→ 远端
+    sha 与本地相同。坑：`date` 要用**该时区本地时间**再贴偏移（取 UTC 再贴 `+08:00` 差 8 小时）。
+12. ⚠️ **datagen 哈希缓存会漏判已存在文件的内容变化**：改了代码 `runData` 仍报 `written: 0`、
+    磁盘上还是旧内容 → 假的「零变化」。**核对前先 `rm -rf src/generated/resources` 再跑**。
 
 ## 重构
 
