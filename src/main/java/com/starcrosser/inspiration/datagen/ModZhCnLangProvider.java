@@ -333,6 +333,7 @@ public class ModZhCnLangProvider extends LanguageProvider {
         add("radiation.inspiration.severity.5", "致命辐射病");
 
         add("itemGroup.inspire_tab", "灵感");
+        add("itemGroup.material_tab", "材料");
 
         // 配置界面（保持与英文相同，未汉化）
         add("inspiration.configuration.title", "Inspiration Configs");

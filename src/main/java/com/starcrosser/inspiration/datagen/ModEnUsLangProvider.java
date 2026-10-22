@@ -338,6 +338,7 @@ public class ModEnUsLangProvider extends LanguageProvider {
 
         // 物品组
         add("itemGroup.inspire_tab", "Inspiration");
+        add("itemGroup.material_tab", "Materials");
 
         // 配置界面
         add("inspiration.configuration.title", "Inspiration Configs");

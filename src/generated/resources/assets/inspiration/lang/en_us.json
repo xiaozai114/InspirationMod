@@ -171,6 +171,7 @@
   "item.inspiration.world_data_detector.header": "Seed-randomised injection energy (world seed %s):",
   "item.inspiration.world_data_detector.line": "%s: %s",
   "itemGroup.inspire_tab": "Inspiration",
+  "itemGroup.material_tab": "Materials",
   "jei.inspiration.assembling": "Inspiration Assembling",
   "jei.inspiration.assembling.fluid": "Fluid input: %s mB %s",
   "jei.inspiration.fusion": "Matter Fusion",

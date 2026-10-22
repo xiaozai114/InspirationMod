@@ -171,6 +171,7 @@
   "item.inspiration.world_data_detector.header": "本存档的种子随机注入能量（种子 %s）：",
   "item.inspiration.world_data_detector.line": "%s：%s",
   "itemGroup.inspire_tab": "灵感",
+  "itemGroup.material_tab": "材料",
   "jei.inspiration.assembling": "灵感装配",
   "jei.inspiration.assembling.fluid": "流体原料：%s mB %s",
   "jei.inspiration.fusion": "物质融合",
