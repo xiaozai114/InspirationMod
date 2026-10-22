@@ -1,0 +1,13 @@
+{
+  "type": "inspiration:fusion",
+  "first_input": {
+    "item": "inspiration:coke"
+  },
+  "result": {
+    "count": 1,
+    "id": "inspiration:reduction_powder"
+  },
+  "second_input": {
+    "item": "inspiration:calcium_dust"
+  }
+}
