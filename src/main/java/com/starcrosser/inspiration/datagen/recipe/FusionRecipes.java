@@ -66,14 +66,13 @@ public final class FusionRecipes {
                         new ItemStack(ModMaterials.SCULK_ALLOY.item().get(), 2), 400, 200),
                 null);
 
-        // 焦煤 + 钙粉 -> 还原粉 ×1
-        // 工作台那条（焦煤 + 钙粉 + 灵感 -> 3 个）产量更高但要吃灵感；这条是「不耗灵感」的替代路线，
-        // 代价是慢且只出 1 个。两槽机型就能做。
+        // 焦煤 + 钙粉 -> 还原粉 ×3
+        // 两槽机型就能做，不额外吃灵感
         recipeOutput.accept(
                 ResourceLocation.fromNamespaceAndPath(Inspiration.MODID, "reduction_powder_from_fusion"),
                 new FusionRecipe(Ingredient.of(ModItems.COKE.get()),
                         Ingredient.of(ModItems.CALCIUM_DUST.get()),
-                        new ItemStack(ModItems.REDUCTION_POWDER.get()), 200, 40),
+                        new ItemStack(ModItems.REDUCTION_POWDER.get(), 3), 200, 40),
                 null);
     }
 }
