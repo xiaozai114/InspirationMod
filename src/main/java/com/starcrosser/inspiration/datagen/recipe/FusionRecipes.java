@@ -1,5 +1,6 @@
 package com.starcrosser.inspiration.datagen.recipe;
 
+import com.starcrosser.inspiration.material.ModMaterials;
 import com.starcrosser.inspiration.Inspiration;
 import com.starcrosser.inspiration.item.ModItems;
 import com.starcrosser.inspiration.machine.recipe.FusionRecipe;
@@ -25,14 +26,14 @@ public final class FusionRecipes {
         recipeOutput.accept(
                 ResourceLocation.fromNamespaceAndPath(Inspiration.MODID, "jade_steel_ingot_from_fusion"),
                 new FusionRecipe(Ingredient.of(Items.EMERALD), Ingredient.of(Items.IRON_INGOT),
-                        new ItemStack(ModItems.JADE_STEEL_INGOT.get(), 2), 200, 40),
+                        new ItemStack(ModMaterials.JADE_STEEL.item().get(), 2), 200, 40),
                 null);
 
         // 玄武岩 + 远古残骸 -> 玄武岩合金
         recipeOutput.accept(
                 ResourceLocation.fromNamespaceAndPath(Inspiration.MODID, "basalt_alloy_from_fusion"),
                 new FusionRecipe(Ingredient.of(Items.BASALT), Ingredient.of(Items.ANCIENT_DEBRIS),
-                        new ItemStack(ModItems.BASALT_ALLOY.get(), 2), 400, 120),
+                        new ItemStack(ModMaterials.BASALT_ALLOY.item().get(), 2), 400, 120),
                 null);
 
         // 思维晶体 + 紫水晶 + 下界石英 -> 思维矩阵锭（三材料配方，只有强能机型能做）
@@ -40,7 +41,7 @@ public final class FusionRecipes {
                 ResourceLocation.fromNamespaceAndPath(Inspiration.MODID, "mind_matrix_ingot_from_fusion"),
                 new FusionRecipe(Ingredient.of(ModItems.MIND_CRYSTAL.get()),
                         Ingredient.of(Items.AMETHYST_SHARD),
-                        new ItemStack(ModItems.MIND_MATRIX_INGOT.get()),
+                        new ItemStack(ModMaterials.MIND_MATRIX.item().get()),
                         600, 300,
                         Ingredient.of(Items.QUARTZ)),
                 null);
@@ -52,7 +53,7 @@ public final class FusionRecipes {
                 new FusionRecipe(Ingredient.of(Items.OBSIDIAN), 4,
                         Ingredient.of(Items.ENDER_PEARL), 1,
                         Ingredient.of(Items.PURPUR_BLOCK), 4,
-                        new ItemStack(ModItems.END_ALLOY.get()),
+                        new ItemStack(ModMaterials.END_ALLOY.item().get()),
                         800, 600),
                 null);
 
@@ -62,7 +63,7 @@ public final class FusionRecipes {
                 ResourceLocation.fromNamespaceAndPath(Inspiration.MODID, "sculk_alloy_from_fusion"),
                 new FusionRecipe(Ingredient.of(Items.ECHO_SHARD),
                         Ingredient.of(Items.REINFORCED_DEEPSLATE),
-                        new ItemStack(ModItems.SCULK_ALLOY.get(), 2), 400, 200),
+                        new ItemStack(ModMaterials.SCULK_ALLOY.item().get(), 2), 400, 200),
                 null);
 
         // 焦煤 + 钙粉 -> 还原粉 ×1
