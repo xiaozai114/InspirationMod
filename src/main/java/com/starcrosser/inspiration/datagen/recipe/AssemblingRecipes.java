@@ -1,5 +1,6 @@
 package com.starcrosser.inspiration.datagen.recipe;
 
+import com.starcrosser.inspiration.material.ModMaterials;
 import com.starcrosser.inspiration.Inspiration;
 import com.starcrosser.inspiration.item.ModItems;
 import com.starcrosser.inspiration.machine.recipe.AssemblingRecipe;
@@ -30,19 +31,19 @@ public final class AssemblingRecipes {
 
     public static void build(RecipeOutput recipeOutput) {
         assembling(recipeOutput, "assembling/capacitor_plugin",
-                List.of(Ingredient.of(ModItems.PLASMA_INGOT.get()), Ingredient.of(ModItems.REDSTONE_INGOT.get())),
+                List.of(Ingredient.of(ModMaterials.PLASMA.item().get()), Ingredient.of(ModMaterials.REDSTONE.item().get())),
                 new ItemStack(ModItems.CAPACITOR_PLUGIN.get()), ASSEMBLE_DURATION, ASSEMBLE_ENERGY_PER_TICK);
 
         assembling(recipeOutput, "assembling/inspiration_plugin",
-                List.of(Ingredient.of(ModItems.PLASMA_INGOT.get()), Ingredient.of(ModItems.INSPIRATION.get())),
+                List.of(Ingredient.of(ModMaterials.PLASMA.item().get()), Ingredient.of(ModItems.INSPIRATION.get())),
                 new ItemStack(ModItems.INSPIRATION_PLUGIN.get()), ASSEMBLE_DURATION, ASSEMBLE_ENERGY_PER_TICK);
 
         assembling(recipeOutput, "assembling/speed_plugin",
-                List.of(Ingredient.of(ModItems.PLASMA_INGOT.get()), Ingredient.of(Items.SUGAR)),
+                List.of(Ingredient.of(ModMaterials.PLASMA.item().get()), Ingredient.of(Items.SUGAR)),
                 new ItemStack(ModItems.SPEED_PLUGIN.get()), ASSEMBLE_DURATION, ASSEMBLE_ENERGY_PER_TICK);
 
         assembling(recipeOutput, "assembling/capacitor_downgrade_plugin",
-                List.of(Ingredient.of(ModItems.PLASMA_INGOT.get()), Ingredient.of(Items.IRON_INGOT)),
+                List.of(Ingredient.of(ModMaterials.PLASMA.item().get()), Ingredient.of(Items.IRON_INGOT)),
                 new ItemStack(ModItems.CAPACITOR_DOWNGRADE_PLUGIN.get()),
                 ASSEMBLE_DURATION, ASSEMBLE_ENERGY_PER_TICK);
 
@@ -57,8 +58,8 @@ public final class AssemblingRecipes {
         // 空白数据：五种材料，四个输入槽的普通装配台放不下，只有高能机型做得了
         assembling(recipeOutput, "assembling/blank_data",
                 List.of(Ingredient.of(Items.QUARTZ),
-                        Ingredient.of(ModItems.PLASMA_INGOT.get()),
-                        Ingredient.of(ModItems.MIND_MATRIX_INGOT.get()),
+                        Ingredient.of(ModMaterials.PLASMA.item().get()),
+                        Ingredient.of(ModMaterials.MIND_MATRIX.item().get()),
                         Ingredient.of(Items.GLASS),
                         Ingredient.of(ModItems.EPHEMERAL_MATERIAL.get())),
                 new ItemStack(ModItems.BLANK_DATA.get()),

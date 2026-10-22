@@ -40,30 +40,24 @@ public class ModDataMapsProvider extends DataMapProvider {
         Builder<Integer, Item> itemRadiation = builder(RadiationDataMaps.ITEM_RADIATION);
         Builder<Integer, Block> blockRadiation = builder(RadiationDataMaps.BLOCK_RADIATION);
 
-        /* ---- 碱性：只属于物品（放进碱性发电机每刻产电「100 × 值」FE） ----
-         * 按物品 ID 字母序登记，与原先手写文件的排列一致。 */
+        /* ---- 碱性：只属于物品（放进碱性发电机每刻产电「100 × 值」FE）---- */
         alkalinity.add(id("calcium_dust"), 1, false);
         alkalinity.add(id("cesium_dust"), 4, false);
-        for (InspirationMaterial material : ModMaterials.ALL) {
-            material.addDataMaps(alkalinity, null, null);
-        }
         alkalinity.add(id("francium_dust"), 6, false);
-        // 钫锭等钫材料迁进 ModMaterials 后，这一行由材料自己出
-        alkalinity.add(id("francium_ingot"), 6, false);
 
-        /* ---- 辐射：按「钫的处理流程」排列（粗盐 → 盐 → 粉 → 锭 → 矿 → 盐块 → 块） ---- */
+        /* ---- 辐射：不属于锭材料的东西按「钫的处理流程」登记 ----
+         * 钫锭（3）与钫块（27）是材料，由 ModMaterials.FRANCIUM 自己出。 */
         itemRadiation.add(id("raw_francium_salt"), 1, false);
         itemRadiation.add(id("francium_salt"), 1, false);
         itemRadiation.add(id("francium_dust"), 3, false);
-        // 钫锭：迁进 ModMaterials 后由材料自己出
-        itemRadiation.add(id("francium_ingot"), 3, false);
         itemRadiation.add(id("francium_salt_ore"), 1, false);
         itemRadiation.add(id("francium_salt_block"), 9, false);
-        // 钫块：同上
-        itemRadiation.add(id("francium_block"), 27, false);
-
         blockRadiation.add(id("francium_salt_ore"), 1, false);
         blockRadiation.add(id("francium_salt_block"), 9, false);
-        blockRadiation.add(id("francium_block"), 27, false);
+
+        // 材料自带的条目：碱性给锭，辐射给锭 + 方块 + 方块物品（值为 0 的不写）
+        for (InspirationMaterial material : ModMaterials.ALL) {
+            material.addDataMaps(alkalinity, itemRadiation, blockRadiation);
+        }
     }
 }

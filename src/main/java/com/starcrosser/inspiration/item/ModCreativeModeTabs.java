@@ -35,13 +35,13 @@ public class ModCreativeModeTabs {
                         output.accept(ModItems.STICKY_AXE);
                         output.accept(ModItems.HEAD_HUNTER_AXE);
                         output.accept(ModItems.EXP_PICKAXE);
-                        output.accept(ModItems.REDSTONE_INGOT);
-                        output.accept(ModItems.LAPIS_INGOT);
-                        output.accept(ModBlocks.LAPIS_INGOT_BLOCK);
-                        output.accept(ModBlocks.REDSTONE_INGOT_BLOCK);
+                        output.accept(ModMaterials.REDSTONE.item());
+                        output.accept(ModMaterials.LAPIS.item());
+                        output.accept(ModMaterials.LAPIS.block());
+                        output.accept(ModMaterials.REDSTONE.block());
                         output.accept(ModItems.UNSTABLE_CORE);
                         output.accept(ModItems.UNSTABLE_SMITHING_TEMPLATE);
-                        output.accept(ModItems.EXTREME_ALLOY);
+                        output.accept(ModMaterials.EXTREME_ALLOY.item());
                         output.accept(ModBlocks.EPHEMERAL_ORE);
                         output.accept(ModItems.EPHEMERAL_MATERIAL);
                         output.accept(ModItems.SOD);
@@ -63,9 +63,9 @@ public class ModCreativeModeTabs {
                         output.accept(ModBlocks.CESIUM_SALT_BLOCK);
                         output.accept(ModMaterials.CESIUM.block());
                         output.accept(ModMaterials.CESIUM.item());
-                        output.accept(ModItems.JADE_STEEL_INGOT);
+                        output.accept(ModMaterials.JADE_STEEL.item());
                         output.accept(ModBlocks.EMPOWERED_TNT_ITEM);
-                        output.accept(ModItems.BASALT_ALLOY);
+                        output.accept(ModMaterials.BASALT_ALLOY.item());
                         output.accept(ModItems.REINFORCED_CORE);
                         output.accept(ModItems.POWERFUL_CORE);
                         output.accept(ModItems.HIGH_ENERGY_CORE);
@@ -82,7 +82,7 @@ public class ModCreativeModeTabs {
                         output.accept(ModItems.ENERGIZED_JADE_STEEL_HOE);
                         output.accept(ModItems.ENERGIZED_JADE_STEEL_SHOVEL);
                         output.accept(ModItems.BASALT_ALLOY_FIRESTRIKER);
-                        output.accept(ModItems.PLASMA_INGOT);
+                        output.accept(ModMaterials.PLASMA.item());
                         output.accept(ModItems.CAPACITOR_PLUGIN);
                         output.accept(ModItems.INSPIRATION_PLUGIN);
                         output.accept(ModItems.SPEED_PLUGIN);
@@ -95,33 +95,33 @@ public class ModCreativeModeTabs {
                         output.accept(ModMachines.MINERAL_TWISTER);
                         output.accept(ModItems.INSPIRATION_SHARD);
                         output.accept(ModItems.MIND_CRYSTAL);
-                        output.accept(ModItems.MIND_MATRIX_INGOT);
+                        output.accept(ModMaterials.MIND_MATRIX.item());
                         output.accept(ModBlocks.DILUTED_INSPIRATION_CRYSTAL);
                         output.accept(ModBlocks.CONCENTRATED_INSPIRATION_CRYSTAL);
                         output.accept(ModBlocks.INSPIRATION_GEL);
                         output.accept(ModBlocks.MIND_CRYSTAL_ROCK);
                         output.accept(ModMachines.INSPIRATION_ASSEMBLER);
                         // 注入合成：底座 —— 束缚器 —— 注入枪 —— 绑定器 —— 两种新物品
-                        output.accept(ModBlocks.BASALT_ALLOY_BLOCK);
-                        output.accept(ModBlocks.SCULK_ALLOY_BLOCK);
-                        output.accept(ModItems.SCULK_ALLOY);
+                        output.accept(ModMaterials.BASALT_ALLOY.block());
+                        output.accept(ModMaterials.SCULK_ALLOY.block());
+                        output.accept(ModMaterials.SCULK_ALLOY.item());
                         output.accept(ModInjection.MATTER_BINDER);
                         output.accept(ModInjection.INJECTION_GUN);
                         output.accept(ModItems.BINDING_WAND);
                         output.accept(ModItems.BASALT_BASE);
-                        output.accept(ModItems.ENERGIZED_JADE_STEEL);
+                        output.accept(ModMaterials.ENERGIZED_JADE_STEEL.item());
                         // 辐射：钫盐系列与盖革计数器
                         output.accept(ModBlocks.FRANCIUM_SALT_ORE);
                         output.accept(ModItems.RAW_FRANCIUM_SALT);
                         output.accept(ModItems.FRANCIUM_SALT);
                         output.accept(ModBlocks.FRANCIUM_SALT_BLOCK);
                         output.accept(ModItems.FRANCIUM_DUST);
-                        output.accept(ModBlocks.FRANCIUM_BLOCK);
-                        output.accept(ModItems.FRANCIUM_INGOT);
+                        output.accept(ModMaterials.FRANCIUM.block());
+                        output.accept(ModMaterials.FRANCIUM.item());
                         output.accept(ModItems.GEIGER_COUNTER);
                         // 下一阶段主材与量具
-                        output.accept(ModItems.END_ALLOY);
-                        output.accept(ModItems.EPHEMERAL_ALLOY);
+                        output.accept(ModMaterials.END_ALLOY.item());
+                        output.accept(ModMaterials.EPHEMERAL_ALLOY.item());
                         output.accept(ModItems.END_ALLOY_SHIELD);
                         output.accept(ModItems.WORLD_DATA_DETECTOR);
                         output.accept(ModItems.WORLD_BREAKER);
@@ -130,9 +130,9 @@ public class ModCreativeModeTabs {
                         output.accept(ModMachines.CORE_DRILLER);
                         output.accept(ModItems.BASALT_ALLOY_DRILL_BIT);
                         // 高能阶段：三种注能锭与三台高能机器
-                        output.accept(ModItems.ENERGIZED_LAPIS_INGOT);
-                        output.accept(ModItems.ENERGIZED_PLASMA_INGOT);
-                        output.accept(ModItems.ENERGIZED_REDSTONE_INGOT);
+                        output.accept(ModMaterials.ENERGIZED_LAPIS.item());
+                        output.accept(ModMaterials.ENERGIZED_PLASMA.item());
+                        output.accept(ModMaterials.ENERGIZED_REDSTONE.item());
                         output.accept(ModMachines.HIGH_ENERGY_MINERAL_TWISTER);
                         output.accept(ModMachines.HIGH_ENERGY_INSPIRATION_ASSEMBLER);
                         output.accept(ModMachines.HIGH_ENERGY_MATTER_RESHAPER);

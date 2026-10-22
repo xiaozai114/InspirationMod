@@ -35,9 +35,7 @@ public class ModBlockStatesProvider extends BlockStateProvider {
         // 褐煤块
         simpleBlock(ModBlocks.LIGNITE_BLOCK.get(), cubeAll(ModBlocks.LIGNITE_BLOCK.get()));
         // 红石锭块
-        simpleBlock(ModBlocks.REDSTONE_INGOT_BLOCK.get(), cubeAll(ModBlocks.REDSTONE_INGOT_BLOCK.get()));
         // 青金石锭块
-        simpleBlock(ModBlocks.LAPIS_INGOT_BLOCK.get(), cubeAll(ModBlocks.LAPIS_INGOT_BLOCK.get()));
         // 无恒矿石
         simpleBlock(ModBlocks.EPHEMERAL_ORE.get(), cubeAll(ModBlocks.EPHEMERAL_ORE.get()));
         simpleBlock(ModBlocks.CESIUM_SALT_ORE.get(), cubeAll(ModBlocks.CESIUM_SALT_ORE.get()));
@@ -52,7 +50,6 @@ public class ModBlockStatesProvider extends BlockStateProvider {
         // 钫盐系列：矿石与两种块，形状同铯盐系列
         simpleBlock(ModBlocks.FRANCIUM_SALT_ORE.get(), cubeAll(ModBlocks.FRANCIUM_SALT_ORE.get()));
         simpleBlock(ModBlocks.FRANCIUM_SALT_BLOCK.get(), cubeAll(ModBlocks.FRANCIUM_SALT_BLOCK.get()));
-        simpleBlock(ModBlocks.FRANCIUM_BLOCK.get(), cubeAll(ModBlocks.FRANCIUM_BLOCK.get()));
         // 思维流体反应生成的方块
         translucentBlock(ModBlocks.DILUTED_INSPIRATION_CRYSTAL.get());
         translucentBlock(ModBlocks.CONCENTRATED_INSPIRATION_CRYSTAL.get());
@@ -69,8 +66,6 @@ public class ModBlockStatesProvider extends BlockStateProvider {
         hatchBlock(ModMultiblocks.DATA_HATCH);
 
         // 玄武岩合金块：注入结构的 1 级底座
-        simpleBlock(ModBlocks.BASALT_ALLOY_BLOCK.get(), cubeAll(ModBlocks.BASALT_ALLOY_BLOCK.get()));
-        simpleBlock(ModBlocks.SCULK_ALLOY_BLOCK.get(), cubeAll(ModBlocks.SCULK_ALLOY_BLOCK.get()));
 
         IntensifiedTNTBlock();
         EmpoweredTNTBlock();

@@ -32,12 +32,9 @@ public class ModEnUsLangProvider extends LanguageProvider {
         add(ModItems.STICKY_AXE.get(), "Inspiration Axe");
         add(ModItems.HEAD_HUNTER_AXE.get(), "Head Hunter");
         add(ModItems.EXP_PICKAXE.get(), "Inspiration Pickaxe");
-        add(ModItems.REDSTONE_INGOT.get(), "Redstone Ingot");
-        add(ModItems.LAPIS_INGOT.get(), "Lapis Ingot");
         add(ModItems.UNSTABLE_CORE.get(), "§7Unstable Core");
         add(ModItems.UNSTABLE_SMITHING_TEMPLATE.get(), "§7Unstable Smithing Template");
         add(ModItems.WORLD_BREAKER.get(), "§9WORLD§4BREAKER§5XX");
-        add(ModItems.EXTREME_ALLOY.get(), "§9Extreme §4Alloy");
         add(ModItems.EPHEMERAL_MATERIAL.get(), "§5Ephemeral Material");
         add(ModItems.SOD.get(), "Sod");
         add(ModItems.EXP_HOE.get(), "Inspiration Hoe");
@@ -67,8 +64,6 @@ public class ModEnUsLangProvider extends LanguageProvider {
             }
         }
         add(ModItems.REDUCTION_POWDER.get(), "Reduction Powder");
-        add(ModItems.JADE_STEEL_INGOT.get(), "Jade Steel Ingot");
-        add(ModItems.BASALT_ALLOY.get(), "Basalt Alloy");
         add(ModItems.REINFORCED_CORE.get(), "Reinforced Core");
         add(ModItems.POWERFUL_CORE.get(), "Powerful Core");
         add(ModItems.HIGH_ENERGY_CORE.get(), "High-Energy Core");
@@ -78,14 +73,12 @@ public class ModEnUsLangProvider extends LanguageProvider {
         add(ModItems.JADE_STEEL_UPGRADE_TEMPLATE.get(), "Jade Steel Upgrade Template");
         add(ModItems.BASALT_ALLOY_FIRESTRIKER.get(), "Basalt Alloy Firestriker");
         add(ModItems.BASALT_ALLOY_DRILL_BIT.get(), "Basalt Alloy Drill Bit");
-        add(ModItems.PLASMA_INGOT.get(), "Plasma Ingot");
         add(ModItems.CAPACITOR_PLUGIN.get(), "Capacitor Plugin");
         add(ModItems.INSPIRATION_PLUGIN.get(), "Inspiration Plugin");
         add(ModItems.SPEED_PLUGIN.get(), "Speed Plugin");
         add(ModItems.CAPACITOR_DOWNGRADE_PLUGIN.get(), "Capacitor Downgrade Plugin");
         add(ModItems.INSPIRATION_SHARD.get(), "Inspiration Shard");
         add(ModItems.MIND_CRYSTAL.get(), "Mind Crystal");
-        add(ModItems.MIND_MATRIX_INGOT.get(), "Mind Matrix Ingot");
         add(ModItems.JADE_STEEL_SWORD.get(), "Jade Steel Sword");
         add(ModItems.JADE_STEEL_AXE.get(), "Jade Steel Axe");
         add(ModItems.JADE_STEEL_PICKAXE.get(), "Jade Steel Pickaxe");
@@ -97,7 +90,6 @@ public class ModEnUsLangProvider extends LanguageProvider {
         add(ModItems.ENERGIZED_JADE_STEEL_PICKAXE.get(), "Energized Jade Steel Pickaxe");
         add(ModItems.ENERGIZED_JADE_STEEL_HOE.get(), "Energized Jade Steel Hoe");
         add(ModItems.ENERGIZED_JADE_STEEL_SHOVEL.get(), "Energized Jade Steel Shovel");
-        add(ModItems.SCULK_ALLOY.get(), "Sculk Alloy");
         add(ModBlocks.DILUTED_INSPIRATION_CRYSTAL.get(), "Diluted Inspiration Crystal");
         add(ModBlocks.CONCENTRATED_INSPIRATION_CRYSTAL.get(), "Concentrated Inspiration Crystal");
         add(ModBlocks.INSPIRATION_GEL.get(), "Inspiration Gel");
@@ -105,31 +97,21 @@ public class ModEnUsLangProvider extends LanguageProvider {
         add(ModBlocks.CESIUM_SALT_BLOCK.get(), "Cesium Salt Block");
         add(ModBlocks.EMPOWERED_TNT_ITEM.get(), "Empowered TNT");
         // 注入合成
-        add(ModBlocks.BASALT_ALLOY_BLOCK.get(), "Basalt Alloy Block");
-        add(ModBlocks.SCULK_ALLOY_BLOCK.get(), "Sculk Alloy Block");
         add(ModInjection.MATTER_BINDER.getBlock(), "Matter Binder");
         add(ModInjection.INJECTION_GUN.getBlock(), "Injection Gun");
         add(ModItems.BINDING_WAND.get(), "Binding Wand");
         add(ModItems.BASALT_BASE.get(), "Basalt Base");
-        add(ModItems.ENERGIZED_JADE_STEEL.get(), "Energized Jade Steel");
         // 辐射：钫盐系列与盖革计数器
         add(ModBlocks.FRANCIUM_SALT_ORE.get(), "Francium Salt Ore");
         add(ModItems.RAW_FRANCIUM_SALT.get(), "Raw Francium Salt");
         add(ModItems.FRANCIUM_SALT.get(), "Francium Salt");
         add(ModBlocks.FRANCIUM_SALT_BLOCK.get(), "Francium Salt Block");
         add(ModItems.FRANCIUM_DUST.get(), "Francium Dust");
-        add(ModBlocks.FRANCIUM_BLOCK.get(), "Francium Block");
-        add(ModItems.FRANCIUM_INGOT.get(), "Francium Ingot");
         add(ModItems.GEIGER_COUNTER.get(), "Geiger Counter");
-        add(ModItems.END_ALLOY.get(), "End Alloy");
-        add(ModItems.EPHEMERAL_ALLOY.get(), "§dEphemeral Alloy");
         add(ModItems.END_ALLOY_SHIELD.get(), "End Alloy Shield");
         add(ModItems.WORLD_DATA_DETECTOR.get(), "World Data Detector");
         add(ModItems.GUIDE_BOOK.get(), "Inspiration Guide");
         // 高能阶段
-        add(ModItems.ENERGIZED_LAPIS_INGOT.get(), "Energized Lapis Ingot");
-        add(ModItems.ENERGIZED_PLASMA_INGOT.get(), "Energized Plasma Ingot");
-        add(ModItems.ENERGIZED_REDSTONE_INGOT.get(), "Energized Redstone Ingot");
         // 多方块：结构模拟机
         add(ModBlocks.HIGH_ENERGY_MACHINE_CASING.get(), "High-Energy Machine Casing");
         add(ModMultiblocks.INPUT_HATCH.getBlock(), "Input Hatch");
@@ -148,8 +130,6 @@ public class ModEnUsLangProvider extends LanguageProvider {
         // 流体
         add("fluid_type.inspiration.inspiration_charge", "Inspiration Charge");
         // 方块
-        add(ModBlocks.REDSTONE_INGOT_BLOCK.get(), "Redstone Ingot Block");
-        add(ModBlocks.LAPIS_INGOT_BLOCK.get(), "Lapis Ingot Block");
         add(ModBlocks.LIGNITE_BLOCK.get(), "lignite block");
         add(ModBlocks.INTENSIFIED_TNT.get(), "intensified_tnt");
         add(ModBlocks.EPHEMERAL_ORE.get(), "§5Ephemeral Ore");

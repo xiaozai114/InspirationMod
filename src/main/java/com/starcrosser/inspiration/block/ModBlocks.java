@@ -53,12 +53,6 @@ public class ModBlocks {
     public static final DeferredBlock<Block> LIGNITE_BLOCK =
             registerBlocks("lignite_block",()->new Block(BlockBehaviour.Properties.of().strength(1.5F,6.0F)
                     .requiresCorrectToolForDrops()));
-    public static final DeferredBlock<Block> LAPIS_INGOT_BLOCK =
-            registerBlocks("lapis_ingot_block",()->new Block(BlockBehaviour.Properties.of().strength(2.5F,6.0F)
-                    .requiresCorrectToolForDrops()));
-    public static final DeferredBlock<Block> REDSTONE_INGOT_BLOCK =
-            registerBlocks("redstone_ingot_block",()->new Block(BlockBehaviour.Properties.of().strength(2.5F,6.0F)
-                    .requiresCorrectToolForDrops()));
     public static final DeferredBlock<Block> EPHEMERAL_ORE =
             registerBlocks("ephemeral_ore",()->new Block(BlockBehaviour.Properties.of().strength(1.0F,10.0F)
                     .requiresCorrectToolForDrops()));
@@ -76,9 +70,6 @@ public class ModBlocks {
             registerBlocks("francium_salt_block", () -> new Block(BlockBehaviour.Properties.of()
                     .strength(2.0F, 6.0F).requiresCorrectToolForDrops()));
     /** 钫块：9 枚钫锭压成一块。 */
-    public static final DeferredBlock<Block> FRANCIUM_BLOCK =
-            registerBlocks("francium_block", () -> new Block(BlockBehaviour.Properties.of()
-                    .strength(2.5F, 6.0F).requiresCorrectToolForDrops()));
 
     public static final DeferredBlock<ReinforcedTNTBlock> INTENSIFIED_TNT =
             registerBlocks("intensified_tnt",()->new ReinforcedTNTBlock(BlockBehaviour.Properties.of().strength(0.0F,0.0F)
@@ -108,16 +99,8 @@ public class ModBlocks {
             ));
 
     /** 玄武岩合金块：注入结构用的 1 级底座，方块等级由 injection_tier_1 标签声明。 */
-    public static final DeferredBlock<Block> BASALT_ALLOY_BLOCK =
-            registerBlocks("basalt_alloy_block", () -> new Block(BlockBehaviour.Properties.of()
-                    .strength(3.0F, 9.0F).requiresCorrectToolForDrops()));
 
     /** 幽匿合金块：注入结构用的 2 级底座，方块等级由 injection_tier_2 标签声明。 */
-    public static final DeferredBlock<Block> SCULK_ALLOY_BLOCK =
-            registerBlocks("sculk_alloy_block", () -> new Block(BlockBehaviour.Properties.of()
-                    .mapColor(MapColor.COLOR_CYAN)
-                    .sound(SoundType.SCULK)
-                    .strength(4.0F, 12.0F).requiresCorrectToolForDrops()));
 
     /* ==================== 思维流体反应生成的四类方块 ==================== */
 

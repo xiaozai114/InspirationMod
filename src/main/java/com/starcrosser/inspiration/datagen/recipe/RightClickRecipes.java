@@ -56,7 +56,7 @@ public final class RightClickRecipes {
                 .save(recipeOutput, ResourceLocation.fromNamespaceAndPath(Inspiration.MODID, "insp_calcium"));
 
         // 钫盐块 + 还原粉（右键）-> 钫块，与铯同法
-        RightClickBlockRecipeBuilder.recipe(ModBlocks.FRANCIUM_SALT_BLOCK.get(), ModBlocks.FRANCIUM_BLOCK.get(),
+        RightClickBlockRecipeBuilder.recipe(ModBlocks.FRANCIUM_SALT_BLOCK.get(), ModMaterials.FRANCIUM.block().get(),
                         new ItemStack(ModItems.REDUCTION_POWDER.get()))
                 .unlockedBy("has_reduction_powder", has(ModItems.REDUCTION_POWDER.get()))
                 .save(recipeOutput, ResourceLocation.fromNamespaceAndPath(Inspiration.MODID, "francium_block_from_salt"));

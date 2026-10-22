@@ -103,7 +103,7 @@ public final class CraftingRecipes {
                 .save(recipeOutput, ResourceLocation.fromNamespaceAndPath(Inspiration.MODID, "guide_book"));
 
         // 红石锭（默认 ID "redstone_ingot"）
-        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.REDSTONE_INGOT.get(), 2)
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModMaterials.REDSTONE.item().get(), 2)
                 .group("redstone_ingot")
                 .pattern("###")
                 .pattern("#Y#")
@@ -115,7 +115,7 @@ public final class CraftingRecipes {
                 .save(recipeOutput);
 
         // 青金石锭（默认 ID "lapis_ingot"）
-        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.LAPIS_INGOT.get(), 2)
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModMaterials.LAPIS.item().get(), 2)
                 .group("lapis_ingot")
                 .pattern("###")
                 .pattern("#Y#")
@@ -136,32 +136,32 @@ public final class CraftingRecipes {
                 .save(recipeOutput);
 
         // 红石锭块（默认 ID "redstone_ingot_block"）
-        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ModBlocks.REDSTONE_INGOT_BLOCK.get())
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ModMaterials.REDSTONE.block().get())
                 .pattern("###")
                 .pattern("###")
                 .pattern("###")
-                .define('#', ModItems.REDSTONE_INGOT.get())
-                .unlockedBy(getHasName(ModItems.REDSTONE_INGOT.get()), has(ModItems.REDSTONE_INGOT.get()))
+                .define('#', ModMaterials.REDSTONE.item().get())
+                .unlockedBy(getHasName(ModMaterials.REDSTONE.item().get()), has(ModMaterials.REDSTONE.item().get()))
                 .save(recipeOutput);
 
         // 青金石锭块（默认 ID "lapis_ingot_block"）
-        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ModBlocks.LAPIS_INGOT_BLOCK.get())
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ModMaterials.LAPIS.block().get())
                 .pattern("###")
                 .pattern("###")
                 .pattern("###")
-                .define('#', ModItems.LAPIS_INGOT.get())
-                .unlockedBy(getHasName(ModItems.LAPIS_INGOT.get()), has(ModItems.LAPIS_INGOT.get()))
+                .define('#', ModMaterials.LAPIS.item().get())
+                .unlockedBy(getHasName(ModMaterials.LAPIS.item().get()), has(ModMaterials.LAPIS.item().get()))
                 .save(recipeOutput);
 
         // 极限合金（默认 ID "extreme_alloy"）
-        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.EXTREME_ALLOY.get())
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModMaterials.EXTREME_ALLOY.item().get())
                 .pattern("###")
                 .pattern("#YZ")
                 .pattern("ZZZ")
-                .define('#', ModBlocks.REDSTONE_INGOT_BLOCK.get())
+                .define('#', ModMaterials.REDSTONE.block().get())
                 .define('Y', ModItems.INSPIRATION.get())
-                .define('Z', ModBlocks.LAPIS_INGOT_BLOCK.get())
-                .unlockedBy(getHasName(ModBlocks.REDSTONE_INGOT_BLOCK.get()), has(ModBlocks.REDSTONE_INGOT_BLOCK.get()))
+                .define('Z', ModMaterials.LAPIS.block().get())
+                .unlockedBy(getHasName(ModMaterials.REDSTONE.block().get()), has(ModMaterials.REDSTONE.block().get()))
                 .save(recipeOutput);
 
         // 空信标（默认 ID "empty_beacon"）
@@ -208,8 +208,8 @@ public final class CraftingRecipes {
                 .define('#', Tags.Items.RODS_WOODEN)
                 .define('X', Items.CRYING_OBSIDIAN)
                 .define('Y', ModItems.INSPIRATION.get())
-                .define('W', ModItems.REDSTONE_INGOT.get())
-                .define('Z', ModItems.LAPIS_INGOT.get())
+                .define('W', ModMaterials.REDSTONE.item().get())
+                .define('Z', ModMaterials.LAPIS.item().get())
                 .unlockedBy(getHasName(ModItems.INSPIRATION.get()), has(ModItems.INSPIRATION.get()))
                 .save(recipeOutput);
 
@@ -243,7 +243,7 @@ public final class CraftingRecipes {
                 .pattern("J")
                 .pattern("I")
                 .pattern("S")
-                .define('J', ModItems.JADE_STEEL_INGOT.get())
+                .define('J', ModMaterials.JADE_STEEL.item().get())
                 .define('I', ModItems.INSPIRATION.get())
                 .define('S', Items.SLIME_BALL)
                 .unlockedBy(getHasName(ModItems.INSPIRATION.get()), has(ModItems.INSPIRATION.get()))
@@ -308,17 +308,17 @@ public final class CraftingRecipes {
                 .save(recipeOutput, "lignite_from_lignite_block");
 
         // 红石锭块分解，需要指定 ID
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ModItems.REDSTONE_INGOT.get(), 9)
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ModMaterials.REDSTONE.item().get(), 9)
                 .group("redstone_ingot")
-                .requires(ModBlocks.REDSTONE_INGOT_BLOCK.get())
-                .unlockedBy(getHasName(ModBlocks.REDSTONE_INGOT_BLOCK.get()), has(ModBlocks.REDSTONE_INGOT_BLOCK.get()))
+                .requires(ModMaterials.REDSTONE.block().get())
+                .unlockedBy(getHasName(ModMaterials.REDSTONE.block().get()), has(ModMaterials.REDSTONE.block().get()))
                 .save(recipeOutput, "redstone_ingot_from_redstone_ingot_block");
 
         // 青金石锭块分解，需要指定 ID
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ModItems.LAPIS_INGOT.get(), 9)
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ModMaterials.LAPIS.item().get(), 9)
                 .group("lapis_ingot")
-                .requires(ModBlocks.LAPIS_INGOT_BLOCK.get())
-                .unlockedBy(getHasName(ModBlocks.LAPIS_INGOT_BLOCK.get()), has(ModBlocks.LAPIS_INGOT_BLOCK.get()))
+                .requires(ModMaterials.LAPIS.block().get())
+                .unlockedBy(getHasName(ModMaterials.LAPIS.block().get()), has(ModMaterials.LAPIS.block().get()))
                 .save(recipeOutput, "lapis_ingot_from_lapis_ingot_block");
 
         // 灵感面包（默认 ID "inspiread"）

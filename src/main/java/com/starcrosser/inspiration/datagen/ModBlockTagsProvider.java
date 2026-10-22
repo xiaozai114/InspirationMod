@@ -35,9 +35,9 @@ public class ModBlockTagsProvider extends BlockTagsProvider {
         tag(BlockTags.MINEABLE_WITH_PICKAXE)
                 .add(ModBlocks.LIGNITE_BLOCK.get())
                 .add(ModBlocks.EPHEMERAL_ORE.get())
-                .add(ModBlocks.LAPIS_INGOT_BLOCK.get())
+                .add(ModMaterials.LAPIS.block().get())
                 .add(ModBlocks.CESIUM_SALT_ORE.get())
-                .add(ModBlocks.REDSTONE_INGOT_BLOCK.get());
+                .add(ModMaterials.REDSTONE.block().get());
 
         // 思维流体反应生成的方块：三种结晶/岩石都要镐，灵感凝胶与原版粘液块一样徒手可取
         tag(BlockTags.MINEABLE_WITH_PICKAXE)
@@ -49,7 +49,7 @@ public class ModBlockTagsProvider extends BlockTagsProvider {
         tag(BlockTags.MINEABLE_WITH_PICKAXE)
                 .add(ModBlocks.FRANCIUM_SALT_ORE.get())
                 .add(ModBlocks.FRANCIUM_SALT_BLOCK.get())
-                .add(ModBlocks.FRANCIUM_BLOCK.get());
+                .add(ModMaterials.FRANCIUM.block().get());
 
         // 机器（遍历 MachineRegistry，加机器不用再往这里补）
         for (Block machine : MachineRegistry.blocks()) {
@@ -66,17 +66,17 @@ public class ModBlockTagsProvider extends BlockTagsProvider {
 
         // 注入结构
         tag(BlockTags.MINEABLE_WITH_PICKAXE)
-                .add(ModBlocks.BASALT_ALLOY_BLOCK.get())
-                .add(ModBlocks.SCULK_ALLOY_BLOCK.get())
+                .add(ModMaterials.BASALT_ALLOY.block().get())
+                .add(ModMaterials.SCULK_ALLOY.block().get())
                 .add(ModInjection.MATTER_BINDER.getBlock())
                 .add(ModInjection.INJECTION_GUN.getBlock());
 
         // 注入等级：底座方块决定这套结构能执行的配方等级上限。
         // 1 级 = 玄武岩合金块，2 级 = 幽匿合金块；将来再加底座只需续写 tag(injection_tier_N)。
         tag(InjectionTiers.tag(1))
-                .add(ModBlocks.BASALT_ALLOY_BLOCK.get());
+                .add(ModMaterials.BASALT_ALLOY.block().get());
         tag(InjectionTiers.tag(2))
-                .add(ModBlocks.SCULK_ALLOY_BLOCK.get());
+                .add(ModMaterials.SCULK_ALLOY.block().get());
 
         // 挖掘等级：石镐及以上
         tag(BlockTags.NEEDS_STONE_TOOL)
@@ -91,15 +91,15 @@ public class ModBlockTagsProvider extends BlockTagsProvider {
                 .add(ModBlocks.FRANCIUM_SALT_ORE.get())
                 .add(ModBlocks.CONCENTRATED_INSPIRATION_CRYSTAL.get())
                 .add(ModBlocks.MIND_CRYSTAL_ROCK.get())
-                .add(ModBlocks.LAPIS_INGOT_BLOCK.get())
-                .add(ModBlocks.REDSTONE_INGOT_BLOCK.get());
+                .add(ModMaterials.LAPIS.block().get())
+                .add(ModMaterials.REDSTONE.block().get());
         // 机器同样遍历清单
         for (Block machine : MachineRegistry.blocks()) {
             ironToolTag.add(machine);
         }
         ironToolTag
-                .add(ModBlocks.BASALT_ALLOY_BLOCK.get())
-                .add(ModBlocks.SCULK_ALLOY_BLOCK.get())
+                .add(ModMaterials.BASALT_ALLOY.block().get())
+                .add(ModMaterials.SCULK_ALLOY.block().get())
                 .add(ModInjection.MATTER_BINDER.getBlock())
                 .add(ModInjection.INJECTION_GUN.getBlock());
 

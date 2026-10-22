@@ -43,7 +43,7 @@ public final class MachineBlockRecipes {
                 .pattern("APA")
                 .pattern("CAC")
                 .define('C', ModMaterials.CESIUM.item().get())
-                .define('A', ModItems.BASALT_ALLOY.get())
+                .define('A', ModMaterials.BASALT_ALLOY.item().get())
                 .define('P', ModItems.REINFORCED_CORE.get())
                 .unlockedBy(getHasName(ModItems.REINFORCED_CORE.get()), has(ModItems.REINFORCED_CORE.get()))
                 .save(recipeOutput);
@@ -52,62 +52,62 @@ public final class MachineBlockRecipes {
 
         // 物质融合器：主要材料铁锭 + 次要材料红石锭 + 强化核心
         machine(recipeOutput, ModMachines.MATTER_FUSION_MACHINE.getBlock(),
-                Items.IRON_INGOT, ModItems.REDSTONE_INGOT.get(), ModItems.REINFORCED_CORE.get(),
+                Items.IRON_INGOT, ModMaterials.REDSTONE.item().get(), ModItems.REINFORCED_CORE.get(),
                 null, ModItems.REINFORCED_CORE.get());
 
         // 强能物质融合机：物质融合器升级，次要材料换成红石锭块
         machine(recipeOutput, ModMachines.ENERGIZED_MATTER_FUSION_MACHINE.getBlock(),
-                ModItems.ENERGIZED_JADE_STEEL.get(), ModBlocks.REDSTONE_INGOT_BLOCK.get(),
+                ModMaterials.ENERGIZED_JADE_STEEL.item().get(), ModMaterials.REDSTONE.block().get(),
                 ModItems.POWERFUL_CORE.get(), ModMachines.MATTER_FUSION_MACHINE.getBlock(),
-                ModItems.ENERGIZED_JADE_STEEL.get());
+                ModMaterials.ENERGIZED_JADE_STEEL.item().get());
 
         // 地核钻探者：翡翠钢 + 思维矩阵锭
         machine(recipeOutput, ModMachines.CORE_DRILLER.getBlock(),
-                ModItems.JADE_STEEL_INGOT.get(), ModItems.MIND_MATRIX_INGOT.get(),
-                ModItems.POWERFUL_CORE.get(), null, ModItems.MIND_MATRIX_INGOT.get());
+                ModMaterials.JADE_STEEL.item().get(), ModMaterials.MIND_MATRIX.item().get(),
+                ModItems.POWERFUL_CORE.get(), null, ModMaterials.MIND_MATRIX.item().get());
 
         // 物质重塑机：翡翠钢 + 红石锭块
         machine(recipeOutput, ModMachines.MATTER_RESHAPER.getBlock(),
-                ModItems.JADE_STEEL_INGOT.get(), ModBlocks.REDSTONE_INGOT_BLOCK.get(),
+                ModMaterials.JADE_STEEL.item().get(), ModMaterials.REDSTONE.block().get(),
                 ModItems.POWERFUL_CORE.get(), null, ModItems.POWERFUL_CORE.get());
 
         // 矿物扭曲机：与物质重塑机同构，次要材料换成青金石锭块
         machine(recipeOutput, ModMachines.MINERAL_TWISTER.getBlock(),
-                ModItems.JADE_STEEL_INGOT.get(), ModBlocks.LAPIS_INGOT_BLOCK.get(),
+                ModMaterials.JADE_STEEL.item().get(), ModMaterials.LAPIS.block().get(),
                 ModItems.POWERFUL_CORE.get(), null, ModItems.POWERFUL_CORE.get());
 
         // 灵感装配台：翡翠钢 + 等离子锭
         machine(recipeOutput, ModMachines.INSPIRATION_ASSEMBLER.getBlock(),
-                ModItems.JADE_STEEL_INGOT.get(), ModItems.PLASMA_INGOT.get(),
-                ModItems.POWERFUL_CORE.get(), null, ModItems.PLASMA_INGOT.get());
+                ModMaterials.JADE_STEEL.item().get(), ModMaterials.PLASMA.item().get(),
+                ModItems.POWERFUL_CORE.get(), null, ModMaterials.PLASMA.item().get());
 
         // 高能矿物扭曲机：矿物扭曲机 + 高能核心 + 注能青金石锭
         machine(recipeOutput, ModMachines.HIGH_ENERGY_MINERAL_TWISTER.getBlock(),
-                ModItems.EPHEMERAL_ALLOY.get(), ModItems.ENERGIZED_LAPIS_INGOT.get(),
+                ModMaterials.EPHEMERAL_ALLOY.item().get(), ModMaterials.ENERGIZED_LAPIS.item().get(),
                 ModItems.HIGH_ENERGY_CORE.get(), ModMachines.MINERAL_TWISTER.getBlock(),
                 ModItems.HIGH_ENERGY_CORE.get());
 
         // 高能灵感装配台：灵感装配台 + 高能核心 + 注能等离子锭
         machine(recipeOutput, ModMachines.HIGH_ENERGY_INSPIRATION_ASSEMBLER.getBlock(),
-                ModItems.EPHEMERAL_ALLOY.get(), ModItems.ENERGIZED_PLASMA_INGOT.get(),
+                ModMaterials.EPHEMERAL_ALLOY.item().get(), ModMaterials.ENERGIZED_PLASMA.item().get(),
                 ModItems.HIGH_ENERGY_CORE.get(), ModMachines.INSPIRATION_ASSEMBLER.getBlock(),
                 ModItems.HIGH_ENERGY_CORE.get());
 
         // 碱性发电机：翡翠钢 + 红石锭 + 发电核心（发电类机器，不跑配方）
         machine(recipeOutput, ModMachines.ALKALINE_REACTOR.getBlock(),
-                ModItems.JADE_STEEL_INGOT.get(), ModItems.REDSTONE_INGOT.get(),
+                ModMaterials.JADE_STEEL.item().get(), ModMaterials.REDSTONE.item().get(),
                 ModItems.GENERATION_CORE.get(), null, ModItems.GENERATION_CORE.get());
 
         // RTG反应堆：无恒合金 + 注能红石锭 + 反应核心
         machine(recipeOutput, ModMachines.RTG_GENERATOR.getBlock(),
-                ModItems.EPHEMERAL_ALLOY.get(), ModItems.ENERGIZED_REDSTONE_INGOT.get(),
+                ModMaterials.EPHEMERAL_ALLOY.item().get(), ModMaterials.ENERGIZED_REDSTONE.item().get(),
                 ModItems.REACTION_CORE.get(), null, ModItems.REACTION_CORE.get());
 
         // ==================== 结构模拟机（多方块） ====================
 
         // 结构模拟机：无恒合金 + 幽匿合金锭 + 高能核心，形状与其他机器一致
         machine(recipeOutput, ModMultiblocks.STRUCTURE_SIMULATOR.getBlock(),
-                ModItems.EPHEMERAL_ALLOY.get(), ModItems.SCULK_ALLOY.get(),
+                ModMaterials.EPHEMERAL_ALLOY.item().get(), ModMaterials.SCULK_ALLOY.item().get(),
                 ModItems.HIGH_ENERGY_CORE.get(), null, ModItems.HIGH_ENERGY_CORE.get());
 
         // 高能机器外壳：1 份无恒物质把 8 个铁块染成淡紫，一次出 8 个
@@ -130,7 +130,7 @@ public final class MachineBlockRecipes {
         hatch(recipeOutput, ModMultiblocks.OUTPUT_HATCH.getBlock(),
                 casing, Blocks.CHEST, casing);
         hatch(recipeOutput, ModMultiblocks.ENERGY_PORT.getBlock(),
-                ModItems.REDSTONE_INGOT.get(), casing, casing);
+                ModMaterials.REDSTONE.item().get(), casing, casing);
         hatch(recipeOutput, ModMultiblocks.INSPIRATION_HATCH.getBlock(),
                 ModItems.INSPIRATION.get(), casing, casing);
         hatch(recipeOutput, ModMultiblocks.DATA_HATCH.getBlock(),
@@ -138,7 +138,7 @@ public final class MachineBlockRecipes {
 
         // 高能物质重塑机：物质重塑机 + 高能核心 + 注能红石锭（除高能倍率外无额外效果）
         machine(recipeOutput, ModMachines.HIGH_ENERGY_MATTER_RESHAPER.getBlock(),
-                ModItems.EPHEMERAL_ALLOY.get(), ModItems.ENERGIZED_REDSTONE_INGOT.get(),
+                ModMaterials.EPHEMERAL_ALLOY.item().get(), ModMaterials.ENERGIZED_REDSTONE.item().get(),
                 ModItems.HIGH_ENERGY_CORE.get(), ModMachines.MATTER_RESHAPER.getBlock(),
                 ModItems.HIGH_ENERGY_CORE.get());
 
@@ -147,9 +147,9 @@ public final class MachineBlockRecipes {
                 .pattern("PPP")
                 .pattern("PCP")
                 .pattern("PPP")
-                .define('P', ModItems.PLASMA_INGOT.get())
+                .define('P', ModMaterials.PLASMA.item().get())
                 .define('C', ModItems.UNSTABLE_CORE.get())
-                .unlockedBy(getHasName(ModItems.PLASMA_INGOT.get()), has(ModItems.PLASMA_INGOT.get()))
+                .unlockedBy(getHasName(ModMaterials.PLASMA.item().get()), has(ModMaterials.PLASMA.item().get()))
                 .save(recipeOutput);
 
         // 注入枪：发射器外圈围 4 个翡翠钢锭
@@ -157,9 +157,9 @@ public final class MachineBlockRecipes {
                 .pattern(" J ")
                 .pattern("JDJ")
                 .pattern(" J ")
-                .define('J', ModItems.JADE_STEEL_INGOT.get())
+                .define('J', ModMaterials.JADE_STEEL.item().get())
                 .define('D', Items.DISPENSER)
-                .unlockedBy(getHasName(ModItems.JADE_STEEL_INGOT.get()), has(ModItems.JADE_STEEL_INGOT.get()))
+                .unlockedBy(getHasName(ModMaterials.JADE_STEEL.item().get()), has(ModMaterials.JADE_STEEL.item().get()))
                 .save(recipeOutput);
 
         // 绑定器：注入枪与束缚器之外的第三件工具，用翡翠钢 + 末影之眼
@@ -167,37 +167,37 @@ public final class MachineBlockRecipes {
                 .pattern("  J")
                 .pattern(" E ")
                 .pattern("J  ")
-                .define('J', ModItems.JADE_STEEL_INGOT.get())
+                .define('J', ModMaterials.JADE_STEEL.item().get())
                 .define('E', Items.ENDER_EYE)
-                .unlockedBy(getHasName(ModItems.JADE_STEEL_INGOT.get()), has(ModItems.JADE_STEEL_INGOT.get()))
+                .unlockedBy(getHasName(ModMaterials.JADE_STEEL.item().get()), has(ModMaterials.JADE_STEEL.item().get()))
                 .save(recipeOutput);
 
         // 玄武岩合金块（1 级底座）
-        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ModBlocks.BASALT_ALLOY_BLOCK.get())
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ModMaterials.BASALT_ALLOY.block().get())
                 .pattern("###")
                 .pattern("###")
                 .pattern("###")
-                .define('#', ModItems.BASALT_ALLOY.get())
-                .unlockedBy(getHasName(ModItems.BASALT_ALLOY.get()), has(ModItems.BASALT_ALLOY.get()))
+                .define('#', ModMaterials.BASALT_ALLOY.item().get())
+                .unlockedBy(getHasName(ModMaterials.BASALT_ALLOY.item().get()), has(ModMaterials.BASALT_ALLOY.item().get()))
                 .save(recipeOutput);
 
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ModItems.BASALT_ALLOY.get(), 9)
-                .requires(ModBlocks.BASALT_ALLOY_BLOCK.get())
-                .unlockedBy(getHasName(ModBlocks.BASALT_ALLOY_BLOCK.get()), has(ModBlocks.BASALT_ALLOY_BLOCK.get()))
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ModMaterials.BASALT_ALLOY.item().get(), 9)
+                .requires(ModMaterials.BASALT_ALLOY.block().get())
+                .unlockedBy(getHasName(ModMaterials.BASALT_ALLOY.block().get()), has(ModMaterials.BASALT_ALLOY.block().get()))
                 .save(recipeOutput, "basalt_alloy_from_block");
 
         // 幽匿合金块（2 级底座）
-        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ModBlocks.SCULK_ALLOY_BLOCK.get())
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ModMaterials.SCULK_ALLOY.block().get())
                 .pattern("###")
                 .pattern("###")
                 .pattern("###")
-                .define('#', ModItems.SCULK_ALLOY.get())
-                .unlockedBy(getHasName(ModItems.SCULK_ALLOY.get()), has(ModItems.SCULK_ALLOY.get()))
+                .define('#', ModMaterials.SCULK_ALLOY.item().get())
+                .unlockedBy(getHasName(ModMaterials.SCULK_ALLOY.item().get()), has(ModMaterials.SCULK_ALLOY.item().get()))
                 .save(recipeOutput);
 
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ModItems.SCULK_ALLOY.get(), 9)
-                .requires(ModBlocks.SCULK_ALLOY_BLOCK.get())
-                .unlockedBy(getHasName(ModBlocks.SCULK_ALLOY_BLOCK.get()), has(ModBlocks.SCULK_ALLOY_BLOCK.get()))
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ModMaterials.SCULK_ALLOY.item().get(), 9)
+                .requires(ModMaterials.SCULK_ALLOY.block().get())
+                .unlockedBy(getHasName(ModMaterials.SCULK_ALLOY.block().get()), has(ModMaterials.SCULK_ALLOY.block().get()))
                 .save(recipeOutput,
                         ResourceLocation.fromNamespaceAndPath(Inspiration.MODID, "sculk_alloy_from_block"));
     }

@@ -1,5 +1,6 @@
 package com.starcrosser.inspiration.item.custom;
 
+import com.starcrosser.inspiration.material.ModMaterials;
 import com.starcrosser.inspiration.item.ModItems;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -28,6 +29,6 @@ public class EndAlloyShieldItem extends ShieldItem {
     /** 铁砧修复：末地合金（以及原版盾牌认的木板）都能拿来补。 */
     @Override
     public boolean isValidRepairItem(ItemStack toRepair, ItemStack repair) {
-        return repair.is(ModItems.END_ALLOY.get()) || super.isValidRepairItem(toRepair, repair);
+        return repair.is(ModMaterials.END_ALLOY.item().get()) || super.isValidRepairItem(toRepair, repair);
     }
 }

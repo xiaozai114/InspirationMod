@@ -33,12 +33,9 @@ public class ModZhCnLangProvider extends LanguageProvider {
         add(ModItems.STICKY_AXE.get(), "灵感之斧");
         add(ModItems.HEAD_HUNTER_AXE.get(), "斩首者");
         add(ModItems.EXP_PICKAXE.get(), "灵感之镐");
-        add(ModItems.REDSTONE_INGOT.get(), "红石锭");
-        add(ModItems.LAPIS_INGOT.get(), "青金石锭");
         add(ModItems.UNSTABLE_CORE.get(), "§7不稳核心");
         add(ModItems.UNSTABLE_SMITHING_TEMPLATE.get(), "§7不稳锻造模板");
         add(ModItems.WORLD_BREAKER.get(), "§9破§a界§4者§5XX");
-        add(ModItems.EXTREME_ALLOY.get(), "§9极限§4合金");
         add(ModItems.EPHEMERAL_MATERIAL.get(), "§5无恒物质");
         add(ModItems.SOD.get(), "草皮");
         add(ModItems.EXP_HOE.get(), "灵感之锄");
@@ -69,8 +66,6 @@ public class ModZhCnLangProvider extends LanguageProvider {
             }
         }
         add(ModItems.REDUCTION_POWDER.get(),"还原粉");
-        add(ModItems.JADE_STEEL_INGOT.get(),"翡翠钢锭");
-        add(ModItems.BASALT_ALLOY.get(),"玄武岩合金");
         add(ModItems.REINFORCED_CORE.get(),"强化核心");
         add(ModItems.POWERFUL_CORE.get(),"强能核心");
         add(ModItems.HIGH_ENERGY_CORE.get(),"高能核心");
@@ -80,14 +75,12 @@ public class ModZhCnLangProvider extends LanguageProvider {
         add(ModItems.JADE_STEEL_UPGRADE_TEMPLATE.get(),"翡翠钢升级模板");
         add(ModItems.BASALT_ALLOY_FIRESTRIKER.get(),"玄武岩合金打火石");
         add(ModItems.BASALT_ALLOY_DRILL_BIT.get(),"玄武岩合金钻头");
-        add(ModItems.PLASMA_INGOT.get(),"等离子锭");
         add(ModItems.CAPACITOR_PLUGIN.get(),"电容插件");
         add(ModItems.INSPIRATION_PLUGIN.get(),"灵感插件");
         add(ModItems.SPEED_PLUGIN.get(),"速度插件");
         add(ModItems.CAPACITOR_DOWNGRADE_PLUGIN.get(),"电容降级插件");
         add(ModItems.INSPIRATION_SHARD.get(),"灵感碎片");
         add(ModItems.MIND_CRYSTAL.get(),"思维晶体");
-        add(ModItems.MIND_MATRIX_INGOT.get(),"思维矩阵锭");
         add(ModItems.JADE_STEEL_SWORD.get(),"翡翠钢剑");
         add(ModItems.JADE_STEEL_AXE.get(),"翡翠钢斧");
         add(ModItems.JADE_STEEL_PICKAXE.get(),"翡翠钢镐");
@@ -99,7 +92,6 @@ public class ModZhCnLangProvider extends LanguageProvider {
         add(ModItems.ENERGIZED_JADE_STEEL_PICKAXE.get(),"注能翡翠钢镐");
         add(ModItems.ENERGIZED_JADE_STEEL_HOE.get(),"注能翡翠钢锄");
         add(ModItems.ENERGIZED_JADE_STEEL_SHOVEL.get(),"注能翡翠钢铲");
-        add(ModItems.SCULK_ALLOY.get(),"幽匿合金");
         add(ModBlocks.DILUTED_INSPIRATION_CRYSTAL.get(),"稀释灵感结晶");
         add(ModBlocks.CONCENTRATED_INSPIRATION_CRYSTAL.get(),"浓缩灵感结晶");
         add(ModBlocks.INSPIRATION_GEL.get(),"灵感凝胶");
@@ -107,31 +99,21 @@ public class ModZhCnLangProvider extends LanguageProvider {
         add(ModBlocks.CESIUM_SALT_BLOCK.get(),"铯盐块");
         add(ModBlocks.EMPOWERED_TNT_ITEM.get(),"强能TNT");
         // 注入合成
-        add(ModBlocks.BASALT_ALLOY_BLOCK.get(),"玄武岩合金块");
-        add(ModBlocks.SCULK_ALLOY_BLOCK.get(),"幽匿合金块");
         add(ModInjection.MATTER_BINDER.getBlock(),"物质束缚器");
         add(ModInjection.INJECTION_GUN.getBlock(),"注入枪");
         add(ModItems.BINDING_WAND.get(),"绑定器");
         add(ModItems.BASALT_BASE.get(),"玄武岩基底");
-        add(ModItems.ENERGIZED_JADE_STEEL.get(),"注能翡翠钢");
         // 辐射：钫盐系列与盖革计数器
         add(ModBlocks.FRANCIUM_SALT_ORE.get(),"钫盐矿");
         add(ModItems.RAW_FRANCIUM_SALT.get(),"粗钫盐");
         add(ModItems.FRANCIUM_SALT.get(),"钫盐");
         add(ModBlocks.FRANCIUM_SALT_BLOCK.get(),"钫盐块");
         add(ModItems.FRANCIUM_DUST.get(),"钫粉");
-        add(ModBlocks.FRANCIUM_BLOCK.get(),"钫块");
-        add(ModItems.FRANCIUM_INGOT.get(),"钫锭");
         add(ModItems.GEIGER_COUNTER.get(),"盖革计数器");
-        add(ModItems.END_ALLOY.get(),"末地合金");
-        add(ModItems.EPHEMERAL_ALLOY.get(),"§d无恒合金");
         add(ModItems.END_ALLOY_SHIELD.get(),"末地合金盾牌");
         add(ModItems.WORLD_DATA_DETECTOR.get(),"世界数据探测器");
         add(ModItems.GUIDE_BOOK.get(),"灵感指导书");
         // 高能阶段
-        add(ModItems.ENERGIZED_LAPIS_INGOT.get(),"注能青金石锭");
-        add(ModItems.ENERGIZED_PLASMA_INGOT.get(),"注能等离子锭");
-        add(ModItems.ENERGIZED_REDSTONE_INGOT.get(),"注能红石锭");
 
         // 多方块：结构模拟机
         add(ModBlocks.HIGH_ENERGY_MACHINE_CASING.get(),"高能机器外壳");
@@ -154,8 +136,6 @@ public class ModZhCnLangProvider extends LanguageProvider {
         add("fluid_type.inspiration.inspiration_charge", "灵感充能");
 
         // 方块
-        add(ModBlocks.REDSTONE_INGOT_BLOCK.get(), "红石锭方块");
-        add(ModBlocks.LAPIS_INGOT_BLOCK.get(), "青金石锭方块");
         add(ModBlocks.LIGNITE_BLOCK.get(), "褐煤块");
         add(ModBlocks.INTENSIFIED_TNT.get(), "强化TNT");
         add(ModBlocks.EPHEMERAL_ORE.get(), "§5无恒矿石");

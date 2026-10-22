@@ -1,5 +1,6 @@
 package com.starcrosser.inspiration.datagen.recipe;
 
+import com.starcrosser.inspiration.material.ModMaterials;
 import com.starcrosser.inspiration.Inspiration;
 import com.starcrosser.inspiration.item.ModItems;
 import com.starcrosser.inspiration.machine.recipe.ReshapingRecipe;
@@ -62,21 +63,21 @@ public final class ReshapingRecipes {
         // 3 红石 -> 红石锭
         reshaping(recipeOutput, "reshaping/redstone_ingot_from_redstone", 3,
                 Ingredient.of(Items.REDSTONE), null,
-                new ItemStack(ModItems.REDSTONE_INGOT.get()), SIMPLE_DURATION, SIMPLE_ENERGY_PER_TICK);
+                new ItemStack(ModMaterials.REDSTONE.item().get()), SIMPLE_DURATION, SIMPLE_ENERGY_PER_TICK);
 
         // 3 青金石 -> 青金石锭
         reshaping(recipeOutput, "reshaping/lapis_ingot_from_lapis", 3,
                 Ingredient.of(Items.LAPIS_LAZULI), null,
-                new ItemStack(ModItems.LAPIS_INGOT.get()), SIMPLE_DURATION, SIMPLE_ENERGY_PER_TICK);
+                new ItemStack(ModMaterials.LAPIS.item().get()), SIMPLE_DURATION, SIMPLE_ENERGY_PER_TICK);
 
         // 钻石 -> 等离子锭：重塑机最高档的单材料转化
         reshaping(recipeOutput, "reshaping/plasma_ingot_from_diamond", 1,
                 Ingredient.of(Items.DIAMOND), null,
-                new ItemStack(ModItems.PLASMA_INGOT.get()), PLASMA_DURATION, PLASMA_ENERGY_PER_TICK);
+                new ItemStack(ModMaterials.PLASMA.item().get()), PLASMA_DURATION, PLASMA_ENERGY_PER_TICK);
 
         // 玄武岩合金 -> 玄武岩合金钻头：地核钻探者的耗材，与等离子锭同档
         reshaping(recipeOutput, "reshaping/basalt_alloy_drill_bit", 1,
-                Ingredient.of(ModItems.BASALT_ALLOY.get()), null,
+                Ingredient.of(ModMaterials.BASALT_ALLOY.item().get()), null,
                 new ItemStack(ModItems.BASALT_ALLOY_DRILL_BIT.get()),
                 PLASMA_DURATION, PLASMA_ENERGY_PER_TICK);
 

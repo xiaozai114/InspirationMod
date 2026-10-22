@@ -54,14 +54,8 @@ public class ModItems {
             ITEMS.register("unstable_smithing_template", () ->new Item(new Item.Properties()));
     public static final DeferredItem<Item> INSPIREAD=
             ITEMS.register("inspiread", () ->new Item(new Item.Properties().food(ModFoods.INSPIREAD)));
-    public static final DeferredItem<Item> REDSTONE_INGOT=
-            ITEMS.register("redstone_ingot", () ->new Item(new Item.Properties()));
-    public static final DeferredItem<Item> LAPIS_INGOT=
-            ITEMS.register("lapis_ingot", () ->new Item(new Item.Properties()));
     public static final DeferredItem<Item> UNSTABLE_CORE=
             ITEMS.register("unstable_core", () ->new Item(new Item.Properties()));
-    public static final DeferredItem<Item> EXTREME_ALLOY=
-            ITEMS.register("extreme_alloy", () ->new Item(new Item.Properties()));
     public static final DeferredItem<Item> EPHEMERAL_MATERIAL=
             ITEMS.register("ephemeral_material", () ->new Item(new Item.Properties()));
     public static final DeferredItem<Item> SOD=
@@ -151,10 +145,6 @@ public class ModItems {
                     new Item.Properties().rarity(Rarity.EPIC)));
     public static final DeferredItem<Item> REDUCTION_POWDER=
             ITEMS.register("reduction_powder", () ->new Item(new Item.Properties()));
-    public static final DeferredItem<Item> JADE_STEEL_INGOT=
-            ITEMS.register("jade_steel_ingot", () ->new Item(new Item.Properties()));
-    public static final DeferredItem<Item> BASALT_ALLOY=
-            ITEMS.register("basalt_alloy", () ->new Item(new Item.Properties()));
     public static final DeferredItem<Item> REINFORCED_CORE=
             ITEMS.register("reinforced_core", () ->new Item(new Item.Properties()));
     /** 强能核心：强化核心的上级产物，用于合成物质重塑机。 */
@@ -221,15 +211,11 @@ public class ModItems {
                             .rarity(Rarity.RARE)));
 
     /** 等离子锭：钻石经物质重塑得到的高阶材料。 */
-    public static final DeferredItem<Item> PLASMA_INGOT=
-            ITEMS.register("plasma_ingot", () ->new Item(new Item.Properties().rarity(Rarity.UNCOMMON)));
 
     /** 灵感碎片：稀释灵感结晶的掉落物，可直接投入机器充能槽。 */
     public static final DeferredItem<InspirationShardItem> INSPIRATION_SHARD=
             ITEMS.register("inspiration_shard", () ->new InspirationShardItem(new Item.Properties()));
     /** 思维矩阵锭：思维晶体 + 紫水晶 + 下界石英在强能物质融合机里融合而成。 */
-    public static final DeferredItem<Item> MIND_MATRIX_INGOT =
-            ITEMS.register("mind_matrix_ingot", () -> new Item(new Item.Properties().rarity(Rarity.UNCOMMON)));
     /** 思维晶体：思维水晶岩的掉落物，目前暂无用途。 */
     public static final DeferredItem<Item> MIND_CRYSTAL=
             ITEMS.register("mind_crystal", () ->new Item(new Item.Properties().rarity(Rarity.UNCOMMON)));
@@ -267,9 +253,6 @@ public class ModItems {
             ITEMS.register("francium_dust", () -> new AlkaliItem(new Item.Properties(),
                     ModItems.FRANCIUM_SALT.get(), 6f));
     /** 钫锭：钫粉高炉冶炼得到。 */
-    public static final DeferredItem<Item> FRANCIUM_INGOT =
-            ITEMS.register("francium_ingot", () -> new AlkaliItem(new Item.Properties(),
-                    ModItems.FRANCIUM_SALT.get(), 6f));
 
     /* ===================== 注入合成相关 ===================== */
 
@@ -277,8 +260,6 @@ public class ModItems {
     public static final DeferredItem<Item> BASALT_BASE=
             ITEMS.register("basalt_base", () ->new Item(new Item.Properties()));
     /** 注能翡翠钢：向翡翠钢注入灵感的产物，目前暂无进一步用途。 */
-    public static final DeferredItem<Item> ENERGIZED_JADE_STEEL=
-            ITEMS.register("energized_jade_steel", () ->new Item(new Item.Properties().rarity(Rarity.UNCOMMON)));
     /** 绑定器：把注入枪与物质束缚器关联起来的工具。 */
     public static final DeferredItem<Item> BINDING_WAND=
             ITEMS.register("binding_wand", () ->new BindingWandItem(
@@ -289,11 +270,7 @@ public class ModItems {
                     new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON)));
 
     /** 末地合金：4 黑曜石 + 末影珍珠 + 4 紫珀块在强能物质融合机里融合而成，下一阶段的主材。 */
-    public static final DeferredItem<Item> END_ALLOY=
-            ITEMS.register("end_alloy", () ->new Item(new Item.Properties().rarity(Rarity.RARE)));
     /** 无恒合金：把无恒物质注入末地合金得到；注入所需的能量窗口由存档种子决定。 */
-    public static final DeferredItem<Item> EPHEMERAL_ALLOY=
-            ITEMS.register("ephemeral_alloy", () ->new Item(new Item.Properties().rarity(Rarity.EPIC)));
     /** 末地合金盾牌：把末地合金注入盾牌得到，耐久是普通盾牌的 10 倍，破盾时会炸开一圈传送波。 */
     public static final DeferredItem<EndAlloyShieldItem> END_ALLOY_SHIELD=
             ITEMS.register("end_alloy_shield", () ->new EndAlloyShieldItem(new Item.Properties()
@@ -303,17 +280,9 @@ public class ModItems {
      * 向普通锭注入灵感得到注能锭，能量窗口越高，注能锭的档位越高。
      */
     /** 注能青金石锭：向青金石锭注入灵感（10k~15k FE），高能矿物扭曲机的材料。 */
-    public static final DeferredItem<Item> ENERGIZED_LAPIS_INGOT =
-            ITEMS.register("energized_lapis_ingot", () -> new Item(new Item.Properties().rarity(Rarity.UNCOMMON)));
     /** 注能等离子锭：向等离子锭注入灵感（1M~2M FE），高能灵感装配台的材料。 */
-    public static final DeferredItem<Item> ENERGIZED_PLASMA_INGOT =
-            ITEMS.register("energized_plasma_ingot", () -> new Item(new Item.Properties().rarity(Rarity.RARE)));
     /** 注能红石锭：向红石锭注入灵感（150k~300k FE），高能物质重塑机的材料。 */
-    public static final DeferredItem<Item> ENERGIZED_REDSTONE_INGOT =
-            ITEMS.register("energized_redstone_ingot", () -> new Item(new Item.Properties().rarity(Rarity.RARE)));
     /** 幽匿合金：回响碎片 + 强化深板岩在物质融合器里融合得到 2 个，用作注入结构的 2 级底座。 */
-    public static final DeferredItem<Item> SCULK_ALLOY =
-            ITEMS.register("sculk_alloy", () -> new Item(new Item.Properties().rarity(Rarity.RARE)));
     /** 注能翡翠钢升级模板：由翡翠钢升级模板注入注能翡翠钢得到，可把翡翠钢工具升为注能翡翠钢工具。 */
     public static final DeferredItem<Item> ENERGIZED_JADE_STEEL_UPGRADE_TEMPLATE =
             ITEMS.register("energized_jade_steel_upgrade_template", () -> JadeSteelUpgradeTemplate.createEnergized());

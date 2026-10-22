@@ -1,5 +1,6 @@
 package com.starcrosser.inspiration.datagen.recipe;
 
+import com.starcrosser.inspiration.material.ModMaterials;
 import com.starcrosser.inspiration.block.ModBlocks;
 import com.starcrosser.inspiration.item.ModItems;
 import net.minecraft.data.recipes.RecipeCategory;
@@ -31,7 +32,7 @@ public final class FranciumRecipes {
                 .unlockedBy(getHasName(ModBlocks.FRANCIUM_SALT_ORE.get()), has(ModItems.RAW_FRANCIUM_SALT.get()))
                 .save(recipeOutput, "francium_salt_from_raw");
         SimpleCookingRecipeBuilder.blasting(Ingredient.of(ModItems.FRANCIUM_DUST.get()), RecipeCategory.MISC,
-                        ModItems.FRANCIUM_INGOT.get(), 0.8f, 100)
+                        ModMaterials.FRANCIUM.item().get(), 0.8f, 100)
                 .unlockedBy(getHasName(ModItems.FRANCIUM_DUST.get()), has(ModItems.FRANCIUM_DUST.get()))
                 .save(recipeOutput);
 
@@ -42,21 +43,21 @@ public final class FranciumRecipes {
                 .define('#', ModItems.FRANCIUM_SALT.get())
                 .unlockedBy(getHasName(ModItems.FRANCIUM_SALT.get()), has(ModItems.FRANCIUM_SALT.get()))
                 .save(recipeOutput);
-        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModBlocks.FRANCIUM_BLOCK.get())
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModMaterials.FRANCIUM.block().get())
                 .pattern("###")
                 .pattern("###")
                 .pattern("###")
-                .define('#', ModItems.FRANCIUM_INGOT.get())
-                .unlockedBy(getHasName(ModItems.FRANCIUM_INGOT.get()), has(ModItems.FRANCIUM_INGOT.get()))
+                .define('#', ModMaterials.FRANCIUM.item().get())
+                .unlockedBy(getHasName(ModMaterials.FRANCIUM.item().get()), has(ModMaterials.FRANCIUM.item().get()))
                 .save(recipeOutput);
 
         ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ModItems.FRANCIUM_SALT.get(), 9)
                 .requires(ModBlocks.FRANCIUM_SALT_BLOCK.get())
                 .unlockedBy(getHasName(ModBlocks.FRANCIUM_SALT_BLOCK.get()), has(ModBlocks.FRANCIUM_SALT_BLOCK.get()))
                 .save(recipeOutput, "francium_salt_from_block");
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ModItems.FRANCIUM_INGOT.get(), 9)
-                .requires(ModBlocks.FRANCIUM_BLOCK.get())
-                .unlockedBy(getHasName(ModBlocks.FRANCIUM_BLOCK.get()), has(ModBlocks.FRANCIUM_BLOCK.get()))
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ModMaterials.FRANCIUM.item().get(), 9)
+                .requires(ModMaterials.FRANCIUM.block().get())
+                .unlockedBy(getHasName(ModMaterials.FRANCIUM.block().get()), has(ModMaterials.FRANCIUM.block().get()))
                 .save(recipeOutput, "francium_ingot_from_block");
     }
 }

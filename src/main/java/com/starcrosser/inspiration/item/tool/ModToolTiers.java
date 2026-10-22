@@ -1,5 +1,6 @@
 package com.starcrosser.inspiration.item.tool;
 
+import com.starcrosser.inspiration.material.ModMaterials;
 import com.starcrosser.inspiration.item.ModItems;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.TagKey;
@@ -40,7 +41,7 @@ public final class ModToolTiers {
             10.0F,
             3.5F,
             16,
-            () -> Ingredient.of(ModItems.JADE_STEEL_INGOT.get()));
+            () -> Ingredient.of(ModMaterials.JADE_STEEL.item().get()));
 
     /**
      * 注能翡翠钢：翡翠钢工具的注能升级版，用注能翡翠钢升级模板在锻造台上得到。
@@ -54,7 +55,7 @@ public final class ModToolTiers {
             12.0F,
             5.0F,
             20,
-            () -> Ingredient.of(ModItems.ENERGIZED_JADE_STEEL.get()));
+            () -> Ingredient.of(ModMaterials.ENERGIZED_JADE_STEEL.item().get()));
 
     private ModToolTiers() {
     }

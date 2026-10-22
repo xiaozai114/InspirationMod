@@ -1,5 +1,6 @@
 package com.starcrosser.inspiration.datagen.recipe;
 
+import com.starcrosser.inspiration.material.ModMaterials;
 import com.starcrosser.inspiration.Inspiration;
 import com.starcrosser.inspiration.item.ModItems;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -62,9 +63,9 @@ public final class SmithingRecipes {
         SmithingTransformRecipeBuilder.smithing(
                         Ingredient.of(ModItems.UNSTABLE_SMITHING_TEMPLATE.get()),
                         Ingredient.of(ModItems.EXP_PICKAXE.get()),
-                        Ingredient.of(ModItems.EXTREME_ALLOY.get()),
+                        Ingredient.of(ModMaterials.EXTREME_ALLOY.item().get()),
                         RecipeCategory.TOOLS, ModItems.WORLD_BREAKER.get())
-                .unlocks("has_extreme_alloy", has(ModItems.EXTREME_ALLOY.get()))
+                .unlocks("has_extreme_alloy", has(ModMaterials.EXTREME_ALLOY.item().get()))
                 .save(recipeOutput,"world_breaker_smithing");
 
         // ========== 翡翠钢升级：模板 + 灵感工具 + 翡翠钢锭 ==========
@@ -97,23 +98,23 @@ public final class SmithingRecipes {
      */
     private static void buildEnergizedJadeSteelUpgrades(RecipeOutput recipeOutput) {
         smithingUpgrade(recipeOutput, ModItems.ENERGIZED_JADE_STEEL_UPGRADE_TEMPLATE.get(),
-                ModItems.ENERGIZED_JADE_STEEL.get(), "energized_jade_steel_sword",
+                ModMaterials.ENERGIZED_JADE_STEEL.item().get(), "energized_jade_steel_sword",
                 ModItems.JADE_STEEL_SWORD.get(), ModItems.ENERGIZED_JADE_STEEL_SWORD.get(),
                 RecipeCategory.COMBAT);
         smithingUpgrade(recipeOutput, ModItems.ENERGIZED_JADE_STEEL_UPGRADE_TEMPLATE.get(),
-                ModItems.ENERGIZED_JADE_STEEL.get(), "energized_jade_steel_axe",
+                ModMaterials.ENERGIZED_JADE_STEEL.item().get(), "energized_jade_steel_axe",
                 ModItems.JADE_STEEL_AXE.get(), ModItems.ENERGIZED_JADE_STEEL_AXE.get(),
                 RecipeCategory.TOOLS);
         smithingUpgrade(recipeOutput, ModItems.ENERGIZED_JADE_STEEL_UPGRADE_TEMPLATE.get(),
-                ModItems.ENERGIZED_JADE_STEEL.get(), "energized_jade_steel_pickaxe",
+                ModMaterials.ENERGIZED_JADE_STEEL.item().get(), "energized_jade_steel_pickaxe",
                 ModItems.JADE_STEEL_PICKAXE.get(), ModItems.ENERGIZED_JADE_STEEL_PICKAXE.get(),
                 RecipeCategory.TOOLS);
         smithingUpgrade(recipeOutput, ModItems.ENERGIZED_JADE_STEEL_UPGRADE_TEMPLATE.get(),
-                ModItems.ENERGIZED_JADE_STEEL.get(), "energized_jade_steel_hoe",
+                ModMaterials.ENERGIZED_JADE_STEEL.item().get(), "energized_jade_steel_hoe",
                 ModItems.JADE_STEEL_HOE.get(), ModItems.ENERGIZED_JADE_STEEL_HOE.get(),
                 RecipeCategory.TOOLS);
         smithingUpgrade(recipeOutput, ModItems.ENERGIZED_JADE_STEEL_UPGRADE_TEMPLATE.get(),
-                ModItems.ENERGIZED_JADE_STEEL.get(), "energized_jade_steel_shovel",
+                ModMaterials.ENERGIZED_JADE_STEEL.item().get(), "energized_jade_steel_shovel",
                 ModItems.JADE_STEEL_SHOVEL.get(), ModItems.ENERGIZED_JADE_STEEL_SHOVEL.get(),
                 RecipeCategory.TOOLS);
     }
@@ -122,7 +123,7 @@ public final class SmithingRecipes {
     private static void smithingUpgrade(RecipeOutput recipeOutput, String path, Item base, Item result,
                                         RecipeCategory category) {
         smithingUpgrade(recipeOutput, ModItems.JADE_STEEL_UPGRADE_TEMPLATE.get(),
-                ModItems.JADE_STEEL_INGOT.get(), path, base, result, category);
+                ModMaterials.JADE_STEEL.item().get(), path, base, result, category);
     }
 
     /** 写出一条锻造升级配方，进度条件挂在原工具上。 */
