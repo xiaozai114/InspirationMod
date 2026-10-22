@@ -13,6 +13,7 @@ import com.starcrosser.inspiration.material.ModMaterials;
 import com.starcrosser.inspiration.multiblock.ModMultiblocks;
 import com.starcrosser.inspiration.radiation.RadiationAttachments;
 import com.starcrosser.inspiration.recipe.ModRecipes;
+import com.starcrosser.inspiration.util.ClientIsolationCheck;
 import org.slf4j.Logger;
 
 import com.mojang.logging.LogUtils;
@@ -117,5 +118,8 @@ public class Inspiration {
     public void onServerStarting(ServerStartingEvent event) {
         // Do something when the server starts
         LOGGER.info("HELLO from server starting");
+
+        // 客户端隔离体检：只在非生产环境跑，扫一遍自己的 class 看有没有服务端路径引用客户端类
+        ClientIsolationCheck.run();
     }
 }
