@@ -6,6 +6,7 @@ import com.starcrosser.inspiration.injection.ModInjection;
 import com.starcrosser.inspiration.item.ModItems;
 import com.starcrosser.inspiration.machine.ModMachines;
 import com.starcrosser.inspiration.multiblock.ModMultiblocks;
+import com.starcrosser.inspiration.material.ModMaterials;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
@@ -41,7 +42,7 @@ public final class MachineBlockRecipes {
                 .pattern("CAC")
                 .pattern("APA")
                 .pattern("CAC")
-                .define('C', ModItems.CESIUM_INGOT.get())
+                .define('C', ModMaterials.CESIUM.item().get())
                 .define('A', ModItems.BASALT_ALLOY.get())
                 .define('P', ModItems.REINFORCED_CORE.get())
                 .unlockedBy(getHasName(ModItems.REINFORCED_CORE.get()), has(ModItems.REINFORCED_CORE.get()))

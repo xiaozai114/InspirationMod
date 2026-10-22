@@ -8,6 +8,8 @@ import com.starcrosser.inspiration.injection.ModInjection;
 import com.starcrosser.inspiration.item.ModItems;
 import com.starcrosser.inspiration.multiblock.ModMultiblocks;
 import com.starcrosser.inspiration.registry.MachineRegistry;
+import com.starcrosser.inspiration.material.ModMaterials;
+import com.starcrosser.inspiration.material.InspirationMaterial;
 import net.minecraft.data.PackOutput;
 import net.neoforged.neoforge.common.data.LanguageProvider;
 
@@ -53,7 +55,19 @@ public class ModZhCnLangProvider extends LanguageProvider {
         add(ModItems.CALCIUM_HYDROXIDE_DUST.get(),"氢氧化钙粉");
         add(ModItems.CALCIUM_DUST.get(),"钙粉");
         add(ModItems.CESIUM_DUST.get(),"铯粉");
-        add(ModItems.CESIUM_INGOT.get(),"铯锭");
+        // 材料：锭 / 方块 / 粒 / 尘，遍历清单（语言文件按 key 排序输出，这里的顺序不影响生成结果）
+        for (InspirationMaterial material : ModMaterials.ALL) {
+            add(material.item().get(), material.zhItem());
+            if (material.hasBlock()) {
+                add(material.block().get(), material.zhBlock());
+            }
+            if (material.hasNugget()) {
+                add(material.nugget().get(), material.zhNugget());
+            }
+            if (material.hasGrit()) {
+                add(material.grit().get(), material.zhGrit());
+            }
+        }
         add(ModItems.REDUCTION_POWDER.get(),"还原粉");
         add(ModItems.JADE_STEEL_INGOT.get(),"翡翠钢锭");
         add(ModItems.BASALT_ALLOY.get(),"玄武岩合金");
@@ -91,7 +105,6 @@ public class ModZhCnLangProvider extends LanguageProvider {
         add(ModBlocks.INSPIRATION_GEL.get(),"灵感凝胶");
         add(ModBlocks.MIND_CRYSTAL_ROCK.get(),"思维水晶岩");
         add(ModBlocks.CESIUM_SALT_BLOCK.get(),"铯盐块");
-        add(ModBlocks.CESIUM_BLOCK.get(),"铯块");
         add(ModBlocks.EMPOWERED_TNT_ITEM.get(),"强能TNT");
         // 注入合成
         add(ModBlocks.BASALT_ALLOY_BLOCK.get(),"玄武岩合金块");

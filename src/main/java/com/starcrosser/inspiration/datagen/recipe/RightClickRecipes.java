@@ -4,6 +4,7 @@ import com.starcrosser.inspiration.Inspiration;
 import com.starcrosser.inspiration.block.ModBlocks;
 import com.starcrosser.inspiration.datagen.RightClickBlockRecipeBuilder;
 import com.starcrosser.inspiration.item.ModItems;
+import com.starcrosser.inspiration.material.ModMaterials;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
@@ -24,7 +25,7 @@ public final class RightClickRecipes {
 
     public static void build(RecipeOutput recipeOutput) {
         // 还原粉右键转换
-        RightClickBlockRecipeBuilder.recipe(ModBlocks.CESIUM_SALT_BLOCK.get(), ModBlocks.CESIUM_BLOCK.get(),
+        RightClickBlockRecipeBuilder.recipe(ModBlocks.CESIUM_SALT_BLOCK.get(), ModMaterials.CESIUM.block().get(),
                         new ItemStack(ModItems.REDUCTION_POWDER.get()))
                 .unlockedBy("has_reduction_powder", has(ModItems.REDUCTION_POWDER.get()))
                 .save(recipeOutput, ResourceLocation.fromNamespaceAndPath(Inspiration.MODID, "cesium_block_from_salt"));

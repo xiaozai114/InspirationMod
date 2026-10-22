@@ -32,6 +32,9 @@ public class ModDataGenerator {
                 ,lookupProvider));
         generator.addProvider(event.includeServer(),
                 new ModRecipesProvider(packOutput,lookupProvider));
+        // 碱性 / 辐射两张 data_map：材料自带的条目由 ModMaterials 出，其余在这里登记
+        generator.addProvider(event.includeServer(),
+                new ModDataMapsProvider(packOutput, lookupProvider));
         BlockTagsProvider blockTagsProvider = new ModBlockTagsProvider(packOutput, lookupProvider, existingFileHelper);
         generator.addProvider(event.includeServer(),
                 blockTagsProvider);

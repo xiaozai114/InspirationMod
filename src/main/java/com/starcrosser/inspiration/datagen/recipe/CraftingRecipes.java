@@ -3,6 +3,7 @@ package com.starcrosser.inspiration.datagen.recipe;
 import com.starcrosser.inspiration.Inspiration;
 import com.starcrosser.inspiration.block.ModBlocks;
 import com.starcrosser.inspiration.item.ModItems;
+import com.starcrosser.inspiration.material.ModMaterials;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
@@ -43,12 +44,12 @@ public final class CraftingRecipes {
                 .save(recipeOutput);
 
         // 铯块
-        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModBlocks.CESIUM_BLOCK.get())
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModMaterials.CESIUM.block().get())
                 .pattern("###")
                 .pattern("###")
                 .pattern("###")
-                .define('#', ModItems.CESIUM_INGOT.get())
-                .unlockedBy(getHasName(ModItems.CESIUM_INGOT.get()), has(ModItems.CESIUM_INGOT.get()))
+                .define('#', ModMaterials.CESIUM.item().get())
+                .unlockedBy(getHasName(ModMaterials.CESIUM.item().get()), has(ModMaterials.CESIUM.item().get()))
                 .save(recipeOutput);
 
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModBlocks.EMPOWERED_TNT_ITEM.get())
@@ -257,9 +258,9 @@ public final class CraftingRecipes {
                 .save(recipeOutput, "cesium_salt_from_block");
 
         // 铯块 -> 铯锭
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ModItems.CESIUM_INGOT.get(), 9)
-                .requires(ModBlocks.CESIUM_BLOCK.get())
-                .unlockedBy(getHasName(ModBlocks.CESIUM_BLOCK.get()), has(ModBlocks.CESIUM_BLOCK.get()))
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ModMaterials.CESIUM.item().get(), 9)
+                .requires(ModMaterials.CESIUM.block().get())
+                .unlockedBy(getHasName(ModMaterials.CESIUM.block().get()), has(ModMaterials.CESIUM.block().get()))
                 .save(recipeOutput, "cesium_ingot_from_block");
 
         //         // 绿宝石矿：灵感+绿宝石+石头

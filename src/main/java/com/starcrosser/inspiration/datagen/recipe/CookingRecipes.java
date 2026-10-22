@@ -2,6 +2,7 @@ package com.starcrosser.inspiration.datagen.recipe;
 
 import com.starcrosser.inspiration.block.ModBlocks;
 import com.starcrosser.inspiration.item.ModItems;
+import com.starcrosser.inspiration.material.ModMaterials;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.data.recipes.SimpleCookingRecipeBuilder;
@@ -51,7 +52,7 @@ public final class CookingRecipes {
 
         // 铯粉 -> 铯锭（高炉）
         SimpleCookingRecipeBuilder.blasting(Ingredient.of(ModItems.CESIUM_DUST.get()), RecipeCategory.MISC,
-                        ModItems.CESIUM_INGOT.get(), 0.8f, 100)
+                        ModMaterials.CESIUM.item().get(), 0.8f, 100)
                 .unlockedBy(getHasName(ModItems.CESIUM_DUST.get()), has(ModItems.CESIUM_DUST.get()))
                 .save(recipeOutput);
     }

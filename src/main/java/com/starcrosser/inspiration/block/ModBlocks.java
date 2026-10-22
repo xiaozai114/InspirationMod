@@ -101,9 +101,7 @@ public class ModBlocks {
         public static final DeferredBlock<Block> CESIUM_SALT_BLOCK =
             registerBlocks("cesium_salt_block", () ->new Block(BlockBehaviour.Properties.of()
                     .strength(2.0F, 6.0F).requiresCorrectToolForDrops()));
-    public static final DeferredBlock<Block> CESIUM_BLOCK =
-            registerBlocks("cesium_block", () ->new Block(BlockBehaviour.Properties.of()
-                    .strength(2.5F, 6.0F).requiresCorrectToolForDrops()));
+    // 铯块改由 material/ModMaterials 声明（与铯锭同一处，见 material/README.md）
         public static final DeferredBlock<EmpoweredTNTBlock> EMPOWERED_TNT =
             BLOCKS.register("empowered_tnt", () -> new EmpoweredTNTBlock(
                     BlockBehaviour.Properties.of().strength(0.0F, 0.0F)

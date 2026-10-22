@@ -8,6 +8,7 @@ import com.starcrosser.inspiration.item.ModCreativeModeTabs;
 import com.starcrosser.inspiration.injection.ModInjection;
 import com.starcrosser.inspiration.item.ModItems;
 import com.starcrosser.inspiration.machine.ModMachines;
+import com.starcrosser.inspiration.material.ModMaterials;
 import com.starcrosser.inspiration.multiblock.ModMultiblocks;
 import com.starcrosser.inspiration.radiation.RadiationAttachments;
 import com.starcrosser.inspiration.recipe.ModRecipes;
@@ -56,6 +57,8 @@ public class Inspiration {
         // Register the commonSetup method for modloading
         modEventBus.addListener(this::commonSetup);
 
+        // 材料必须在物品表/方块表冻结之前声明完：它们往这两张表里塞东西
+        ModMaterials.init();
         ModItems.register(modEventBus);
         // 指导书界面（空菜单）
         ModGuideMenus.register(modEventBus);

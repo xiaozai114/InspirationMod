@@ -5,6 +5,7 @@ import com.starcrosser.inspiration.block.ModBlocks;
 import com.starcrosser.inspiration.injection.ModInjection;
 import com.starcrosser.inspiration.machine.ModMachines;
 import com.starcrosser.inspiration.multiblock.ModMultiblocks;
+import com.starcrosser.inspiration.material.ModMaterials;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.CreativeModeTab;
@@ -60,8 +61,8 @@ public class ModCreativeModeTabs {
                         output.accept(ModItems.REDUCTION_POWDER);
                         output.accept(ModItems.CESIUM_DUST);
                         output.accept(ModBlocks.CESIUM_SALT_BLOCK);
-                        output.accept(ModBlocks.CESIUM_BLOCK);
-                        output.accept(ModItems.CESIUM_INGOT);
+                        output.accept(ModMaterials.CESIUM.block());
+                        output.accept(ModMaterials.CESIUM.item());
                         output.accept(ModItems.JADE_STEEL_INGOT);
                         output.accept(ModBlocks.EMPOWERED_TNT_ITEM);
                         output.accept(ModItems.BASALT_ALLOY);

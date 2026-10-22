@@ -6,6 +6,7 @@ import com.starcrosser.inspiration.injection.InjectionTiers;
 import com.starcrosser.inspiration.injection.ModInjection;
 import com.starcrosser.inspiration.multiblock.ModMultiblocks;
 import com.starcrosser.inspiration.registry.MachineRegistry;
+import com.starcrosser.inspiration.material.ModMaterials;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.tags.BlockTags;
@@ -29,7 +30,7 @@ public class ModBlockTagsProvider extends BlockTagsProvider {
         // 铯盐块/铯块
         pickaxeTag
                 .add(ModBlocks.CESIUM_SALT_BLOCK.get())
-                .add(ModBlocks.CESIUM_BLOCK.get());
+                .add(ModMaterials.CESIUM.block().get());
 
         tag(BlockTags.MINEABLE_WITH_PICKAXE)
                 .add(ModBlocks.LIGNITE_BLOCK.get())

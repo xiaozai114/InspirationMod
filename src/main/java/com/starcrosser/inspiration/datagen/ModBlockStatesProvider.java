@@ -9,6 +9,8 @@ import com.starcrosser.inspiration.injection.block.InjectionGunBlock;
 import com.starcrosser.inspiration.multiblock.ModMultiblocks;
 import com.starcrosser.inspiration.registry.MachineRegistry;
 import com.starcrosser.inspiration.multiblock.block.HatchBlock;
+import com.starcrosser.inspiration.material.ModMaterials;
+import com.starcrosser.inspiration.material.InspirationMaterial;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.PackOutput;
@@ -41,7 +43,12 @@ public class ModBlockStatesProvider extends BlockStateProvider {
         simpleBlock(ModBlocks.CESIUM_SALT_ORE.get(), cubeAll(ModBlocks.CESIUM_SALT_ORE.get()));
         simpleBlock(ModBlocks.MIND_FLUID_BLOCK.get(), cubeAll(ModBlocks.MIND_FLUID_BLOCK.get()));
         simpleBlock(ModBlocks.CESIUM_SALT_BLOCK.get(), cubeAll(ModBlocks.CESIUM_SALT_BLOCK.get()));
-        simpleBlock(ModBlocks.CESIUM_BLOCK.get(), cubeAll(ModBlocks.CESIUM_BLOCK.get()));
+        // 材料块：六面同贴图，遍历清单
+        for (InspirationMaterial material : ModMaterials.ALL) {
+            if (material.hasBlock()) {
+                simpleBlock(material.block().get(), cubeAll(material.block().get()));
+            }
+        }
         // 钫盐系列：矿石与两种块，形状同铯盐系列
         simpleBlock(ModBlocks.FRANCIUM_SALT_ORE.get(), cubeAll(ModBlocks.FRANCIUM_SALT_ORE.get()));
         simpleBlock(ModBlocks.FRANCIUM_SALT_BLOCK.get(), cubeAll(ModBlocks.FRANCIUM_SALT_BLOCK.get()));

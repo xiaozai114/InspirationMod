@@ -3,6 +3,8 @@ package com.starcrosser.inspiration.datagen;
 import com.starcrosser.inspiration.Inspiration;
 import com.starcrosser.inspiration.block.ModBlocks;
 import com.starcrosser.inspiration.item.ModItems;
+import com.starcrosser.inspiration.material.ModMaterials;
+import com.starcrosser.inspiration.material.InspirationMaterial;
 import net.minecraft.data.PackOutput;
 import net.neoforged.neoforge.client.model.generators.ItemModelProvider;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
@@ -43,7 +45,16 @@ public class ModItemModelsProvider extends ItemModelProvider {
         basicItem(ModItems.CALCIUM_HYDROXIDE_DUST.get());
         basicItem(ModItems.CALCIUM_DUST.get());
         basicItem(ModItems.CESIUM_DUST.get());
-        basicItem(ModItems.CESIUM_INGOT.get());
+        // 材料：锭本体（粒/尘开关打开时一并生成），遍历清单，加材料不用再往这里补
+        for (InspirationMaterial material : ModMaterials.ALL) {
+            basicItem(material.item().get());
+            if (material.hasNugget()) {
+                basicItem(material.nugget().get());
+            }
+            if (material.hasGrit()) {
+                basicItem(material.grit().get());
+            }
+        }
         basicItem(ModItems.REDUCTION_POWDER.get());
         basicItem(ModItems.JADE_STEEL_INGOT.get());
         basicItem(ModItems.BASALT_ALLOY.get());
@@ -117,7 +128,12 @@ public class ModItemModelsProvider extends ItemModelProvider {
         blockItem(ModBlocks.CESIUM_SALT_ORE.get());
         blockItem(ModBlocks.INTENSIFIED_TNT.get());
         blockItem(ModBlocks.CESIUM_SALT_BLOCK.get());
-        blockItem(ModBlocks.CESIUM_BLOCK.get());
+        // 材料的方块物品（只有开了方块开关的材料才有）
+        for (InspirationMaterial material : ModMaterials.ALL) {
+            if (material.hasBlock()) {
+                blockItem(material.block().get());
+            }
+        }
         blockItem(ModBlocks.FRANCIUM_SALT_ORE.get());
         blockItem(ModBlocks.FRANCIUM_SALT_BLOCK.get());
         blockItem(ModBlocks.FRANCIUM_BLOCK.get());

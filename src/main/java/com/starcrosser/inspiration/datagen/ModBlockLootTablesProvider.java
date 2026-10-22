@@ -5,6 +5,8 @@ import com.starcrosser.inspiration.injection.ModInjection;
 import com.starcrosser.inspiration.item.ModItems;
 import com.starcrosser.inspiration.multiblock.ModMultiblocks;
 import com.starcrosser.inspiration.registry.MachineRegistry;
+import com.starcrosser.inspiration.material.ModMaterials;
+import com.starcrosser.inspiration.material.InspirationMaterial;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
@@ -35,7 +37,12 @@ public class ModBlockLootTablesProvider extends BlockLootSubProvider {
         dropSelf(ModBlocks.LAPIS_INGOT_BLOCK.get());
         dropSelf(ModBlocks.INTENSIFIED_TNT.get());
         dropSelf(ModBlocks.CESIUM_SALT_BLOCK.get());
-        dropSelf(ModBlocks.CESIUM_BLOCK.get());
+        // 材料块掉自身，遍历清单
+        for (InspirationMaterial material : ModMaterials.ALL) {
+            if (material.hasBlock()) {
+                dropSelf(material.block().get());
+            }
+        }
         dropSelf(ModBlocks.FRANCIUM_SALT_BLOCK.get());
         dropSelf(ModBlocks.FRANCIUM_BLOCK.get());
         dropSelf(ModBlocks.EMPOWERED_TNT.get());

@@ -7,6 +7,8 @@ import com.starcrosser.inspiration.injection.ModInjection;
 import com.starcrosser.inspiration.item.ModItems;
 import com.starcrosser.inspiration.multiblock.ModMultiblocks;
 import com.starcrosser.inspiration.registry.MachineRegistry;
+import com.starcrosser.inspiration.material.ModMaterials;
+import com.starcrosser.inspiration.material.InspirationMaterial;
 import net.minecraft.data.PackOutput;
 import net.neoforged.neoforge.common.data.LanguageProvider;
 
@@ -51,7 +53,19 @@ public class ModEnUsLangProvider extends LanguageProvider {
         add(ModItems.CALCIUM_HYDROXIDE_DUST.get(), "Calcium Hydroxide");
         add(ModItems.CALCIUM_DUST.get(), "Calcium Dust");
         add(ModItems.CESIUM_DUST.get(), "Cesium Dust");
-        add(ModItems.CESIUM_INGOT.get(), "Cesium Ingot");
+        // 材料：锭 / 方块 / 粒 / 尘，遍历清单（语言文件按 key 排序输出，这里的顺序不影响生成结果）
+        for (InspirationMaterial material : ModMaterials.ALL) {
+            add(material.item().get(), material.enItem());
+            if (material.hasBlock()) {
+                add(material.block().get(), material.enBlock());
+            }
+            if (material.hasNugget()) {
+                add(material.nugget().get(), material.enNugget());
+            }
+            if (material.hasGrit()) {
+                add(material.grit().get(), material.enGrit());
+            }
+        }
         add(ModItems.REDUCTION_POWDER.get(), "Reduction Powder");
         add(ModItems.JADE_STEEL_INGOT.get(), "Jade Steel Ingot");
         add(ModItems.BASALT_ALLOY.get(), "Basalt Alloy");
@@ -89,7 +103,6 @@ public class ModEnUsLangProvider extends LanguageProvider {
         add(ModBlocks.INSPIRATION_GEL.get(), "Inspiration Gel");
         add(ModBlocks.MIND_CRYSTAL_ROCK.get(), "Mind Crystal Rock");
         add(ModBlocks.CESIUM_SALT_BLOCK.get(), "Cesium Salt Block");
-        add(ModBlocks.CESIUM_BLOCK.get(), "Cesium Block");
         add(ModBlocks.EMPOWERED_TNT_ITEM.get(), "Empowered TNT");
         // 注入合成
         add(ModBlocks.BASALT_ALLOY_BLOCK.get(), "Basalt Alloy Block");

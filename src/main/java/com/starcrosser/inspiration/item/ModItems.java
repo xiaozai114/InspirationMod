@@ -36,8 +36,7 @@ public class ModItems {
             ITEMS.register("calcium_dust", () ->new AlkaliItem(new Item.Properties(),ModItems.CALCIUM_HYDROXIDE_DUST.get(),0.1f));
     public static final DeferredItem<Item> CESIUM_DUST=
             ITEMS.register("cesium_dust", () ->new AlkaliItem(new Item.Properties(),ModItems.CESIUM_SALT.get(),4f));
-    public static final DeferredItem<Item> CESIUM_INGOT=
-            ITEMS.register("cesium_ingot", () ->new AlkaliItem(new Item.Properties(),ModItems.CESIUM_SALT.get(),4f));
+    // 铯锭改由 material/ModMaterials 声明（一次性生成锭、块、data_maps 与配套资源）
 
     public static final DeferredItem<Item> RAW_CESIUM_SALT=
             ITEMS.register("raw_cesium_salt", () ->new Item(new Item.Properties()));

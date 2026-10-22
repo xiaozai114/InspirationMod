@@ -3,6 +3,7 @@ package com.starcrosser.inspiration.datagen.recipe;
 import com.starcrosser.inspiration.Inspiration;
 import com.starcrosser.inspiration.injection.recipe.InjectionRecipe;
 import com.starcrosser.inspiration.item.ModItems;
+import com.starcrosser.inspiration.material.ModMaterials;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
@@ -97,7 +98,7 @@ public final class InjectionRecipes {
         // 能量窗口 150k~250k FE —— 下限很高，逼玩家先把注入枪充满再动手
         injection(recipeOutput, "injection/geiger_counter",
                 Ingredient.of(Items.IRON_INGOT),
-                Ingredient.of(ModItems.CESIUM_INGOT.get()),
+                Ingredient.of(ModMaterials.CESIUM.item().get()),
                 1, 150_000, 250_000,
                 new ItemStack(ModItems.GEIGER_COUNTER.get()));
     }
