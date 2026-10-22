@@ -34,20 +34,21 @@
 | `alkali/AlkalinityDataMaps` | mod | `RegisterDataMapTypesEvent` | 注册 `inspiration:alkalinity` 数据地图类型 |
 | `radiation/RadiationDataMaps` | mod | `RegisterDataMapTypesEvent` | 注册 `inspiration:radiation` 数据地图类型（item / block 两张） |
 
-### 1.3 客户端监听器（P3 收拢后可能会动）
+### 1.3 客户端监听器（P3 后全部收在 `client/` 下）
 
 全部标了 `value = Dist.CLIENT`，专用服务器启动时不会被加载。
+客户端类的完整清单见 `client/README.md`。
 
 | 类 | 事件 | 干什么 |
 | --- | --- | --- |
 | `client/ClientExtensionsHandler` | `RegisterClientExtensionsEvent` | 注册物品 / 流体的客户端扩展 |
 | `client/ClientModEvents` | `EntityRenderersEvent.RegisterRenderers` / `RegisterMenuScreensEvent` / `FMLClientSetupEvent` | 渲染器、界面、客户端初始化 |
-| `machine/client/MachineTooltips` | `ItemTooltipEvent` | 机器 tooltip（一个键可写多行） |
-| `alkali/client/AlkalinityTooltips` | `ItemTooltipEvent` | 碱性值 tooltip |
-| `radiation/client/RadiationTooltips` | `ItemTooltipEvent` | 辐射值 tooltip |
-| `multiblock/client/ProjectorPreviewHandler` | `PlayerInteractEvent.RightClickBlock` | 投影仪右键 → 记录待显示的虚影 |
-| `multiblock/client/SimulatorPreviewRenderer` | `RenderLevelStageEvent` | 画结构虚影 |
-| `InspirationClient` | `FMLClientSetupEvent` | 客户端入口 |
+| `client/tooltip/MachineTooltips` | `ItemTooltipEvent` | 机器 tooltip（一个键可写多行） |
+| `client/tooltip/AlkalinityTooltips` | `ItemTooltipEvent` | 碱性值 tooltip |
+| `client/tooltip/RadiationTooltips` | `ItemTooltipEvent` | 辐射值 tooltip |
+| `client/extensions/ProjectorPreviewHandler` | `PlayerInteractEvent.RightClickBlock` | 投影仪右键 → 记录待显示的虚影 |
+| `client/renderer/SimulatorPreviewRenderer` | `RenderLevelStageEvent` | 画结构虚影 |
+| `client/InspirationClient` | `FMLClientSetupEvent` | 客户端入口 |
 
 ### 1.4 其余两处（不是玩法监听）
 
