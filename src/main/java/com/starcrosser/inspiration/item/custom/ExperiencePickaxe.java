@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * 挖掘方块时掉落经验的镐。
  * <p>
- * 经验的实际产出发生在 {@code item/tool/ExpMiningHandler}，本类只负责携带数值。
+ * 经验的实际产出发生在 {@link com.starcrosser.inspiration.event.ExpMiningHandler}，本类只负责携带数值。
  */
 public class ExperiencePickaxe extends PickaxeItem implements MiningExperienceTool {
 

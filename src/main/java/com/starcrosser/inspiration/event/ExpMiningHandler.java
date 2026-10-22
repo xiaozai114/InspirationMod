@@ -1,5 +1,8 @@
-package com.starcrosser.inspiration.item.tool;
+package com.starcrosser.inspiration.event;
 
+import com.starcrosser.inspiration.Inspiration;
+import com.starcrosser.inspiration.item.tool.ExperienceDrops;
+import com.starcrosser.inspiration.item.tool.MiningExperienceTool;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -10,7 +13,7 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.level.BlockEvent;
 
 /** 挖掘方块的经验产出：手持实现了 {@link MiningExperienceTool} 的工具破坏方块时撒出经验。 */
-@EventBusSubscriber(modid = "inspiration")
+@EventBusSubscriber(modid = Inspiration.MODID)
 public class ExpMiningHandler {
 
     @SubscribeEvent

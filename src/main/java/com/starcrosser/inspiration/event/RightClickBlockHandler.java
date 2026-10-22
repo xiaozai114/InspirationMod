@@ -1,7 +1,9 @@
-package com.starcrosser.inspiration.recipe;
+package com.starcrosser.inspiration.event;
 
 import com.starcrosser.inspiration.Inspiration;
 import com.starcrosser.inspiration.control.VecHelper;
+import com.starcrosser.inspiration.recipe.ModRecipes;
+import com.starcrosser.inspiration.recipe.RightClickBlockRecipe;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;

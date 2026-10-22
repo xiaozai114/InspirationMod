@@ -1,4 +1,6 @@
-package com.starcrosser.inspiration.item.custom;
+package com.starcrosser.inspiration.event;
+
+import com.starcrosser.inspiration.Inspiration;
 
 
 import com.starcrosser.inspiration.item.ModItems;
@@ -24,7 +26,7 @@ import net.neoforged.neoforge.event.entity.living.LivingDeathEvent;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
-@EventBusSubscriber(modid = "inspiration")
+@EventBusSubscriber(modid = Inspiration.MODID)
 public class HeadDropHandler {
     private static final Map<Class<? extends LivingEntity>, ItemStack> HEAD_MAPPINGS = new HashMap<>();
 

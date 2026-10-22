@@ -1,6 +1,7 @@
-package com.starcrosser.inspiration.item.custom;
+package com.starcrosser.inspiration.event;
 
 import com.starcrosser.inspiration.Inspiration;
+import com.starcrosser.inspiration.item.custom.EndAlloyShieldItem;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
