@@ -6,8 +6,8 @@ import com.starcrosser.inspiration.block.ModBlocks;
 import com.starcrosser.inspiration.fluid.ModFluids;
 import com.starcrosser.inspiration.injection.ModInjection;
 import com.starcrosser.inspiration.item.ModItems;
-import com.starcrosser.inspiration.machine.ModMachines;
 import com.starcrosser.inspiration.multiblock.ModMultiblocks;
+import com.starcrosser.inspiration.registry.MachineRegistry;
 import net.minecraft.data.PackOutput;
 import net.neoforged.neoforge.common.data.LanguageProvider;
 
@@ -131,18 +131,10 @@ public class ModZhCnLangProvider extends LanguageProvider {
         add(ModItems.SHIPWRECK_DATA.get(),"沉船数据");
         add(ModItems.PROJECTOR.get(),"结构投影仪");
 
-        // 机器
-        add(ModMachines.MATTER_FUSION_MACHINE.getBlock(),"物质融合器");
-        add(ModMachines.ENERGIZED_MATTER_FUSION_MACHINE.getBlock(),"强能物质融合机");
-        add(ModMachines.MATTER_RESHAPER.getBlock(),"物质重塑机");
-        add(ModMachines.MINERAL_TWISTER.getBlock(),"矿物扭曲机");
-        add(ModMachines.INSPIRATION_ASSEMBLER.getBlock(),"灵感装配台");
-        add(ModMachines.CORE_DRILLER.getBlock(),"地核钻探者");
-        add(ModMachines.HIGH_ENERGY_MINERAL_TWISTER.getBlock(),"高能矿物扭曲机");
-        add(ModMachines.HIGH_ENERGY_INSPIRATION_ASSEMBLER.getBlock(),"高能灵感装配台");
-        add(ModMachines.HIGH_ENERGY_MATTER_RESHAPER.getBlock(),"高能物质重塑机");
-        add(ModMachines.ALKALINE_REACTOR.getBlock(),"碱性发电机");
-        add(ModMachines.RTG_GENERATOR.getBlock(),"RTG反应堆");
+        // 机器：显示名写在注册处（MachineRegistry），这里只管遍历
+        for (MachineRegistry.MachineEntry machine : MachineRegistry.machines()) {
+            add(machine.block(), machine.zhName());
+        }
         add(ModMultiblocks.STRUCTURE_SIMULATOR.getBlock(),"结构模拟机");
 
         // 流体

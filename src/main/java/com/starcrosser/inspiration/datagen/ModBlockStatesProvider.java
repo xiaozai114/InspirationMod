@@ -6,8 +6,8 @@ import com.starcrosser.inspiration.Inspiration;
 import com.starcrosser.inspiration.block.ModBlocks;
 import com.starcrosser.inspiration.injection.ModInjection;
 import com.starcrosser.inspiration.injection.block.InjectionGunBlock;
-import com.starcrosser.inspiration.machine.ModMachines;
 import com.starcrosser.inspiration.multiblock.ModMultiblocks;
+import com.starcrosser.inspiration.registry.MachineRegistry;
 import com.starcrosser.inspiration.multiblock.block.HatchBlock;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -67,17 +67,10 @@ public class ModBlockStatesProvider extends BlockStateProvider {
 
         IntensifiedTNTBlock();
         EmpoweredTNTBlock();
-        machineBlock(ModMachines.MATTER_FUSION_MACHINE);
-        machineBlock(ModMachines.ENERGIZED_MATTER_FUSION_MACHINE);
-        machineBlock(ModMachines.MATTER_RESHAPER);
-        machineBlock(ModMachines.MINERAL_TWISTER);
-        machineBlock(ModMachines.INSPIRATION_ASSEMBLER);
-        machineBlock(ModMachines.CORE_DRILLER);
-        machineBlock(ModMachines.HIGH_ENERGY_MINERAL_TWISTER);
-        machineBlock(ModMachines.HIGH_ENERGY_INSPIRATION_ASSEMBLER);
-        machineBlock(ModMachines.HIGH_ENERGY_MATTER_RESHAPER);
-        machineBlock(ModMachines.ALKALINE_REACTOR);
-        machineBlock(ModMachines.RTG_GENERATOR);
+        // 11 台机器：遍历 MachineRegistry，加机器不用再往这里补一行
+        for (MachineRegistry.MachineEntry machine : MachineRegistry.machines()) {
+            machineBlock(machine.machine());
+        }
         // 结构模拟机的主方块：与单方块机器一样按 subfacing 转四个朝向
         machineBlock(ModMultiblocks.STRUCTURE_SIMULATOR);
 

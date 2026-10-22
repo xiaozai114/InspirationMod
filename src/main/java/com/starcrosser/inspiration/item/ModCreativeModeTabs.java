@@ -86,6 +86,8 @@ public class ModCreativeModeTabs {
                         output.accept(ModItems.INSPIRATION_PLUGIN);
                         output.accept(ModItems.SPEED_PLUGIN);
                         output.accept(ModItems.CAPACITOR_DOWNGRADE_PLUGIN);
+                        // 机器在创造栏里是与同期物品穿插排列的（展示顺序是刻意排的：一台机器紧挨着它的
+                        // 材料与产物），不是"所有机器挨在一起"，所以这里仍然逐个写、不遍历 MachineRegistry。
                         output.accept(ModMachines.MATTER_FUSION_MACHINE);
                         output.accept(ModMachines.ENERGIZED_MATTER_FUSION_MACHINE);
                         output.accept(ModMachines.MATTER_RESHAPER);

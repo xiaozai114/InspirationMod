@@ -4,11 +4,12 @@ import com.starcrosser.inspiration.Inspiration;
 import com.starcrosser.inspiration.block.ModBlocks;
 import com.starcrosser.inspiration.injection.InjectionTiers;
 import com.starcrosser.inspiration.injection.ModInjection;
-import com.starcrosser.inspiration.machine.ModMachines;
 import com.starcrosser.inspiration.multiblock.ModMultiblocks;
+import com.starcrosser.inspiration.registry.MachineRegistry;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.world.level.block.Block;
 import net.neoforged.neoforge.common.data.BlockTagsProvider;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import org.jetbrains.annotations.Nullable;
@@ -23,8 +24,10 @@ public class ModBlockTagsProvider extends BlockTagsProvider {
     @Override
     protected void addTags(HolderLookup.Provider provider) {
         // 镐子可挖掘
+        // 同一个 tag 反复 tag(...) 拿到的是同一个收集器，这里存成局部变量好往里续机器清单
+        var pickaxeTag = tag(BlockTags.MINEABLE_WITH_PICKAXE);
         // 铯盐块/铯块
-        tag(BlockTags.MINEABLE_WITH_PICKAXE)
+        pickaxeTag
                 .add(ModBlocks.CESIUM_SALT_BLOCK.get())
                 .add(ModBlocks.CESIUM_BLOCK.get());
 
@@ -47,19 +50,11 @@ public class ModBlockTagsProvider extends BlockTagsProvider {
                 .add(ModBlocks.FRANCIUM_SALT_BLOCK.get())
                 .add(ModBlocks.FRANCIUM_BLOCK.get());
 
-        // 机器
-        tag(BlockTags.MINEABLE_WITH_PICKAXE)
-                .add(ModMachines.MATTER_FUSION_MACHINE.getBlock())
-                .add(ModMachines.ENERGIZED_MATTER_FUSION_MACHINE.getBlock())
-                .add(ModMachines.MATTER_RESHAPER.getBlock())
-                .add(ModMachines.MINERAL_TWISTER.getBlock())
-                .add(ModMachines.INSPIRATION_ASSEMBLER.getBlock())
-                .add(ModMachines.CORE_DRILLER.getBlock())
-                .add(ModMachines.HIGH_ENERGY_MINERAL_TWISTER.getBlock())
-                .add(ModMachines.HIGH_ENERGY_INSPIRATION_ASSEMBLER.getBlock())
-                .add(ModMachines.HIGH_ENERGY_MATTER_RESHAPER.getBlock())
-                .add(ModMachines.ALKALINE_REACTOR.getBlock())
-                .add(ModMachines.RTG_GENERATOR.getBlock())
+        // 机器（遍历 MachineRegistry，加机器不用再往这里补）
+        for (Block machine : MachineRegistry.blocks()) {
+            pickaxeTag.add(machine);
+        }
+        pickaxeTag
                 .add(ModBlocks.HIGH_ENERGY_MACHINE_CASING.get())
                 .add(ModMultiblocks.INPUT_HATCH.getBlock())
                 .add(ModMultiblocks.OUTPUT_HATCH.getBlock())
@@ -89,24 +84,19 @@ public class ModBlockTagsProvider extends BlockTagsProvider {
                 .add(ModBlocks.DILUTED_INSPIRATION_CRYSTAL.get());
 
         // 挖掘等级：铁镐及以上
-        tag(BlockTags.NEEDS_IRON_TOOL)
+        var ironToolTag = tag(BlockTags.NEEDS_IRON_TOOL);
+        ironToolTag
                 // 钫盐矿埋在地狱上层，比铯盐矿（石镐）更苛刻
                 .add(ModBlocks.FRANCIUM_SALT_ORE.get())
                 .add(ModBlocks.CONCENTRATED_INSPIRATION_CRYSTAL.get())
                 .add(ModBlocks.MIND_CRYSTAL_ROCK.get())
                 .add(ModBlocks.LAPIS_INGOT_BLOCK.get())
-                .add(ModBlocks.REDSTONE_INGOT_BLOCK.get())
-                .add(ModMachines.MATTER_FUSION_MACHINE.getBlock())
-                .add(ModMachines.ENERGIZED_MATTER_FUSION_MACHINE.getBlock())
-                .add(ModMachines.MATTER_RESHAPER.getBlock())
-                .add(ModMachines.MINERAL_TWISTER.getBlock())
-                .add(ModMachines.INSPIRATION_ASSEMBLER.getBlock())
-                .add(ModMachines.CORE_DRILLER.getBlock())
-                .add(ModMachines.HIGH_ENERGY_MINERAL_TWISTER.getBlock())
-                .add(ModMachines.HIGH_ENERGY_INSPIRATION_ASSEMBLER.getBlock())
-                .add(ModMachines.HIGH_ENERGY_MATTER_RESHAPER.getBlock())
-                .add(ModMachines.ALKALINE_REACTOR.getBlock())
-                .add(ModMachines.RTG_GENERATOR.getBlock())
+                .add(ModBlocks.REDSTONE_INGOT_BLOCK.get());
+        // 机器同样遍历清单
+        for (Block machine : MachineRegistry.blocks()) {
+            ironToolTag.add(machine);
+        }
+        ironToolTag
                 .add(ModBlocks.BASALT_ALLOY_BLOCK.get())
                 .add(ModBlocks.SCULK_ALLOY_BLOCK.get())
                 .add(ModInjection.MATTER_BINDER.getBlock())

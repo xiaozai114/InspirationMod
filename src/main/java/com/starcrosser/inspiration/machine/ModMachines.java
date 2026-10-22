@@ -11,6 +11,7 @@ import com.starcrosser.inspiration.machine.block.MatterReshaperMachineBlock;
 import com.starcrosser.inspiration.machine.block.MineralTwisterBlock;
 import com.starcrosser.inspiration.machine.block.RtgGeneratorBlock;
 import com.starcrosser.inspiration.machine.spec.MachineSpec;
+import com.starcrosser.inspiration.registry.MachineRegistry;
 import net.minecraft.world.item.DyeColor;
 
 /**
@@ -71,48 +72,61 @@ public class ModMachines {
     /** RTG反应堆：烧放射性物质发电，代价是往区块里放辐射。 */
     public static BlockWithTile RTG_GENERATOR;
 
+    /**
+     * 一次性注册所有机器。
+     * <p>
+     * 走 {@link MachineRegistry#register} 而不是 Titanium 的裸调用：顺带把机器登记进
+     * {@link MachineRegistry} 这份可遍历清单，语言 / 方块状态 / 标签 / 战利品表就都能循环生成，
+     * 不用每台机器再手写一遍。
+     * <p>
+     * **注册顺序 = 清单顺序 = 标签 JSON 里的输出顺序**：基础机型 → 上位机型 → 发电类。
+     * 改这个顺序会让 tag json 的内容重排（功能不变但 diff 变脏），所以别为了好看重排。
+     */
     public static void register() {
         DeferredRegistryHelper registry = new DeferredRegistryHelper(Inspiration.MODID);
-        MATTER_FUSION_MACHINE = registry.registerBlockWithTile(
-                "matter_fusion_machine",
+
+        MATTER_FUSION_MACHINE = MachineRegistry.register(registry, "matter_fusion_machine",
+                "物质融合器", "Matter Fusion Machine",
                 () -> new MatterFusionMachineBlock("matter_fusion_machine", FUSION_T1,
-                        () -> MATTER_FUSION_MACHINE, 3.5F, 6.0F), null);
-        ENERGIZED_MATTER_FUSION_MACHINE = registry.registerBlockWithTile(
-                "energized_matter_fusion_machine",
+                        () -> MATTER_FUSION_MACHINE, 3.5F, 6.0F));
+        ENERGIZED_MATTER_FUSION_MACHINE = MachineRegistry.register(registry, "energized_matter_fusion_machine",
+                "强能物质融合机", "Energized Matter Fusion Machine",
                 () -> new MatterFusionMachineBlock("energized_matter_fusion_machine", FUSION_T2,
-                        () -> ENERGIZED_MATTER_FUSION_MACHINE, 3.5F, 8.0F), null);
-        MATTER_RESHAPER = registry.registerBlockWithTile(
-                "matter_reshaper",
+                        () -> ENERGIZED_MATTER_FUSION_MACHINE, 3.5F, 8.0F));
+        MATTER_RESHAPER = MachineRegistry.register(registry, "matter_reshaper",
+                "物质重塑机", "Matter Reshaper",
                 () -> new MatterReshaperMachineBlock("matter_reshaper", RESHAPER_T1,
-                        () -> MATTER_RESHAPER, 4.5F, 9.0F), null);
-        HIGH_ENERGY_MATTER_RESHAPER = registry.registerBlockWithTile(
-                "high_energy_matter_reshaper",
-                () -> new MatterReshaperMachineBlock("high_energy_matter_reshaper", RESHAPER_T2,
-                        () -> HIGH_ENERGY_MATTER_RESHAPER, 5.0F, 12.0F), null);
-        MINERAL_TWISTER = registry.registerBlockWithTile(
-                "mineral_twister",
+                        () -> MATTER_RESHAPER, 4.5F, 9.0F));
+        MINERAL_TWISTER = MachineRegistry.register(registry, "mineral_twister",
+                "矿物扭曲机", "Mineral Twister",
                 () -> new MineralTwisterBlock("mineral_twister", TWISTER_T1,
-                        () -> MINERAL_TWISTER, 5.0F, 10.0F), null);
-        HIGH_ENERGY_MINERAL_TWISTER = registry.registerBlockWithTile(
-                "high_energy_mineral_twister",
-                () -> new MineralTwisterBlock("high_energy_mineral_twister", TWISTER_T2,
-                        () -> HIGH_ENERGY_MINERAL_TWISTER, 5.0F, 12.0F), null);
-        INSPIRATION_ASSEMBLER = registry.registerBlockWithTile(
-                "inspiration_assembler",
+                        () -> MINERAL_TWISTER, 5.0F, 10.0F));
+        INSPIRATION_ASSEMBLER = MachineRegistry.register(registry, "inspiration_assembler",
+                "灵感装配台", "Inspiration Assembler",
                 () -> new InspirationAssemblerBlock("inspiration_assembler", ASSEMBLER_T1,
-                        () -> INSPIRATION_ASSEMBLER, 5.0F, 10.0F), null);
-        HIGH_ENERGY_INSPIRATION_ASSEMBLER = registry.registerBlockWithTile(
-                "high_energy_inspiration_assembler",
-                () -> new InspirationAssemblerBlock("high_energy_inspiration_assembler", ASSEMBLER_T2,
-                        () -> HIGH_ENERGY_INSPIRATION_ASSEMBLER, 5.0F, 12.0F), null);
-        CORE_DRILLER = registry.registerBlockWithTile(
-                "core_driller",
+                        () -> INSPIRATION_ASSEMBLER, 5.0F, 10.0F));
+        CORE_DRILLER = MachineRegistry.register(registry, "core_driller",
+                "地核钻探者", "Core Driller",
                 () -> new CoreDrillerBlock("core_driller", DRILLER_T1,
-                        () -> CORE_DRILLER, 6.0F, 12.0F), null);
+                        () -> CORE_DRILLER, 6.0F, 12.0F));
+
+        HIGH_ENERGY_MINERAL_TWISTER = MachineRegistry.register(registry, "high_energy_mineral_twister",
+                "高能矿物扭曲机", "High-Energy Mineral Twister",
+                () -> new MineralTwisterBlock("high_energy_mineral_twister", TWISTER_T2,
+                        () -> HIGH_ENERGY_MINERAL_TWISTER, 5.0F, 12.0F));
+        HIGH_ENERGY_INSPIRATION_ASSEMBLER = MachineRegistry.register(registry, "high_energy_inspiration_assembler",
+                "高能灵感装配台", "High-Energy Inspiration Assembler",
+                () -> new InspirationAssemblerBlock("high_energy_inspiration_assembler", ASSEMBLER_T2,
+                        () -> HIGH_ENERGY_INSPIRATION_ASSEMBLER, 5.0F, 12.0F));
+        HIGH_ENERGY_MATTER_RESHAPER = MachineRegistry.register(registry, "high_energy_matter_reshaper",
+                "高能物质重塑机", "High-Energy Matter Reshaper",
+                () -> new MatterReshaperMachineBlock("high_energy_matter_reshaper", RESHAPER_T2,
+                        () -> HIGH_ENERGY_MATTER_RESHAPER, 5.0F, 12.0F));
+
         // 发电类：不跑配方，只烧燃料往外输电
-        ALKALINE_REACTOR = registry.registerBlockWithTile(
-                "alkaline_reactor", AlkalineReactorBlock::new, null);
-        RTG_GENERATOR = registry.registerBlockWithTile(
-                "rtg_generator", RtgGeneratorBlock::new, null);
+        ALKALINE_REACTOR = MachineRegistry.register(registry, "alkaline_reactor",
+                "碱性发电机", "Alkaline Generator", AlkalineReactorBlock::new);
+        RTG_GENERATOR = MachineRegistry.register(registry, "rtg_generator",
+                "RTG反应堆", "RTG Reactor", RtgGeneratorBlock::new);
     }
 }

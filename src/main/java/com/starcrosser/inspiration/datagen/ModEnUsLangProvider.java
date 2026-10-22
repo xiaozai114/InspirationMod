@@ -5,8 +5,8 @@ import com.starcrosser.inspiration.Inspiration;
 import com.starcrosser.inspiration.block.ModBlocks;
 import com.starcrosser.inspiration.injection.ModInjection;
 import com.starcrosser.inspiration.item.ModItems;
-import com.starcrosser.inspiration.machine.ModMachines;
 import com.starcrosser.inspiration.multiblock.ModMultiblocks;
+import com.starcrosser.inspiration.registry.MachineRegistry;
 import net.minecraft.data.PackOutput;
 import net.neoforged.neoforge.common.data.LanguageProvider;
 
@@ -127,18 +127,10 @@ public class ModEnUsLangProvider extends LanguageProvider {
         add(ModItems.BLANK_DATA.get(), "Blank Data");
         add(ModItems.SHIPWRECK_DATA.get(), "Shipwreck Data");
         add(ModItems.PROJECTOR.get(), "Structure Projector");
-        // 机器
-        add(ModMachines.MATTER_FUSION_MACHINE.getBlock(), "Matter Fusion Machine");
-        add(ModMachines.ENERGIZED_MATTER_FUSION_MACHINE.getBlock(), "Energized Matter Fusion Machine");
-        add(ModMachines.MATTER_RESHAPER.getBlock(), "Matter Reshaper");
-        add(ModMachines.MINERAL_TWISTER.getBlock(), "Mineral Twister");
-        add(ModMachines.INSPIRATION_ASSEMBLER.getBlock(), "Inspiration Assembler");
-        add(ModMachines.CORE_DRILLER.getBlock(), "Core Driller");
-        add(ModMachines.HIGH_ENERGY_MINERAL_TWISTER.getBlock(), "High-Energy Mineral Twister");
-        add(ModMachines.HIGH_ENERGY_INSPIRATION_ASSEMBLER.getBlock(), "High-Energy Inspiration Assembler");
-        add(ModMachines.HIGH_ENERGY_MATTER_RESHAPER.getBlock(), "High-Energy Matter Reshaper");
-        add(ModMachines.ALKALINE_REACTOR.getBlock(), "Alkaline Generator");
-        add(ModMachines.RTG_GENERATOR.getBlock(), "RTG Reactor");
+        // 机器：显示名写在注册处（MachineRegistry），这里只管遍历
+        for (MachineRegistry.MachineEntry machine : MachineRegistry.machines()) {
+            add(machine.block(), machine.enName());
+        }
         add(ModMultiblocks.STRUCTURE_SIMULATOR.getBlock(), "Structure Simulator");
         // 流体
         add("fluid_type.inspiration.inspiration_charge", "Inspiration Charge");

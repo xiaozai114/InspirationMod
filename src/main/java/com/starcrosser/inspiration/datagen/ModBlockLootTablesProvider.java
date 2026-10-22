@@ -3,8 +3,8 @@ package com.starcrosser.inspiration.datagen;
 import com.starcrosser.inspiration.block.ModBlocks;
 import com.starcrosser.inspiration.injection.ModInjection;
 import com.starcrosser.inspiration.item.ModItems;
-import com.starcrosser.inspiration.machine.ModMachines;
 import com.starcrosser.inspiration.multiblock.ModMultiblocks;
+import com.starcrosser.inspiration.registry.MachineRegistry;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
@@ -54,17 +54,7 @@ public class ModBlockLootTablesProvider extends BlockLootSubProvider {
         dropSelf(ModBlocks.INSPIRATION_GEL.get());
 
         // 机器方块（注册在 Titanium 的注册表中，需要手动补战利品表）
-        dropSelf(ModMachines.MATTER_FUSION_MACHINE.getBlock());
-        dropSelf(ModMachines.ENERGIZED_MATTER_FUSION_MACHINE.getBlock());
-        dropSelf(ModMachines.MATTER_RESHAPER.getBlock());
-        dropSelf(ModMachines.MINERAL_TWISTER.getBlock());
-        dropSelf(ModMachines.INSPIRATION_ASSEMBLER.getBlock());
-        dropSelf(ModMachines.CORE_DRILLER.getBlock());
-        dropSelf(ModMachines.HIGH_ENERGY_MINERAL_TWISTER.getBlock());
-        dropSelf(ModMachines.HIGH_ENERGY_INSPIRATION_ASSEMBLER.getBlock());
-        dropSelf(ModMachines.HIGH_ENERGY_MATTER_RESHAPER.getBlock());
-        dropSelf(ModMachines.ALKALINE_REACTOR.getBlock());
-        dropSelf(ModMachines.RTG_GENERATOR.getBlock());
+        MachineRegistry.blocks().forEach(this::dropSelf);
         // 结构模拟机：外壳、五种仓室与控制器（Titanium 注册的方块不在 ModBlocks.BLOCKS 里，要手动补）
         dropSelf(ModBlocks.HIGH_ENERGY_MACHINE_CASING.get());
         dropSelf(ModMultiblocks.INPUT_HATCH.getBlock());
@@ -100,17 +90,7 @@ public class ModBlockLootTablesProvider extends BlockLootSubProvider {
     protected Iterable<Block> getKnownBlocks() {
         List<Block> blocks = new ArrayList<>(ModBlocks.BLOCKS.getEntries().stream().map(Holder::value).toList());
         // 机器方块注册在 Titanium 的注册表中，需要手动加入，否则会被判定为“非方块战利品表”
-        blocks.add(ModMachines.MATTER_FUSION_MACHINE.getBlock());
-        blocks.add(ModMachines.ENERGIZED_MATTER_FUSION_MACHINE.getBlock());
-        blocks.add(ModMachines.MATTER_RESHAPER.getBlock());
-        blocks.add(ModMachines.MINERAL_TWISTER.getBlock());
-        blocks.add(ModMachines.INSPIRATION_ASSEMBLER.getBlock());
-        blocks.add(ModMachines.CORE_DRILLER.getBlock());
-        blocks.add(ModMachines.HIGH_ENERGY_MINERAL_TWISTER.getBlock());
-        blocks.add(ModMachines.HIGH_ENERGY_INSPIRATION_ASSEMBLER.getBlock());
-        blocks.add(ModMachines.HIGH_ENERGY_MATTER_RESHAPER.getBlock());
-        blocks.add(ModMachines.ALKALINE_REACTOR.getBlock());
-        blocks.add(ModMachines.RTG_GENERATOR.getBlock());
+        blocks.addAll(MachineRegistry.blocks());
         blocks.add(ModBlocks.HIGH_ENERGY_MACHINE_CASING.get());
         blocks.add(ModMultiblocks.INPUT_HATCH.getBlock());
         blocks.add(ModMultiblocks.OUTPUT_HATCH.getBlock());
