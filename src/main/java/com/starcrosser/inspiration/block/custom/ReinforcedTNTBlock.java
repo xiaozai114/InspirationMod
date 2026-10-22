@@ -1,4 +1,4 @@
-package com.starcrosser.inspiration.block;
+package com.starcrosser.inspiration.block.custom;
 
 import com.starcrosser.inspiration.entity.ReinforcedTNTEntity;
 import net.minecraft.core.BlockPos;

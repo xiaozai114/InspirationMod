@@ -1,6 +1,7 @@
 package com.starcrosser.inspiration;
 
 import com.starcrosser.inspiration.block.ModBlocks;
+import com.starcrosser.inspiration.config.Config;
 import com.starcrosser.inspiration.entity.ModEntities;
 import com.starcrosser.inspiration.fluid.ModFluids;
 import com.starcrosser.inspiration.guide.ModGuideMenus;

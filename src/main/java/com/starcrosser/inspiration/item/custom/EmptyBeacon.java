@@ -1,6 +1,6 @@
 package com.starcrosser.inspiration.item.custom;
 
-import com.starcrosser.inspiration.control.VecHelper;
+import com.starcrosser.inspiration.util.VecHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.sounds.SoundEvents;

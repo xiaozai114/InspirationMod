@@ -1,6 +1,6 @@
 package com.starcrosser.inspiration.item.custom;
 
-import com.starcrosser.inspiration.control.VecHelper;
+import com.starcrosser.inspiration.util.VecHelper;
 import com.starcrosser.inspiration.item.ModItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;

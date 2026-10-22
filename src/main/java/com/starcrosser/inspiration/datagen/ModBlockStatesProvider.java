@@ -4,6 +4,7 @@ import com.hrznstudio.titanium.block.RotatableBlock;
 import com.hrznstudio.titanium.module.BlockWithTile;
 import com.starcrosser.inspiration.Inspiration;
 import com.starcrosser.inspiration.block.ModBlocks;
+import com.starcrosser.inspiration.block.custom.EmpoweredTNTBlock;
 import com.starcrosser.inspiration.injection.ModInjection;
 import com.starcrosser.inspiration.injection.block.InjectionGunBlock;
 import com.starcrosser.inspiration.multiblock.ModMultiblocks;

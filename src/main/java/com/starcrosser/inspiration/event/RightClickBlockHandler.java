@@ -1,7 +1,7 @@
 package com.starcrosser.inspiration.event;
 
 import com.starcrosser.inspiration.Inspiration;
-import com.starcrosser.inspiration.control.VecHelper;
+import com.starcrosser.inspiration.util.VecHelper;
 import com.starcrosser.inspiration.recipe.ModRecipes;
 import com.starcrosser.inspiration.recipe.RightClickBlockRecipe;
 import net.minecraft.core.BlockPos;
