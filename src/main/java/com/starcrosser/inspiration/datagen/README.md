@@ -9,7 +9,7 @@
 
 | Provider | 产出 |
 | --- | --- |
-| `ModRecipesProvider` | 全部配方 JSON（含右键转化、机器配方、数据表驱动的批量配方） |
+| `ModRecipesProvider` | **只负责派活**，配方本体在 [`recipe/`](recipe/README.md) 下按机制分文件 |
 | `ModBlockStatesProvider` | 方块状态与方块模型 |
 | `ModItemModelsProvider` | 物品模型 |
 | `ModBlockLootTablesProvider` | 方块战利品表 |
@@ -19,14 +19,14 @@
 
 ## 机器配方
 
-机器本体一律走 `ModRecipesProvider#machine(...)`，形状为 `MSM / SCS / MXM`
+机器本体一律走 `MachineBlockRecipes#machine(...)`，形状为 `MSM / SCS / MXM`
 （X 为下级机器，基础机型填主要材料），选材表见 [机器文档](../machine/README.md) 的
 《机器本体的合成形状》。以后新增机器直接调这个方法，不要再手写 pattern。
 
 ## 已知事项
 
 - `ModBlockLootTablesProvider#getKnownBlocks` 只认 `ModBlocks.BLOCKS`，
-  **机器方块必须手动加进去**，否则掉不出东西。
+  机器方块靠 `MachineRegistry.blocks()` 补进去（注册在 Titanium 的表里，遍历不到）。
 - 数据生成时，进度/能耗字段等于默认值会被 codec 省略，读回来自动填默认值，属正常行为，
   不要为此改默认值。
 - 不完整方块的模型要手写 `elements`，六向方块的 variant 也要手写（见 [方块文档](../block/README.md)）。

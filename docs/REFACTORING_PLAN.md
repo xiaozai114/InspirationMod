@@ -385,34 +385,67 @@ Java 是单继承，插不进一个统一的 `ChargedToolItem extends Item`。
 
 ### P2 — 注册与资源统一（解决"手写 9 遍"）
 
-#### P2.1 建 `registry/MachineRegistry`（B1 的根因修复）
+#### P2.1 建 `registry/MachineRegistry`（B1 的根因修复）—— ✅ 已完成（commit `b1c0ed6`）
 
 Titanium 的 `DeferredRegistryHelper.registerBlockWithTile(...)` 注册的方块**不会进入** `ModBlocks.BLOCKS`，
 所以 datagen 里遍历不到它们 —— 这才是"11 台机器被手写 9 遍"的总根源。
 
-**改法**：
+**实际做法**：`ModMachines#register()` 不再直接调 Titanium，改走
+`MachineRegistry.register(registry, id, zhName, enName, blockFactory)`，注册的同时登记进清单。
+条目用 record 存 `id / BlockWithTile / zhName / enName`，并提供 `machines()` 与 `blocks()` 两个遍历口。
 
-```java
-public final class MachineRegistry {
-    // 注册机器时同时登记到这里
-    public static final List<DeferredBlock<? extends Block>> MACHINES = new ArrayList<>();
-}
-```
+**改成遍历的 4 处**：中英语言、方块状态、挖掘标签（`mineable_with_pickaxe` + `needs_iron_tool`）、
+战利品表（`dropSelf` + `getKnownBlocks`）。
 
-然后创造栏 / 中英语言 / 方块状态 / 标签 / 战利品表**全部改成遍历这份清单**。
+**两处刻意没改**：
 
-**收益**：以后加一台机器，只需要在注册处写一次，9 处配套资源自动生成。
-**风险**：必须逐个核对生成的 json 与旧文件逐字节相同（同样用 `git diff --stat` 验证）。
+- **创造栏仍逐个写**。机器在那里是与同期物品**穿插**排列的（一台机器紧挨着它的材料与产物），
+  不是"所有机器挨在一起"，遍历会打乱刻意排好的展示顺序。
+- **JEI 的「机器 → 配方类型」映射**仍是手工的一张表，那是有语义的对应关系，不是清单。
 
-#### P2.2 拆 `ModRecipesProvider`（1303 行）
+⚠️ **注册顺序被调整成了「基础机型 → 上位机型 → 发电类」**。清单顺序 = 标签 JSON 里的输出顺序，
+原来 `ModMachines` 的注册顺序与标签顺序不一致，不统一就会让 tag json 内容重排
+（功能不变但 diff 变脏）。方块注册顺序本身不进存档，改它是安全的。
 
-按配方类型拆成 `datagen/recipe/` 下的多个类（`AssemblingRecipes`、`FusionRecipes`、
-`InjectionRecipes`、`MultiblockRecipes`…），主 Provider 只做组合。
+**验收**：`runData` 生成资源**零变化**；服务端自检 11 台机器方块 / 物品全部注册成功、
+静态字段与清单指向同一对象。
 
-#### P2.3 事件集中到 `event/`（B5）
+⚠️ **踩到的一个类型坑**：`registerBlockWithTile` 的第二个参数是
+`Supplier<BasicTileBlock<?>>`（**不变型**，不是 `? extends`），所以 `MachineRegistry`
+的形参也必须写成 `Supplier<BasicTileBlock<?>>`，写成 `Supplier<? extends ...>` 或
+`Supplier<Block>` 都会编译失败。
 
-把 18 个订阅类里纯事件处理的逻辑抽出，或至少建立 `event/` 包 + 一份清单文档，
-保证"谁监听了什么"一眼可见。同时**确保没有任何处理器被注册两次**（A8 的教训）。
+#### P2.2 拆 `ModRecipesProvider`（1303 行）—— ✅ 已完成（commit `eaa1e08`）
+
+拆成 `datagen/recipe/` 下 11 个文件，主 Provider 只剩 67 行派活。分工见
+[`datagen/recipe/README.md`](../src/main/java/com/starcrosser/inspiration/datagen/recipe/README.md)。
+
+⚠️ **唯一的技术障碍与解法**：`RecipeProvider#has` / `#getHasName` 是 **protected static**，
+拆出去的类不再是 `RecipeProvider` 的子类就用不了。解法是新增 `RecipeUnlocks`
+**原样复刻**这两个方法（照抄 `RecipeProvider#inventoryTrigger` 的触发器构造），
+各配方类用 `import static` 引入 —— 调用处写法与拆分前一字不差。
+
+**验收**：`runData` 生成资源**零变化**（拆分完全等价）。
+
+#### P2.3 事件集中到 `event/`（B5）—— ✅ 已完成（commit `a8a9e61`）
+
+**实际做法**（方案里给了"或至少建立清单文档"这个降级选项，取的是中间路线）：
+
+- 建 `event/` 包，把**四个纯玩法监听器**搬进去：
+  `EndAlloyShieldHandler`（碎盾传送）、`ExpMiningHandler`（挖掘掉经验）、
+  `HeadDropHandler`（掉头颅）、`RightClickBlockHandler`（右键方块转换）。
+  判据是「不持有状态、不被别处引用，纯粹是 事件 → 玩法」。
+- **辐射的 7 个事件与两个数据地图注册留在原地**：它们是子系统的主体逻辑，
+  搬到 `event/` 会把机制和同包的数据拆散。
+- 新增 **`event/README.md` 作为唯一权威清单**：18 个订阅类逐个列出
+  「类 / 总线 / 事件 / 干什么」，并写明两条规矩（一个类只能注册一次、自检类必须带注解）。
+
+⚠️ **一条容易记错的事实**：新版 FML **按事件类型自己分派**总线
+（`IModBusEvent` 走 mod 总线，其余走游戏总线），所以**不要**写 `bus = Bus.MOD`
+—— 该属性已标记待删除。这也是 `AlkalinityDataMaps` / `RadiationDataMaps`
+能用游戏总线注解收到 `RegisterDataMapTypesEvent` 的原因。
+
+**验收**：`runData` 零变化；服务端自检 6/6 通过（四个监听器注解仍在、机器清单 11 条）。
 
 **回滚点**：`git tag p2-start` → `git tag p2-done`
 
