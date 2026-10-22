@@ -2,6 +2,9 @@
 package com.starcrosser.inspiration.client;
 
 import com.starcrosser.inspiration.Inspiration;
+import com.starcrosser.inspiration.client.extensions.EndAlloyShieldClientExtensions;
+import com.starcrosser.inspiration.client.extensions.InspirationChargeClientExtensions;
+import com.starcrosser.inspiration.client.extensions.MindFluidClientExtensions;
 import com.starcrosser.inspiration.fluid.ModFluids;
 import com.starcrosser.inspiration.item.ModItems;
 import net.neoforged.api.distmarker.Dist;

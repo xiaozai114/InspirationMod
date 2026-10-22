@@ -5,7 +5,7 @@ import com.hrznstudio.titanium.block.BasicTileBlock;
 import com.hrznstudio.titanium.component.inventory.SidedInventoryComponent;
 import com.starcrosser.inspiration.item.ModItems;
 import com.starcrosser.inspiration.machine.ModMachines;
-import com.starcrosser.inspiration.machine.client.FacingLabels;
+import com.starcrosser.inspiration.client.util.FacingLabels;
 import com.starcrosser.inspiration.radiation.Radiation;
 import com.starcrosser.inspiration.radiation.RadiationSavedData;
 import net.minecraft.core.BlockPos;

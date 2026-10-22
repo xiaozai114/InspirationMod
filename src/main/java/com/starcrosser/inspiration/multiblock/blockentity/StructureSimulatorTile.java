@@ -514,7 +514,7 @@ public class StructureSimulatorTile extends MachineTile<StructureSimulatorTile> 
     @Override
     public void initClient() {
         super.initClient();
-        addGuiAddonFactory(() -> new com.starcrosser.inspiration.multiblock.client.StatusAddon(this));
+        addGuiAddonFactory(() -> new com.starcrosser.inspiration.client.extensions.StatusAddon(this));
     }
 
     /* ============================ 持久化 ============================ */

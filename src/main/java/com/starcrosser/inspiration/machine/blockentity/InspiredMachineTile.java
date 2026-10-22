@@ -8,7 +8,7 @@ import com.hrznstudio.titanium.component.fluid.SidedFluidTankComponent;
 import com.hrznstudio.titanium.component.inventory.SidedInventoryComponent;
 import com.hrznstudio.titanium.component.progress.ProgressBarComponent;
 import com.hrznstudio.titanium.component.sideness.IFacingComponent;
-import com.starcrosser.inspiration.machine.client.FacingLabels;
+import com.starcrosser.inspiration.client.util.FacingLabels;
 import com.starcrosser.inspiration.machine.charge.InspirationCharge;
 import com.starcrosser.inspiration.machine.plugin.PluginEffects;
 import com.starcrosser.inspiration.machine.plugin.PluginEnergyStorage;
@@ -312,4 +312,5 @@ public abstract class InspiredMachineTile<T extends InspiredMachineTile<T>> exte
     public int getChargeCapacity() {
         return chargeTank.getCapacity();
     }
+
 }

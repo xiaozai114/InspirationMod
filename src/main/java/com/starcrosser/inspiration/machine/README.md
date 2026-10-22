@@ -80,7 +80,7 @@ RTG 烧 1 钫锭（辐射 3）产 72,000,000 FE、吐 3 个核废料、区块辐
 
 ### 机器 tooltip
 
-`machine/client/MachineTooltips` 按物品 ID 给所有机器挂说明：加工类写配方类型，
+`client/tooltip/MachineTooltips` 按物品 ID 给所有机器挂说明：加工类写配方类型，
 发电类写发电机制。键是 `tooltip.inspiration.machine.<机器名>`，新增机器只要往
 `MACHINES` 里加一行、再补两种语言的文案（走 tooltip 事件是因为机器方块由 Titanium
 一次注册成型，拿不到自定义物品类去覆写 `appendHoverText`）。
@@ -176,7 +176,7 @@ M X M
 #### 侧向配置按钮的文字标签
 
 Titanium 的朝向按钮本体是个 14×14 的小方块，只靠颜色区分归属，单看界面分不出哪个是输入。
-`machine/client/FacingLabelAddon` 在按钮**正上方**补一行短标签，颜色取组件自己的 `getColor()`
+`client/extensions/FacingLabelAddon` 在按钮**正上方**补一行短标签，颜色取组件自己的 `getColor()`
 压暗 62%，跟槽位高亮是同一套配色。
 
 位置是唯一的难点，改动前先看清楚三件事：

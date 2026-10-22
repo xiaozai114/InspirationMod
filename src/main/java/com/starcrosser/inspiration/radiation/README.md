@@ -87,7 +87,7 @@
 | `RadiationTicker` | 每刻驱动：扫描队列、每秒结算、每小时结算 |
 | `RadiationEvents` | 事件入口：放置/破坏/区块加载卸载、死亡减半、治疗换算、停服清索引 |
 | `item/GeigerCounterItem` | 盖革计数器：右键读出区块值与玩家值 |
-| `client/RadiationTooltips` | 给带辐射的物品挂一行 tooltip（客户端限定） |
+| `client/tooltip/RadiationTooltips` | 给带辐射的物品挂一行 tooltip（客户端限定） |
 
 ## 实现要点
 

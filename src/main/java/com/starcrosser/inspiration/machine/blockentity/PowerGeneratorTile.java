@@ -5,7 +5,7 @@ import com.hrznstudio.titanium.block.BasicTileBlock;
 import com.hrznstudio.titanium.component.inventory.SidedInventoryComponent;
 import com.hrznstudio.titanium.component.progress.ProgressBarComponent;
 import com.hrznstudio.titanium.block.tile.MachineTile;
-import com.starcrosser.inspiration.machine.client.FacingLabels;
+import com.starcrosser.inspiration.client.util.FacingLabels;
 import com.starcrosser.inspiration.machine.plugin.PluginEffects;
 import com.starcrosser.inspiration.machine.plugin.PluginEnergyStorage;
 import com.starcrosser.inspiration.machine.plugin.PluginHost;

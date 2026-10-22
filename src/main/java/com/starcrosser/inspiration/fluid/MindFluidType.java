@@ -1,9 +1,6 @@
 package com.starcrosser.inspiration.fluid;
 
-import com.mojang.blaze3d.shaders.Effect;
-import com.starcrosser.inspiration.client.MindFluidClientExtensions;
 import net.minecraft.core.BlockPos;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -11,14 +8,8 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.phys.Vec3;
-import net.neoforged.neoforge.client.extensions.common.IClientFluidTypeExtensions;
 import net.neoforged.neoforge.common.SoundActions;
 import net.neoforged.neoforge.fluids.FluidType;
-import org.jetbrains.annotations.NotNull;
-
-import java.util.function.Consumer;
-
-import static com.starcrosser.inspiration.Inspiration.MODID;
 
 public class MindFluidType extends FluidType {
 

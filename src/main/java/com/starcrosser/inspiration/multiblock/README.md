@@ -109,7 +109,7 @@ SHAPE[层][行]（行自下而上，层自后往前）
 
 玩家看到的永远是最该先解决的那个问题（结构没搭好比没电更重要）。
 值存在 `@Save int status` 里，服务端改动后 `markForUpdate()` 推给客户端；
-`client/StatusAddon` 在界面 `(8, 90)` 画一行 —— 176×184 的界面里，玩家背包从 y=102 开始。
+`client/extensions/StatusAddon` 在界面 `(8, 90)` 画一行 —— 176×184 的界面里，玩家背包从 y=102 开始。
 
 ## 为什么不给多方块装插件
 
@@ -129,7 +129,7 @@ SHAPE[层][行]（行自下而上，层自后往前）
 投影期间**不打开界面**：`StructureSimulatorTile#onActivated` 见到主手是投影仪就返回
 `ItemInteractionResult.SUCCESS`，否则一开 GUI 就把刚投出来的虚影挡住了。
 
-### 2. 客户端虚影（`client/ProjectorPreviewHandler` + `client/SimulatorPreviewRenderer`）
+### 2. 客户端虚影（`client/extensions/ProjectorPreviewHandler` + `client/renderer/SimulatorPreviewRenderer`）
 
 状态拆成两半：`ProjectorPreviewHandler` 记「从哪一格、按哪个朝向、什么时候过期」
 （纯客户端，不做网络同步 —— 投影只是视觉辅助），渲染器每帧去画。

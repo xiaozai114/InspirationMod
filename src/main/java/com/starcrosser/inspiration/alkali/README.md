@@ -27,7 +27,7 @@
 | --- | --- |
 | `AlkalinityDataMaps` | 物品表 `data_maps/item/alkalinity.json` 的数据地图定义（`inspiration:alkalinity`，已 `.synced(...)`） |
 | `Alkalinity` | 查询：`of(ItemStack)`，未登记返回 0 |
-| `client/AlkalinityTooltips` | 在物品名字下面补一行「碱性值：x」（客户端限定） |
+| `client/tooltip/AlkalinityTooltips` | 在物品名字下面补一行「碱性值：x」（客户端限定） |
 
 ## 实现要点
 
