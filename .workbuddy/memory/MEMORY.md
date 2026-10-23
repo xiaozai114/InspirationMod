@@ -1,10 +1,8 @@
 # 项目长期备忘（Inspiration，NeoForge 1.21.1）
 
 > **必须 < 12KB**，超了先合并同类条目、把细则挪进包 README，别硬删。
-> 细则在各包 `README.md`（`machine/`、`multiblock/`、`injection/`、`guide/`、`fluid/`、
-> `item/tool/`、`client/jei/`、`recipe/`、`datagen/`、`block/`、`radiation/`、`material/`、
-> `client/`）；根 `README.md` 管构建/验证。**改哪个包顺手更新那份**。
-> 本文件只放**踩坑与决策**。
+> 细则在各包 `README.md`（根 `README.md` 有索引，构建/验证也在那）；本文件只放
+> **踩坑与决策**。**改哪个包顺手更新那份**。
 
 ## 机器（Titanium）
 
@@ -26,20 +24,15 @@
   `energyUse=speed²`、`chargeUse=speed`）；容量类只改容量、缩容要截断。
 - 发电类 `PowerGeneratorTile`：`maxReceive=0` + 每刻推六邻；两坑：燃料开工即扣、
   缓冲满时进度条打回 0 且**不回调 onFinishWork**。
-- `MachineTooltips`：**一个键可写多行**（值里 `\n`、代码 `split("\n")`）。
 
 ## 客户端隔离（P3 后）
 
-- **所有纯客户端代码在 `client/`**：`extensions/`（扩展与 addon）、`renderer/`、`tooltip/`、
-  `guide/`、`util/`，加 `jei/`（JEI 是纯客户端，搬进来后边界一眼可见）。
-  `client/` 之外不该出现客户端类。
-- 服务端要碰客户端类 → **必须 `@OnlyIn(Dist.CLIENT)`**（挂 Titanium addon 的那些
-  `initClient` 已经是了）。不标的话本地永远测不出来，只有上专用服务器才炸。
-- **`util/ClientIsolationCheck`** 是这道纪律的自动保险：非生产环境开服时扫自己的 class，
-  按方法找「引用客户端类却没标 `@OnlyIn`」并打 ERROR。口径与两个豁免（datagen 整包、
-  lambda 跟着类走）写在 `client/README.md`。
-- `datagen/` 引用 `neoforge.client.model.generators` 是**正常的**（模型生成 API 就在那），
-  不是漏标注解。
+- **所有纯客户端代码在 `client/`**（`extensions/`、`renderer/`、`tooltip/`、`guide/`、
+  `util/`、`jei/`）；`client/` 之外不该出现客户端类，要碰就标 `@OnlyIn(Dist.CLIENT)`。
+- **`util/ClientIsolationCheck`** 是自动保险：非生产环境开服时扫自己的 class，按方法找
+  「引用客户端类却没标 `@OnlyIn`」并打 ERROR（240 类约 180 ms）。口径与豁免（datagen
+  整包跳过、lambda 跟着类走）见 `client/README.md`。
+- `datagen/` 引用 `neoforge.client.model.generators` **正常**（模型 API 就在那），不是漏标。
 
 ## 多方块（结构模拟机）
 
@@ -80,14 +73,14 @@
 - 碱性 `.alkalinity(int)` 与碱金属行为 `.alkaliRevert(target,radius)` **是两件事**
   （钙粉碱性 1、半径 0.1f）。值 0 = 不写 data_map、不显示 tooltip、不能当燃料。
 - 有辐射且有方块时，方块与**方块物品**都要登记，值 = 物品值 × 9。
-- **data_maps 改由 `ModDataMapsProvider` 生成**，手写三份已删；**手写与生成不能并存**（同名文件撞），
+- **data_maps 改由 `ModDataMapsProvider` 生成**（**手写与生成不能并存**，同名文件撞）；
   不属于锭材料的条目（粉/盐/矿）在 Provider 里显式登记。
 
 ## 注入 / 材料 / 工具
 
 - 注入：束缚器单槽、产物回同槽；右键放/取、**潜行右键开 GUI**；失败返回 `CONSUME`。
   超 `max_energy` 在束缚器处 `explode`——**刻意设计，别加保护**。
-- 辐射值要在 **item 与 block 两表各登记一份**。幽匿合金 = 回响碎片 + 强化深板岩融合**得 2 个**。
+- 幽匿合金 = 回响碎片 + 强化深板岩融合**得 2 个**（辐射两表登记见「材料」段）。
 - 工具：**`Properties#durability` 对 `TieredItem` 无效** → 用 `ModToolTiers.withDurability`。
   蓄力 buff 的接口 `default` **打不过父类 `Item#use`**（P1.3 结论：保持现状，单继承无解）。
 
@@ -96,8 +89,7 @@
 - **P2.3 后** `event/` 放**纯玩法监听器**（不持状态、不被引用）：碎盾传送 / 挖掘掉经验 /
   掉头颅 / 右键方块转换。辐射与数据地图注册**留在原子系统**（是机制主体）。
 - **`event/README.md` 是订阅类的唯一权威清单**（类 / 总线 / 事件 / 干什么）。
-- ⚠️ **新版 FML 按事件类型自己分派总线**（`IModBusEvent` → mod 总线），**别写 `bus = Bus.MOD`**
-  （已标记待删除）；游戏总线注解照样收得到 `RegisterDataMapTypesEvent`。
+- ⚠️ **新版 FML 按事件类型自己分派总线**（`IModBusEvent` → mod 总线），**别写 `bus = Bus.MOD`**。
 - ⚠️ 一个类只能注册一次（A8：`RightClickBlockHandler` 曾被注解 + 手工各注册一遍）。
 
 ## 构建与验证
@@ -142,14 +134,17 @@
 9. **物品栏黑紫棋盘格 = 缺 `models/item/<方块>.json`**（`ModItemModelsProvider` 补 `blockItem`）。
 10. **配置缓存按「任务集」分别存条目**；动仓库 `content`/`metadataSources` 会让已缓存解析失效。
 11. **Git 远程** `origin = https://github.com/xiaozai114/InspirationMod`（私有），代理对
-    **github.com:443 间歇 502**。持续失败走 API 兜底：把本地 commit 元数据原样发给 API
-    （`git cat-file commit <sha>` → POST `/git/commits` → PATCH ref 带 `force:true`）。
-    坑：`date` 要用**该时区本地时间**再贴偏移（取 UTC 再贴 `+08:00` 会差 8 小时 → sha 对不上）。
-12. **datagen 哈希缓存会漏判内容变化** → 假的「零变化」，见构建节。
+    **github.com:443 间歇 502**（`api.github.com` 通常是通的，先 curl 探一下）。
+    持续失败走 REST 兜底，**顺序 blob → tree → commit → ref**：变化文件 `POST /git/blobs`
+    （base64，删除条目 `sha:null`）→ `POST /git/trees`（`base_tree=<parent>^{tree}`）→
+    `POST /git/commits` → `PATCH /git/refs/heads/master` force，**每步校 sha 等于本地**。
+    ⚠️ 只发 commit 会 422「Tree SHA does not exist」（REST 收不了 pack）。坑：`date` 用
+    **该时区本地时间**再贴偏移（取 UTC 再贴 `+08:00` 差 8 小时）；`author` 行**从右往左**
+    切（Name 含空格）。推完 `git update-ref` 同步 origin/*。
 
 ## 重构
 
-- 方案 **`docs/REFACTORING_PLAN.md`**，基线 **`5194af5`**。P0 止血 → P1（机器等级化 ✅ /
+- 方案 **`docs/REFACTORING_PLAN.md`**，基线 **`5194af5`**。P0 ✅ → P1（机器等级化 ✅ /
   配方基类 ✅ / 五件套 ❌ 保持现状 / 仓室基类 ✅）→ P2（MachineRegistry ✅ / 拆 Provider ✅ /
-  事件集中 ✅ / P2.5 材料系统统一）→ P3 客户端隔离与命名。
+  事件集中 ✅ / P2.5 材料系统统一 ✅）→ **P3 客户端隔离与命名 ✅**（`p3-start` → `p3-done`）。
 - 红线：**不动任何 `ResourceLocation`**（老存档靠 ID）；**同 commit 不混「改结构」与「加内容」**。
