@@ -39,6 +39,7 @@ public class ModItemModelsProvider extends ItemModelProvider {
         basicItem(ModItems.RAW_CESIUM_SALT.get());
         basicItem(ModItems.EXPLODING_CANDY.get());
         basicItem(ModItems.MIND_FLUID_BUCKET.get());
+        basicItem(ModItems.MOLTEN_PLASMA_BUCKET.get());
         basicItem(ModItems.CALCIUM_HYDROXIDE_DUST.get());
         basicItem(ModItems.CALCIUM_DUST.get());
         basicItem(ModItems.CESIUM_DUST.get());

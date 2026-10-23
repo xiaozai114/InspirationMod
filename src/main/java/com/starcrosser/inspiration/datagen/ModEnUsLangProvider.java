@@ -47,6 +47,7 @@ public class ModEnUsLangProvider extends LanguageProvider {
         add(ModItems.EXPLODING_CANDY.get(),"Exploding Candy");
         add(ModItems.POWER_BEACON.get(), "Power Beacon");
         add(ModItems.MIND_FLUID_BUCKET.get(), "Mind Fluid Bucket");
+        add(ModItems.MOLTEN_PLASMA_BUCKET.get(), "Molten Plasma Bucket");
         add(ModItems.CALCIUM_HYDROXIDE_DUST.get(), "Calcium Hydroxide");
         add(ModItems.CALCIUM_DUST.get(), "Calcium Dust");
         add(ModItems.CESIUM_DUST.get(), "Cesium Dust");
@@ -129,6 +130,7 @@ public class ModEnUsLangProvider extends LanguageProvider {
         add(ModMultiblocks.STRUCTURE_SIMULATOR.getBlock(), "Structure Simulator");
         // 流体
         add("fluid_type.inspiration.inspiration_charge", "Inspiration Charge");
+        add("fluid_type.inspiration.molten_plasma", "Molten Plasma");
         // 方块
         add(ModBlocks.LIGNITE_BLOCK.get(), "lignite block");
         add(ModBlocks.INTENSIFIED_TNT.get(), "intensified_tnt");

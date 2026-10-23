@@ -91,6 +91,7 @@ public class ModCreativeModeTabs {
                         output.accept(ModBlocks.INTENSIFIED_TNT);
                         output.accept(ModBlocks.EMPOWERED_TNT_ITEM);
                         output.accept(ModItems.MIND_FLUID_BUCKET.get());
+                        output.accept(ModItems.MOLTEN_PLASMA_BUCKET.get());
                         // 思维流体反应生成的四类方块
                         output.accept(ModBlocks.DILUTED_INSPIRATION_CRYSTAL);
                         output.accept(ModBlocks.CONCENTRATED_INSPIRATION_CRYSTAL);

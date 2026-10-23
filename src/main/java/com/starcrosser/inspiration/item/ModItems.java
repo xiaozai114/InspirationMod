@@ -307,6 +307,13 @@ public class ModItems {
             ()->new BucketItem(ModFluids.Fluids.MIND_FLUID.get(),
                     new Item.Properties())
     );
+
+    /** 液态等离子桶：流体提取机的产物，也是装配台的流体原料容器。 */
+    public static final DeferredHolder<Item, BucketItem> MOLTEN_PLASMA_BUCKET = ITEMS.register(
+            "molten_plasma_bucket",
+            ()->new BucketItem(ModFluids.Fluids.MOLTEN_PLASMA.get(),
+                    new Item.Properties().rarity(Rarity.UNCOMMON))
+    );
     public static void register(IEventBus eventBus) {
         ITEMS.register(eventBus);
     }

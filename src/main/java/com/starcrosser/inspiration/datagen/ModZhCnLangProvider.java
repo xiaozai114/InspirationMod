@@ -48,6 +48,7 @@ public class ModZhCnLangProvider extends LanguageProvider {
         add(ModItems.EXPLODING_CANDY.get(),"跳跳糖");
         add(ModBlocks.MIND_FLUID_BLOCK.get(),"思维流体");
         add(ModItems.MIND_FLUID_BUCKET.get(),"思维流体桶");
+        add(ModItems.MOLTEN_PLASMA_BUCKET.get(),"液态等离子桶");
         add(ModItems.POWER_BEACON.get(),"动力信标");
         add(ModItems.CALCIUM_HYDROXIDE_DUST.get(),"氢氧化钙粉");
         add(ModItems.CALCIUM_DUST.get(),"钙粉");
@@ -134,6 +135,7 @@ public class ModZhCnLangProvider extends LanguageProvider {
 
         // 流体
         add("fluid_type.inspiration.inspiration_charge", "灵感充能");
+        add("fluid_type.inspiration.molten_plasma", "液态等离子");
 
         // 方块
         add(ModBlocks.LIGNITE_BLOCK.get(), "褐煤块");

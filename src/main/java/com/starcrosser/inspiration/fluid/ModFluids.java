@@ -31,6 +31,14 @@ public class ModFluids {
                 "inspiration_charge",
                 () -> new InspirationChargeFluid.Source(InspirationChargeFluid.PROPERTIES)
         );
+        public static final DeferredHolder<Fluid, BaseFlowingFluid.Flowing> FLOWING_MOLTEN_PLASMA = FLUIDS.register(
+                "flowing_molten_plasma",
+                () -> new MoltenPlasma.Flowing(MoltenPlasma.PROPERTIES)
+        );
+        public static final DeferredHolder<Fluid, BaseFlowingFluid.Source> MOLTEN_PLASMA = FLUIDS.register(
+                "molten_plasma",
+                () -> new MoltenPlasma.Source(MoltenPlasma.PROPERTIES)
+        );
     }
 
     public static class FluidsTypes {
@@ -43,6 +51,11 @@ public class ModFluids {
                 FLUID_TYPES.register(
                         "inspiration_charge",
                         InspirationChargeFluidType::new
+                );
+        public static final DeferredHolder<FluidType, MoltenPlasmaFluidType> MOLTEN_PLASMA_TYPE =
+                FLUID_TYPES.register(
+                        "molten_plasma",
+                        MoltenPlasmaFluidType::new
                 );
     }
     
