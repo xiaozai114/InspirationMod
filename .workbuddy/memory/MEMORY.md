@@ -2,8 +2,9 @@
 
 > **必须 < 12KB**，超了先合并同类条目、把细则挪进包 README，别硬删。
 > 细则在各包 `README.md`（`machine/`、`multiblock/`、`injection/`、`guide/`、`fluid/`、
-> `item/tool/`、`jei/`、`recipe/`、`datagen/`、`block/`、`radiation/`、`material/`）；
-> 根 `README.md` 管构建/验证。**改哪个包顺手更新那份**。本文件只放**踩坑与决策**。
+> `item/tool/`、`client/jei/`、`recipe/`、`datagen/`、`block/`、`radiation/`、`material/`、
+> `client/`）；根 `README.md` 管构建/验证。**改哪个包顺手更新那份**。
+> 本文件只放**踩坑与决策**。
 
 ## 机器（Titanium）
 
@@ -27,6 +28,19 @@
   缓冲满时进度条打回 0 且**不回调 onFinishWork**。
 - `MachineTooltips`：**一个键可写多行**（值里 `\n`、代码 `split("\n")`）。
 
+## 客户端隔离（P3 后）
+
+- **所有纯客户端代码在 `client/`**：`extensions/`（扩展与 addon）、`renderer/`、`tooltip/`、
+  `guide/`、`util/`，加 `jei/`（JEI 是纯客户端，搬进来后边界一眼可见）。
+  `client/` 之外不该出现客户端类。
+- 服务端要碰客户端类 → **必须 `@OnlyIn(Dist.CLIENT)`**（挂 Titanium addon 的那些
+  `initClient` 已经是了）。不标的话本地永远测不出来，只有上专用服务器才炸。
+- **`util/ClientIsolationCheck`** 是这道纪律的自动保险：非生产环境开服时扫自己的 class，
+  按方法找「引用客户端类却没标 `@OnlyIn`」并打 ERROR。口径与两个豁免（datagen 整包、
+  lambda 跟着类走）写在 `client/README.md`。
+- `datagen/` 引用 `neoforge.client.model.generators` 是**正常的**（模型生成 API 就在那），
+  不是漏标注解。
+
 ## 多方块（结构模拟机）
 
 - **MBD2 21.1.1 + LDLib2 2.2.39.a，只借结构层**：控制器不实现 `IMultiController`，只用
@@ -47,14 +61,10 @@
 - 一个自定义类型 = `XxxRecipe`（`MapCodec`）+ `XxxRecipeInput` + `XxxRecipeSerializer`；
   **≥7 字段必须手写 `StreamCodec.of(写,读)`**；`RecipeOutput#accept(id,recipe,null)`；
   **`save(output,"名字")` 落 `minecraft:` 命名空间**。
-- **P2.2 后**配方按机制拆到 `datagen/recipe/`（11 个文件），`ModRecipesProvider` 只派活。
-  ⚠️ `RecipeProvider#has`/`getHasName` 是 **protected static**，拆出去的子类用不了 →
-  在 `datagen/recipe/RecipeUnlocks` 里**原样复刻**（照抄 `inventoryTrigger` 的触发器构造），
-  各文件 `import static` 引入，调用处一字不改。
-- JEI 三步：`ModJeiRecipeTypes` → `category/XxxRecipeCategory` → `InspirationJeiPlugin`。要点：
-  背景尺寸**必须等于 `getWidth()/getHeight()`**；贴图路径**必须带 `.png`**；`addText` 超 maxHeight
-  整段截断；**`MapCodec` 没有 `listOf()`**；自绘用 `draw(...)`（在槽位之后执行）；
-  **消耗 >1 个材料用 `jei/JeiSlots.input(builder,x,y,ing,count)`**。
+- **P2.2 后**配方按机制拆到 `datagen/recipe/`（11 个文件）。⚠️ `RecipeProvider#has`/
+  `getHasName` 是 protected static，拆出去用不了 → 在 `RecipeUnlocks` 里原样复刻。
+- JEI（现 `client/jei/`）三步：`ModJeiRecipeTypes` → `category/XxxRecipeCategory` →
+  `InspirationJeiPlugin`。要点见 `client/jei/README.md`。
 
 ## 材料（`material/`，P2.5 后）
 
@@ -92,6 +102,14 @@
 
 ## 构建与验证
 
+- ⚠️ **`sed -i` 会把 CRLF 改成 LF**（本机 `core.autocrlf=true`）：批量替换后 `git status`
+  一片 M 但 `git diff --numstat` 是空的。提交前把 `src/main/java` 下的 `.java`/`.md`
+  统一回 CRLF，工作区才干净。
+- ⚠️ **搬包要按「文件组」提交时，用默认（mixed）的 `git reset`**，别用 `--soft`
+  （soft 保留索引，后面按路径 add 再 commit 会把**全部**改动一起提进去）。
+  另外**旧路径的删除也要 stage**，只 add 新路径会漏。
+- **datagen 哈希缓存会漏判内容变化**：核对前删 `src/generated/resources/.cache/*`（不必删
+  整个目录，删了要重新生成 500+ 文件）再 `runData`，否则看到假的「零变化」。
 - MC 1.21.1 / **NeoForge 21.1.256** / ModDevGradle **2.0.148** / Titanium 1.21-4.0.50 /
   **JEI 19.57.0.451**（`compileOnly + localRuntime`，**服务端也加载** → `runServer` 能验插件注册）。
 - 新方块要补 blockstates / loot / tags / `blockItem` / 创造页 / 中英语言（**物品本体别忘了
@@ -112,7 +130,7 @@
 4. 子类化原版方块注意 codec 泛型不变型；`BooleanProperty` 默认 true、`DirectionProperty` 默认
    `DOWN`。**忘了给 `DeferredRegister` 调 `register(bus)` 不报编译错**，只在首次 `.get()` 抛
    unbound value；配方一次消耗多个材料时 `canProcess` 要校验数量。
-5. **服务端引用客户端类会炸**，给方法标 `@OnlyIn(Dist.CLIENT)`。
+5. **服务端引用客户端类会炸** → 给方法标 `@OnlyIn(Dist.CLIENT)`（P3 后有自动体检，见上）。
 6. 自检用 **`FakePlayer`**（`openMenu` 返回 empty）、**改经验调 `giveExperiencePoints`**；
    **自检类必须带 `@EventBusSubscriber` 注解**，只写 `@SubscribeEvent` 不会挂上总线；
    **不能复用被测代码的坐标计算**（否则只证明「自己和自己一致」）。
@@ -123,12 +141,11 @@
    写错**不报编译错**。
 9. **物品栏黑紫棋盘格 = 缺 `models/item/<方块>.json`**（`ModItemModelsProvider` 补 `blockItem`）。
 10. **配置缓存按「任务集」分别存条目**；动仓库 `content`/`metadataSources` 会让已缓存解析失效。
-11. **Git 远程** `origin = https://github.com/xiaozai114/InspirationMod`（私有）。代理对
+11. **Git 远程** `origin = https://github.com/xiaozai114/InspirationMod`（私有），代理对
     **github.com:443 间歇 502**。持续失败走 API 兜底：把本地 commit 元数据原样发给 API
-    （`git cat-file commit <sha>` → POST `/git/commits` → PATCH ref 带 `force:true`）→ 远端
-    sha 与本地相同。坑：`date` 要用**该时区本地时间**再贴偏移（取 UTC 再贴 `+08:00` 差 8 小时）。
-12. ⚠️ **datagen 哈希缓存会漏判已存在文件的内容变化**：改了代码 `runData` 仍报 `written: 0`、
-    磁盘上还是旧内容 → 假的「零变化」。**核对前先 `rm -rf src/generated/resources` 再跑**。
+    （`git cat-file commit <sha>` → POST `/git/commits` → PATCH ref 带 `force:true`）。
+    坑：`date` 要用**该时区本地时间**再贴偏移（取 UTC 再贴 `+08:00` 会差 8 小时 → sha 对不上）。
+12. **datagen 哈希缓存会漏判内容变化** → 假的「零变化」，见构建节。
 
 ## 重构
 

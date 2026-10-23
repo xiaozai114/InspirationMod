@@ -40,7 +40,8 @@ Minecraft 1.21.1 / NeoForge 模组。主题围绕「灵感」这一资源展开�
 | [`fluid/README.md`](src/main/java/com/starcrosser/inspiration/fluid/README.md) | 思维流体反应与四种结晶方块 |
 | [`item/tool/README.md`](src/main/java/com/starcrosser/inspiration/item/tool/README.md) | 三条工具升级链、数值与注能系列的蓄力增益 |
 | [`block/README.md`](src/main/java/com/starcrosser/inspiration/block/README.md) | 方块登记点、不完整方块与朝向、黑紫块排查 |
-| [`jei/README.md`](src/main/java/com/starcrosser/inspiration/jei/README.md) | JEI 分类、面板内容与 API 注意事项 |
+| [`client/README.md`](src/main/java/com/starcrosser/inspiration/client/README.md) | 纯客户端代码清单、三条边界规矩与自动体检 |
+| [`client/jei/README.md`](src/main/java/com/starcrosser/inspiration/client/jei/README.md) | JEI 分类、面板内容与 API 注意事项 |
 | [`recipe/README.md`](src/main/java/com/starcrosser/inspiration/recipe/README.md) | 自定义配方类型三件套与序列化约定 |
 | [`datagen/README.md`](src/main/java/com/starcrosser/inspiration/datagen/README.md) | 数据生成 Provider 与注意事项 |
 | [`tools/README.md`](tools/README.md) | 贴图生成脚本 |
@@ -70,14 +71,19 @@ src/main/java/com/starcrosser/inspiration/
 │   └── pattern/     4×3×3 结构定义与虚影坐标
 ├── guide/           灵感指导书：章节表、空菜单与客户端的书页界面
 ├── radiation/       辐射机制：数据地图、区块辐射存档、玩家辐射、方块索引与结算
-│   ├── item/        盖革计数器
-│   └── client/      带辐射物品的 tooltip
+│   └── item/        盖革计数器
 ├── entity/          自定义 TNT 实体
 ├── recipe/          右键转化配方与全局配方注册
-├── jei/             JEI 插件，category/ 为各配方分类
 ├── datagen/         数据生成（配方、战利品表、方块状态、语言文件等）
-├── client/          客户端扩展（渲染器绑定、流体贴图）
-└── util/            通用工具
+├── config/          配置项（NeoForge ModConfigSpec）
+├── client/          纯客户端代码，client/ 之外不该出现客户端类
+│   ├── extensions/  客户端扩展与 addon（物品/流体扩展、按钮标签、状态行、虚影状态）
+│   ├── renderer/    三个渲染器
+│   ├── tooltip/     三种 tooltip 监听
+│   ├── guide/       指导书界面
+│   ├── util/        客户端小工具
+│   └── jei/         JEI 插件，category/ 为各配方分类
+└── util/            通用工具（含客户端隔离体检 ClientIsolationCheck）
 ```
 
 资源与数据在 `src/main/resources`；由数据生成产出的文件写入 `src/generated/resources`，不应手工编辑。
@@ -265,7 +271,7 @@ src/main/java/com/starcrosser/inspiration/
 单方块机器面板只显示基准耗时与基准每刻耗电两行（融合分类因为有 3 材料配方而高一格，
 需要多个的输入槽会直接画出数量），注入面板保留完整的等级与能量窗口信息，
 种子随机的配方则把上下限写成 `???` 并加一行说明。
-详见 [jei/README.md](src/main/java/com/starcrosser/inspiration/jei/README.md)。
+详见 [client/jei/README.md](src/main/java/com/starcrosser/inspiration/client/jei/README.md)。
 
 ## 许可
 

@@ -133,15 +133,15 @@ com.starcrosser.inspiration
 | **B2** | **高能机型 = 复制粘贴** | 4 组普通/高能 BE 相似度 74%~83%，约 490 行重复（如 `InspirationAssemblerTile` 306 行 vs `HighEnergyInspirationAssemblerTile` 353 行） | 改一个逻辑要改两处，迟早漏 | P1 |
 | **B3** | **四套配方无公共基类** | `FusionRecipe`(243) / `AssemblingRecipe`(222) / `ReshapingRecipe`(137) / `TwistingRecipe`(135)，约 160 行样板；回溯匹配算法写了 3 遍；`FusionRecipe` 9 个字段手写 `encode/decode` | 加字段漏改一处 = **静默数据错位**（不报错，存档悄悄坏） | P1 |
 | **B4** | 五件套工具各 58 行，其中约 24 行逐字相同 | `EnergizedJadeSteel{Axe,Hoe,Pickaxe,Shovel,Sword}.java` 各 58 行 | Java 单继承的无奈，但可以用工厂/委托减少 | P1 |
-| **B5** | 事件处理器散落 12 个包 | 18 个类含 `@SubscribeEvent`，分布在根包、`alkali/`、`client/`、`item/custom/`、`item/tool/`、`machine/client/`、`multiblock/client/`、`radiation/`、`recipe/` | 想找"谁监听了右键"要全局搜 | P2 |
-| **B6** | 客户端隔离靠人工纪律 | 忘写 `@OnlyIn(Dist.CLIENT)` 编译不报错；`control/VecHelper` 还 import 了 `Minecraft`/`Camera` | 只在专用服务器启动才炸，本地测试永远发现不了 | P3 |
-| **B7** | 命名/包结构三套并存 | `blockentity` vs `part`；`recipe` vs `machine/recipe` vs `injection/recipe`；`block/` 根下散落类；`Config` 在根包 | 找文件靠猜 | P3 |
+| **B5** | 事件处理器散落 12 个包 | 18 个类含 `@SubscribeEvent`，分布在根包、`alkali/`、`client/`、`item/custom/`、`item/tool/`、`machine/client/`、`multiblock/client/`、`radiation/`、`recipe/` | 想找"谁监听了右键"要全局搜 | P2 ✅ 已集中到 `event/` |
+| **B6** | 客户端隔离靠人工纪律 | 忘写 `@OnlyIn(Dist.CLIENT)` 编译不报错；`control/VecHelper` 还 import 了 `Minecraft`/`Camera` | 只在专用服务器启动才炸，本地测试永远发现不了 | P3 ✅ 已收拢 + 自动体检 |
+| **B7** | 命名/包结构三套并存 | `blockentity` vs `part`；`recipe` vs `machine/recipe` vs `injection/recipe`；`block/` 根下散落类；`Config` 在根包 | 找文件靠猜 | P3 ✅ 已统一 |
 
 ### 3.3 C 类：死代码（P0 顺手清）
 
 | 项 | 说明 |
 | --- | --- |
-| `control/VecHelper.java` | 355 行，**只有 1 个方法在用**；且混入了客户端 import |
+| ~~`control/VecHelper.java`~~ | P3 已处理：移入 `util/`，删掉只被注释代码引用的 `Minecraft`/`Camera` import 与那段注释掉的 `projectToPlayerView`（保留方法本体，它是服务端在用的数学工具） |
 | `item/custom/ModFuelItem.java` | 已从未注册状态（无引用） |
 | `datagen/ModItemTagsProvider.java` | 空实现 |
 | `block/ModBlocks.FLUID_BLOCKS` | 死寄存器（流体方块应用 `registerBlockOnly`） |
@@ -154,7 +154,7 @@ com.starcrosser.inspiration
 
 每期格式统一：**目标 → 涉及文件 → 步骤 → 验收标准 → 回滚点**。
 
-### P0 — 止血（修 bug + 清死代码）
+### P0 — 止血（修 bug + 清死代码）✅ 已完成
 
 **目标**：不改动任何结构，只把 A 类 12 个 bug 修掉、C 类死代码删掉。风险最低、立刻见效。
 
@@ -227,7 +227,7 @@ level.setChunkForced(base.getX() >> 4, base.getZ() >> 4, true);  // 强制加载
 
 ---
 
-### P1 — 消除重复（收益最大的一期）
+### P1 — 消除重复（收益最大的一期）✅ 已完成
 
 > 这一期动的是**游戏逻辑**，风险中等。必须改完立刻跑 `runData` 对照生成文件。
 
@@ -383,7 +383,7 @@ Java 是单继承，插不进一个统一的 `ChargedToolItem extends Item`。
 
 ---
 
-### P2 — 注册与资源统一（解决"手写 9 遍"）
+### P2 — 注册与资源统一（解决"手写 9 遍"）✅ 已完成
 
 #### P2.1 建 `registry/MachineRegistry`（B1 的根因修复）—— ✅ 已完成（commit `b1c0ed6`）
 
@@ -611,20 +611,76 @@ public static final InspirationMaterial CESIUM = InspirationMaterial.create("ces
 
 ---
 
-### P3 — 客户端隔离与命名统一
+### P3 — 客户端隔离与命名统一 ✅ 已完成
 
 #### P3.1 客户端代码物理收拢（B6）
 
-- 所有纯客户端类移入 `client/`（含 `renderer/`、`extensions/`、`guide/screen/`）
-- 补 `@OnlyIn(Dist.CLIENT)` 或统一走 `DistExecutor`
-- **加一道保险**：在 `runServer` 自检里遍历所有类，检查是否有服务端路径引用到客户端类
-  （这类问题编译期发现不了，只能靠运行时自检）
+- ✅ 所有纯客户端类移入 `client/`，按功能分五个子包
+  （`extensions/` `renderer/` `tooltip/` `guide/` `util/`），外加 `jei/`
+- ✅ **加了一道保险**：`util/ClientIsolationCheck`，开服时扫 class（详见下）
+
+**实际做法**（与方案的差别）
+
+1. **散落点比预想的多**：除了方案点名的 `renderer/`、`extensions/`、`guide/`，实际还有
+   `machine/client/`（3 个）、`multiblock/client/`（3 个）、`alkali/client/`（1 个）、
+   `radiation/client/`（1 个），以及根包的 `InspirationClient`（`@Mod(dist=CLIENT)` 入口）。
+   一共 23 个类换了位置。
+2. **JEI 也搬了**：JEI 是纯客户端 mod，插件类只由 JEI 自己发现加载，搬到 `client/jei/`
+   不影响功能，换来的是「`client/` 之外一律不许碰客户端类」这条边界一眼可见。
+3. **`control/VecHelper` 没进 `client/`**：它是纯数学工具，服务端（`RightClickBlockHandler`、
+   两个信标）也在用。所谓"混入客户端 import"其实是**注释掉的代码**留下的——
+   删掉无用 import + 那段注释掉的 `projectToPlayerView`，然后移入 `util/`。
+   这比按字面把工具判成"客户端类"更准确。
+
+**踩坑**
+
+- 同包互相引用的类一分家就要补 import：`SimulatorPreviewRenderer` 引用
+  `ProjectorPreviewHandler`、`FacingLabels` 引用 `FacingLabelAddon`，
+  `ClientExtensionsHandler` 引用三个 extensions。编译能报出来，照着补即可。
+- **`sed -i` 会把 CRLF 改成 LF**（本机 `core.autocrlf=true`）。提交前用脚本把
+  `src/main/java` 下的 `.java`/`.md` 统一回 CRLF，否则 `git status` 一片假改动
+  （`git diff --numstat` 是空的，但看着很吓人）。
+
+#### P3.1b 自动体检（`util/ClientIsolationCheck`）
+
+开服（`ServerStartingEvent`）时在非生产环境跑一次：用 ASM 读自己的 class，
+**按方法**收集引用的类型，凡是引用了客户端类却没标 `@OnlyIn(CLIENT)` 的，
+打 ERROR 列出「类 + 方法 + 引用到的类」。240 个类约 180 ms。
+
+口径与两个豁免：
+
+- 客户端类 = 内部名带 `/client/` 段 + `com/mojang/blaze3d/` + `mezz/jei/`。
+- `client/` 包自身跳过；**`datagen/` 整包跳过** —— 数据生成的模型 API
+  （`neoforge.client.model.generators`）本身就长在 client 包下，不跳会有 49 条误报。
+- lambda / 合成方法拿不到注解，跟着「所在类有没有客户端方法」走。
+
+验证方式：故意在一个 Tile 里加一个引用 `Minecraft` 却没标注解的方法 → 报 1 处；
+删掉后报「体检通过：240 个类」。这套口径不是靠推理，是跑出来的。
 
 #### P3.2 命名统一（B7）
 
-- `blockentity` vs `part` → 统一为 `blockentity`（多方块仓室放 `multiblock/blockentity/part/` 保持不变也行，但要在 README 里说明约定）
-- `Config` 移入 `config/`
-- `block/` 根下散落的类归入 `block/custom/`
+- ✅ `Config` 移入 `config/`（跨包后 `SPEC` 要改成 `public`，否则入口类拿不到）
+- ✅ `block/` 根下的 `EmpoweredTNTBlock`、`ReinforcedTNTBlock` 归入 `block/custom/`
+- ✅ `blockentity` vs `part`：`machine/`、`injection/` 用 `blockentity`，
+  多方块仓室保持在 `multiblock/blockentity/part/` —— 它是 blockentity 的**分类子包**
+  （"这台机器的部件"），不是平级概念，约定写进 `multiblock/README.md`
+- ✅ 新增 `client/README.md`：客户端包清单 + 三条规矩
+
+#### P3 执行结果（实测）
+
+分 4 个 commit：`16f50a4`（P3.1 收拢）、`5b54224`（P3.2 命名）、`e5918c4`（漏带的
+`event/README`）、`8fbdf8b`（体检工具）。**纯搬包，没动任何 `ResourceLocation`、没动逻辑**。
+
+| 验证项 | 方式 | 结果 |
+| --- | --- | --- |
+| 编译 | `compileJava` | ✅ 通过 |
+| 生成资源 | 清空 `.cache` 后全量 `runData` | ✅ **零变化**（搬包不影响任何 ID） |
+| 服务端启动 | `runServer` | ✅ 正常；体检报「体检通过：240 个类」 |
+| 体检有效性 | 人为加一个漏标 `@OnlyIn` 的探针 | ✅ 报出 1 处，探针删掉后归零 |
+| 产物 | `jar` | ✅ 打包成功，`com/starcrosser/inspiration/client/**` 在包内 |
+
+**遗留**：客户端 4 项目视（P0 就列着的虚影朝向、StormSword 冷却、注入中途退出、错误位置提示）
+仍然**没进游戏看过**——这一期不引入新的客户端行为，理论上不影响，但严格说未验证。
 
 **回滚点**：`git tag p3-start` → `git tag p3-done`
 
@@ -700,9 +756,10 @@ git tag pN-done
 | `machine/recipe` | 13 | 1071 行，四套配方 |
 | `injection/**` | ~12 | 1645 行 |
 | `multiblock/**` | ~20 | 仓室 5 个 + 控制器 459 行 |
-| `radiation/**` | 8 | 含 `client/`、`item/` 子包 |
-| `datagen` | 9 | `ModRecipesProvider` 1303 行 |
-| `jei/**` | 9 | 7 个分类 |
+| `radiation/**` | 7 | 含 `item/` 子包（tooltip 已收进 `client/tooltip/`） |
+| `datagen` | 22 | P2.2 后按机制拆成 11 个配方文件 |
+| `client/**` | 24 | P3 收拢后的全部客户端代码，含 `jei/` 的 14 个 |
+| `util/` | 3 | 通用工具 + 客户端隔离体检 `ClientIsolationCheck` |
 
 ---
 
