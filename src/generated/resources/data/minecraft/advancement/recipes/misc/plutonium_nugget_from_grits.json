@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_plutonium_grit": {
+      "conditions": {
+        "items": [
+          {
+            "items": "inspiration:plutonium_grit"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "minecraft:plutonium_nugget_from_grits"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_plutonium_grit"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "minecraft:plutonium_nugget_from_grits"
+    ]
+  }
+}

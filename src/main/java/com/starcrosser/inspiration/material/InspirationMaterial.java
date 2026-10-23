@@ -250,6 +250,14 @@ public final class InspirationMaterial {
         return blockId;
     }
 
+    public String nuggetId() {
+        return nuggetId;
+    }
+
+    public String gritId() {
+        return gritId;
+    }
+
     public String moltenId() {
         return moltenId;
     }

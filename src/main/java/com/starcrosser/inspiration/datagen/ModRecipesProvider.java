@@ -7,6 +7,7 @@ import com.starcrosser.inspiration.datagen.recipe.FranciumRecipes;
 import com.starcrosser.inspiration.datagen.recipe.FusionRecipes;
 import com.starcrosser.inspiration.datagen.recipe.InjectionRecipes;
 import com.starcrosser.inspiration.datagen.recipe.MachineBlockRecipes;
+import com.starcrosser.inspiration.datagen.recipe.MaterialRecipes;
 import com.starcrosser.inspiration.datagen.recipe.ReshapingRecipes;
 import com.starcrosser.inspiration.datagen.recipe.RightClickRecipes;
 import com.starcrosser.inspiration.datagen.recipe.SmithingRecipes;
@@ -27,6 +28,7 @@ import java.util.concurrent.CompletableFuture;
  * <ul>
  *   <li>{@link CookingRecipes} 熔炉 / 高炉 / 烟熏 / 营火</li>
  *   <li>{@link CraftingRecipes} 工作台的有序与无序合成</li>
+ *   <li>{@link MaterialRecipes} 锭 / 粒 / 尘三档之间的打包与拆包（表驱动）</li>
  *   <li>{@link SmithingRecipes} 锻造转换与翡翠钢升级</li>
  *   <li>{@link RightClickRecipes} 手持物品右键方块转换</li>
  *   <li>{@link MachineBlockRecipes} 机器与多方块结构方块本身</li>
@@ -50,6 +52,7 @@ public class ModRecipesProvider extends RecipeProvider {
         // 原版机制
         CookingRecipes.build(recipeOutput);
         CraftingRecipes.build(recipeOutput);
+        MaterialRecipes.build(recipeOutput);
         SmithingRecipes.build(recipeOutput);
         RightClickRecipes.build(recipeOutput);
         FranciumRecipes.build(recipeOutput);

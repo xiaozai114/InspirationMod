@@ -160,6 +160,73 @@ public final class ModMaterials {
             .itemName("§9极限§4合金", "§9Extreme §4Alloy")
             .register();
 
+    /* ==================== 精炼金属（原料精炼机的产物） ==================== */
+    //
+    // 这一组都由原料精炼机产出：主产物是锭，副产物是粒（9 粒 = 1 锭），
+    // 镎与钚更细，副产物是尘（9 尘 = 1 粒、81 尘 = 1 锭）。
+    // 辐射值写在材料上（锭的量级），粒与尘的周期由 InspirationMaterial 自动派生，
+    // 因此这里只写「铀 2」一个数，粒尘不用管。
+
+    /** 钙锭：钙粉烧成；原料精炼机的机壳材料。没有碱性与辐射（碱金属行为属于铯/钫）。 */
+    public static final InspirationMaterial CALCIUM = InspirationMaterial.create("calcium")
+            .name("钙", "Calcium")
+            .register();
+
+    /** 镍：粗铁的副产物，只有粒是配方直接产出的（锭靠 9 粒合成）。 */
+    public static final InspirationMaterial NICKEL = InspirationMaterial.create("nickel")
+            .name("镍", "Nickel")
+            .nugget(true)
+            .register();
+
+    /** 铀：粗钫盐与铯盐的副产物，辐射 2。 */
+    public static final InspirationMaterial URANIUM = InspirationMaterial.create("uranium")
+            .name("铀", "Uranium")
+            .rarity(Rarity.UNCOMMON)
+            .radiation(2)
+            .nugget(true)
+            .register();
+
+    /** 钍：粗钫盐的副产物，辐射 1。 */
+    public static final InspirationMaterial THORIUM = InspirationMaterial.create("thorium")
+            .name("钍", "Thorium")
+            .rarity(Rarity.UNCOMMON)
+            .radiation(1)
+            .nugget(true)
+            .register();
+
+    /** 铷：粗铯盐的副产物，碱性 2（与铯同源但弱一档）。 */
+    public static final InspirationMaterial RUBIDIUM = InspirationMaterial.create("rubidium")
+            .name("铷", "Rubidium")
+            .alkalinity(2)
+            .nugget(true)
+            .register();
+
+    /** 锕：钫盐的副产物，辐射 1。 */
+    public static final InspirationMaterial ACTINIUM = InspirationMaterial.create("actinium")
+            .name("锕", "Actinium")
+            .rarity(Rarity.UNCOMMON)
+            .radiation(1)
+            .nugget(true)
+            .register();
+
+    /** 镎：核废料的副产物，辐射 6；副产物是尘而不是粒（9 尘 = 1 粒）。 */
+    public static final InspirationMaterial NEPTUNIUM = InspirationMaterial.create("neptunium")
+            .name("镎", "Neptunium")
+            .rarity(Rarity.RARE)
+            .radiation(6)
+            .nugget(true)
+            .grit(true)
+            .register();
+
+    /** 钚：核废料的副产物，辐射 4；副产物同样是尘。 */
+    public static final InspirationMaterial PLUTONIUM = InspirationMaterial.create("plutonium")
+            .name("钚", "Plutonium")
+            .rarity(Rarity.RARE)
+            .radiation(4)
+            .nugget(true)
+            .grit(true)
+            .register();
+
     private ModMaterials() {
     }
 

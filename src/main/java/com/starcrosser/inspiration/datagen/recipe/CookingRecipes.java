@@ -55,5 +55,11 @@ public final class CookingRecipes {
                         ModMaterials.CESIUM.item().get(), 0.8f, 100)
                 .unlockedBy(getHasName(ModItems.CESIUM_DUST.get()), has(ModItems.CESIUM_DUST.get()))
                 .save(recipeOutput);
+
+        // 钙粉 -> 钙锭（高炉）：原料精炼机的机壳材料
+        SimpleCookingRecipeBuilder.blasting(Ingredient.of(ModItems.CALCIUM_DUST.get()), RecipeCategory.MISC,
+                        ModMaterials.CALCIUM.item().get(), 0.8f, 100)
+                .unlockedBy(getHasName(ModItems.CALCIUM_DUST.get()), has(ModItems.CALCIUM_DUST.get()))
+                .save(recipeOutput, "calcium_ingot");
     }
 }

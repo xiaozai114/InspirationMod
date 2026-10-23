@@ -1,11 +1,23 @@
 {
   "values": {
+    "inspiration:actinium_ingot": 1,
+    "inspiration:actinium_nugget": 1,
     "inspiration:francium_block": 27,
     "inspiration:francium_dust": 3,
     "inspiration:francium_ingot": 3,
     "inspiration:francium_salt": 1,
     "inspiration:francium_salt_block": 9,
     "inspiration:francium_salt_ore": 1,
-    "inspiration:raw_francium_salt": 1
+    "inspiration:neptunium_grit": 6,
+    "inspiration:neptunium_ingot": 6,
+    "inspiration:neptunium_nugget": 6,
+    "inspiration:plutonium_grit": 4,
+    "inspiration:plutonium_ingot": 4,
+    "inspiration:plutonium_nugget": 4,
+    "inspiration:raw_francium_salt": 1,
+    "inspiration:thorium_ingot": 1,
+    "inspiration:thorium_nugget": 1,
+    "inspiration:uranium_ingot": 2,
+    "inspiration:uranium_nugget": 2
   }
 }

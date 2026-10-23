@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_neptunium_nugget": {
+      "conditions": {
+        "items": [
+          {
+            "items": "inspiration:neptunium_nugget"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "minecraft:neptunium_ingot_from_nuggets"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_neptunium_nugget"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "minecraft:neptunium_ingot_from_nuggets"
+    ]
+  }
+}

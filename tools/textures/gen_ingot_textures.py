@@ -16,6 +16,9 @@ from pathlib import Path
 
 from PIL import Image
 
+from palettes import MATERIAL_COLORS
+from recolor import remap, mix
+
 TEMPLATE = "jade_steel_ingot"
 
 # 每种锭的配色：由暗到亮两端，中间按模板的亮度档位线性插值。
@@ -38,6 +41,10 @@ PALETTES = {
     "sculk_alloy": ((0x06, 0x2A, 0x2F), (0x9C, 0xF6, 0xEC)),
 }
 
+# 精炼金属：颜色统一放在 palettes.py，锭 / 粒 / 尘三处共用一份
+for _base, _colors in MATERIAL_COLORS.items():
+    PALETTES[f"{_base}_ingot"] = _colors
+
 # 白色星点：键为锭名，值是星心坐标。每颗星画成十字 —— 星心纯白，四臂往白里混 3/4，
 # 于是看起来是嵌在晶体里的闪烁点，而不是贴上去的加号。星心必须落在锭的不透明区域里。
 SPARKLES = {
@@ -56,15 +63,6 @@ RESOURCE_ROOT = Path(__file__).resolve().parents[2] / "src/main/resources/assets
 ITEM_DIR = RESOURCE_ROOT / "item"
 
 
-def luminance(color):
-    r, g, b = color[:3]
-    return 0.299 * r + 0.587 * g + 0.114 * b
-
-
-def mix(color, target, t):
-    return tuple(round(color[i] + (target[i] - color[i]) * t) for i in range(3))
-
-
 def draw_sparkles(out, centers):
     white = (255, 255, 255)
     for cx, cy in centers:
@@ -80,20 +78,7 @@ def draw_sparkles(out, centers):
 
 
 def build(name, dark, light):
-    template = Image.open(ITEM_DIR / f"{TEMPLATE}.png").convert("RGBA")
-    width, height = template.size
-    pixels = list(template.getdata())
-
-    # 只统计不透明像素用到的颜色，透明像素原样保留
-    shades = sorted({p for p in pixels if p[3] > 0}, key=luminance)
-    ramp = [tuple(
-        round(dark[i] + (light[i] - dark[i]) * index / max(1, len(shades) - 1))
-        for i in range(3)) + (255,)
-        for index in range(len(shades))]
-    mapping = {shade: ramp[index] for index, shade in enumerate(shades)}
-
-    out = Image.new("RGBA", (width, height))
-    out.putdata([mapping.get(p, p) for p in pixels])
+    out = remap(Image.open(ITEM_DIR / f"{TEMPLATE}.png"), dark, light)
     draw_sparkles(out, SPARKLES.get(name, ()))
     return out
 

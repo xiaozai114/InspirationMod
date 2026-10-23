@@ -23,6 +23,8 @@ D:/programfiles/conda/python.exe tools/textures/gen_plugin_textures.py <插件�
 | `gen_inspiration_fragments.py` / `gen_inspiration_charge_fluid.py` | 灵感碎片 / 灵感充能流体 |
 | `gen_inspiration_crystal_blocks.py` | 四种结晶方块 |
 | `gen_ingot_textures.py` | 同形异色锭（按亮度重映射到目标调色板，新增配色往 `PALETTES` 加一行；白色星点往 `SPARKLES` 加） |
+| `gen_nugget_textures.py` / `gen_grit_textures.py` | 粒 / 尘（形状模板分别是原版铁粒与糖，配色与锭共用 `palettes.py`；哪些金属有粒尘写在脚本的 `NUGGETS` / `GRITS` 里，要和 `ModMaterials` 的开关一致） |
+| `recolor.py` / `palettes.py` | 上面三个脚本的公共部分：按亮度重映射的实现，以及精炼金属的配色表（改色只改 `palettes.py` 一处，三个脚本重跑） |
 | `gen_francium_textures.py` | 钫盐系列（铯系换色相）+ 手绘盖革计数器（钫盐矿换成地狱岩底） |
 | `gen_end_alloys.py` | 末地合金 / 无恒合金 / 末地合金盾牌 / 世界数据探测器（下界合金锭换淡黄 + 末地石材质；无恒物质整张叠上去且**不被锭轮廓裁剪**、只做一层几乎透明的淡紫；盾牌 = **原版盾牌展开图**只换盾正面材质，输出到 `textures/entity/`） |
 | `gen_high_energy_core.py` | 高能核心（放大到满画布的菱形外框 + 粉色炉心 + 外沿粉光与四角星点） |
