@@ -224,6 +224,7 @@ public class ModEnUsLangProvider extends LanguageProvider {
 
         // 辐射机制
         add("tooltip.inspiration.radiation", "Radiation: %s /s");
+        add("tooltip.inspiration.radiation.period", "Radiation: %1$s per %2$s seconds");
         // 碱性值（碱性发电机的燃料强度）
         add("tooltip.inspiration.alkalinity", "Alkalinity: %s");
 

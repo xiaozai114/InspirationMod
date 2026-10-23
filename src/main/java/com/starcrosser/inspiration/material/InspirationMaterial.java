@@ -32,6 +32,12 @@ import java.util.function.UnaryOperator;
  */
 public final class InspirationMaterial {
 
+    /** 一粒的辐射周期：9 粒 = 1 锭，所以粒写成「每 9 秒释放锭那么多点」。 */
+    public static final int NUGGET_RADIATION_PERIOD = 9;
+
+    /** 一撮尘的辐射周期：9 尘 = 1 粒、81 尘 = 1 锭。 */
+    public static final int GRIT_RADIATION_PERIOD = 81;
+
     /* ==================== 声明期字段 ==================== */
 
     private final String baseId;
@@ -327,24 +333,35 @@ public final class InspirationMaterial {
     }
 
     /**
-     * 把本材料自带的碱性/辐射条目写进三张 data_map。
+     * 把本材料自带的碱性/辐射条目写进 data_map。
      * 值为 0 时不写任何条目（见类注释的「0」语义）。
+     * <p>
+     * 辐射的分子跟着锭走，周期（分母）按形态派生，因此「9 枚粒」与「1 枚锭」的
+     * 平均速率相同：锭 {@code 值/秒}、粒 {@code 值/9 秒}、尘 {@code 值/81 秒}。
      */
     public void addDataMaps(DataMapProvider.Builder<Integer, Item> alkalinity,
                             DataMapProvider.Builder<Integer, Item> itemRadiation,
+                            DataMapProvider.Builder<Integer, Item> radiationPeriod,
                             DataMapProvider.Builder<Integer, Block> blockRadiation) {
         if (alkalinity != null && this.alkalinity > 0) {
             alkalinity.add(item.getKey(), this.alkalinity, false);
         }
-        if (itemRadiation != null && radiation > 0) {
-            itemRadiation.add(item.getKey(), radiation, false);
+        if (itemRadiation == null || radiation <= 0) {
+            return;
+        }
+        itemRadiation.add(item.getKey(), radiation, false);       // 锭：周期 1，不用写分母表
+        if (withNugget && radiationPeriod != null) {
+            itemRadiation.add(nugget.getKey(), radiation, false);
+            radiationPeriod.add(nugget.getKey(), NUGGET_RADIATION_PERIOD, false);
+        }
+        if (withGrit && radiationPeriod != null) {
+            itemRadiation.add(grit.getKey(), radiation, false);
+            radiationPeriod.add(grit.getKey(), GRIT_RADIATION_PERIOD, false);
         }
         if (blockRadiation != null && blockRadiation() > 0) {
             // 方块物品也要登记：玩家把它拿在背包里同样会往外放辐射
             blockRadiation.add(block.getKey(), blockRadiation(), false);
-            if (itemRadiation != null) {
-                itemRadiation.add(blockItem.getKey(), blockRadiation(), false);
-            }
+            itemRadiation.add(blockItem.getKey(), blockRadiation(), false);
         }
     }
 }

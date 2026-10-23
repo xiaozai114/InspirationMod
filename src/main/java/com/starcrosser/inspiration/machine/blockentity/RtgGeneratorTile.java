@@ -75,9 +75,16 @@ public class RtgGeneratorTile extends PowerGeneratorTile<RtgGeneratorTile> {
         return this;
     }
 
+    /**
+     * 只收「每秒都在放」的辐射物（周期 = 1）。
+     * <p>
+     * 粒与尘埃的辐射写成「每 9 / 81 秒若干点」，平均速率只有锭的 1/9，
+     * 但分子与锭相同 —— 若按分子判定，一枚铀粒会当成一枚铀锭来烧，明显不合理。
+     * 所以这里按周期把它们挡在门外。
+     */
     @Override
     protected boolean isFuel(ItemStack stack) {
-        return Radiation.of(stack) > 0;
+        return Radiation.of(stack) > 0 && Radiation.denominator(stack) == 1;
     }
 
     @Override

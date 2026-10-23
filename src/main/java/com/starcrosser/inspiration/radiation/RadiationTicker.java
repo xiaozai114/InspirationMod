@@ -70,8 +70,10 @@ public final class RadiationTicker {
 
         tracker.collect(level, gains);
 
+        // 秒序号：带周期（分母 > 1）的物品靠它判断这一秒轮不轮到自己
+        long seconds = elapsed / TICKS_PER_SECOND;
         for (ServerPlayer player : level.players()) {
-            tickPlayerSecond(data, player, gains);
+            tickPlayerSecond(data, player, gains, seconds);
         }
 
         data.addAll(gains);
@@ -83,9 +85,9 @@ public final class RadiationTicker {
      * 区块值取「本轮方块结算之前」的值，避免同一秒内自己携带的辐射立刻反弹回自己身上。
      */
     public static void tickPlayerSecond(RadiationSavedData data, ServerPlayer player,
-                                        Map<ChunkPos, Integer> gains) {
+                                        Map<ChunkPos, Integer> gains, long seconds) {
         ChunkPos pos = player.chunkPosition();
-        int carried = carriedRadiation(player);
+        int carried = carriedRadiation(player, seconds);
         if (carried > 0) {
             gains.merge(pos, carried, Integer::sum);
         }
@@ -118,15 +120,19 @@ public final class RadiationTicker {
         }
     }
 
-    /** 玩家身上携带的全部辐射：背包 + 装备栏 + 副手，按件数累计。 */
-    public static int carriedRadiation(ServerPlayer player) {
+    /**
+     * 玩家身上在第 {@code seconds} 秒注入的全部辐射：背包 + 装备栏 + 副手，按件数累计。
+     * <p>
+     * 带周期（分母 > 1）的物品只在轮到的那一秒计入，见 {@link Radiation#ofStack}。
+     */
+    public static int carriedRadiation(ServerPlayer player, long seconds) {
         int total = 0;
         for (List<ItemStack> compartment : List.of(
                 player.getInventory().items,
                 player.getInventory().armor,
                 player.getInventory().offhand)) {
             for (ItemStack stack : compartment) {
-                total += Radiation.ofStack(stack);
+                total += Radiation.ofStack(stack, seconds);
             }
         }
         return total;

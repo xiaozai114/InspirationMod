@@ -230,6 +230,7 @@ public class ModZhCnLangProvider extends LanguageProvider {
         // 物品组
         // 辐射机制
         add("tooltip.inspiration.radiation", "辐射值：%s /秒");
+        add("tooltip.inspiration.radiation.period", "辐射值：每 %2$s 秒 %1$s 点");
         // 碱性值（碱性发电机的燃料强度）
         add("tooltip.inspiration.alkalinity", "碱性值：%s");
 

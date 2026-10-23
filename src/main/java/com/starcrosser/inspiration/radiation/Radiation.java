@@ -17,7 +17,7 @@ public final class Radiation {
     private Radiation() {
     }
 
-    /** 单个物品的辐射值；没有登记过就是 0。 */
+    /** 单个物品的辐射值（分子）；没有登记过就是 0。 */
     public static int of(ItemStack stack) {
         if (stack.isEmpty()) {
             return 0;
@@ -26,9 +26,32 @@ public final class Radiation {
         return value == null ? 0 : value;
     }
 
-    /** 一整堆物品的辐射值 = 单件值 × 件数。 */
-    public static int ofStack(ItemStack stack) {
-        return of(stack) * stack.getCount();
+    /**
+     * 单个物品的辐射周期（分母）：每几秒释放一次 {@link #of(ItemStack)} 那么多点。
+     * 没登记过就是 1（每秒释放）。
+     */
+    public static int denominator(ItemStack stack) {
+        if (stack.isEmpty()) {
+            return 1;
+        }
+        Integer value = stack.getItem().builtInRegistryHolder()
+                .getData(RadiationDataMaps.ITEM_RADIATION_DENOMINATOR);
+        return value == null || value < 1 ? 1 : value;
+    }
+
+    /**
+     * 一整堆物品在「第 {@code seconds} 秒」这一刻实际注入的点数。
+     * <p>
+     * 分母为 1（默认）时每秒注入「值 × 件数」；分母为 N 时每 N 秒才注入一次，其余秒为 0。
+     * 这样「9 枚铀粒（2 / 9 秒）」的平均速率与「1 枚铀锭（2 / 秒）」相同。
+     */
+    public static int ofStack(ItemStack stack, long seconds) {
+        int value = of(stack);
+        if (value <= 0) {
+            return 0;
+        }
+        int period = denominator(stack);
+        return (period <= 1 || seconds % period == 0) ? value * stack.getCount() : 0;
     }
 
     /** 方块状态的辐射值；没有登记过就是 0。 */

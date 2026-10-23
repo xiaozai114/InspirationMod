@@ -4,6 +4,7 @@ import com.starcrosser.inspiration.Inspiration;
 import com.starcrosser.inspiration.radiation.Radiation;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -28,7 +29,11 @@ public final class RadiationTooltips {
         if (value <= 0) {
             return;
         }
-        event.getToolTip().add(Component.translatable("tooltip.inspiration.radiation", value)
-                .withStyle(ChatFormatting.GREEN));
+        int period = Radiation.denominator(event.getItemStack());
+        MutableComponent line = period <= 1
+                ? Component.translatable("tooltip.inspiration.radiation", value)
+                // 带周期的物品写成「每 N 秒 M 点」，避免看着像和锭一样强
+                : Component.translatable("tooltip.inspiration.radiation.period", value, period);
+        event.getToolTip().add(line.withStyle(ChatFormatting.GREEN));
     }
 }

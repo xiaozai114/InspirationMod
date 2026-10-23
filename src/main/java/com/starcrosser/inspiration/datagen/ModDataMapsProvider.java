@@ -38,6 +38,7 @@ public class ModDataMapsProvider extends DataMapProvider {
     protected void gather(HolderLookup.Provider lookupProvider) {
         Builder<Integer, Item> alkalinity = builder(AlkalinityDataMaps.ITEM_ALKALINITY);
         Builder<Integer, Item> itemRadiation = builder(RadiationDataMaps.ITEM_RADIATION);
+        Builder<Integer, Item> radiationPeriod = builder(RadiationDataMaps.ITEM_RADIATION_DENOMINATOR);
         Builder<Integer, Block> blockRadiation = builder(RadiationDataMaps.BLOCK_RADIATION);
 
         /* ---- 碱性：只属于物品（放进碱性发电机每刻产电「100 × 值」FE）---- */
@@ -55,9 +56,10 @@ public class ModDataMapsProvider extends DataMapProvider {
         blockRadiation.add(id("francium_salt_ore"), 1, false);
         blockRadiation.add(id("francium_salt_block"), 9, false);
 
-        // 材料自带的条目：碱性给锭，辐射给锭 + 方块 + 方块物品（值为 0 的不写）
+        // 材料自带的条目：碱性给锭，辐射给锭 + 方块 + 方块物品（值为 0 的不写）。
+        // 粒与尘的辐射分子同锭、周期分别为 9 / 81 秒，由材料自己派生。
         for (InspirationMaterial material : ModMaterials.ALL) {
-            material.addDataMaps(alkalinity, itemRadiation, blockRadiation);
+            material.addDataMaps(alkalinity, itemRadiation, radiationPeriod, blockRadiation);
         }
     }
 }
