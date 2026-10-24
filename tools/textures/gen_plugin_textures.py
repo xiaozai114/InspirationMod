@@ -1,7 +1,8 @@
 """机器插件贴图生成脚本。
 
 各种插件共用同一块「深底 + 亮边」的方形底板，各自用不同颜色与符号区分：
-电容是闪电，灵感是四角星，速度是双箭头，电容降级是向下的双箭头（代表上限被压低）。
+电容是闪电，灵感是四角星，速度是双箭头，电容降级是向下的双箭头（代表上限被压低），
+回收是向上的双箭头（产量变多）。
 
 用法：
     python tools/textures/gen_plugin_textures.py                # 生成全部
@@ -27,6 +28,7 @@ PLUGINS = {
     "inspiration_plugin": (0xC7, 0x7D, 0xFF, 0xFF),
     "speed_plugin": (0x5F, 0xE0, 0xFF, 0xFF),
     "capacitor_downgrade_plugin": (0xFF, 0x6B, 0x6B, 0xFF),
+    "recycling_plugin": (0x6B, 0xE8, 0x8A, 0xFF),
 }
 
 # 闪电（电容）：自上而下的折线
@@ -45,11 +47,19 @@ CHEVRONS = [(4, 5), (5, 4), (5, 6), (6, 5), (6, 7), (7, 6), (7, 8), (8, 7),
 CHEVRONS_DOWN = [(4, 4), (5, 5), (6, 6), (7, 7), (8, 7), (9, 6), (10, 5), (11, 4),
                  (4, 8), (5, 9), (6, 10), (7, 11), (8, 11), (9, 10), (10, 9), (11, 8)]
 
+
+# 回收升级：两个向上的粗箭头（= 产量往上走）。
+# 速度插件是横向双箭头、电容降级是向下的双箭头，这里沿用同一套「箭头」语汇，
+# 只把方向朝上并换成绿色，一眼能看出是「变多」而不是「变快」或「变少」。
+RECYCLE = [(7, 4), (8, 4), (6, 5), (9, 5), (5, 6), (10, 6), (4, 7), (11, 7),
+           (7, 8), (8, 8), (6, 9), (9, 9), (5, 10), (10, 10), (4, 11), (11, 11)]
+
 SYMBOLS = {
     "capacitor_plugin": BOLT,
     "inspiration_plugin": STAR,
     "speed_plugin": CHEVRONS,
     "capacitor_downgrade_plugin": CHEVRONS_DOWN,
+    "recycling_plugin": RECYCLE,
 }
 
 ITEM_DIR = Path(__file__).resolve().parents[2] / "src/main/resources/assets/inspiration/textures/item"

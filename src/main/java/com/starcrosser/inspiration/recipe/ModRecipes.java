@@ -6,8 +6,12 @@ import com.starcrosser.inspiration.injection.recipe.InjectionRecipe;
 import com.starcrosser.inspiration.injection.recipe.InjectionRecipeSerializer;
 import com.starcrosser.inspiration.machine.recipe.AssemblingRecipe;
 import com.starcrosser.inspiration.machine.recipe.AssemblingRecipeSerializer;
+import com.starcrosser.inspiration.machine.recipe.FluidExtractingRecipe;
+import com.starcrosser.inspiration.machine.recipe.FluidExtractingRecipeSerializer;
 import com.starcrosser.inspiration.machine.recipe.FusionRecipe;
 import com.starcrosser.inspiration.machine.recipe.FusionRecipeSerializer;
+import com.starcrosser.inspiration.machine.recipe.RefiningRecipe;
+import com.starcrosser.inspiration.machine.recipe.RefiningRecipeSerializer;
 import com.starcrosser.inspiration.machine.recipe.ReshapingRecipe;
 import com.starcrosser.inspiration.machine.recipe.ReshapingRecipeSerializer;
 import com.starcrosser.inspiration.machine.recipe.TwistingRecipe;
@@ -57,6 +61,21 @@ public class ModRecipes {
     public static final DeferredHolder<RecipeType<?>, RecipeType<AssemblingRecipe>> ASSEMBLING_TYPE =
             TYPES.register("assembling", () -> RecipeType.simple(
                     ResourceLocation.fromNamespaceAndPath(Inspiration.MODID, "assembling")));
+
+    // 流体提取机配方
+    public static final DeferredHolder<RecipeSerializer<?>, RecipeSerializer<FluidExtractingRecipe>>
+            FLUID_EXTRACTING_SERIALIZER =
+            SERIALIZERS.register("fluid_extracting", FluidExtractingRecipeSerializer::new);
+    public static final DeferredHolder<RecipeType<?>, RecipeType<FluidExtractingRecipe>> FLUID_EXTRACTING_TYPE =
+            TYPES.register("fluid_extracting", () -> RecipeType.simple(
+                    ResourceLocation.fromNamespaceAndPath(Inspiration.MODID, "fluid_extracting")));
+
+    // 原料精炼机配方
+    public static final DeferredHolder<RecipeSerializer<?>, RecipeSerializer<RefiningRecipe>> REFINING_SERIALIZER =
+            SERIALIZERS.register("refining", RefiningRecipeSerializer::new);
+    public static final DeferredHolder<RecipeType<?>, RecipeType<RefiningRecipe>> REFINING_TYPE =
+            TYPES.register("refining", () -> RecipeType.simple(
+                    ResourceLocation.fromNamespaceAndPath(Inspiration.MODID, "refining")));
 
     // 注入配方（物质束缚器 + 注入枪）
     public static final DeferredHolder<RecipeSerializer<?>, RecipeSerializer<InjectionRecipe>> INJECTION_SERIALIZER =

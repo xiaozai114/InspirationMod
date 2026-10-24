@@ -38,8 +38,10 @@ agent_created: true
 | 矿物扭曲机 | `machine/block/MineralTwisterBlock.java` | `machine/blockentity/MineralTwisterTile.java` | 单输入 + 随机产量 |
 | 灵感装配台 | `machine/block/InspirationAssemblerBlock.java` | `machine/blockentity/InspirationAssemblerTile.java` | 2×2 输入 + 独立流体输入槽 |
 | 地核钻探者 | `machine/block/CoreDrillerBlock.java` | `machine/blockentity/CoreDrillerTile.java` | 无配方：向下掏竖井，进度条由现场扫描决定上限 |
+| 流体提取机 | `machine/block/FluidExtractorBlock.java` | `machine/blockentity/FluidExtractorTile.java` | **产物是流体**：单输入 + 一个只出不进的输出罐 |
+| 原料精炼机 | `machine/block/RawRefinerBlock.java` | `machine/blockentity/RawRefinerTile.java` | **三个输出槽**竖排：主产物 + 最多两份副产物 |
 
-六台机器都继承 `InspiredMachineTile`，因此都自带插件槽（见下节）。
+八台机器都继承 `InspiredMachineTile`，因此都自带插件槽（见下节）。
 
 配方类型集中在 `recipe/ModRecipes.java` 注册，配方类放在 `machine/recipe/`。
 
@@ -59,14 +61,17 @@ agent_created: true
    想做「同配方但更快更贵」的上位机型，覆写 `baseSpeed()`（进度条每刻推进量）与
    `baseChargeCapacity()`，配方侧的耗电倍率写在机器自己的 `energyCost(...)` 里。
    能量存储用 `PluginEnergyStorage`（普通 `EnergyStorageComponent` 无法被插件改容量）。
-5. `machine/ModMachines.java`：`registry.registerBlockWithTile("xxx", XxxBlock::new, null)`。
-6. 数据生成挂钩（**容易漏**）：`ModRecipesProvider`（机器本体合成 + 配方）、
-   `ModBlockStatesProvider#machineBlock`、`ModBlockLootTablesProvider`（`dropSelf` **与**
-   `getKnownBlocks` 各加一行）、`ModBlockTagsProvider`、中英文 `LangProvider`、`ModCreativeModeTabs`。
-   机器物品模型由方块状态提供器生成，`ModItemModelsProvider` 不需要改动。
-7. JEI：`jei/ModJeiRecipeTypes` 加常量，新增 `jei/category/XxxRecipeCategory`，并在
-   `jei/InspirationJeiPlugin` 的 `registerCategories` / `registerRecipes` / `registerRecipeCatalysts`
-   三处注册。
+5. `machine/ModMachines.java`：走 `MachineRegistry.register(registry, id, 中文名, 英文名, factory)`
+   —— 它会把机器登记进一份可遍历的清单，中英语言 / 方块状态 / 挖掘标签 / 战利品表由各 Provider
+   遍历生成，**这四项不用再手写**。注册顺序 = 标签 JSON 里的输出顺序，别乱排。
+6. 仍需手工补的数据生成挂钩：`ModRecipesProvider`（机器本体合成 + 配方）、
+   `ModCreativeModeTabs`（创造栏按内容穿插排列，是刻意排的）、
+   `client/tooltip/MachineTooltips` 的 `MACHINES` 集合（机器方块拿不到自定义物品类，
+   tooltip 只能按物品 ID 匹配）。
+7. JEI（**在 `client/jei/` 下，P3 之后 JEI 包整体搬进了 `client/`**）：
+   `client/jei/ModJeiRecipeTypes` 加常量，新增 `client/jei/category/XxxRecipeCategory`，并在
+   `client/jei/InspirationJeiPlugin` 的 `registerCategories` / `registerRecipes` /
+   `registerRecipeCatalysts` 三处注册。
 8. 贴图：用 `tools/textures/` 下的生成脚本，不要手搓二进制。
 9. 验证：`./gradlew compileJava` → `./gradlew runData` → `./gradlew runServer`。
 
@@ -80,7 +85,8 @@ agent_created: true
 - 效果结算集中在 `machine/plugin/PluginEffects`：只保留一个 `speed` 变量，
   `energyUse = speed²`、`chargeUse = speed`（速度插件每个 ×2 → 2 倍速 / 每刻耗电 ×4 / 每刻充能 ×2）。
   容量类插件（`PluginEnergyStorage#setCapacity`、`setChargeCapacity`）只翻容量、无额外代价，
-  缩容时超出部分会被截断。改数值只改 `MachinePluginType.MULTIPLIER` 与 `PluginEffects` 两处。
+  缩容时超出部分会被截断。改数值只改 `MachinePluginType` 枚举的 `multiplier()` 与
+  `PluginEffects` 两处（倍率现在是**每类各一个**，不是全局常量 `MULTIPLIER`）。
 - 刷新用「插件内容指纹」：`InspiredMachineTile` 每刻比对槽内物品组成的字符串，
   变了才重算倍率并套用，避免每刻遍历。
 
@@ -100,8 +106,9 @@ agent_created: true
 - `runData` 会打印新写入的文件数；产物落在 `src/generated/resources/`，用 `cat` 抽查 JSON 是否符合预期。
 - `runServer` 日志里的 `Loaded N recipes` 是**配方总数的硬指标**：先算出本次应增加的条数，
   跑完对总数；数量对不上说明有配方没被解析。日志同时会打印 `Couldn't parse data file ...`。
-- 测试服务器前把 `run/server.properties` 的 `server-port` 改成 25580（25565 是用户自己在跑的服务器），
-  验证完必须改回 25565。
+- `run/server.properties` 的 `server-port` 固定写成 **25599**（25565 是用户自己在跑的服务器）。
+  自检类挂 `ServerStartedEvent`，跑完 `server.halt(false)`、删掉自检类与 `run/crash-reports`；
+  拿不准时直接手动调 `tile.serverTick(level, pos, state, tile)` 若干次，比等真实刻快得多。
 - 抄原版公式（时运、掉落数量等）时，解出
   `build/moddev/artifacts/neoforge-<version>-sources.jar` 里的原版类逐行核对，别凭记忆写。
 
@@ -172,13 +179,22 @@ add(block, createSilkTouchDispatchTable(block,
 - 机器界面是 176×184：能量条 (8,14)、输入槽 (44,30)、输出槽 (116,39)、侧向按钮 y=84；
   充能罐占 (150,14) 18×56、充能槽 (150,74)，新增部件按这个网格避让。
 - 流体罐构造是 `SidedFluidTankComponent(name, 容量, x, y, 侧栏序号)`（容量在第 2 位），
-  与库存组件参数顺序不同；罐体设 `Action.FILL` 后机器自身扣减必须走 `drainForced`；
+  与库存组件参数顺序不同；**罐体的 `Action` 会同时挡住机器自己的读写**：设成 `FILL` 后自身扣减必须
+  `drainForced`，设成 `DRAIN`（流体提取机的输出罐）后自身灌入必须 `fillForced`。
+  普通 `fill` / `drain` 会被动作校验挡掉并**静默返回 0** —— 表现为「原料被吃掉、罐里什么都没有」。
   罐体字段可直接加 `@Save`（Titanium 内置 `TankNBTHandler`）。
+- 多输出槽的机器必须**先确认所有输出格都塞得下，才开始扣材料**
+  （`insertItem(slot, stack, true)` 试放一遍）。只检查主产物会在副产物槽满时吞掉原料；
+  真正写入时也要留快照，任一格失败就整批回滚，否则会白送一份主产物。
+- 回收升级是唯一**加算**的插件（`byproduct += multiplier - 1`，两个是 ×3 不是 ×4），
+  也是唯一只有特定机器读它的插件 —— 装在别的机器上没有任何效果。
 - 配方若一次消耗多个材料，必须在 `canProcess` 里校验槽内数量足够，
   否则会出现「只扣 1 个却产出整份产物」。
 - 随机产量的配方，输出槽容量要按**上限**预留，否则结算时物品塞不进去。
-- JEI 19.27：`IRecipeCategory#getBackground()` 已废弃，改用 `getWidth()/getHeight()` +
-  `createRecipeExtras` 里 `builder.addDrawable(背景, 0, 0)`。
+- **JEI 背景必须走 `IRecipeCategory#getBackground()`**（它标了 `forRemoval`，但 19.57.0.451 仍在调用；
+  `getWidth()` / `getHeight()` 也要显式覆写，背景为 null 会抛异常）。
+  **不要**放进 `createRecipeExtras` 的 `addDrawable` —— 绘制顺序是 背景 → 槽位 → widgets → extras，
+  那样会整块盖住内容。贴图路径必须带 `.png`，且独立小图要 `setTextureSize(w, h)`。
   展示数量大于 1 的输入用 `slot.addItemStacks(...)`（`Ingredient` 本身不带数量）。
 - `RecipeManager#getAllRecipesFor` 要的是**原版** `net.minecraft...RecipeType`，
   不是同名的 `mezz.jei.api.recipe.RecipeType`。

@@ -58,6 +58,12 @@ BACKGROUNDS = {
     # shaft_x 给负数让 draw_arrow 整个跳过；面板正好放下 4 列 × 3 行、间距 18 的网格。
     # 分隔线下方写「第几层 / 朝向」这类说明。
     "structure_preview": Background((0x9C, 0x6B, 0xFF, 0xFF), -1, 86, 0, 104, 60),
+    # 流体提取：单输入 -> 一格流体罐（产物是流体不是物品），箭头沿用单输入的居中位置，
+    # 颜色取熔体的橙红以区别于其它分类。面板加高到 74：底部除耗时与耗电外还要写产物量
+    "fluid_extracting": Background((0xF0, 0x8A, 0x2E, 0xFF), 41, 74),
+    # 原料精炼：单输入 -> 三个输出槽竖排（主产物在上、两个副产物在下），
+    # 箭头仍指向最上面那个主产物；面板加高到 86 才放得下三格加两行说明
+    "refining": Background((0xE8, 0x8A, 0x3A, 0xFF), 41, 86),
 }
 
 OUTPUT_DIR = Path(__file__).resolve().parents[2] / "src/main/resources/assets/inspiration/textures/gui/jei"

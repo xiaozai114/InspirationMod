@@ -13,21 +13,25 @@ import java.util.List;
  *     <li>{@code speed} —— 进度条每刻推进量，等价于运行速度；</li>
  *     <li>{@code energyUse} —— 每刻耗电，为速度的平方（速度 ×2 时耗电 ×4）；</li>
  *     <li>{@code chargeUse} —— 每刻灵感充能消耗，与速度同步增长；</li>
- *     <li>{@code energyCapacity} / {@code chargeCapacity} —— 两种缓冲的容量。</li>
+ *     <li>{@code energyCapacity} / {@code chargeCapacity} —— 两种缓冲的容量；</li>
+ *     <li>{@code byproduct} —— 副产物产量倍率（唯一按加算叠加的那一项）。</li>
  * </ul>
- * 同类插件每多装一个就再乘一次 {@link MachinePluginType#MULTIPLIER}。
+ * 同类插件每多装一个就再乘一次 {@link MachinePluginType#multiplier()}，
+ * **只有 {@link MachinePluginType#BYPRODUCT} 是加算**：每个回收升级加 100%，
+ * 装两个就是 3 倍而不是 4 倍。
  */
 public record PluginEffects(float speed, float energyUse, float chargeUse,
-                            float energyCapacity, float chargeCapacity) {
+                            float energyCapacity, float chargeCapacity, float byproduct) {
 
     /** 没装任何插件时的中性倍率。 */
-    public static final PluginEffects NONE = new PluginEffects(1F, 1F, 1F, 1F, 1F);
+    public static final PluginEffects NONE = new PluginEffects(1F, 1F, 1F, 1F, 1F, 1F);
 
     /** 按插件槽里的物品折算倍率，非插件物品直接忽略。 */
     public static PluginEffects from(List<ItemStack> installed) {
         float speed = 1F;
         float energyCapacity = 1F;
         float chargeCapacity = 1F;
+        float byproduct = 1F;
         for (ItemStack stack : installed) {
             if (stack.isEmpty() || !(stack.getItem() instanceof MachinePluginItem plugin)) {
                 continue;
@@ -38,9 +42,11 @@ public record PluginEffects(float speed, float energyUse, float chargeUse,
                 case SPEED -> speed *= factor;
                 case ENERGY_CAPACITY, ENERGY_CAPACITY_DOWNGRADE -> energyCapacity *= factor;
                 case CHARGE_CAPACITY -> chargeCapacity *= factor;
+                // 加算：倍率 2.0 的插件等价于「再多一整份」，两个就是 1 + 1 + 1
+                case BYPRODUCT -> byproduct += factor - 1F;
             }
         }
-        return new PluginEffects(speed, speed * speed, speed, energyCapacity, chargeCapacity);
+        return new PluginEffects(speed, speed * speed, speed, energyCapacity, chargeCapacity, byproduct);
     }
 
     /**
@@ -68,8 +74,20 @@ public record PluginEffects(float speed, float energyUse, float chargeUse,
         return Math.max(1, Math.round(base * chargeCapacity));
     }
 
+    /**
+     * 副产物的实际产量。
+     *
+     * @param base 配方里写的基准数量；没有这份副产物时传 0，结果也是 0
+     */
+    public int byproductCount(int base) {
+        if (base <= 0) {
+            return 0;
+        }
+        return Math.max(1, Math.round(base * byproduct));
+    }
+
     /** 是否装了任何插件。 */
     public boolean isEmpty() {
-        return speed == 1F && energyCapacity == 1F && chargeCapacity == 1F;
+        return speed == 1F && energyCapacity == 1F && chargeCapacity == 1F && byproduct == 1F;
     }
 }

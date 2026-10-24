@@ -1,0 +1,16 @@
+{
+  "type": "inspiration:refining",
+  "byproducts": [
+    {
+      "count": 1,
+      "id": "inspiration:uranium_nugget"
+    }
+  ],
+  "input": {
+    "item": "inspiration:cesium_salt"
+  },
+  "result": {
+    "count": 1,
+    "id": "inspiration:cesium_ingot"
+  }
+}

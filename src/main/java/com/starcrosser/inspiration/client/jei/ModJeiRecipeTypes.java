@@ -3,7 +3,9 @@ package com.starcrosser.inspiration.client.jei;
 import com.starcrosser.inspiration.Inspiration;
 import com.starcrosser.inspiration.injection.recipe.InjectionRecipe;
 import com.starcrosser.inspiration.machine.recipe.AssemblingRecipe;
+import com.starcrosser.inspiration.machine.recipe.FluidExtractingRecipe;
 import com.starcrosser.inspiration.machine.recipe.FusionRecipe;
+import com.starcrosser.inspiration.machine.recipe.RefiningRecipe;
 import com.starcrosser.inspiration.machine.recipe.ReshapingRecipe;
 import com.starcrosser.inspiration.machine.recipe.TwistingRecipe;
 import com.starcrosser.inspiration.recipe.RightClickBlockRecipe;
@@ -39,6 +41,14 @@ public final class ModJeiRecipeTypes {
     /** 注入（物质束缚器 + 注入枪）。 */
     public static final RecipeType<InjectionRecipe> INJECTION =
             RecipeType.create(Inspiration.MODID, "injection", InjectionRecipe.class);
+
+    /** 流体提取机。 */
+    public static final RecipeType<FluidExtractingRecipe> FLUID_EXTRACTING =
+            RecipeType.create(Inspiration.MODID, "fluid_extracting", FluidExtractingRecipe.class);
+
+    /** 原料精炼机。 */
+    public static final RecipeType<RefiningRecipe> REFINING =
+            RecipeType.create(Inspiration.MODID, "refining", RefiningRecipe.class);
 
     /** 结构模拟机的结构预览：每一层一条，翻页即翻层。不是真配方，只是给 JEI 的展示载体。 */
     public static final RecipeType<StructurePreview> STRUCTURE_PREVIEW =

@@ -3,8 +3,10 @@ package com.starcrosser.inspiration.client.jei;
 import com.starcrosser.inspiration.Inspiration;
 import com.starcrosser.inspiration.injection.ModInjection;
 import com.starcrosser.inspiration.client.jei.category.AssemblingRecipeCategory;
+import com.starcrosser.inspiration.client.jei.category.FluidExtractingRecipeCategory;
 import com.starcrosser.inspiration.client.jei.category.FusionRecipeCategory;
 import com.starcrosser.inspiration.client.jei.category.InjectionRecipeCategory;
+import com.starcrosser.inspiration.client.jei.category.RefiningRecipeCategory;
 import com.starcrosser.inspiration.client.jei.category.ReshapingRecipeCategory;
 import com.starcrosser.inspiration.client.jei.category.RightClickBlockRecipeCategory;
 import com.starcrosser.inspiration.client.jei.category.StructurePreviewCategory;
@@ -50,8 +52,10 @@ public class InspirationJeiPlugin implements IModPlugin {
         IGuiHelper guiHelper = registration.getJeiHelpers().getGuiHelper();
         registration.addRecipeCategories(
                 new AssemblingRecipeCategory(guiHelper),
+                new FluidExtractingRecipeCategory(guiHelper),
                 new FusionRecipeCategory(guiHelper),
                 new InjectionRecipeCategory(guiHelper),
+                new RefiningRecipeCategory(guiHelper),
                 new ReshapingRecipeCategory(guiHelper),
                 new RightClickBlockRecipeCategory(guiHelper),
                 new StructurePreviewCategory(guiHelper),
@@ -77,6 +81,10 @@ public class InspirationJeiPlugin implements IModPlugin {
                 collect(recipeManager, ModRecipes.ASSEMBLING_TYPE.get()));
         registration.addRecipes(ModJeiRecipeTypes.INJECTION,
                 collect(recipeManager, ModRecipes.INJECTION_TYPE.get()));
+        registration.addRecipes(ModJeiRecipeTypes.FLUID_EXTRACTING,
+                collect(recipeManager, ModRecipes.FLUID_EXTRACTING_TYPE.get()));
+        registration.addRecipes(ModJeiRecipeTypes.REFINING,
+                collect(recipeManager, ModRecipes.REFINING_TYPE.get()));
         // 结构预览不是数据包配方：层数直接由形状常量决定，一层一条，翻页即翻层
         registration.addRecipes(ModJeiRecipeTypes.STRUCTURE_PREVIEW,
                 IntStream.range(0, SimulatorPattern.depth())
@@ -105,6 +113,8 @@ public class InspirationJeiPlugin implements IModPlugin {
         // 注入的催化剂同时给出束缚器与注入枪，缺一不可
         registration.addRecipeCatalyst(ModInjection.MATTER_BINDER, ModJeiRecipeTypes.INJECTION);
         registration.addRecipeCatalyst(ModInjection.INJECTION_GUN, ModJeiRecipeTypes.INJECTION);
+        registration.addRecipeCatalyst(ModMachines.FLUID_EXTRACTOR, ModJeiRecipeTypes.FLUID_EXTRACTING);
+        registration.addRecipeCatalyst(ModMachines.RAW_REFINER, ModJeiRecipeTypes.REFINING);
         // 结构预览挂在结构模拟机的用途里：在 JEI 里对着控制器按 U 就能看到结构
         registration.addRecipeCatalyst(ModMultiblocks.STRUCTURE_SIMULATOR,
                 ModJeiRecipeTypes.STRUCTURE_PREVIEW);

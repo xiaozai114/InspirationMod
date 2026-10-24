@@ -236,6 +236,10 @@ public class ModItems {
     public static final DeferredItem<Item> CAPACITOR_DOWNGRADE_PLUGIN=
             ITEMS.register("capacitor_downgrade_plugin",
                     () ->new MachinePluginItem(MachinePluginType.ENERGY_CAPACITY_DOWNGRADE));
+    /** 回收升级：原料精炼机的副产物产量 +100%，多个按加算叠加。 */
+    public static final DeferredItem<Item> RECYCLING_PLUGIN=
+            ITEMS.register("recycling_plugin",
+                    () ->new MachinePluginItem(MachinePluginType.BYPRODUCT));
 
     /* ===================== 钫盐系列（辐射材料） =====================
      * 处理流程与铯盐逐一对应，但全流程产物都带辐射，数值见

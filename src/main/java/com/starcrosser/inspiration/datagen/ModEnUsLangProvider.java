@@ -78,6 +78,7 @@ public class ModEnUsLangProvider extends LanguageProvider {
         add(ModItems.INSPIRATION_PLUGIN.get(), "Inspiration Plugin");
         add(ModItems.SPEED_PLUGIN.get(), "Speed Plugin");
         add(ModItems.CAPACITOR_DOWNGRADE_PLUGIN.get(), "Capacitor Downgrade Plugin");
+        add(ModItems.RECYCLING_PLUGIN.get(), "Recycling Upgrade");
         add(ModItems.INSPIRATION_SHARD.get(), "Inspiration Shard");
         add(ModItems.MIND_CRYSTAL.get(), "Mind Crystal");
         add(ModItems.JADE_STEEL_SWORD.get(), "Jade Steel Sword");
@@ -150,6 +151,11 @@ public class ModEnUsLangProvider extends LanguageProvider {
         // 单方块机器共用的两行：基准耗时与基准每刻耗电
         add("jei.inspiration.machine.duration", "Time: %s ticks");
         add("jei.inspiration.machine.energy_per_tick", "Energy: %s FE/t");
+        add("jei.inspiration.fluid_extracting", "Fluid Extracting");
+        add("jei.inspiration.fluid_extracting.output", "Output: %s mB");
+        add("jei.inspiration.refining", "Raw Refining");
+        add("jei.inspiration.refining.byproduct", "Byproduct");
+        add("jei.inspiration.refining.recycling", "A Recycling Upgrade doubles byproducts");
         add("jei.inspiration.injection", "Matter Injection");
         add("jei.inspiration.injection.role_inject", "Injected material");
         add("jei.inspiration.injection.role_base", "Base material");
@@ -164,6 +170,7 @@ public class ModEnUsLangProvider extends LanguageProvider {
         add("gui.inspiration.facing.inspiration_charge", "Chg");
         add("gui.inspiration.facing.fluid_input", "Flu");
         add("gui.inspiration.facing.fluid_input_2", "Flu");
+        add("gui.inspiration.facing.fluid_output", "Flu");
         add("gui.inspiration.facing.drill", "Bit");
         add("gui.inspiration.facing.fuel", "Fuel");
         // Titanium 悬停提示：键是 tooltip.titanium.facing_handler.<组件名小写>
@@ -173,6 +180,7 @@ public class ModEnUsLangProvider extends LanguageProvider {
         add("tooltip.titanium.facing_handler.inspiration_charge", "Inspiration charge tank");
         add("tooltip.titanium.facing_handler.fluid_input", "Fluid input");
         add("tooltip.titanium.facing_handler.fluid_input_2", "Second fluid input");
+        add("tooltip.titanium.facing_handler.fluid_output", "Fluid output");
         add("tooltip.titanium.facing_handler.drill", "Drill bit");
         add("tooltip.titanium.facing_handler.fuel", "Fuel input");
         add("tooltip.titanium.facing_handler.inject", "Material to inject");
@@ -222,6 +230,7 @@ public class ModEnUsLangProvider extends LanguageProvider {
         add("tooltip.inspiration.plugin.charge_capacity", "Machine inspiration charge capacity x2");
         add("tooltip.inspiration.plugin.speed", "Speed x2, energy per tick x4, charge per tick x2");
         add("tooltip.inspiration.plugin.energy_capacity_downgrade", "Machine energy capacity x0.67");
+        add("tooltip.inspiration.plugin.byproduct", "Refiner byproduct output +100%");
         add("tooltip.inspiration.plugin.stack", "Same-type plugins stack, each x%s");
 
         // 辐射机制
@@ -253,6 +262,10 @@ public class ModEnUsLangProvider extends LanguageProvider {
                 "Burns alkaline items to generate power.\nOutput: 100x FE/tick; burn time: 12000 ticks.\nx is the item's alkalinity");
         add("tooltip.inspiration.machine.rtg_generator",
                 "Burns radioactive items to generate power.\nOutput: 1000x FE/tick; burn time: 24000 ticks.\nx is the item's radiation value\nEvery minute it leaks (x-1)^3 radiation into its chunk; if x>9 it also has a (x-9)/1000 chance to explode.\nProduces x Nuclear Waste when finished.");
+        add("tooltip.inspiration.machine.fluid_extractor",
+                "Recipe type: Fluid Extracting\nMelts materials into their molten form, one ingot = 144 mB.\nThe result is stored in the output tank and can be bucketed out.");
+        add("tooltip.inspiration.machine.raw_refiner",
+                "Recipe type: Raw Refining\nOne input slot and three output slots; the last two hold byproducts.\nA Recycling Upgrade doubles byproduct output.");
         add("tooltip.inspiration.machine.structure_simulator",
                 "Runs a structure data to simulate its loot.\nInspiration charge: 8 mB/tick; power use depends on the data.\nBuild a hollow 4x3x3 shell of High-Energy Machine Casing and fit all five hatches (the two inner cells may be left empty or filled).");
         // ===================== Structure Simulator =====================

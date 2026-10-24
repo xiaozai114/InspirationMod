@@ -1,0 +1,16 @@
+{
+  "type": "inspiration:refining",
+  "byproducts": [
+    {
+      "count": 1,
+      "id": "inspiration:actinium_nugget"
+    }
+  ],
+  "input": {
+    "item": "inspiration:francium_salt"
+  },
+  "result": {
+    "count": 1,
+    "id": "inspiration:francium_ingot"
+  }
+}

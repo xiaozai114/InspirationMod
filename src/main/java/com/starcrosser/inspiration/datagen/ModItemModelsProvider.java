@@ -78,6 +78,7 @@ public class ModItemModelsProvider extends ItemModelProvider {
         basicItem(ModItems.INSPIRATION_PLUGIN.get());
         basicItem(ModItems.SPEED_PLUGIN.get());
         basicItem(ModItems.CAPACITOR_DOWNGRADE_PLUGIN.get());
+        basicItem(ModItems.RECYCLING_PLUGIN.get());
         basicItem(ModItems.INSPIRATION_SHARD.get());
         basicItem(ModItems.MIND_CRYSTAL.get());
         // 地核钻探者与它的耗材

@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/orientable",
+  "textures": {
+    "front": "inspiration:block/raw_refiner_front",
+    "side": "inspiration:block/raw_refiner_side",
+    "top": "inspiration:block/raw_refiner_top"
+  }
+}

@@ -1,7 +1,7 @@
 # Inspiration
 
 Minecraft 1.21.1 / NeoForge 模组。主题围绕「灵感」这一资源展开：在原有矿物与工具体系之上，
-新增九种用电机器，把灵感充能作为与电力并列的第二种消耗品，并提供可装入机器提升性能的插件；
+新增十一种用电机器，把灵感充能作为与电力并列的第二种消耗品，并提供可装入机器提升性能的插件；
 思维流体与水、岩浆接触后会凝固成四种新方块，构成一条可再生的结晶产线；
 灵感系列工具可经翡翠钢升级模板、注能翡翠钢升级模板两级锻造成更高数值的翡翠钢 / 注能翡翠钢工具；
 注入合成则是一套多方块结构驱动的合成方式，用能量规模换取产物；
@@ -30,7 +30,8 @@ Minecraft 1.21.1 / NeoForge 模组。主题围绕「灵感」这一资源展开�
 | 文档 | 内容 |
 | --- | --- |
 | [`README.md`](src/main/java/com/starcrosser/inspiration/README.md) | 源码树导览：构建命令、没有客户端时怎么验证、通用坑清单 |
-| [`machine/README.md`](src/main/java/com/starcrosser/inspiration/machine/README.md) | 四种机器、Titanium 约定与界面网格、各机器配方清单 |
+| [`machine/README.md`](src/main/java/com/starcrosser/inspiration/machine/README.md) | 十一种加工机器 + 两种发电机、Titanium 约定与界面网格、各机器配方清单 |
+| [`material/README.md`](src/main/java/com/starcrosser/inspiration/material/README.md) | 锭类材料：一处声明生成全部配套资源，粒/尘的分数辐射口径 |
 | [`machine/plugin/README.md`](src/main/java/com/starcrosser/inspiration/machine/plugin/README.md) | 插件种类与倍率结算、非机器宿主如何复用槽位 |
 | [`machine/charge/README.md`](src/main/java/com/starcrosser/inspiration/machine/charge/README.md) | 灵感充能：来源、换算与消耗规则 |
 | [`injection/README.md`](src/main/java/com/starcrosser/inspiration/injection/README.md) | 注入合成：结构、绑定、触发、判定与配方 |
@@ -52,13 +53,14 @@ Minecraft 1.21.1 / NeoForge 模组。主题围绕「灵感」这一资源展开�
 src/main/java/com/starcrosser/inspiration/
 ├── block/           方块注册，custom/ 为自定义方块（含思维流体方块）
 ├── item/            物品注册，custom/ 为带行为的物品，tool/ 为工具品质与经验接口
-├── fluid/           流体注册（思维流体、灵感充能）与流体反应规则表
+├── fluid/           流体注册（思维流体、灵感充能、液态等离子）与流体反应规则表
+├── material/        锭类材料：一处声明生成锭/块/粒/尘与 data_maps 条目
 ├── machine/
 │   ├── block/       机器方块
 │   ├── blockentity/ 机器方块实体（含充能机器公共基类 InspiredMachineTile）
 │   ├── charge/      灵感充能的定义与换算
 │   ├── plugin/      插件种类、倍率结算、插件槽与可扩容能量存储
-│   └── recipe/      四种机器配方类型及其序列化器
+│   └── recipe/      六种机器配方类型及其序列化器
 ├── injection/       注入合成：结构判定、等级标签、配方与两个方块实体
 │   ├── block/       物质束缚器与注入枪方块
 │   ├── blockentity/ 两个结构的方块实体
@@ -117,8 +119,12 @@ src/main/java/com/starcrosser/inspiration/
 | 高能物质重塑机 | 物质重塑、右键转化 | 400,000 FE / 8,000 FE·t⁻¹ | 4 mB/刻 |
 | 高能矿物扭曲机 | 矿物扭曲（时运 12） | 800,000 FE / 16,000 FE·t⁻¹ | 4 mB/刻 |
 | 高能灵感装配台 | 灵感装配 | 600,000 FE / 12,000 FE·t⁻¹ | 4 mB/刻 |
+| 流体提取机 | 流体提取 | 400,000 FE / 8,000 FE·t⁻¹ | 2 mB/刻 |
+| 原料精炼机 | 原料精炼 | 300,000 FE / 6,000 FE·t⁻¹ | 2 mB/刻 |
 
-九台机器均为只进不出的用电设备，能量只能被自身消耗，界面右侧都有四个插件槽。
+十一台机器均为只进不出的用电设备，能量只能被自身消耗，界面右侧都有四个插件槽。
+流体提取机的产物是流体（一锭 = 144 mB，存在输出罐里）；原料精炼机有**三个输出槽** ——
+一份原料出一份主产物加最多两份副产物，副产物产量可被**回收升级**翻倍（加算 +100%）。
 强能物质融合机是物质融合器的上位机型（三个输入槽、两倍速、两倍消耗与容量），配方共用一套。
 **高能机型**（紫色外壳）是下一阶段的上位机型：电容、灵感充能容量与处理速度都是上一阶段的
 两倍，每刻耗电与每刻充能消耗同样翻倍（一次作业的总耗电不变，只是快一倍）；主色调取无恒合金
@@ -186,6 +192,7 @@ src/main/java/com/starcrosser/inspiration/
 | 电容降级插件 | 能量缓冲容量 ×0.67 | 无 |
 | 灵感插件 | 灵感充能上限 ×2 | 无 |
 | 速度插件 | 运行速度 ×2 | 每刻耗电 ×4、每刻充能消耗 ×2 |
+| 回收升级 | 原料精炼机副产物产量 +100%（**加算**，两个是 ×3） | 无 |
 
 详见 [machine/plugin/README.md](src/main/java/com/starcrosser/inspiration/machine/plugin/README.md)。
 

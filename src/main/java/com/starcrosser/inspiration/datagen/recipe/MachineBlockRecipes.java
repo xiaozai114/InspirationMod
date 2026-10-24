@@ -103,6 +103,26 @@ public final class MachineBlockRecipes {
                 ModMaterials.EPHEMERAL_ALLOY.item().get(), ModMaterials.ENERGIZED_REDSTONE.item().get(),
                 ModItems.REACTION_CORE.get(), null, ModItems.REACTION_CORE.get());
 
+        // 流体提取机：强能核心 + 翡翠钢 + 下界合金锭（与其它机器同构，四角翡翠钢、四边下界合金）
+        machine(recipeOutput, ModMachines.FLUID_EXTRACTOR.getBlock(),
+                ModMaterials.JADE_STEEL.item().get(), Items.NETHERITE_INGOT,
+                ModItems.POWERFUL_CORE.get(), null, ModItems.POWERFUL_CORE.get());
+
+        // 原料精炼机：3 钙锭 + 5 无恒合金 + 1 高能核心。
+        // 刻意**不**用 machine(...) 的统一形状 —— 那套形状是「四角主材 + 四边次材 + 中心核心」，
+        // 材料数固定 5/3/1；这里要的是 3/5/1，换成自己的 SCS / CHC / SSS。
+        // 形状不同也有好处：玩家不会在放材料时误把两台高阶机器搞混。
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModMachines.RAW_REFINER.getBlock())
+                .pattern("SCS")
+                .pattern("CHC")
+                .pattern("SSS")
+                .define('C', ModMaterials.CALCIUM.item().get())
+                .define('H', ModItems.HIGH_ENERGY_CORE.get())
+                .define('S', ModMaterials.EPHEMERAL_ALLOY.item().get())
+                .unlockedBy(getHasName(ModItems.HIGH_ENERGY_CORE.get()), has(ModItems.HIGH_ENERGY_CORE.get()))
+                .save(recipeOutput);
+
+
         // ==================== 结构模拟机（多方块） ====================
 
         // 结构模拟机：无恒合金 + 幽匿合金锭 + 高能核心，形状与其他机器一致

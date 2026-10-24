@@ -80,6 +80,7 @@ public class ModZhCnLangProvider extends LanguageProvider {
         add(ModItems.INSPIRATION_PLUGIN.get(),"灵感插件");
         add(ModItems.SPEED_PLUGIN.get(),"速度插件");
         add(ModItems.CAPACITOR_DOWNGRADE_PLUGIN.get(),"电容降级插件");
+        add(ModItems.RECYCLING_PLUGIN.get(),"回收升级");
         add(ModItems.INSPIRATION_SHARD.get(),"灵感碎片");
         add(ModItems.MIND_CRYSTAL.get(),"思维晶体");
         add(ModItems.JADE_STEEL_SWORD.get(),"翡翠钢剑");
@@ -156,6 +157,11 @@ public class ModZhCnLangProvider extends LanguageProvider {
         // 单方块机器共用的两行：基准耗时与基准每刻耗电
         add("jei.inspiration.machine.duration", "耗时：%s 刻");
         add("jei.inspiration.machine.energy_per_tick", "每刻耗电：%s FE");
+        add("jei.inspiration.fluid_extracting", "流体提取");
+        add("jei.inspiration.fluid_extracting.output", "产物：%s mB");
+        add("jei.inspiration.refining", "原料精炼");
+        add("jei.inspiration.refining.byproduct", "副产物");
+        add("jei.inspiration.refining.recycling", "装回收升级可让副产物翻倍");
         add("jei.inspiration.injection", "物质注入");
         add("jei.inspiration.injection.role_inject", "注入物质");
         add("jei.inspiration.injection.role_base", "基底物质");
@@ -170,6 +176,7 @@ public class ModZhCnLangProvider extends LanguageProvider {
         add("gui.inspiration.facing.inspiration_charge", "充能");
         add("gui.inspiration.facing.fluid_input", "流体");
         add("gui.inspiration.facing.fluid_input_2", "流体");
+        add("gui.inspiration.facing.fluid_output", "液出");
         add("gui.inspiration.facing.drill", "钻头");
         add("gui.inspiration.facing.fuel", "燃料");
         // Titanium 悬停提示：键是 tooltip.titanium.facing_handler.<组件名小写>
@@ -179,6 +186,7 @@ public class ModZhCnLangProvider extends LanguageProvider {
         add("tooltip.titanium.facing_handler.inspiration_charge", "灵感充能罐");
         add("tooltip.titanium.facing_handler.fluid_input", "流体输入");
         add("tooltip.titanium.facing_handler.fluid_input_2", "第二个流体输入");
+        add("tooltip.titanium.facing_handler.fluid_output", "流体输出");
         add("tooltip.titanium.facing_handler.drill", "钻头槽");
         add("tooltip.titanium.facing_handler.fuel", "燃料输入");
         add("tooltip.titanium.facing_handler.inject", "待注入材料");
@@ -228,6 +236,7 @@ public class ModZhCnLangProvider extends LanguageProvider {
         add("tooltip.inspiration.plugin.charge_capacity", "机器灵感充能上限 ×2");
         add("tooltip.inspiration.plugin.speed", "运行速度 ×2，每刻耗电 ×4，每刻灵感充能消耗 ×2");
         add("tooltip.inspiration.plugin.energy_capacity_downgrade", "机器能量缓冲容量 ×0.67");
+        add("tooltip.inspiration.plugin.byproduct", "原料精炼机副产物产量 +100%（加算叠加）");
         add("tooltip.inspiration.plugin.stack", "同类插件可叠加，每个 ×%s");
         // 物品组
         // 辐射机制
@@ -248,6 +257,8 @@ public class ModZhCnLangProvider extends LanguageProvider {
         add("tooltip.inspiration.machine.high_energy_inspiration_assembler", "配方类型：灵感装配\n有六个输入槽与两个流体罐，可做材料更多的配方；速度 ×2。");
         add("tooltip.inspiration.machine.alkaline_reactor", "投入碱性物质发电。\n发电量：100x/tick；燃烧时间：12000tick。\nx为物品碱性值");
         add("tooltip.inspiration.machine.rtg_generator", "投入放射性物质发电。\n发电量：1000x/tick；燃烧时间：24000tick。\nx为物品辐射值\n每分钟向所在区块释放(x-1)³点辐射；x>9时每分钟有(x-9)/1000的概率爆炸。\n烧完后产出x个核废料。");
+        add("tooltip.inspiration.machine.fluid_extractor", "配方类型：流体提取\\n把材料熔成对应的液态金属，一锭 = 144 mB。\\n产物存在输出罐里，可用桶舀走。");
+        add("tooltip.inspiration.machine.raw_refiner", "配方类型：原料精炼\\n一个输入槽 + 三个输出槽，后两个是副产物。\\n装上回收升级可让副产物产量翻倍。");
         add("tooltip.inspiration.machine.structure_simulator", "投入结构数据进行模拟。\n灵感充能：8mB/tick；电力消耗随数据而定。\n需要用高能机器外壳搭出4宽*3高*3长的中空结构，并装上五种仓室（内部两格留空或填上都算成型）。");
         // ===================== 结构模拟机 =====================
         // 结构数据物品的三行参数

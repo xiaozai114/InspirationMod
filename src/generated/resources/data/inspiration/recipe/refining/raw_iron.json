@@ -1,0 +1,16 @@
+{
+  "type": "inspiration:refining",
+  "byproducts": [
+    {
+      "count": 1,
+      "id": "inspiration:nickel_nugget"
+    }
+  ],
+  "input": {
+    "item": "minecraft:raw_iron"
+  },
+  "result": {
+    "count": 1,
+    "id": "minecraft:iron_ingot"
+  }
+}

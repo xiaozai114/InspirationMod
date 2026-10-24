@@ -1,0 +1,16 @@
+{
+  "type": "inspiration:refining",
+  "byproducts": [
+    {
+      "count": 1,
+      "id": "minecraft:gold_nugget"
+    }
+  ],
+  "input": {
+    "item": "minecraft:raw_copper"
+  },
+  "result": {
+    "count": 1,
+    "id": "minecraft:copper_ingot"
+  }
+}

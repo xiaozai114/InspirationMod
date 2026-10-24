@@ -1,0 +1,22 @@
+{
+  "type": "inspiration:refining",
+  "byproducts": [
+    {
+      "count": 1,
+      "id": "inspiration:neptunium_grit"
+    },
+    {
+      "count": 1,
+      "id": "inspiration:plutonium_grit"
+    }
+  ],
+  "duration": 400,
+  "energy_per_tick": 320,
+  "input": {
+    "item": "inspiration:nuclear_waste"
+  },
+  "result": {
+    "count": 1,
+    "id": "inspiration:uranium_ingot"
+  }
+}

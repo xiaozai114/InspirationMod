@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/orientable",
+  "textures": {
+    "front": "inspiration:block/fluid_extractor_front",
+    "side": "inspiration:block/fluid_extractor_side",
+    "top": "inspiration:block/fluid_extractor_top"
+  }
+}

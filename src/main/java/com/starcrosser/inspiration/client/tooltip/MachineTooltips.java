@@ -43,7 +43,9 @@ public final class MachineTooltips {
             "high_energy_matter_reshaper",
             "alkaline_reactor",
             "rtg_generator",
-            "structure_simulator");
+            "structure_simulator",
+            "fluid_extractor",
+            "raw_refiner");
 
     private MachineTooltips() {
     }

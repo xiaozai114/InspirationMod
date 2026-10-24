@@ -3,11 +3,13 @@ package com.starcrosser.inspiration.datagen;
 import com.starcrosser.inspiration.datagen.recipe.AssemblingRecipes;
 import com.starcrosser.inspiration.datagen.recipe.CookingRecipes;
 import com.starcrosser.inspiration.datagen.recipe.CraftingRecipes;
+import com.starcrosser.inspiration.datagen.recipe.FluidExtractorRecipes;
 import com.starcrosser.inspiration.datagen.recipe.FranciumRecipes;
 import com.starcrosser.inspiration.datagen.recipe.FusionRecipes;
 import com.starcrosser.inspiration.datagen.recipe.InjectionRecipes;
 import com.starcrosser.inspiration.datagen.recipe.MachineBlockRecipes;
 import com.starcrosser.inspiration.datagen.recipe.MaterialRecipes;
+import com.starcrosser.inspiration.datagen.recipe.RefiningRecipes;
 import com.starcrosser.inspiration.datagen.recipe.ReshapingRecipes;
 import com.starcrosser.inspiration.datagen.recipe.RightClickRecipes;
 import com.starcrosser.inspiration.datagen.recipe.SmithingRecipes;
@@ -36,6 +38,8 @@ import java.util.concurrent.CompletableFuture;
  *       {@link AssemblingRecipes} 四台配方机器各自的配方</li>
  *   <li>{@link InjectionRecipes} 注入</li>
  *   <li>{@link FranciumRecipes} 钫盐系列</li>
+ *   <li>{@link FluidExtractorRecipes} 流体提取机：材料 → 液态金属</li>
+ *   <li>{@link RefiningRecipes} 原料精炼机：原料 → 主产物 + 副产物</li>
  * </ul>
  *
  * 加一条新配方：找到对应那个文件往里写就行；要加一整类机制，就在 {@code datagen/recipe/}
@@ -66,5 +70,9 @@ public class ModRecipesProvider extends RecipeProvider {
 
         // 注入
         InjectionRecipes.build(recipeOutput);
+
+        // 流体提取机与原料精炼机
+        FluidExtractorRecipes.build(recipeOutput);
+        RefiningRecipes.build(recipeOutput);
     }
 }

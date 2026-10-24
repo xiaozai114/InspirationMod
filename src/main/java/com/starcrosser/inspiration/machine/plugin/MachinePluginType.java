@@ -26,7 +26,15 @@ public enum MachinePluginType implements IAugmentType {
      * 电容降级插件：机器的能量缓冲容量降到 67%。
      * 配合爆炸类机制使用 —— 上限被压低后，玩家就攒不出足以引爆的能量。
      */
-    ENERGY_CAPACITY_DOWNGRADE("energy_capacity_downgrade", 0.67F);
+    ENERGY_CAPACITY_DOWNGRADE("energy_capacity_downgrade", 0.67F),
+    /**
+     * 回收升级：副产物产量 +100%。
+     * <p>
+     * ⚠️ 这是唯一**加算**的插件：装两个是 +200%（×3），不是 ×4。
+     * 「每装一个就多一份」比「叠乘」更好理解，玩家也不会因为忘了叠乘规则而算错产量。
+     * 结算见 {@link PluginEffects#from}。
+     */
+    BYPRODUCT("byproduct", 2.0F);
 
     private final String type;
     private final float multiplier;

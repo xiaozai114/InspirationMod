@@ -29,9 +29,9 @@ public static final InspirationMaterial CESIUM = InspirationMaterial.create("ces
 | 开关 | 生成 | 现状 |
 | --- | --- | --- |
 | `block(boolean)` | `<base>_block` + 方块物品 | 有块的材料开 |
-| `nugget(boolean)` | `<base>_nugget`（粒） | 关：粒尚未纳入玩法 |
-| `grit(boolean)` | `<base>_grit`（尘） | 关：尘要等流体提取机那一期 |
-| `molten(boolean)` | `molten_<base>` 熔融流体 | 关：尚未实现，打开会抛异常 |
+| `nugget(boolean)` | `<base>_nugget`（粒） | 开：原料精炼机那期起的 7 种精炼金属 |
+| `grit(boolean)` | `<base>_grit`（尘） | 开：只有镎与钚（核废料的副产物，比粒更细一档） |
+| `molten(boolean)` | `molten_<base>` 熔融流体 | 关：尚未纳入材料声明，打开会抛异常 |
 
 关着的开关不产生任何东西，所以「加材料」和「加内容」是两件可以分开提交的事。
 `molten` 现在故意抛异常而不是静默什么都不做 —— 免得开关存在却看不出它没生效。
@@ -51,6 +51,22 @@ public static final InspirationMaterial CESIUM = InspirationMaterial.create("ces
 不能当对应发电机的燃料。不要在表里塞一堆 0。
 
 有辐射且有方块时，方块与方块物品的辐射值取「物品值 × 9」（9 枚锭压一块）。
+
+### 粒与尘的分数辐射
+
+粒 / 尘的辐射量是锭的 1/9 与 1/81，但 data_map 只收整数，所以拆成**两张表**：
+
+- `inspiration:radiation` 存**分子**（粒/尘沿用锭的数值，例如铀粒也写 2）；
+- `inspiration:radiation_denominator` 存**周期**（锭不写 = 1，粒写 9，尘写 81）。
+
+语义是「每 N 秒释放 M 点」：只有 `秒数 % 周期 == 0` 的那一次才计入，
+于是 9 枚铀粒在 9 秒里的总释放量与 1 枚铀锭相同（平均值对得上，只是结算更稀疏）。
+tooltip 走 `tooltip.inspiration.radiation.period`（「每 %2$s 秒释放 %1$s 点」）。
+
+⚠️ RTG 只收**周期为 1** 的燃料（`Radiation#denominator(stack) == 1`），
+否则一枚铀粒会被当成铀锭那样烧出满功率。
+
+粒与尘的分子与周期由 `InspirationMaterial#addDataMaps` 自动派生，声明材料时**只写锭的那一个数**就行。
 
 ## 配套资源从哪里来
 
@@ -75,7 +91,16 @@ public static final InspirationMaterial CESIUM = InspirationMaterial.create("ces
 | 原版材料链（铁锭、钻石…） | 不是本模组注册的，但可以在 data_maps 里登记辐射/碱性 |
 | 幽匿合金块 / 玄武岩合金块 | 除是材料块外还是注入结构的底座，标签要额外照顾 |
 
+## 精炼金属
+
+`ModMaterials` 末尾那一组（钙 / 镍 / 铀 / 钍 / 铷 / 锕 / 镎 / 钚）全部由**原料精炼机**产出：
+主产物是锭，副产物是粒（镎、钚是尘）。钙锭例外 —— 它是钙粉高炉烧出来的，
+用来合成原料精炼机本身（幽匿合金已经被结构模拟机占用了）。
+
 ## 已知事项
 
-- 粒与尘现在没有贴图，打开开关会先缺图。贴图脚本在 `tools/textures/`，做那一期时补。
-- 熔融流体的注册与贴图要配合「流体提取机」，重构全部做完后单独开一期。
+- 锭 / 粒 / 尘的贴图由 `tools/textures/` 下的脚本生成（亮度排序重映射，保留原版高光）：
+  `gen_ingot_textures.py` / `gen_nugget_textures.py` / `gen_grit_textures.py`，
+  颜色统一记在 `palettes.py` 的 `MATERIAL_COLORS`，共用 `recolor.py` 的 `remap()`。
+- 熔融流体目前只有**液态等离子**一种（`fluid/MoltenPlasma`），没走材料声明的 `molten` 开关。
+  等材料系统真正支持熔融流体时再把这个开关接上。

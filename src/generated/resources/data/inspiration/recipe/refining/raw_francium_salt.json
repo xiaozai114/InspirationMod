@@ -1,0 +1,20 @@
+{
+  "type": "inspiration:refining",
+  "byproducts": [
+    {
+      "count": 1,
+      "id": "inspiration:uranium_nugget"
+    },
+    {
+      "count": 1,
+      "id": "inspiration:thorium_nugget"
+    }
+  ],
+  "input": {
+    "item": "inspiration:raw_francium_salt"
+  },
+  "result": {
+    "count": 1,
+    "id": "inspiration:francium_salt"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "type": "inspiration:refining",
+  "byproducts": [
+    {
+      "count": 1,
+      "id": "inspiration:rubidium_nugget"
+    }
+  ],
+  "input": {
+    "item": "inspiration:raw_cesium_salt"
+  },
+  "result": {
+    "count": 1,
+    "id": "inspiration:cesium_salt"
+  }
+}

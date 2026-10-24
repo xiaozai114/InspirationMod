@@ -1,9 +1,11 @@
 package com.starcrosser.inspiration.datagen.recipe;
 
+import com.starcrosser.inspiration.fluid.ModFluids;
 import com.starcrosser.inspiration.material.ModMaterials;
 import com.starcrosser.inspiration.Inspiration;
 import com.starcrosser.inspiration.item.ModItems;
 import com.starcrosser.inspiration.machine.recipe.AssemblingRecipe;
+import com.starcrosser.inspiration.machine.recipe.FluidExtractingRecipe;
 import com.starcrosser.inspiration.machine.recipe.FluidRequirement;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.resources.ResourceLocation;
@@ -45,6 +47,17 @@ public final class AssemblingRecipes {
         assembling(recipeOutput, "assembling/capacitor_downgrade_plugin",
                 List.of(Ingredient.of(ModMaterials.PLASMA.item().get()), Ingredient.of(Items.IRON_INGOT)),
                 new ItemStack(ModItems.CAPACITOR_DOWNGRADE_PLUGIN.get()),
+                ASSEMBLE_DURATION, ASSEMBLE_ENERGY_PER_TICK);
+
+        // 回收升级：思维矩阵锭 + 液态等离子 —— 第一份产物流回到装配台里的配方，
+        // 也是流体提取机存在的理由（等离子得先熔成流体才能上装配台）
+        assembling(recipeOutput, "assembling/recycling_plugin",
+                List.of(Ingredient.of(ModMaterials.MIND_MATRIX.item().get())),
+                List.of(),
+                List.of(new FluidRequirement(
+                        FluidIngredient.of(ModFluids.Fluids.MOLTEN_PLASMA.get()),
+                        FluidExtractingRecipe.INGOT_AMOUNT)),
+                new ItemStack(ModItems.RECYCLING_PLUGIN.get()),
                 ASSEMBLE_DURATION, ASSEMBLE_ENERGY_PER_TICK);
 
         // 高能核心：强能核心 + 钫盐 + 强化深板岩 —— 三样材料缺一不可

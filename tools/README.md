@@ -34,6 +34,8 @@ D:/programfiles/conda/python.exe tools/textures/gen_plugin_textures.py <插件�
 | `gen_exp_shovel.py` | 灵感之铲（从 client-extra jar 取原版 `iron_shovel.png`，按显式 `COLOUR_MAP` 把铁灰换成灵感绿、保留木柄；**遇到未映射的颜色直接报错**，别静默放过） |
 | `gen_jade_steel_tools.py` | 表驱动：`STYLES` 里两套色相（`jade_steel` 绿 / `energized_jade_steel` 青带星点）× `SOURCES` 里 5 种工具（含 `shovel` ← `exp_shovel`），一次出 10 张 |
 | `gen_jade_steel_upgrade_template.py` | 两个升级模板（从原版下界合金升级模板取图，`PALETTES` 分别产出翡翠钢的绿色版与注能版的紫底电青宝石） |
+| `gen_molten_plasma_fluid.py` | 液态等离子的流动/静止方块贴图与桶（桶 = 原版 `water_bucket.png`，**只重映射偏蓝的像素**，桶身的金属灰与把手不动） |
+| `gen_refinery_blocks.py` | 流体提取机（青蓝机身 + 喷嘴 + 液槽）与原料精炼机（暖铜机身 + 三道槽）的方块三面，共用 `gen_generator_blocks` 里的外壳绘制函数 |
 
 `tools/textures/base/` 放**底材与形状模板**（`netherrack.png`、`netherite_ingot.png`、`end_stone.png`，
 都从原版资源包 `build/moddev/artifacts/neoforge-*-client-extra-aka-minecraft-resources.jar` 里抽出）。

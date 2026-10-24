@@ -5,10 +5,12 @@ import com.hrznstudio.titanium.module.DeferredRegistryHelper;
 import com.starcrosser.inspiration.Inspiration;
 import com.starcrosser.inspiration.machine.block.AlkalineReactorBlock;
 import com.starcrosser.inspiration.machine.block.CoreDrillerBlock;
+import com.starcrosser.inspiration.machine.block.FluidExtractorBlock;
 import com.starcrosser.inspiration.machine.block.InspirationAssemblerBlock;
 import com.starcrosser.inspiration.machine.block.MatterFusionMachineBlock;
 import com.starcrosser.inspiration.machine.block.MatterReshaperMachineBlock;
 import com.starcrosser.inspiration.machine.block.MineralTwisterBlock;
+import com.starcrosser.inspiration.machine.block.RawRefinerBlock;
 import com.starcrosser.inspiration.machine.block.RtgGeneratorBlock;
 import com.starcrosser.inspiration.machine.spec.MachineSpec;
 import com.starcrosser.inspiration.registry.MachineRegistry;
@@ -46,6 +48,12 @@ public class ModMachines {
     /** 地核钻探者：等级 1，1 个钻头槽。目前没有上位机型。 */
     private static final MachineSpec DRILLER_T1 = MachineSpec.of(1, 1, DyeColor.PURPLE);
 
+    /** 流体提取机：等级 1，1 个输入槽。 */
+    private static final MachineSpec EXTRACTOR_T1 = MachineSpec.of(1, 1, DyeColor.CYAN);
+
+    /** 原料精炼机：等级 1，1 个输入槽（三个输出槽是固定的，不随配置变）。 */
+    private static final MachineSpec REFINER_T1 = MachineSpec.of(1, 1, DyeColor.ORANGE);
+
     /** 灵感装配台：等级 1，4 个物品输入槽 + 1 个流体输入槽。 */
     private static final MachineSpec ASSEMBLER_T1 = MachineSpec.of(1, 4, 1, DyeColor.YELLOW);
     /** 高能灵感装配台：等级 2，6 个物品输入槽 + 2 个流体输入槽。 */
@@ -71,6 +79,10 @@ public class ModMachines {
     public static BlockWithTile ALKALINE_REACTOR;
     /** RTG反应堆：烧放射性物质发电，代价是往区块里放辐射。 */
     public static BlockWithTile RTG_GENERATOR;
+    /** 流体提取机：把材料熔成液态金属。 */
+    public static BlockWithTile FLUID_EXTRACTOR;
+    /** 原料精炼机：粗矿 / 盐 / 核废料 → 主产物 + 副产物。 */
+    public static BlockWithTile RAW_REFINER;
 
     /**
      * 一次性注册所有机器。
@@ -122,6 +134,15 @@ public class ModMachines {
                 "高能物质重塑机", "High-Energy Matter Reshaper",
                 () -> new MatterReshaperMachineBlock("high_energy_matter_reshaper", RESHAPER_T2,
                         () -> HIGH_ENERGY_MATTER_RESHAPER, 5.0F, 12.0F));
+
+        FLUID_EXTRACTOR = MachineRegistry.register(registry, "fluid_extractor",
+                "流体提取机", "Fluid Extractor",
+                () -> new FluidExtractorBlock("fluid_extractor", EXTRACTOR_T1,
+                        () -> FLUID_EXTRACTOR, 5.0F, 10.0F));
+        RAW_REFINER = MachineRegistry.register(registry, "raw_refiner",
+                "原料精炼机", "Raw Refiner",
+                () -> new RawRefinerBlock("raw_refiner", REFINER_T1,
+                        () -> RAW_REFINER, 5.0F, 10.0F));
 
         // 发电类：不跑配方，只烧燃料往外输电
         ALKALINE_REACTOR = MachineRegistry.register(registry, "alkaline_reactor",

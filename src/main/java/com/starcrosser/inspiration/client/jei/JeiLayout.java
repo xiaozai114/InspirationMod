@@ -91,6 +91,17 @@ public final class JeiLayout {
     public static final int THIRD_INPUT_X = 19;
     public static final int THIRD_INPUT_Y = 24;
 
+    /* ---------------- 原料精炼：单输入 -> 三个输出槽竖排 ---------------- */
+
+    /** 面板尺寸与说明文字起始行；比 {@link #TALL_HEIGHT} 再高一点才放得下三格产物。 */
+    public static final int REFINING_HEIGHT = 86;
+    public static final int REFINING_TEXT_Y = 60;
+
+    /** 三个输出槽共用一列：第 0 格（主产物）与输入槽同高，副产物顺次往下排。 */
+    public static final int REFINING_OUTPUT_X = 78;
+    public static final int REFINING_OUTPUT_Y = 6;
+    public static final int REFINING_OUTPUT_PITCH = 18;
+
     /* ---------------- 注入配方：两行输入各带来源图标与角色标签，右侧箭头指产物 ---------------- */
 
     /**

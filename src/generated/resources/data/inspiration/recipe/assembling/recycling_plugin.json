@@ -1,0 +1,23 @@
+{
+  "type": "inspiration:assembling",
+  "counts": [
+    1
+  ],
+  "fluids": [
+    {
+      "amount": 144,
+      "ingredient": {
+        "fluid": "inspiration:molten_plasma"
+      }
+    }
+  ],
+  "ingredients": [
+    {
+      "item": "inspiration:mind_matrix_ingot"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "inspiration:recycling_plugin"
+  }
+}

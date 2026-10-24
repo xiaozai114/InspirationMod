@@ -80,11 +80,12 @@ public class ModCreativeModeTabs {
                         // 玄武岩合金工具：打火石与钻头（地核钻探者的耗材）
                         output.accept(ModItems.BASALT_ALLOY_FIRESTRIKER);
                         output.accept(ModItems.BASALT_ALLOY_DRILL_BIT);
-                        // 机器插件：四种，装进机器侧栏改变性能
+                        // 机器插件：五种，装进机器侧栏改变性能
                         output.accept(ModItems.CAPACITOR_PLUGIN);
                         output.accept(ModItems.INSPIRATION_PLUGIN);
                         output.accept(ModItems.SPEED_PLUGIN);
                         output.accept(ModItems.CAPACITOR_DOWNGRADE_PLUGIN);
+                        output.accept(ModItems.RECYCLING_PLUGIN);
                         // 信标与 TNT
                         output.accept(ModItems.EMPTY_BEACON);
                         output.accept(ModItems.POWER_BEACON);
