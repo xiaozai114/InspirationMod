@@ -17,7 +17,9 @@
   循环调 `tile.serverTick(level,pos,state,tile)`。⚠️ 世界会在两次自检间存盘，开头先清空槽位。
   `getHandlerFromName`/`serverTick` 在 **`ActiveTile`** 上，不在 `BasicTile`。
 - **P2.1 后**注册走 `registry/MachineRegistry.register(registry,id,zhName,enName,factory)`，
-  中英语言 / 方块状态 / 挖掘标签 / 战利品表全部遍历清单。**创造栏与 JEI 映射仍手工**。
+  中英语言 / 方块状态 / 挖掘标签 / 战利品表全部遍历清单。**创造栏与 JEI 映射仍手工
+  —— 新机器一定别忘了加 `ModCreativeModeTabs`**（漏过两次）。
+  创造栏两页：**材料页只放锭类材料（锭/块/粒/尘，遍历 `ModMaterials`）**，其余原料都在灵感页末尾。
   **注册顺序 = 标签输出顺序**。`registerBlockWithTile` 第二参是 `Supplier<BasicTileBlock<?>>`（不变型）。
 - **只有 `MachineTile#onActivated` 会 `openGui()`**；直接继承 `ActiveTile/PoweredTile` 的要自己
   覆写（仓室打不开就是栽在这）。GUI 坐标与侧栏标签限制见 `machine/README.md`。
@@ -74,6 +76,7 @@
   `basalt_alloy_ingot`，忘了覆盖就注册出新 ID，而且配方 JSON 会**静默**改用新 ID。
 - 命名（用户拍板）：锭=`ingot`、粉=`dust`（现有 4 个 `*_dust` ID 不动）、尘=`grit`（dust 已占用）、
   粒=`nugget`。尘比粉粗（破碎矿石），粉是化学产物。
+- 贴图：锭/粒/尘都由 `tools/textures` 按「模板换色」生成；**尘 = 粉等比缩到 0.6**（`dust_base.png`）。
 - 碱性 `.alkalinity(int)` 与碱金属行为 `.alkaliRevert(target,radius)` **是两件事**。值 0 =
   不写 data_map、不显示 tooltip、不能当燃料。有辐射且有方块时，方块与**方块物品**都要登记，
   值 = 物品值 × 9。
@@ -97,11 +100,10 @@
 
 ## 构建与验证
 
-- ⚠️ **`sed -i` 会把 CRLF 改成 LF**（本机 `core.autocrlf=true`）：批量替换后 `git status`
-  一片 M 但 `git diff --numstat` 是空的。提交前把 `src/main/java` 下的 `.java`/`.md`
-  统一回 CRLF，工作区才干净。
-- ⚠️ **按「文件组」提交时用默认（mixed）`git reset`**，别用 `--soft`（索引残留会让后面按路径
-  add 把全部改动一起提进去）；旧路径的删除也要 stage。
+- ⚠️ **`sed -i` 会把 CRLF 改成 LF**（本机 `core.autocrlf=true`）：status 一片 M 但 numstat 为空
+  → 提交前把 `.java`/`.md` 统一回 CRLF。
+- ⚠️ 按「文件组」提交用默认（mixed）`git reset`，别用 `--soft`（索引残留会把全部改动一起提）；
+  旧路径的删除也要 stage。
 - **datagen 哈希缓存会漏判内容变化**：核对前删 `src/generated/resources/.cache/*`（不必删
   整个目录，删了要重新生成 500+ 文件）再 `runData`，否则看到假的「零变化」。
 - MC 1.21.1 / **NeoForge 21.1.256** / ModDevGradle **2.0.148** / Titanium 1.21-4.0.50 /
@@ -110,10 +112,10 @@
   `basicItem`）；半透明 `renderType("translucent")`；流体方块 `registerBlockOnly`。
 - **jar 不随 compileJava 更新**；**`assets/` 只能在客户端校验**；打包后 `unzip -l` 查有无自检残留。
 - 自检 = 临时类 + `server.halt(false)`，跑完删掉、删 `run/crash-reports`。`server-port` 固定 **25599**。
-- **Gradle**：`gradle.properties` 写死 `org.gradle.java.home=...jdk-21`；**日常一律 `--offline`**
-  （maven.neoforged.net 不通，解析 classpath 会联网卡死）。
+- **Gradle**：`gradle.properties` 写死 `org.gradle.java.home=...jdk-21`；日常一律 `--offline`。
 - **`build.gradle` 两处补丁别删**：① `force 'org.jetbrains:annotations:26.1.0'` ② 禁用
-  `compileTestJava`/`test`（否则 IDEA 同步卡死 → 满屏 import 报红）。
+  `compileTestJava`/`test`（否则 IDEA 同步卡死 → 满屏 import 报红）；单禁用不够，
+  配置缓存仍会序列化 `testCompileClasspath`，还要 `force`。
 
 ## 坑
 
@@ -123,27 +125,25 @@
    `level.getCapability(Capabilities.ItemHandler.BLOCK,pos,side)`。
 4. 子类化原版方块注意 codec 泛型不变型；`BooleanProperty` 默认 true、`DirectionProperty` 默认
    `DOWN`。**忘了给 `DeferredRegister` 调 `register(bus)` 不报编译错**，只在首次 `.get()` 抛
-   unbound value；配方一次消耗多个材料时 `canProcess` 要校验数量；**多输出槽要同时校验所有格子**。
+   unbound value；一次消耗多个材料要校验数量，多输出槽要同时校验所有格子。
 5. **服务端引用客户端类会炸** → 给方法标 `@OnlyIn(Dist.CLIENT)`（P3 后有自动体检，见上）。
 6. 自检用 **`FakePlayer`**（`openMenu` 返回 empty）、**改经验调 `giveExperiencePoints`**；
-   **自检类必须带 `@EventBusSubscriber` 注解**，只写 `@SubscribeEvent` 不会挂上总线；
-   **不能复用被测代码的坐标计算**（否则只证明「自己和自己一致」）。
-7. **`testCompileClasspath` 继承 `implementation`**：禁用 `compileTestJava` **不够**
-   （配置缓存仍序列化它的 classpath），必须 `force`（见构建节）。
+   **自检类必须带 `@EventBusSubscriber`**（只写 `@SubscribeEvent` 挂不上总线）；
+   **不能复用被测代码的坐标计算**。
 8. **Titanium 组件构造参数顺序互不相同**：`InventoryComponent(name,x,y,slots)`、
    `FluidTankComponent(name,capacity,x,y)`、`EnergyStorageComponent(cap,maxReceive,maxExtract,x,y)`。
    写错**不报编译错**。
 9. **物品栏黑紫棋盘格 = 缺 `models/item/<方块>.json`**（`ModItemModelsProvider` 补 `blockItem`）。
 10. **配置缓存按「任务集」分别存条目**；动仓库 `content`/`metadataSources` 会让已缓存解析失效。
-11. **Git 远程** `origin = .../InspirationMod`（私有），代理对 **github.com:443 间歇 502**。
-    持续失败走 REST 兜底，**顺序 blob → tree → commit → ref**（只发 commit 会 422
-    「Tree SHA does not exist」）：`POST /git/blobs`（base64，删 `sha:null`）→ `POST /git/trees`
-    （`base_tree=<parent>^{tree}`）→ `POST /git/commits` → `PATCH /git/refs/heads/master` force，
-    每步校 sha。`date` 用本地时间再贴偏移；`author` 行从右往左切（Name 含空格）。
+11. **Git 远程** `origin = .../InspirationMod`（私有），代理对 **github.com:443 间歇 502**
+    （`api.github.com` 通常通）。兜底走 REST，**顺序 blob → tree → commit → ref**（只发 commit 会 422
+    「Tree SHA does not exist」）：`POST /git/blobs`（base64，删 `sha:null`）→ `/git/trees`
+    （`base_tree=<parent>^{tree}`）→ `/git/commits` → `PATCH /git/refs/heads/master` force，每步校 sha。
 
 ## 重构
 
-- 方案 **`docs/REFACTORING_PLAN.md`**（基线 `5194af5`）：P0 ✅ → P1（机器等级化 ✅ / 配方基类 ✅ /
-  五件套 ❌ 保持现状 / 仓室基类 ✅）→ P2（MachineRegistry ✅ / 拆 Provider ✅ / 事件集中 ✅ /
-  P2.5 材料统一 ✅）→ **P3 客户端隔离与命名 ✅**（`p3-start` → `p3-done`）。
+- **P0–P3 全部完成**（基线 `5194af5`，`p3-start` → `p3-done`）；`docs/REFACTORING_PLAN.md`
+  已改写成《重构纪要》，只留结论 / 决策 / 红线 / 验收，过程细节在 `docs/` 之外各包 README。
 - 红线：**不动任何 `ResourceLocation`**（老存档靠 ID）；同 commit 不混「改结构」与「加内容」。
+- **文档要短**（用户明确要求，别让翻阅吃 token）：每份包 README 控制在 6~7KB，只写规则 / 清单 / 坑，
+  不写过程叙述与自检流水账。新增内容优先改已有表格，别另起一节。
