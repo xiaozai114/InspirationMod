@@ -19,15 +19,14 @@ import java.util.function.Supplier;
 /**
  * 创造模式物品栏：两页。
  * <p>
- * 分页规则是「有没有直接使用功能」：<b>灵感</b>页放能拿起来就用的东西 —— 食物、工具、
- * 机器、功能方块、插件、模板、结构数据、指导书；<b>材料</b>页放只作为合成原料存在的东西 ——
- * 矿、锭、粉、盐、晶、核心部件与废料、煤。
+ * 分页规则是「是不是锭类材料」：<b>材料</b>页只放锭类材料及其附属形态（锭 / 粒 / 块 / 尘），
+ * 遍历 {@link ModMaterials#ALL} 生成；<b>灵感</b>页放其余一切 —— 能拿起来就用的东西
+ * （食物、工具、机器、功能方块、插件、模板、结构数据、指导书），
+ * 以及不是锭类材料的原料（矿、粉、盐、晶、煤、核心部件、废料）放在末尾。
  * <p>
- * 分页之后两页内部仍然逐个显式写、不遍历清单，因为展示顺序是刻意排的：
+ * 两页内部仍然逐个显式写、不遍历清单，因为展示顺序是刻意排的：
  * 一条生产线的上下游要挨在一起（矿石 → 粗盐 → 盐 → 粉 → 锭 → 块），
  * 而清单顺序是声明顺序，跟玩法脉络对不上。
- * 唯一例外是锭类材料那一组：它们没有上下游关系，遍历 {@link ModMaterials#ALL}
- * 既能保证同一材料的锭与块挨着，加材料时也不用再来补这里。
  */
 public class ModCreativeModeTabs {
     public static final DeferredRegister<CreativeModeTab> CREATIVE_MOD_TABS =
@@ -106,9 +105,13 @@ public class ModCreativeModeTabs {
                         output.accept(ModMachines.MINERAL_TWISTER);
                         output.accept(ModMachines.INSPIRATION_ASSEMBLER);
                         output.accept(ModMachines.CORE_DRILLER);
+                        // 流体提取机：强能核心那一档，摆在高能机型之前
+                        output.accept(ModMachines.FLUID_EXTRACTOR);
                         output.accept(ModMachines.HIGH_ENERGY_MINERAL_TWISTER);
                         output.accept(ModMachines.HIGH_ENERGY_INSPIRATION_ASSEMBLER);
                         output.accept(ModMachines.HIGH_ENERGY_MATTER_RESHAPER);
+                        // 原料精炼机：与高能机型同档（高能核心 + 无恒合金）
+                        output.accept(ModMachines.RAW_REFINER);
                         output.accept(ModMachines.ALKALINE_REACTOR);
                         output.accept(ModMachines.RTG_GENERATOR);
                         // 注入合成：束缚器 —— 注入枪 —— 绑定器
@@ -127,16 +130,7 @@ public class ModCreativeModeTabs {
                         output.accept(ModItems.SHIPWRECK_DATA);
                         output.accept(ModItems.PROJECTOR);
                         output.accept(ModItems.GUIDE_BOOK);
-                    })
-                    .build());
-
-    /* ==================== 材料页：只作为合成原料存在的东西 ==================== */
-
-    public static final Supplier<CreativeModeTab> MATERIAL_TAB =
-            CREATIVE_MOD_TABS.register("material_tab", () -> CreativeModeTab.builder()
-                    .icon(() -> new ItemStack(ModMaterials.CESIUM.item().get()))
-                    .title(Component.translatable("itemGroup.material_tab"))
-                    .displayItems((parameters, output) -> {
+                        // 以下是非锭类原料：锭类材料都在材料页，这些没有锭形态，放在灵感页末尾
                         // 煤系：褐煤是最早的燃料，焦煤是它的冶炼产物
                         output.accept(ModItems.LIGNITE);
                         output.accept(ModBlocks.LIGNITE_BLOCK);
@@ -162,7 +156,27 @@ public class ModCreativeModeTabs {
                         output.accept(ModItems.EPHEMERAL_MATERIAL);
                         output.accept(ModItems.MIND_CRYSTAL);
                         output.accept(ModItems.INSPIRATION_SHARD);
-                        // 锭类材料：遍历清单，每个材料的锭紧挨着自己的方块
+                        // 核心部件与废料：合成机器用的中间产物
+                        output.accept(ModItems.UNSTABLE_CORE);
+                        output.accept(ModItems.REINFORCED_CORE);
+                        output.accept(ModItems.POWERFUL_CORE);
+                        output.accept(ModItems.HIGH_ENERGY_CORE);
+                        output.accept(ModItems.GENERATION_CORE);
+                        output.accept(ModItems.REACTION_CORE);
+                        output.accept(ModItems.NUCLEAR_WASTE);
+                        // 注入底材
+                        output.accept(ModItems.BASALT_BASE);
+                    })
+                    .build());
+
+    /* ==================== 材料页：锭类材料与附属形态 ==================== */
+
+    public static final Supplier<CreativeModeTab> MATERIAL_TAB =
+            CREATIVE_MOD_TABS.register("material_tab", () -> CreativeModeTab.builder()
+                    .icon(() -> new ItemStack(ModMaterials.CESIUM.item().get()))
+                    .title(Component.translatable("itemGroup.material_tab"))
+                    .displayItems((parameters, output) -> {
+                        // 只放锭类材料：锭 —— 块 —— 粒 —— 尘，同一材料的四种形态挨在一起
                         for (InspirationMaterial material : ModMaterials.ALL) {
                             output.accept(material.item());
                             if (material.hasBlock()) {
@@ -175,16 +189,6 @@ public class ModCreativeModeTabs {
                                 output.accept(material.grit());
                             }
                         }
-                        // 核心部件与废料：合成机器用的中间产物
-                        output.accept(ModItems.UNSTABLE_CORE);
-                        output.accept(ModItems.REINFORCED_CORE);
-                        output.accept(ModItems.POWERFUL_CORE);
-                        output.accept(ModItems.HIGH_ENERGY_CORE);
-                        output.accept(ModItems.GENERATION_CORE);
-                        output.accept(ModItems.REACTION_CORE);
-                        output.accept(ModItems.NUCLEAR_WASTE);
-                        // 注入底材
-                        output.accept(ModItems.BASALT_BASE);
                     })
                     .build());
 

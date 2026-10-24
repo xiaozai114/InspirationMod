@@ -1,11 +1,8 @@
 # JEI 支持（`client/jei` 包）
 
-相关：[客户端包总览](../README.md) ・ [机器体系](../../machine/README.md) ・ [注入合成](../../injection/README.md) ・ [数据生成（语言键出处）](../../datagen/README.md)
-
-插件类以 `@JeiPlugin` 注解声明，由 JEI 自动发现；依赖是 `compileOnly`，运行时没有 JEI 也能正常游戏。
-P3 之后整个 JEI 包收在 `client/` 下（JEI 是纯客户端 mod），分类在 `category/` 子包。
-
-依赖版本：**JEI 19.57.0.451 / MC 1.21.1**。升级时下面几条 API 约定要重新核对。
+相关：[客户端包](../README.md) ・ [机器体系](../../machine/README.md) ・ [注入](../../injection/README.md) ・
+[语言键出处](../../datagen/README.md)。插件以 `@JeiPlugin` 声明由 JEI 自动发现；依赖 `compileOnly`，
+运行时没有 JEI 也能正常游戏。**JEI 19.57.0.451 / MC 1.21.1**，升级时下面几条 API 约定要重新核对。
 
 ## 八个分类
 
@@ -17,78 +14,55 @@ P3 之后整个 JEI 包收在 `client/` 下（JEI 是纯客户端 mod），分�
 | 灵感装配 | 灵感装配台、高能灵感装配台 |
 | 流体提取 | 流体提取机 |
 | 原料精炼 | 原料精炼机 |
-| 右键转化 | —— |
 | 注入 | 物质束缚器、注入枪 |
-| 结构预览 | 结构模拟机 |
+| 右键转化 / 结构预览 | —— / 结构模拟机 |
 
-上位机型与基础机型**共用一个分类**（配方类型相同），只是多挂一个催化剂；
-界面里显示的是配方**基准值**，不含机型倍率（高能机型的 2 倍速 / 2 倍耗电不体现在这里，
-高能扭曲机的等效时运 12 也不体现 —— 面板用的是配方声明的时运）。
-
-新增一个分类要动三处，缺一不可：
-
-1. `ModJeiRecipeTypes` 加常量；
-2. 新建 `category/XxxRecipeCategory`；
-3. `InspirationJeiPlugin` 里注册分类、灌配方、声明催化剂。
+上位机型与基础机型**共用一个分类**，只多挂一个催化剂；面板显示的是配方**基准值**，不含机型倍率
+（高能 2 倍速、扭曲机时运 12 都不体现）。新增分类要动三处：`ModJeiRecipeTypes` 加常量、
+新建 `category/XxxRecipeCategory`、在 `InspirationJeiPlugin` 里注册分类 / 灌配方 / 声明催化剂。
 
 ## 面板内容
 
-单方块机器（融合 / 重塑 / 扭曲 / 装配）的面板**只给两行**：基准耗时与基准每刻耗电。
-插件倍率、总能耗、灵感充能消耗在机器界面里看得到，重复列出只会把正文挤到看不见。
-这两行由 `MachineRecipeText.baseLines(duration, energyPerTick)` 生成，语言键是
-`jei.inspiration.machine.duration` 与 `jei.inspiration.machine.energy_per_tick`。
+- 单方块机器（融合 / 重塑 / 扭曲 / 装配）**只给两行**：基准耗时与基准每刻耗电
+  （`MachineRecipeText.baseLines`，键 `jei.inspiration.machine.duration|energy_per_tick`）。
+  插件倍率、总能耗、充能消耗在机器界面里看得到，重复列只会把正文挤没。
+- 矿物扭曲产量随机 → 区间与期望值挂在产物槽 tooltip（`addRichTooltipCallback`，
+  旧的 `addTooltipCallback` 已过时）。
+- 注入走自己的排版：两个输入各配「放哪台设备」的小图标与角色标签（紫 / 蓝），箭头指向产物；
+  分隔线下写需求等级、最小（金）与最大（红）能量。种子随机窗口上下限都写 `???`。
+- 融合里一次消耗多个的槽位用带数量的 `ItemStack`（`addItemStacks` + `copyWithCount`），
+  JEI 会在角上画数字；只消耗 1 个时照旧 `addIngredients(Ingredient)`，保留标签原料的轮播。
+- 流体提取的产物是流体：输出槽用 `setFluidRenderer(容量, false, 16, 16)` + `addFluidStack`，
+  16×16 放不下数字，产物量单独写一行 `jei.inspiration.fluid_extracting.output`。
+- 原料精炼三个输出槽竖排（`REFINING_OUTPUT_X=78`，y = 6 / 24 / 42）：最上一格与输入同高、
+  箭头正对它，是主产物；下两格空着时表示无副产物，有副产物时各加一行 tooltip 说明。
+  回收升级的翻倍是机器侧的事，面板只补一行提示（写进正文会让人误以为配方本身产那么多）。
 
-矿物扭曲的产量是随机的，产量区间与期望值挂在产物槽的 tooltip 上
-（`addRichTooltipCallback`；旧的 `addTooltipCallback` 已过时）。
+## 布局常量（`JeiLayout`）
 
-注入（多方块）的信息更关键，不走这套：两个输入各配一个「该材料放哪台设备」的小图标与角色标签
-（注入物质 / 基底物质，分别着紫色与蓝色），右侧箭头指向产物；分隔线下方写出需求等级、
-最小能量（金色）与最大能量（红色）。种子随机窗口的配方把上下限都写成 `???`
-（不再额外加说明行——想知道具体数值得用世界数据探测器）。
-
-融合分类里一次要消耗多个的槽位，改用带数量的 `ItemStack` 灌进槽位（`addItemStacks` + `copyWithCount`），
-JEI 会在图标角上画出数字；只消耗 1 个时照旧走 `addIngredients(Ingredient)`，保留标签类原料的轮播。
-
-流体提取的产物是**流体**而不是物品：输出槽改用 `setFluidRenderer(容量, false, 16, 16)` +
-`addFluidStack`。16×16 的格子放不下数字，所以产物量单独写成一行正文
-（`jei.inspiration.fluid_extracting.output`）—— 不悬停就能看到 144 mB 这个比例。
-
-原料精炼有三个输出槽，面板里竖排（`REFINING_OUTPUT_X=78`，三格 y = 6 / 24 / 42）：
-最上面那格与输入槽同高、箭头正对着它，是主产物；下面两格是副产物，配方没写就空着，
-两个副产物槽的 tooltip 各加一行「副产物」。副产物会被回收升级翻倍，那是机器侧的事，
-面板只在有副产物时补一行提示（写进正文会让玩家误以为配方本身就产那么多）。
-
-## 布局常量
-
-都在 `JeiLayout`，数值与 `assets/inspiration/textures/gui/jei/*.png` 的实际尺寸保持一致。
+数值与 `assets/inspiration/textures/gui/jei/*.png` 的实际尺寸一致。
 
 | 用途 | 常量 |
 | --- | --- |
-| 普通面板（融合 / 重塑 / 扭曲 / 右键转化） | `WIDTH=104`、`HEIGHT=54` |
-| 双输入槽 / 输出槽 | `FIRST_INPUT_X=8`、`SECOND_INPUT_X=30`、`OUTPUT_X=78`，`SLOT_Y=6` |
-| 说明文字区 | `TEXT_Y=30` |
-| 融合分类（含 3 材料配方） | 面板加高到 `TALL_HEIGHT=74`，第三槽 `(19, 24)`，说明文字 `TALL_TEXT_Y=46` |
-| 灵感装配（最多 3×2 输入 + 2 流体罐） | 列 `8/30/52`、行 `6/24`，输出 `(98, 24)`；流体罐 `(8, 44)`、`(30, 44)`；面板 `GRID_WIDTH=122`、`GRID_HEIGHT=96`、`GRID_TEXT_Y=68` |
-| 注入面板 | `INJECT_WIDTH=150`、`INJECT_HEIGHT=112`（说明区要塞下四行，100 会让最后一行被截断） |
-| 注入图标 / 槽位 / 角色标签 | 见文件末尾那一组 `INJECT_*` |
-| 注入说明文字区 | `INJECT_TEXT_Y=56` |
-| 流体提取（单输入 → 一格流体罐） | 面板 `WIDTH=104`、`TALL_HEIGHT=74`，罐在 `(78, 6)`，说明文字 `TALL_TEXT_Y=46` |
-| 原料精炼（单输入 → 三格产物竖排） | 面板 `WIDTH=104`、`REFINING_HEIGHT=86`，产物同列 `REFINING_OUTPUT_X=78`，说明文字 `REFINING_TEXT_Y=60` |
+| 普通面板 | `WIDTH=104`、`HEIGHT=54`；输入 `8`/`30`、输出 `78`、`SLOT_Y=6`、`TEXT_Y=30` |
+| 三材料（融合） | 面板高 `TALL_HEIGHT=74`，第三槽 `(19, 24)`，文字 `TALL_TEXT_Y=46` |
+| 灵感装配 | 列 `8/30/52`、行 `6/24`，输出 `(98, 24)`，罐 `(8,44)`/`(30,44)`，`GRID_*` |
+| 注入 | `INJECT_WIDTH=150`、`INJECT_HEIGHT=112`、`INJECT_TEXT_Y=56`（100 高会截掉最后一行） |
+| 流体提取 | `WIDTH=104`、`TALL_HEIGHT=74`，罐 `(78, 6)`，文字 `TALL_TEXT_Y=46` |
+| 原料精炼 | `WIDTH=104`、`REFINING_HEIGHT=86`，产物列 `78`，文字 `REFINING_TEXT_Y=60` |
 
 ## 必须避开的四个坑
 
-1. **背景只能走 `IRecipeCategory#getBackground()`**。它从 19.19.0 起就标了 `forRemoval`，
-   但一直到 **19.57.0.451**，`RecipeLayout#drawRecipe` 仍在调用它（同时我们的 `getWidth()` /
-   `getHeight()` 也必须是显式覆写，因为背景若为 null 会抛异常）。
-   绘制顺序是 背景 → 槽位 → widgets（文字） → extras 的 `addDrawable`，
-   把背景放进 extras 会整块盖住内容。哪天真被删了，官方推荐改在 `draw()` 里自己画。
-2. **贴图路径必须带 `.png`**。MC 的纹理管理器按完整路径找文件，不补扩展名；
-   少了它界面就渲染成缺失贴图的黑紫棋盘格。`JeiLayout#background(name)` 已经统一处理。
-3. **独立小图必须 `drawableBuilder(loc,0,0,w,h).setTextureSize(w,h).build()`**。
-   `createDrawable` 默认按 256×256 归一化取 UV，我们的背景是独立小图，
-   那样只能取到左上角一块再拉伸。第 2、3 条是两个独立的坑，表现各不相同。
-4. **`addText(lines, maxWidth, maxHeight)` 会先按宽度折行**，行数翻倍后超出 `maxHeight`
-   就整段截断成省略号。排版按「英文最长行」估算：CJK 8px、空格 4px、其余 ASCII 5px、行高 9+2。
+1. **背景只能走 `IRecipeCategory#getBackground()`**：它从 19.19.0 起标了 `forRemoval`，
+   但到 19.57.0.451 `RecipeLayout#drawRecipe` 仍在调它（`getWidth()` / `getHeight()` 也必须显式覆写，
+   背景为 null 会抛异常）。绘制顺序是 背景 → 槽位 → 文字 → extras 的 `addDrawable`，
+   背景放进 extras 会整块盖住内容。真删了就在 `draw()` 里自己画。
+2. **贴图路径必须带 `.png`**：纹理管理器按完整路径找文件，少了就渲染成黑紫棋盘格
+   （`JeiLayout#background(name)` 已统一处理）。
+3. **独立小图必须 `drawableBuilder(loc,0,0,w,h).setTextureSize(w,h).build()`**：
+   `createDrawable` 默认按 256×256 归一化取 UV，只能取到左上角一块再拉伸。
+4. **`addText(lines, maxWidth, maxHeight)` 先按宽度折行**，超 `maxHeight` 就整段截断成省略号。
+   排版按英文最长行估算：CJK 8px、空格 4px、其余 ASCII 5px、行高 9+2。
 
-另外：取配方要用原版 `RecipeType`（`net.minecraft.world.item.crafting`），别引 JEI 的同名类；
+另外：取配方用原版 `RecipeType`（`net.minecraft.world.item.crafting`），别引 JEI 的同名类；
 没有方块物品的方块 `asItem()` 返回 AIR，要退回 `fluidState.getType().getBucket()`。

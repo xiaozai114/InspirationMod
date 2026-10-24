@@ -23,7 +23,8 @@ D:/programfiles/conda/python.exe tools/textures/gen_plugin_textures.py <插件�
 | `gen_inspiration_fragments.py` / `gen_inspiration_charge_fluid.py` | 灵感碎片 / 灵感充能流体 |
 | `gen_inspiration_crystal_blocks.py` | 四种结晶方块 |
 | `gen_ingot_textures.py` | 同形异色锭（按亮度重映射到目标调色板，新增配色往 `PALETTES` 加一行；白色星点往 `SPARKLES` 加） |
-| `gen_nugget_textures.py` / `gen_grit_textures.py` | 粒 / 尘（形状模板分别是原版铁粒与糖，配色与锭共用 `palettes.py`；哪些金属有粒尘写在脚本的 `NUGGETS` / `GRITS` 里，要和 `ModMaterials` 的开关一致） |
+| `gen_nugget_textures.py` | 粒（形状模板取原版铁粒，配色与锭共用 `palettes.py`；哪些金属有粒写在 `NUGGETS` 里，要和 `ModMaterials` 的开关一致） |
+| `gen_grit_textures.py` | 尘 = **粉的等比缩小**（模板 `base/dust_base.png`，按 `SCALE = 0.6` 围绕粉堆中心缩小到 7×7，再换色；有尘的金属写在 `GRITS`） |
 | `recolor.py` / `palettes.py` | 上面三个脚本的公共部分：按亮度重映射的实现，以及精炼金属的配色表（改色只改 `palettes.py` 一处，三个脚本重跑） |
 | `gen_francium_textures.py` | 钫盐系列（铯系换色相）+ 手绘盖革计数器（钫盐矿换成地狱岩底） |
 | `gen_end_alloys.py` | 末地合金 / 无恒合金 / 末地合金盾牌 / 世界数据探测器（下界合金锭换淡黄 + 末地石材质；无恒物质整张叠上去且**不被锭轮廓裁剪**、只做一层几乎透明的淡紫；盾牌 = **原版盾牌展开图**只换盾正面材质，输出到 `textures/entity/`） |
@@ -37,8 +38,9 @@ D:/programfiles/conda/python.exe tools/textures/gen_plugin_textures.py <插件�
 | `gen_molten_plasma_fluid.py` | 液态等离子的流动/静止方块贴图与桶（桶 = 原版 `water_bucket.png`，**只重映射偏蓝的像素**，桶身的金属灰与把手不动） |
 | `gen_refinery_blocks.py` | 流体提取机（青蓝机身 + 喷嘴 + 液槽）与原料精炼机（暖铜机身 + 三道槽）的方块三面，共用 `gen_generator_blocks` 里的外壳绘制函数 |
 
-`tools/textures/base/` 放**底材与形状模板**（`netherrack.png`、`netherite_ingot.png`、`end_stone.png`，
-都从原版资源包 `build/moddev/artifacts/neoforge-*-client-extra-aka-minecraft-resources.jar` 里抽出）。
+`tools/textures/base/` 放**底材与形状模板**（`netherrack.png`、`netherite_ingot.png`、`end_stone.png`、
+`nugget_base.png`、`dust_base.png`，都从原版资源包
+`build/moddev/artifacts/neoforge-*-client-extra-aka-minecraft-resources.jar` 里抽出）。
 钫盐矿要把矿脉叠在地狱岩上，末地合金要拿末地石给合金做材质调制，
 所以这两处都不是整张换色，而是「模板换色后与底图合成」；换底材只换这几张图。
 
