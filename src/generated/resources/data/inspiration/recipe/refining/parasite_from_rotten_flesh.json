@@ -1,0 +1,10 @@
+{
+  "type": "inspiration:refining",
+  "input": {
+    "item": "minecraft:rotten_flesh"
+  },
+  "result": {
+    "count": 1,
+    "id": "inspiration:parasite"
+  }
+}

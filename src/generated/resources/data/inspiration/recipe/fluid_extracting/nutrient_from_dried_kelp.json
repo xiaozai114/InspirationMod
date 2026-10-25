@@ -1,0 +1,10 @@
+{
+  "type": "inspiration:fluid_extracting",
+  "input": {
+    "item": "minecraft:dried_kelp"
+  },
+  "result": {
+    "amount": 160,
+    "id": "inspiration:nutrient_fluid"
+  }
+}

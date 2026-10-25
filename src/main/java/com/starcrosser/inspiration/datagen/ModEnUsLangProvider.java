@@ -48,6 +48,15 @@ public class ModEnUsLangProvider extends LanguageProvider {
         add(ModItems.POWER_BEACON.get(), "Power Beacon");
         add(ModItems.MIND_FLUID_BUCKET.get(), "Mind Fluid Bucket");
         add(ModItems.MOLTEN_PLASMA_BUCKET.get(), "Molten Plasma Bucket");
+        add(ModItems.NUTRIENT_FLUID_BUCKET.get(), "Nutrient Fluid Bucket");
+        add(ModItems.VILLAGER_BRAIN.get(), "Villager Brain");
+        add(ModItems.ENDERMAN_BRAIN.get(), "Enderman Brain");
+        add(ModItems.INACTIVE_BRAIN.get(), "Inactive Brain");
+        add(ModItems.PARASITE.get(), "Parasite");
+        add(ModItems.MECHANICAL_PARASITE.get(), "Mechanical Parasite");
+        add("fluid_type.inspiration.nutrient_fluid", "Nutrient Fluid");
+        add("effect.inspiration.parasite", "Parasitized");
+        add("effect.inspiration.mechanical_parasite", "Mechanically Parasitized");
         add(ModItems.CALCIUM_HYDROXIDE_DUST.get(), "Calcium Hydroxide");
         add(ModItems.CALCIUM_DUST.get(), "Calcium Dust");
         add(ModItems.CESIUM_DUST.get(), "Cesium Dust");
@@ -266,6 +275,8 @@ public class ModEnUsLangProvider extends LanguageProvider {
                 "Recipe type: Fluid Extracting\nMelts materials into their molten form, one ingot = 144 mB.\nThe result is stored in the output tank and can be bucketed out.");
         add("tooltip.inspiration.machine.raw_refiner",
                 "Recipe type: Raw Refining\nOne input slot and three output slots; the last two hold byproducts.\nA Recycling Upgrade doubles byproduct output.");
+        add("tooltip.inspiration.machine.culture_tank",
+                "Villager Brain: 100 FE/tick + 1 mB/tick nutrient, 1 Inspiration per 10 s.\nEnderman Brain: 1000 FE/tick + 10 mB/tick, 1 Mind Crystal per 20 s.\nRunning out of nutrient kills a villager brain; an enderman brain never dies.");
         add("tooltip.inspiration.machine.structure_simulator",
                 "Runs a structure data to simulate its loot.\nInspiration charge: 8 mB/tick; power use depends on the data.\nBuild a hollow 4x3x3 shell of High-Energy Machine Casing and fit all five hatches (the two inner cells may be left empty or filled).");
         // ===================== Structure Simulator =====================

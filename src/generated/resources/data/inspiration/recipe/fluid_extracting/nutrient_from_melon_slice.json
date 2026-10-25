@@ -1,0 +1,10 @@
+{
+  "type": "inspiration:fluid_extracting",
+  "input": {
+    "item": "minecraft:melon_slice"
+  },
+  "result": {
+    "amount": 320,
+    "id": "inspiration:nutrient_fluid"
+  }
+}

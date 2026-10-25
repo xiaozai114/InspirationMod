@@ -318,6 +318,24 @@ public class ModItems {
             ()->new BucketItem(ModFluids.Fluids.MOLTEN_PLASMA.get(),
                     new Item.Properties().rarity(Rarity.UNCOMMON))
     );
+
+    /* ===================== 缸中之脑产线 ===================== */
+
+    public static final DeferredHolder<Item, BucketItem> NUTRIENT_FLUID_BUCKET = ITEMS.register(
+            "nutrient_fluid_bucket",
+            ()->new BucketItem(ModFluids.Fluids.NUTRIENT_FLUID.get(), new Item.Properties())
+    );
+    public static final DeferredItem<Item> VILLAGER_BRAIN =
+            ITEMS.register("villager_brain", () -> new Item(new Item.Properties().rarity(Rarity.UNCOMMON)));
+    public static final DeferredItem<Item> ENDERMAN_BRAIN =
+            ITEMS.register("enderman_brain", () -> new Item(new Item.Properties().rarity(Rarity.RARE)));
+    public static final DeferredItem<Item> INACTIVE_BRAIN =
+            ITEMS.register("inactive_brain", () -> new Item(new Item.Properties()));
+    public static final DeferredItem<Item> PARASITE =
+            ITEMS.register("parasite", () -> new Item(new Item.Properties()));
+    public static final DeferredItem<Item> MECHANICAL_PARASITE =
+            ITEMS.register("mechanical_parasite", () -> new Item(new Item.Properties().rarity(Rarity.UNCOMMON)));
+
     public static void register(IEventBus eventBus) {
         ITEMS.register(eventBus);
     }

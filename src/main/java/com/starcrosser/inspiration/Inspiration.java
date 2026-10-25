@@ -2,6 +2,7 @@ package com.starcrosser.inspiration;
 
 import com.starcrosser.inspiration.block.ModBlocks;
 import com.starcrosser.inspiration.config.Config;
+import com.starcrosser.inspiration.effect.ModEffects;
 import com.starcrosser.inspiration.entity.ModEntities;
 import com.starcrosser.inspiration.fluid.ModFluids;
 import com.starcrosser.inspiration.guide.ModGuideMenus;
@@ -67,6 +68,7 @@ public class Inspiration {
         // 玩家体内累积的辐射值挂在实体 attachment 上，注册表是 NeoForge 的
         RadiationAttachments.register(modEventBus);
         ModFluids.register(modEventBus);
+        ModEffects.register(modEventBus);
         ModCreativeModeTabs.register(modEventBus);
         ModBlocks.register(modEventBus);
         // 强化/强能 TNT 点燃后生成的实体类型，必须注册，否则客户端绑定渲染器时拿到的是未绑定值

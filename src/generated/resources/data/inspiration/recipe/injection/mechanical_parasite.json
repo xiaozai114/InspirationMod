@@ -1,0 +1,15 @@
+{
+  "type": "inspiration:injection",
+  "base": {
+    "item": "inspiration:parasite"
+  },
+  "inject": {
+    "item": "inspiration:ephemeral_alloy"
+  },
+  "max_energy": 20000,
+  "min_energy": 10000,
+  "result": {
+    "count": 1,
+    "id": "inspiration:mechanical_parasite"
+  }
+}

@@ -49,6 +49,15 @@ public class ModZhCnLangProvider extends LanguageProvider {
         add(ModBlocks.MIND_FLUID_BLOCK.get(),"思维流体");
         add(ModItems.MIND_FLUID_BUCKET.get(),"思维流体桶");
         add(ModItems.MOLTEN_PLASMA_BUCKET.get(),"液态等离子桶");
+        add(ModItems.NUTRIENT_FLUID_BUCKET.get(), "营养液桶");
+        add(ModItems.VILLAGER_BRAIN.get(), "村民大脑");
+        add(ModItems.ENDERMAN_BRAIN.get(), "末影人大脑");
+        add(ModItems.INACTIVE_BRAIN.get(), "失活的大脑");
+        add(ModItems.PARASITE.get(), "寄生虫");
+        add(ModItems.MECHANICAL_PARASITE.get(), "机械寄生虫");
+        add("fluid_type.inspiration.nutrient_fluid", "营养液");
+        add("effect.inspiration.parasite", "寄生");
+        add("effect.inspiration.mechanical_parasite", "机械寄生");
         add(ModItems.POWER_BEACON.get(),"动力信标");
         add(ModItems.CALCIUM_HYDROXIDE_DUST.get(),"氢氧化钙粉");
         add(ModItems.CALCIUM_DUST.get(),"钙粉");
@@ -259,6 +268,7 @@ public class ModZhCnLangProvider extends LanguageProvider {
         add("tooltip.inspiration.machine.rtg_generator", "投入放射性物质发电。\n发电量：1000x/tick；燃烧时间：24000tick。\nx为物品辐射值\n每分钟向所在区块释放(x-1)³点辐射；x>9时每分钟有(x-9)/1000的概率爆炸。\n烧完后产出x个核废料。");
         add("tooltip.inspiration.machine.fluid_extractor", "配方类型：流体提取\\n把材料熔成对应的液态金属，一锭 = 144 mB。\\n产物存在输出罐里，可用桶舀走。");
         add("tooltip.inspiration.machine.raw_refiner", "配方类型：原料精炼\\n一个输入槽 + 三个输出槽，后两个是副产物。\\n装上回收升级可让副产物产量翻倍。");
+        add("tooltip.inspiration.machine.culture_tank", "村民大脑：100 FE/刻 + 1 mB/刻营养液，每 10 秒 1 灵感。\\n末影人大脑：1000 FE/刻 + 10 mB/刻，每 20 秒 1 思维晶体。\\n营养液耗尽时村民大脑会失活，末影人大脑不会。");
         add("tooltip.inspiration.machine.structure_simulator", "投入结构数据进行模拟。\n灵感充能：8mB/tick；电力消耗随数据而定。\n需要用高能机器外壳搭出4宽*3高*3长的中空结构，并装上五种仓室（内部两格留空或填上都算成型）。");
         // ===================== 结构模拟机 =====================
         // 结构数据物品的三行参数

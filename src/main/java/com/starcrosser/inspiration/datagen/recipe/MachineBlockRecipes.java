@@ -122,6 +122,16 @@ public final class MachineBlockRecipes {
                 .unlockedBy(getHasName(ModItems.HIGH_ENERGY_CORE.get()), has(ModItems.HIGH_ENERGY_CORE.get()))
                 .save(recipeOutput);
 
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModMachines.CULTURE_TANK.getBlock())
+                .pattern("GGG")
+                .pattern("GJG")
+                .pattern("GEG")
+                .define('G', Items.GLASS_PANE)
+                .define('J', ModMaterials.JADE_STEEL.item().get())
+                .define('E', ModItems.EPHEMERAL_MATERIAL.get())
+                .unlockedBy(getHasName(ModMaterials.JADE_STEEL.item().get()), has(ModMaterials.JADE_STEEL.item().get()))
+                .save(recipeOutput);
+
 
         // ==================== 结构模拟机（多方块） ====================
 

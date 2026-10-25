@@ -1,0 +1,10 @@
+{
+  "type": "inspiration:fluid_extracting",
+  "input": {
+    "item": "minecraft:cookie"
+  },
+  "result": {
+    "amount": 240,
+    "id": "inspiration:nutrient_fluid"
+  }
+}

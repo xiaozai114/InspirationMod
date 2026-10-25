@@ -1,0 +1,10 @@
+{
+  "type": "inspiration:refining",
+  "input": {
+    "item": "inspiration:inactive_brain"
+  },
+  "result": {
+    "count": 2,
+    "id": "inspiration:parasite"
+  }
+}

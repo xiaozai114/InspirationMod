@@ -1,0 +1,10 @@
+{
+  "type": "inspiration:fluid_extracting",
+  "input": {
+    "item": "minecraft:baked_potato"
+  },
+  "result": {
+    "amount": 1100,
+    "id": "inspiration:nutrient_fluid"
+  }
+}

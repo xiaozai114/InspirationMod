@@ -5,6 +5,7 @@ import com.hrznstudio.titanium.module.DeferredRegistryHelper;
 import com.starcrosser.inspiration.Inspiration;
 import com.starcrosser.inspiration.machine.block.AlkalineReactorBlock;
 import com.starcrosser.inspiration.machine.block.CoreDrillerBlock;
+import com.starcrosser.inspiration.machine.block.CultureTankBlock;
 import com.starcrosser.inspiration.machine.block.FluidExtractorBlock;
 import com.starcrosser.inspiration.machine.block.InspirationAssemblerBlock;
 import com.starcrosser.inspiration.machine.block.MatterFusionMachineBlock;
@@ -54,6 +55,9 @@ public class ModMachines {
     /** 原料精炼机：等级 1，1 个输入槽（三个输出槽是固定的，不随配置变）。 */
     private static final MachineSpec REFINER_T1 = MachineSpec.of(1, 1, DyeColor.ORANGE);
 
+    /** 培养缸：等级 1，1 个脑槽 + 1 个营养液罐。 */
+    private static final MachineSpec CULTURE_TANK_T1 = MachineSpec.of(1, 1, DyeColor.LIME);
+
     /** 灵感装配台：等级 1，4 个物品输入槽 + 1 个流体输入槽。 */
     private static final MachineSpec ASSEMBLER_T1 = MachineSpec.of(1, 4, 1, DyeColor.YELLOW);
     /** 高能灵感装配台：等级 2，6 个物品输入槽 + 2 个流体输入槽。 */
@@ -83,6 +87,8 @@ public class ModMachines {
     public static BlockWithTile FLUID_EXTRACTOR;
     /** 原料精炼机：粗矿 / 盐 / 核废料 → 主产物 + 副产物。 */
     public static BlockWithTile RAW_REFINER;
+    /** 培养缸：村民脑产灵感、末影人脑产思维晶体，消耗营养液与电力。 */
+    public static BlockWithTile CULTURE_TANK;
 
     /**
      * 一次性注册所有机器。
@@ -143,6 +149,10 @@ public class ModMachines {
                 "原料精炼机", "Raw Refiner",
                 () -> new RawRefinerBlock("raw_refiner", REFINER_T1,
                         () -> RAW_REFINER, 5.0F, 10.0F));
+        CULTURE_TANK = MachineRegistry.register(registry, "culture_tank",
+                "培养缸", "Culture Tank",
+                () -> new CultureTankBlock("culture_tank", CULTURE_TANK_T1,
+                        () -> CULTURE_TANK, 3.0F, 6.0F));
 
         // 发电类：不跑配方，只烧燃料往外输电
         ALKALINE_REACTOR = MachineRegistry.register(registry, "alkaline_reactor",

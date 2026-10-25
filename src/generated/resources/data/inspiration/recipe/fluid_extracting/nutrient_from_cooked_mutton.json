@@ -1,0 +1,10 @@
+{
+  "type": "inspiration:fluid_extracting",
+  "input": {
+    "item": "minecraft:cooked_mutton"
+  },
+  "result": {
+    "amount": 1560,
+    "id": "inspiration:nutrient_fluid"
+  }
+}

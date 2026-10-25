@@ -101,6 +101,12 @@ public final class InjectionRecipes {
                 Ingredient.of(ModMaterials.CESIUM.item().get()),
                 1, 150_000, 250_000,
                 new ItemStack(ModItems.GEIGER_COUNTER.get()));
+
+        injection(recipeOutput, "injection/mechanical_parasite",
+                Ingredient.of(ModItems.PARASITE.get()),
+                Ingredient.of(ModMaterials.EPHEMERAL_ALLOY.item().get()),
+                1, 10_000, 20_000,
+                new ItemStack(ModItems.MECHANICAL_PARASITE.get()));
     }
 
     private static void injection(RecipeOutput recipeOutput, String path, Ingredient base, Ingredient inject,

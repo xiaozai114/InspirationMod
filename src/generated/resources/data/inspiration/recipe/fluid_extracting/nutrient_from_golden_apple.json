@@ -1,0 +1,10 @@
+{
+  "type": "inspiration:fluid_extracting",
+  "input": {
+    "item": "minecraft:golden_apple"
+  },
+  "result": {
+    "amount": 1360,
+    "id": "inspiration:nutrient_fluid"
+  }
+}

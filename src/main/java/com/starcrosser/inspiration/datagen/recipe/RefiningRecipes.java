@@ -68,6 +68,12 @@ public final class RefiningRecipes {
         refine(recipeOutput, "nuclear_waste", Ingredient.of(ModItems.NUCLEAR_WASTE.get()),
                 uraniumNugget.copy(),
                 List.of(neptuniumGrit, plutoniumGrit), NUCLEAR_DURATION, NUCLEAR_ENERGY_PER_TICK);
+
+        // ===== 寄生虫：腐肉里孵出来，或从失活的大脑里回收 =====
+        refine(recipeOutput, "parasite_from_rotten_flesh", Ingredient.of(Items.ROTTEN_FLESH),
+                new ItemStack(ModItems.PARASITE.get()), List.of());
+        refine(recipeOutput, "parasite_from_inactive_brain", Ingredient.of(ModItems.INACTIVE_BRAIN.get()),
+                new ItemStack(ModItems.PARASITE.get(), 2), List.of());
     }
 
     /** 走默认耗时与耗电。 */

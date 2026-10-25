@@ -1,0 +1,10 @@
+{
+  "type": "inspiration:fluid_extracting",
+  "input": {
+    "item": "minecraft:porkchop"
+  },
+  "result": {
+    "amount": 480,
+    "id": "inspiration:nutrient_fluid"
+  }
+}

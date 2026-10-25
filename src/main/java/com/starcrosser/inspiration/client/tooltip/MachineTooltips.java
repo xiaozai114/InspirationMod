@@ -45,7 +45,8 @@ public final class MachineTooltips {
             "rtg_generator",
             "structure_simulator",
             "fluid_extractor",
-            "raw_refiner");
+            "raw_refiner",
+            "culture_tank");
 
     private MachineTooltips() {
     }

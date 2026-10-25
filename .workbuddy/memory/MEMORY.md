@@ -13,8 +13,8 @@
   基准建，再由 `applyTier()` 补正；**`applyTier()` 必须在构造体最后一行**（否则 NPE 崩服）。
 - ⚠️ **`@Save` 不认 `List`** → 可变数量组件手写 `saveAdditional`。**`@Save` 字段放基类没问题**
   （`NBTManager` 递归扫父类），**存盘键是字段名不是组件名**。
-- 自检摆方块用 `getSharedSpawnPos()`（无玩家时**只有出生点区块被 tick**）；更快的办法是手动
-  循环调 `tile.serverTick(level,pos,state,tile)`。⚠️ 世界会在两次自检间存盘，开头先清空槽位。
+- 自检摆方块用 `getSharedSpawnPos()`（无玩家时只有出生点区块被 tick），或手动循环调
+  `tile.serverTick(...)`。⚠️ 世界会在两次自检间存盘，开头清空槽位。
   `getHandlerFromName`/`serverTick` 在 **`ActiveTile`** 上，不在 `BasicTile`。
 - **P2.1 后**注册走 `registry/MachineRegistry.register(registry,id,zhName,enName,factory)`，
   中英语言 / 方块状态 / 挖掘标签 / 战利品表全部遍历清单。**创造栏也自动了**：灵感页遍历
@@ -30,19 +30,18 @@
   也是唯一只有特定机器读它的插件（目前只有 `RawRefinerTile` 调 `byproductCount`）。
 - ⚠️ 罐体 `Action` 挡机器自身读写（`FILL`→`drainForced`、`DRAIN`→`fillForced`）；
   **多输出槽**（原料精炼机 3 格）先试放全部格子再扣材料、写入失败整批回滚。
-- 发电类 `PowerGeneratorTile`：`maxReceive=0` + 每刻推六邻；两坑：燃料开工即扣、
-  缓冲满时进度条打回 0 且**不回调 onFinishWork**。
+- 发电类 `PowerGeneratorTile`：`maxReceive=0` + 每刻推六邻；燃料开工即扣、缓冲满时进度条打回 0
+  且**不回调 onFinishWork**。
 
 ## 客户端隔离（P3 后）
 
 - **纯客户端代码一律在 `client/`**（`extensions/`、`renderer/`、`tooltip/`、`guide/`、`util/`、
   `jei/`）；别处要碰就标 `@OnlyIn(Dist.CLIENT)`。`util/ClientIsolationCheck` 是自动保险：
-  开服时扫自己的 class 找漏标并打 ERROR。口径与豁免见 `client/README.md`。
+  开服时扫 class 找漏标打 ERROR（口径见 `client/README.md`）。
 
 ## 多方块（结构模拟机）
 
-- **MBD2 21.1.1 + LDLib2 2.2.39.a，只借结构层**（控制器不实现 `IMultiController`，
-  `checkPatternAtWithoutController` 自遍历四朝向）；两库 `implementation`、禁止 shade。
+- **MBD2 + LDLib2 只借结构层**（控制器不实现 `IMultiController`，自遍历四朝向）；两库禁止 shade。
 - **成型锚点就是控制器自己的位置**；虚影几何必须问 MBD2 的 `collectTrackedPositions`，
   不能另算一套（自研 `rotate()` 列方向是反的）。
 - **P1.4 后仓室继承链**：`InventoryHatchTile` → `HatchTile` → `ActiveTile`（能量端口走 `PoweredTile`）。
@@ -84,18 +83,24 @@
 - **data_maps 改由 `ModDataMapsProvider` 生成**（**手写与生成不能并存**，同名文件撞）；
   非锭材料（粉/盐/矿）在 Provider 里显式登记。
 
+## 缸中之脑产线
+
+- 培养缸**不耗灵感充能** → 继承 `PoweredTile`（不是 `InspiredMachineTile`），按槽里的脑切产出（`BrainKind`）。
+  ⚠️ 村民脑的 `canIncrease` **故意不查营养液**，否则进度卡住、永远走不到「失活」那一格。
+- 营养液 = 食物 →（饱食 + 饱和）× 100 mB；`FoodProperties#saturation()` 已是**绝对饱和度**，别再 ×2。
+- 掉脑与感染在 `event/ParasiteHandler`，效果在 `effect/ModEffects`。
+
 ## 注入 / 材料 / 工具
 
-- 注入：束缚器单槽、产物回同槽；右键放/取、**潜行右键开 GUI**；失败返回 `CONSUME`。
+- 注入：束缚器单槽、产物回同槽；右键放/取、潜行右键开 GUI，取放要返 `CONSUME`。
   超 `max_energy` 在束缚器处 `explode`——**刻意设计，别加保护**。
 - 工具：**`Properties#durability` 对 `TieredItem` 无效** → 用 `ModToolTiers.withDurability`。
   蓄力 buff 的接口 `default` **打不过父类 `Item#use`**（P1.3 结论：保持现状，单继承无解）。
 
 ## 事件
 
-- **P2.3 后** `event/` 放**纯玩法监听器**（不持状态、不被引用）：碎盾传送 / 挖掘掉经验 /
-  掉头颅 / 右键方块转换。辐射与数据地图注册**留在原子系统**（是机制主体）。
-  **`event/README.md` 是订阅类的唯一权威清单**（类 / 总线 / 事件 / 干什么）。
+- **P2.3 后** `event/` 放**纯玩法监听器**（不持状态、不被引用）；辐射与数据地图注册留在原子系统。
+  **`event/README.md` 是订阅类的唯一权威清单**。
 - ⚠️ **新版 FML 按事件类型自己分派总线**（`IModBusEvent` → mod 总线），**别写 `bus = Bus.MOD`**；
   一个类只能注册一次（注解 + 手工各注册一遍会重复触发）。
 
@@ -135,7 +140,7 @@
    `FluidTankComponent(name,capacity,x,y)`、`EnergyStorageComponent(cap,maxReceive,maxExtract,x,y)`。
    写错**不报编译错**。
 9. **物品栏黑紫棋盘格 = 缺 `models/item/<方块>.json`**（`ModItemModelsProvider` 补 `blockItem`）。
-10. **配置缓存按「任务集」分别存条目**；动仓库 `content`/`metadataSources` 会让已缓存解析失效。
+10. 配置缓存按任务集存条目；动仓库 content/metadataSources 会让已缓存解析失效。
 11. **Git 远程** `origin = .../InspirationMod`（私有），代理对 **github.com:443 间歇 502**
     （`api.github.com` 通常通）。兜底走 REST，**顺序 blob → tree → commit → ref**（只发 commit 会 422
     「Tree SHA does not exist」）：`POST /git/blobs`（base64，删 `sha:null`）→ `/git/trees`
@@ -143,8 +148,8 @@
 
 ## 重构
 
-- **P0–P3 全部完成**（基线 `5194af5`，`p3-start` → `p3-done`）；`docs/REFACTORING_PLAN.md`
-  已改写成《重构纪要》，只留结论 / 决策 / 红线 / 验收，过程细节在 `docs/` 之外各包 README。
+- **P0–P3 全部完成**（基线 `5194af5`）；`docs/REFACTORING_PLAN.md` 已改写成《重构纪要》，
+  只留结论 / 决策 / 红线 / 验收。
 - 红线：**不动任何 `ResourceLocation`**（老存档靠 ID）；同 commit 不混「改结构」与「加内容」。
-- **文档要短**（用户明确要求，别让翻阅吃 token）：每份包 README 控制在 6~7KB，只写规则 / 清单 / 坑，
-  不写过程叙述与自检流水账。新增内容优先改已有表格，别另起一节。
+- **文档要短**（用户要求）：每份包 README 6~7KB，只写规则 / 清单 / 坑，不写过程叙述；
+  新增内容优先改已有表格。

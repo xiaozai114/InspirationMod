@@ -1,0 +1,10 @@
+{
+  "type": "inspiration:fluid_extracting",
+  "input": {
+    "item": "minecraft:mutton"
+  },
+  "result": {
+    "amount": 320,
+    "id": "inspiration:nutrient_fluid"
+  }
+}

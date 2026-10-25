@@ -1,0 +1,10 @@
+{
+  "type": "inspiration:fluid_extracting",
+  "input": {
+    "item": "minecraft:pumpkin_pie"
+  },
+  "result": {
+    "amount": 1280,
+    "id": "inspiration:nutrient_fluid"
+  }
+}

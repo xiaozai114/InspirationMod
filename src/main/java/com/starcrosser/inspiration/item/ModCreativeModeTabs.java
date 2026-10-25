@@ -111,6 +111,12 @@ public class ModCreativeModeTabs {
                         output.accept(ModBlocks.EMPOWERED_TNT_ITEM);
                         output.accept(ModItems.MIND_FLUID_BUCKET.get());
                         output.accept(ModItems.MOLTEN_PLASMA_BUCKET.get());
+                        output.accept(ModItems.NUTRIENT_FLUID_BUCKET.get());
+                        output.accept(ModItems.VILLAGER_BRAIN);
+                        output.accept(ModItems.ENDERMAN_BRAIN);
+                        output.accept(ModItems.INACTIVE_BRAIN);
+                        output.accept(ModItems.PARASITE);
+                        output.accept(ModItems.MECHANICAL_PARASITE);
                         // 思维流体反应生成的四类方块
                         output.accept(ModBlocks.DILUTED_INSPIRATION_CRYSTAL);
                         output.accept(ModBlocks.CONCENTRATED_INSPIRATION_CRYSTAL);

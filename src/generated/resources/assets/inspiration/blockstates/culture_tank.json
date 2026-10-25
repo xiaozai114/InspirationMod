@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "subfacing=east": {
+      "model": "inspiration:block/culture_tank",
+      "y": 90
+    },
+    "subfacing=north": {
+      "model": "inspiration:block/culture_tank"
+    },
+    "subfacing=south": {
+      "model": "inspiration:block/culture_tank",
+      "y": 180
+    },
+    "subfacing=west": {
+      "model": "inspiration:block/culture_tank",
+      "y": 270
+    }
+  }
+}

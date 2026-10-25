@@ -1,0 +1,10 @@
+{
+  "type": "inspiration:fluid_extracting",
+  "input": {
+    "item": "minecraft:rabbit_stew"
+  },
+  "result": {
+    "amount": 2200,
+    "id": "inspiration:nutrient_fluid"
+  }
+}

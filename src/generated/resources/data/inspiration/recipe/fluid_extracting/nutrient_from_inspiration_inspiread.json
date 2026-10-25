@@ -1,0 +1,10 @@
+{
+  "type": "inspiration:fluid_extracting",
+  "input": {
+    "item": "inspiration:inspiread"
+  },
+  "result": {
+    "amount": 2600,
+    "id": "inspiration:nutrient_fluid"
+  }
+}

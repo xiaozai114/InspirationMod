@@ -40,6 +40,12 @@ public class ModItemModelsProvider extends ItemModelProvider {
         basicItem(ModItems.EXPLODING_CANDY.get());
         basicItem(ModItems.MIND_FLUID_BUCKET.get());
         basicItem(ModItems.MOLTEN_PLASMA_BUCKET.get());
+        basicItem(ModItems.NUTRIENT_FLUID_BUCKET.get());
+        basicItem(ModItems.VILLAGER_BRAIN.get());
+        basicItem(ModItems.ENDERMAN_BRAIN.get());
+        basicItem(ModItems.INACTIVE_BRAIN.get());
+        basicItem(ModItems.PARASITE.get());
+        basicItem(ModItems.MECHANICAL_PARASITE.get());
         basicItem(ModItems.CALCIUM_HYDROXIDE_DUST.get());
         basicItem(ModItems.CALCIUM_DUST.get());
         basicItem(ModItems.CESIUM_DUST.get());

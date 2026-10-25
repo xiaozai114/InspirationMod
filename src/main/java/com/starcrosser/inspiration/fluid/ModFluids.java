@@ -39,6 +39,14 @@ public class ModFluids {
                 "molten_plasma",
                 () -> new MoltenPlasma.Source(MoltenPlasma.PROPERTIES)
         );
+        public static final DeferredHolder<Fluid, BaseFlowingFluid.Flowing> FLOWING_NUTRIENT_FLUID = FLUIDS.register(
+                "flowing_nutrient_fluid",
+                () -> new NutrientFluid.Flowing(NutrientFluid.PROPERTIES)
+        );
+        public static final DeferredHolder<Fluid, BaseFlowingFluid.Source> NUTRIENT_FLUID = FLUIDS.register(
+                "nutrient_fluid",
+                () -> new NutrientFluid.Source(NutrientFluid.PROPERTIES)
+        );
     }
 
     public static class FluidsTypes {
@@ -56,6 +64,11 @@ public class ModFluids {
                 FLUID_TYPES.register(
                         "molten_plasma",
                         MoltenPlasmaFluidType::new
+                );
+        public static final DeferredHolder<FluidType, NutrientFluidType> NUTRIENT_FLUID_TYPE =
+                FLUID_TYPES.register(
+                        "nutrient_fluid",
+                        NutrientFluidType::new
                 );
     }
     

@@ -1,0 +1,10 @@
+{
+  "type": "inspiration:fluid_extracting",
+  "input": {
+    "item": "minecraft:apple"
+  },
+  "result": {
+    "amount": 640,
+    "id": "inspiration:nutrient_fluid"
+  }
+}

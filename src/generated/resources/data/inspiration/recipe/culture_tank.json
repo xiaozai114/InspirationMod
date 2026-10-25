@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "E": {
+      "item": "inspiration:ephemeral_material"
+    },
+    "G": {
+      "item": "minecraft:glass_pane"
+    },
+    "J": {
+      "item": "inspiration:jade_steel_ingot"
+    }
+  },
+  "pattern": [
+    "GGG",
+    "GJG",
+    "GEG"
+  ],
+  "result": {
+    "count": 1,
+    "id": "inspiration:culture_tank"
+  }
+}
