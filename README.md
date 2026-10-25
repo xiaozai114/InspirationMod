@@ -44,7 +44,7 @@ Minecraft 1.21.1 / NeoForge 模组。在原有矿物与工具体系之上加了�
 src/main/java/com/starcrosser/inspiration/
 ├── block/       方块注册，custom/ 为自定义方块
 ├── item/        物品注册，custom/ 有行为的物品，tool/ 工具品质与经验接口
-├── fluid/       流体注册（思维流体、灵感充能、液态等离子）与反应规则
+├── fluid/       流体注册（思维流体、灵感充能、液态等离子、营养液）与反应规则
 ├── material/    锭类材料：一处声明生成锭/块/粒/尘与 data_maps
 ├── machine/     block/ · blockentity/ · charge/ · plugin/ · recipe/
 ├── injection/   注入合成：结构判定、等级标签、配方与两个方块实体
@@ -55,7 +55,9 @@ src/main/java/com/starcrosser/inspiration/
 ├── recipe/      右键转化配方与全局注册
 ├── datagen/     数据生成（配方、战利品、方块状态、语言、模型）
 ├── config/      配置项
-├── client/      extensions/ · renderer/ · tooltip/ · guide/ · util/ · jei/
+├── player/      灵感值（玩家 attachment）与提取逻辑
+├── network/     自定义数据包（灵感值同步 / 提取）
+├── client/      extensions/ · renderer/ · tooltip/ · guide/ · gui/ · util/ · jei/
 └── util/        通用工具（含客户端隔离体检 ClientIsolationCheck）
 ```
 
@@ -73,7 +75,8 @@ src/main/java/com/starcrosser/inspiration/
   发电类只烧燃料往外送电。逐台数值见 [machine/README.md](src/main/java/com/starcrosser/inspiration/machine/README.md)。
 - **插件**：电容（容量 ×2）、电容降级（×0.67）、灵感（充能上限 ×2）、速度（速度 ×2，耗电 ×4、耗充能 ×2）、
   回收升级（原料精炼机副产物**加算** +100%）。同类叠乘、异类乘算。
-- **灵感与充能**：4 铜锭 + 下界石英 → 1 灵感，4 金锭 + 紫水晶碎片 → 4 灵感（浓缩灵感结晶也是来源）。
+- **灵感与充能**：合成、吃东西、获得经验各攒 1 点灵感值（上限 1000）；物品栏右侧的进度条 + 按钮
+  每 100 点换 1 枚灵感（浓缩灵感结晶也是来源）。
   充能只存在于机器罐中（无方块无桶），1 灵感 = 1,000 mB、碎片 = 100 mB，罐容 16,000 mB，
   不足时进度条暂停、不扣材料。
 - **思维流体**：接触水凝固为浓缩（源）/稀释（流动）灵感结晶，接触岩浆凝固为思维水晶岩 / 灵感凝胶。

@@ -247,6 +247,14 @@ public class ModZhCnLangProvider extends LanguageProvider {
         add("tooltip.inspiration.plugin.energy_capacity_downgrade", "机器能量缓冲容量 ×0.67");
         add("tooltip.inspiration.plugin.byproduct", "原料精炼机副产物产量 +100%（加算叠加）");
         add("tooltip.inspiration.plugin.stack", "同类插件可叠加，每个 ×%s");
+        add("tooltip.inspiration.brain.villager", "放入培养缸：100 FE/刻 + 1 mB/刻营养液，每 10 秒 1 灵感。\\n营养液耗尽会失活。");
+        add("tooltip.inspiration.brain.enderman", "放入培养缸：1000 FE/刻 + 10 mB/刻营养液，每 20 秒 1 思维晶体。\\n不会失活。");
+        add("tooltip.inspiration.brain.inactive", "放进原料精炼机可回收 2 个寄生虫。");
+        add("tooltip.inspiration.parasite", "右键村民使其寄生；击杀寄生村民大概率掉落村民大脑。");
+        add("tooltip.inspiration.mechanical_parasite", "右键末影人 / 村民使其寄生。\\n击杀寄生末影人掉末影人大脑；寄生村民被杀时回收它。");
+        add("gui.inspiration.inspiration_value", "灵感值");
+        add("gui.inspiration.inspiration_value.tip", "灵感值：%s / %s");
+        add("gui.inspiration.inspiration_value.extract", "点击提取 100 点 → 1 灵感");
         // 物品组
         // 辐射机制
         add("tooltip.inspiration.radiation", "辐射值：%s /秒");
@@ -256,20 +264,20 @@ public class ModZhCnLangProvider extends LanguageProvider {
 
         // 机器 tooltip：加工类写配方类型，发电类写发电机制；一个键可写多行，用 \n 分隔
         add("tooltip.inspiration.machine.matter_fusion_machine", "配方类型：物质融合");
-        add("tooltip.inspiration.machine.energized_matter_fusion_machine", "配方类型：物质融合\n有第三个输入槽，可做三材料配方；速度 ×2。");
-        add("tooltip.inspiration.machine.matter_reshaper", "配方类型：物质重塑\n也可以执行右键转化配方。");
+        add("tooltip.inspiration.machine.energized_matter_fusion_machine", "配方类型：物质融合\n第三个输入槽，可做三材料配方；速度 ×2。");
+        add("tooltip.inspiration.machine.matter_reshaper", "配方类型：物质重塑\n也执行右键转化配方。");
         add("tooltip.inspiration.machine.mineral_twister", "配方类型：矿物扭曲");
         add("tooltip.inspiration.machine.inspiration_assembler", "配方类型：灵感装配");
-        add("tooltip.inspiration.machine.core_driller", "通电后，消耗存储的所有电量和钻头耐久向下挖掘直到遇到不可采集方块。\n可以挖掘强化深板岩。");
+        add("tooltip.inspiration.machine.core_driller", "一次作业耗尽电量与钻头耐久，向下挖到不可破坏方块。\n能挖强化深板岩。");
         add("tooltip.inspiration.machine.high_energy_matter_reshaper", "配方类型：物质重塑\n也可以执行右键转化配方；速度 ×2。");
         add("tooltip.inspiration.machine.high_energy_mineral_twister", "配方类型：矿物扭曲\n产出等效时运 12；速度 ×2。");
         add("tooltip.inspiration.machine.high_energy_inspiration_assembler", "配方类型：灵感装配\n有六个输入槽与两个流体罐，可做材料更多的配方；速度 ×2。");
-        add("tooltip.inspiration.machine.alkaline_reactor", "投入碱性物质发电。\n发电量：100x/tick；燃烧时间：12000tick。\nx为物品碱性值");
-        add("tooltip.inspiration.machine.rtg_generator", "投入放射性物质发电。\n发电量：1000x/tick；燃烧时间：24000tick。\nx为物品辐射值\n每分钟向所在区块释放(x-1)³点辐射；x>9时每分钟有(x-9)/1000的概率爆炸。\n烧完后产出x个核废料。");
-        add("tooltip.inspiration.machine.fluid_extractor", "配方类型：流体提取\\n把材料熔成对应的液态金属，一锭 = 144 mB。\\n产物存在输出罐里，可用桶舀走。");
-        add("tooltip.inspiration.machine.raw_refiner", "配方类型：原料精炼\\n一个输入槽 + 三个输出槽，后两个是副产物。\\n装上回收升级可让副产物产量翻倍。");
-        add("tooltip.inspiration.machine.culture_tank", "村民大脑：100 FE/刻 + 1 mB/刻营养液，每 10 秒 1 灵感。\\n末影人大脑：1000 FE/刻 + 10 mB/刻，每 20 秒 1 思维晶体。\\n营养液耗尽时村民大脑会失活，末影人大脑不会。");
-        add("tooltip.inspiration.machine.structure_simulator", "投入结构数据进行模拟。\n灵感充能：8mB/tick；电力消耗随数据而定。\n需要用高能机器外壳搭出4宽*3高*3长的中空结构，并装上五种仓室（内部两格留空或填上都算成型）。");
+        add("tooltip.inspiration.machine.alkaline_reactor", "烧碱性物品发电：100x FE/刻，12000 刻。\nx 为碱性值。");
+        add("tooltip.inspiration.machine.rtg_generator", "烧放射性物品发电：1000x FE/刻，24000 刻。\n每分钟向区块放 (x-1)³ 辐射，x>9 时另有 (x-9)/1000 概率爆炸；产出 x 个核废料。");
+        add("tooltip.inspiration.machine.fluid_extractor", "配方类型：流体提取\n把材料熔成流体，一锭 = 144 mB，产物存输出罐。");
+        add("tooltip.inspiration.machine.raw_refiner", "配方类型：原料精炼\n一进三出，后两格是副产物；回收升级让其翻倍。");
+        add("tooltip.inspiration.machine.culture_tank", "用营养液与电力养脑：村民脑 10 秒 1 灵感，末影人脑 20 秒 1 思维晶体。");
+        add("tooltip.inspiration.machine.structure_simulator", "按结构数据模拟掉落，另耗 8 mB/刻灵感充能。\n4×3×3 中空高能外壳 + 五种仓室。");
         // ===================== 结构模拟机 =====================
         // 结构数据物品的三行参数
         add("tooltip.inspiration.structure_data.duration", "模拟时长：%s tick");
@@ -308,7 +316,9 @@ public class ModZhCnLangProvider extends LanguageProvider {
                         + "头脑里那些说不清的想法凝成实体，\n"
                         + "就成了这样一枚能握在手里的东西。\n\n"
                         + "它既是合成材料，也是机器的燃料 ——\n"
-                        + "只有电、没有灵感的机器是转不动的。");
+                        + "只有电、没有灵感的机器是转不动的。\n\n"
+                        + "合成、吃东西、拿经验都会攒下灵感值，\n"
+                        + "满 100 点就能在物品栏右侧按按钮换出一枚。");
         add("guide.inspiration.chapter.machines", "机器总览");
         add("guide.inspiration.chapter.machines.body",
                 "物质融合器：把几样材料融成一样。\n"

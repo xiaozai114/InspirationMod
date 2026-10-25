@@ -35,8 +35,7 @@
 
 ## 客户端隔离（P3 后）
 
-- **纯客户端代码一律在 `client/`**（`extensions/`、`renderer/`、`tooltip/`、`guide/`、`util/`、
-  `jei/`）；别处要碰就标 `@OnlyIn(Dist.CLIENT)`。`util/ClientIsolationCheck` 是自动保险：
+- **纯客户端代码一律在 `client/`**；别处要碰就标 `@OnlyIn(Dist.CLIENT)`。`util/ClientIsolationCheck`
   开服时扫 class 找漏标打 ERROR（口径见 `client/README.md`）。
 
 ## 多方块（结构模拟机）
@@ -49,9 +48,8 @@
 
 ## 配方 / JEI
 
-- **P1.2 后**四配方继承 `machine/recipe/InspiredRecipe`（result/duration/energyPerTick + 四个模板方法），
-  **`getSerializer`/`getType` 仍在子类**。槽位回溯统一在 `RecipeSlotMatcher`。
-  产物是**流体**时不继承它；副产物写成 **List** 而非平铺字段（`composite` 只到 6 通道）。
+- **P1.2 后**四配方继承 `machine/recipe/InspiredRecipe`，**`getSerializer`/`getType` 仍在子类**；
+  产物是**流体**时不继承它；副产物写成 List（`composite` 只到 6 通道）。
 - ⚠️ **round-trip 校验不能直接比 tag**：`Ingredient.CONTENTS_STREAM_CODEC` 发到客户端时把
   `tag:minecraft:planks` **展开成具体物品**。材料按「接受哪些物品」语义比。
 - 一个自定义类型 = `XxxRecipe`（`MapCodec`）+ `XxxRecipeInput` + `XxxRecipeSerializer`；
@@ -74,8 +72,7 @@
   ⚠️ **RTG 只收周期为 1 的燃料**。
 - ⚠️ **ID 不带 `_ingot` 的材料必须显式 `.itemId(...)`**：`create("basalt_alloy")` 默认派生
   `basalt_alloy_ingot`，忘了覆盖就注册出新 ID，而且配方 JSON 会**静默**改用新 ID。
-- 命名（用户拍板）：锭=`ingot`、粉=`dust`（现有 4 个 `*_dust` ID 不动）、尘=`grit`（dust 已占用）、
-  粒=`nugget`。尘比粉粗（破碎矿石），粉是化学产物。
+- 命名（用户拍板）：锭=`ingot`、粉=`dust`（4 个 `*_dust` 不动）、尘=`grit`（dust 已占用）、粒=`nugget`。
 - 贴图：锭/粒/尘都由 `tools/textures` 按「模板换色」生成；**尘 = 粉等比缩到 0.6**（`dust_base.png`）。
 - 碱性 `.alkalinity(int)` 与碱金属行为 `.alkaliRevert(target,radius)` **是两件事**。值 0 =
   不写 data_map、不显示 tooltip、不能当燃料。有辐射且有方块时，方块与**方块物品**都要登记，
@@ -85,10 +82,17 @@
 
 ## 缸中之脑产线
 
-- 培养缸**不耗灵感充能** → 继承 `PoweredTile`（不是 `InspiredMachineTile`），按槽里的脑切产出（`BrainKind`）。
+- 培养缸继承 `PoweredTile`（不耗充能）而不是 `InspiredMachineTile`，按槽里的脑切产出（`BrainKind`）。
   ⚠️ 村民脑的 `canIncrease` **故意不查营养液**，否则进度卡住、永远走不到「失活」那一格。
 - 营养液 = 食物 →（饱食 + 饱和）× 100 mB；`FoodProperties#saturation()` 已是**绝对饱和度**，别再 ×2。
 - 掉脑与感染在 `event/ParasiteHandler`，效果在 `effect/ModEffects`。
+
+## 灵感值
+
+- 玩家 attachment（`player/InspirationValue`，上限 1000）：合成 / 吃食物 / 拿经验各 +1，100 点换 1 灵感
+  （原来的两条合成配方已删）。**客户端缓存字段放在同一个 common 类里**（`synced`）—— payload handler
+  一旦引客户端类，服务端加载时就会炸。
+- 物品栏控件用 `ScreenEvent.Init.Post` 挂到 `InventoryScreen`；点击发 `ExtractInspirationPayload`。
 
 ## 注入 / 材料 / 工具
 
@@ -129,9 +133,8 @@
 2. 罐体**不同步容量**（只同步存量，容量要自己挂 DataSlot）。
 3. `tile.getItemHandler(null)` 刚放下时可能为 null → 走
    `level.getCapability(Capabilities.ItemHandler.BLOCK,pos,side)`。
-4. 子类化原版方块注意 codec 泛型不变型；`BooleanProperty` 默认 true、`DirectionProperty` 默认
-   `DOWN`。**忘了给 `DeferredRegister` 调 `register(bus)` 不报编译错**，只在首次 `.get()` 抛
-   unbound value；一次消耗多个材料要校验数量，多输出槽要同时校验所有格子。
+4. 子类化原版方块注意 codec 泛型不变型；`BooleanProperty` 默认 true、`DirectionProperty` 默认 `DOWN`。
+   **忘了给 `DeferredRegister` 调 `register(bus)` 不报编译错**，只在首次 `.get()` 抛 unbound value。
 5. **服务端引用客户端类会炸** → 给方法标 `@OnlyIn(Dist.CLIENT)`（P3 后有自动体检，见上）。
 6. 自检用 **`FakePlayer`**（`openMenu` 返回 empty）、**改经验调 `giveExperiencePoints`**；
    **自检类必须带 `@EventBusSubscriber`**（只写 `@SubscribeEvent` 挂不上总线）；
@@ -139,7 +142,7 @@
 8. **Titanium 组件构造参数顺序互不相同**：`InventoryComponent(name,x,y,slots)`、
    `FluidTankComponent(name,capacity,x,y)`、`EnergyStorageComponent(cap,maxReceive,maxExtract,x,y)`。
    写错**不报编译错**。
-9. **物品栏黑紫棋盘格 = 缺 `models/item/<方块>.json`**（`ModItemModelsProvider` 补 `blockItem`）。
+9. 物品栏黑紫棋盘格 = 缺 `models/item/<方块>.json`。
 10. 配置缓存按任务集存条目；动仓库 content/metadataSources 会让已缓存解析失效。
 11. **Git 远程** `origin = .../InspirationMod`（私有），代理对 **github.com:443 间歇 502**
     （`api.github.com` 通常通）。兜底走 REST，**顺序 blob → tree → commit → ref**（只发 commit 会 422

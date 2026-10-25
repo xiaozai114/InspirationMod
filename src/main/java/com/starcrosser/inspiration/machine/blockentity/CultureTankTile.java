@@ -14,6 +14,10 @@ import com.starcrosser.inspiration.fluid.ModFluids;
 import com.starcrosser.inspiration.item.ModItems;
 import com.starcrosser.inspiration.machine.spec.MachineSpec;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.ItemInteractionResult;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -92,6 +96,15 @@ public class CultureTankTile extends PoweredTile<CultureTankTile> {
     @Override
     public CultureTankTile getSelf() {
         return this;
+    }
+
+    @Override
+    public ItemInteractionResult onActivated(Player player, InteractionHand hand, Direction facing,
+                                             double hitX, double hitY, double hitZ) {
+        if (level != null && !level.isClientSide) {
+            openGui(player);
+        }
+        return ItemInteractionResult.SUCCESS;
     }
 
     public int getNutrientAmount() {

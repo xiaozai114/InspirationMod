@@ -10,7 +10,8 @@ P3 之后**所有**只在客户端存在的代码都在这一个包下面，包�
 | （根） | 客户端入口与两类注册 | `InspirationClient`（`@Mod(dist = CLIENT)` 入口）、`ClientModEvents`（渲染器 / 界面 / 客户端初始化）、`ClientExtensionsHandler`（物品与流体的客户端扩展） |
 | `extensions/` | 挂给原版 / NeoForge / Titanium 的客户端扩展与 addon | `EndAlloyShieldClientExtensions`、`InspirationChargeClientExtensions`、`MindFluidClientExtensions`、`FacingLabelAddon`、`StatusAddon`、`ProjectorPreviewHandler` |
 | `renderer/` | 渲染器 | `EndAlloyShieldRenderer`、`MatterBinderRenderer`、`SimulatorPreviewRenderer` |
-| `tooltip/` | tooltip 监听（都是 `Dist.CLIENT` 的 `ItemTooltipEvent`） | `MachineTooltips`、`AlkalinityTooltips`、`RadiationTooltips` |
+| `tooltip/` | tooltip 监听（都是 `Dist.CLIENT` 的 `ItemTooltipEvent`） | `MachineTooltips`、`AlkalinityTooltips`、`RadiationTooltips`、`BrainLineTooltips` |
+| `gui/` | 挂在原版界面上的自定义控件 | `InspirationGauge`（物品栏右侧的灵感值进度条 + 提取按钮）、`InspirationGaugeHandler`（`ScreenEvent.Init.Post` 里挂到 `InventoryScreen`） |
 | `guide/` | 指导书界面 | `GuideBookScreen`（菜单在 `guide/GuideBookMenu`，服务端也要用） |
 | `util/` | 只在客户端用的小工具 | `FacingLabels`（给朝向按钮挂标签，调用方必须标 `@OnlyIn`） |
 | `jei/` | JEI 插件与七个配方分类 | `InspirationJeiPlugin`、`ModJeiRecipeTypes`、`JeiLayout`、`JeiSlots`、`MachineRecipeText`、`StructurePreview`、`category/*`（详见 `jei/README.md`） |

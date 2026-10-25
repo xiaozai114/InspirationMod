@@ -77,23 +77,7 @@ public final class CraftingRecipes {
                 .unlockedBy(getHasName(ModItems.INSPIRATION.get()), has(ModItems.INSPIRATION.get()))
                 .save(recipeOutput);
 
-        // 灵感（默认 ID "inspiration"）
-        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.INSPIRATION.get())
-                .pattern(" # ")
-                .pattern("#Y#")
-                .pattern(" # ")
-                .define('#', Items.COPPER_INGOT)
-                .define('Y', Items.QUARTZ)
-                .unlockedBy(getHasName(Items.QUARTZ), has(Items.QUARTZ))
-                .save(recipeOutput);
-
-        // 4 金锭 + 1 紫水晶 -> 4 灵感
-        // 无序：这套材料的形状本身就是「一堆金 + 一颗紫水晶」，摆法不该有意义
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ModItems.INSPIRATION.get(), 4)
-                .requires(Items.GOLD_INGOT, 4)
-                .requires(Items.AMETHYST_SHARD)
-                .unlockedBy(getHasName(Items.AMETHYST_SHARD), has(Items.AMETHYST_SHARD))
-                .save(recipeOutput, ResourceLocation.fromNamespaceAndPath(Inspiration.MODID, "inspiration_from_gold_and_amethyst"));
+        // 灵感不再有合成配方：改由玩家身上的「灵感值」提取（合成 / 吃东西 / 拿经验积累）
 
         // 指导书：书 + 灵感（书的装帧由灵感驱动，所以是无序的）
         ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ModItems.GUIDE_BOOK.get())

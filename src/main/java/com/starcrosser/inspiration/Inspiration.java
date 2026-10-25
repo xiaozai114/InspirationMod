@@ -12,6 +12,7 @@ import com.starcrosser.inspiration.item.ModItems;
 import com.starcrosser.inspiration.machine.ModMachines;
 import com.starcrosser.inspiration.material.ModMaterials;
 import com.starcrosser.inspiration.multiblock.ModMultiblocks;
+import com.starcrosser.inspiration.player.InspirationValue;
 import com.starcrosser.inspiration.radiation.RadiationAttachments;
 import com.starcrosser.inspiration.recipe.ModRecipes;
 import com.starcrosser.inspiration.util.ClientIsolationCheck;
@@ -67,6 +68,7 @@ public class Inspiration {
         ModGuideMenus.register(modEventBus);
         // 玩家体内累积的辐射值挂在实体 attachment 上，注册表是 NeoForge 的
         RadiationAttachments.register(modEventBus);
+        InspirationValue.register(modEventBus);
         ModFluids.register(modEventBus);
         ModEffects.register(modEventBus);
         ModCreativeModeTabs.register(modEventBus);

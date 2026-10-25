@@ -20,6 +20,7 @@
 | `EndAlloyShieldHandler` | `PlayerDestroyItemEvent` | 末地合金盾牌被击碎时，把周围敌对生物随机传送走 |
 | `ExpMiningHandler` | `BlockEvent.BreakEvent` | 手持 `MiningExperienceTool` 挖掉方块时撒经验 |
 | `HeadDropHandler` | `LivingDeathEvent` | 生物死亡时按映射表掉头颅 |
+| `InspirationGainHandler` | `ItemCraftedEvent`、`LivingEntityUseItemEvent.Finish`、`PlayerXpEvent.XpChange`、`PlayerLoggedInEvent`、`Clone` | 合成 / 吃食物 / 拿经验各 +1 灵感值；登录与克隆时同步 |
 | `ParasiteHandler` | `LivingDeathEvent`、`PlayerInteractEvent.EntityInteract` | 寄生虫感染（右键村民 / 末影人）与掉脑：寄生村民 80%、机械寄生虫回收、末影人 100% 掉脑 |
 | `RightClickBlockHandler` | `PlayerInteractEvent.RightClickBlock` | 手持物品右键方块 → 查 `RightClickBlockRecipe` 并转换方块 |
 

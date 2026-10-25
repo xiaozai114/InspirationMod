@@ -251,34 +251,33 @@ public class ModEnUsLangProvider extends LanguageProvider {
         // 机器 tooltip：加工类写配方类型，发电类写发电机制；一个键可写多行，用 \n 分隔
         add("tooltip.inspiration.machine.matter_fusion_machine",
                 "Recipe type: Matter Fusion");
-        add("tooltip.inspiration.machine.energized_matter_fusion_machine",
-                "Recipe type: Matter Fusion\nA third input slot unlocks 3-ingredient recipes; 2x speed.");
-        add("tooltip.inspiration.machine.matter_reshaper",
-                "Recipe type: Matter Reshaping\nAlso performs right-click conversion recipes.");
+        add("tooltip.inspiration.machine.energized_matter_fusion_machine", "Recipe: Matter Fusion\nThird input slot unlocks 3-material recipes; 2x speed.");
+        add("tooltip.inspiration.machine.matter_reshaper", "Recipe: Matter Reshaping\nAlso runs right-click conversion recipes.");
         add("tooltip.inspiration.machine.mineral_twister",
                 "Recipe type: Mineral Twisting");
         add("tooltip.inspiration.machine.inspiration_assembler",
                 "Recipe type: Inspiration Assembling");
-        add("tooltip.inspiration.machine.core_driller",
-                "Once powered, drains all stored energy and drill durability to dig straight down until it hits an unbreakable block.\nCan mine Reinforced Deepslate.");
+        add("tooltip.inspiration.machine.core_driller", "One run drains all energy and drill durability, digging down until an unbreakable block.\nCan mine Reinforced Deepslate.");
         add("tooltip.inspiration.machine.high_energy_matter_reshaper",
                 "Recipe type: Matter Reshaping\nAlso performs right-click conversion recipes; 2x speed.");
         add("tooltip.inspiration.machine.high_energy_mineral_twister",
                 "Recipe type: Mineral Twisting\nOutput equals Fortune 12; 2x speed.");
         add("tooltip.inspiration.machine.high_energy_inspiration_assembler",
                 "Recipe type: Inspiration Assembling\nSix input slots and two fluid tanks unlock bigger recipes; 2x speed.");
-        add("tooltip.inspiration.machine.alkaline_reactor",
-                "Burns alkaline items to generate power.\nOutput: 100x FE/tick; burn time: 12000 ticks.\nx is the item's alkalinity");
-        add("tooltip.inspiration.machine.rtg_generator",
-                "Burns radioactive items to generate power.\nOutput: 1000x FE/tick; burn time: 24000 ticks.\nx is the item's radiation value\nEvery minute it leaks (x-1)^3 radiation into its chunk; if x>9 it also has a (x-9)/1000 chance to explode.\nProduces x Nuclear Waste when finished.");
-        add("tooltip.inspiration.machine.fluid_extractor",
-                "Recipe type: Fluid Extracting\nMelts materials into their molten form, one ingot = 144 mB.\nThe result is stored in the output tank and can be bucketed out.");
-        add("tooltip.inspiration.machine.raw_refiner",
-                "Recipe type: Raw Refining\nOne input slot and three output slots; the last two hold byproducts.\nA Recycling Upgrade doubles byproduct output.");
-        add("tooltip.inspiration.machine.culture_tank",
-                "Villager Brain: 100 FE/tick + 1 mB/tick nutrient, 1 Inspiration per 10 s.\nEnderman Brain: 1000 FE/tick + 10 mB/tick, 1 Mind Crystal per 20 s.\nRunning out of nutrient kills a villager brain; an enderman brain never dies.");
-        add("tooltip.inspiration.machine.structure_simulator",
-                "Runs a structure data to simulate its loot.\nInspiration charge: 8 mB/tick; power use depends on the data.\nBuild a hollow 4x3x3 shell of High-Energy Machine Casing and fit all five hatches (the two inner cells may be left empty or filled).");
+        add("tooltip.inspiration.machine.alkaline_reactor", "Burns alkaline items: 100x FE/tick, 12000 ticks.\nx is alkalinity.");
+        add("tooltip.inspiration.machine.rtg_generator", "Burns radioactive items: 1000x FE/tick, 24000 ticks.\nLeaks (x-1)^3 radiation per minute; if x>9 it may explode with (x-9)/1000 chance. Yields x Nuclear Waste.");
+        add("tooltip.inspiration.machine.fluid_extractor", "Recipe: Fluid Extracting\nMelts materials, one ingot = 144 mB, stored in the output tank.");
+        add("tooltip.inspiration.machine.raw_refiner", "Recipe: Raw Refining\nOne input, three outputs; the last two are byproducts, doubled by a Recycling Upgrade.");
+        add("tooltip.inspiration.machine.culture_tank", "Feeds brains with nutrient and power: villager brain 1 Inspiration / 10 s, enderman brain 1 Mind Crystal / 20 s.");
+        add("tooltip.inspiration.machine.structure_simulator", "Simulates loot from structure data; costs 8 mB/tick inspiration charge.\n4x3x3 hollow casing shell with all five hatches.");
+        add("tooltip.inspiration.brain.villager", "Culture Tank: 100 FE/tick + 1 mB/tick nutrient, 1 Inspiration per 10 s.\\nDies when nutrient runs out.");
+        add("tooltip.inspiration.brain.enderman", "Culture Tank: 1000 FE/tick + 10 mB/tick nutrient, 1 Mind Crystal per 20 s.\\nNever dies.");
+        add("tooltip.inspiration.brain.inactive", "Recycle in a Raw Refiner for 2 Parasites.");
+        add("tooltip.inspiration.parasite", "Right-click a villager to infest it; killing it most likely drops a Villager Brain.");
+        add("tooltip.inspiration.mechanical_parasite", "Right-click an enderman or villager to infest it.\\nKilling an infested enderman drops an Enderman Brain; a villager returns the parasite.");
+        add("gui.inspiration.inspiration_value", "Inspiration");
+        add("gui.inspiration.inspiration_value.tip", "Inspiration: %s / %s");
+        add("gui.inspiration.inspiration_value.extract", "Click to extract 100 -> 1 Inspiration");
         // ===================== Structure Simulator =====================
         add("tooltip.inspiration.structure_data.duration", "Duration: %s ticks");
         add("tooltip.inspiration.structure_data.energy", "Power: %s FE/tick");
@@ -315,7 +314,9 @@ public class ModEnUsLangProvider extends LanguageProvider {
                         + "a thought that refuses to stay a thought,\n"
                         + "condensed into something you can hold.\n\n"
                         + "It is both a crafting material and machine fuel -\n"
-                        + "without it, a machine with power still will not run.");
+                        + "without it, a machine with power still will not run.\n\n"
+                        + "Crafting, eating and gaining XP build up Inspiration;\n"
+                        + "100 points can be exchanged for one in the inventory screen.");
         add("guide.inspiration.chapter.machines", "The Machines");
         add("guide.inspiration.chapter.machines.body",
                 "Matter Fusion Machine: fuses materials into one.\n"
