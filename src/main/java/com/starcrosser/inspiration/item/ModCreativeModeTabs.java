@@ -3,17 +3,21 @@ package com.starcrosser.inspiration.item;
 import com.starcrosser.inspiration.Inspiration;
 import com.starcrosser.inspiration.block.ModBlocks;
 import com.starcrosser.inspiration.injection.ModInjection;
-import com.starcrosser.inspiration.machine.ModMachines;
 import com.starcrosser.inspiration.material.InspirationMaterial;
 import com.starcrosser.inspiration.material.ModMaterials;
 import com.starcrosser.inspiration.multiblock.ModMultiblocks;
+import com.starcrosser.inspiration.registry.MachineRegistry;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
+import java.util.HashSet;
+import java.util.Set;
 import java.util.function.Supplier;
 
 /**
@@ -24,9 +28,14 @@ import java.util.function.Supplier;
  * （食物、工具、机器、功能方块、插件、模板、结构数据、指导书），
  * 以及不是锭类材料的原料（矿、粉、盐、晶、煤、核心部件、废料）放在末尾。
  * <p>
- * 两页内部仍然逐个显式写、不遍历清单，因为展示顺序是刻意排的：
- * 一条生产线的上下游要挨在一起（矿石 → 粗盐 → 盐 → 粉 → 锭 → 块），
- * 而清单顺序是声明顺序，跟玩法脉络对不上。
+ * <b>不必手动往里加东西</b>：
+ * <ul>
+ *   <li>锭类材料 —— 遍历 {@link ModMaterials#ALL}；</li>
+ *   <li>机器 —— 遍历 {@link com.starcrosser.inspiration.registry.MachineRegistry}（注册即入栏）；</li>
+ *   <li>其余物品 —— 写了就有明确位置，没写的由灵感页末尾的**兜底循环**补齐
+ *       （凡是本模组注册、又没被这两页收走的物品，一律追加到灵感页最后）。</li>
+ * </ul>
+ * 显式清单只用来决定「排在哪儿」——一条生产线的上下游要挨在一起，而注册顺序跟玩法脉络对不上。
  */
 public class ModCreativeModeTabs {
     public static final DeferredRegister<CreativeModeTab> CREATIVE_MOD_TABS =
@@ -38,7 +47,17 @@ public class ModCreativeModeTabs {
             CREATIVE_MOD_TABS.register("inspire_tab", ()-> CreativeModeTab.builder()
                     .icon(()->new ItemStack(ModItems.INSPIRATION.get()))
                     .title(Component.translatable("itemGroup.inspire_tab"))
-                    .displayItems((parameters, output) -> {
+                    .displayItems((parameters, raw) -> {
+                        // 包一层：记下已经排过版的物品，末尾的兜底循环靠它判断「谁还没进栏」。
+                        // 只需实现唯一的抽象方法，其余 accept 重载都会默认转到这里。
+                        Set<Item> placed = new HashSet<>();
+                        CreativeModeTab.Output output = new CreativeModeTab.Output() {
+                            @Override
+                            public void accept(ItemStack stack, CreativeModeTab.TabVisibility visibility) {
+                                placed.add(stack.getItem());
+                                raw.accept(stack, visibility);
+                            }
+                        };
                         // 灵感本体与食物
                         output.accept(ModItems.INSPIRATION);
                         output.accept(ModItems.COOKED_INSPIRATION);
@@ -97,23 +116,11 @@ public class ModCreativeModeTabs {
                         output.accept(ModBlocks.CONCENTRATED_INSPIRATION_CRYSTAL);
                         output.accept(ModBlocks.INSPIRATION_GEL);
                         output.accept(ModBlocks.MIND_CRYSTAL_ROCK);
-                        // 机器在创造栏里是与同期物品穿插排列的（展示顺序是刻意排的：一台机器紧挨着它的
-                        // 材料与产物），不是"所有机器挨在一起"，所以这里仍然逐个写、不遍历 MachineRegistry。
-                        output.accept(ModMachines.MATTER_FUSION_MACHINE);
-                        output.accept(ModMachines.ENERGIZED_MATTER_FUSION_MACHINE);
-                        output.accept(ModMachines.MATTER_RESHAPER);
-                        output.accept(ModMachines.MINERAL_TWISTER);
-                        output.accept(ModMachines.INSPIRATION_ASSEMBLER);
-                        output.accept(ModMachines.CORE_DRILLER);
-                        // 流体提取机：强能核心那一档，摆在高能机型之前
-                        output.accept(ModMachines.FLUID_EXTRACTOR);
-                        output.accept(ModMachines.HIGH_ENERGY_MINERAL_TWISTER);
-                        output.accept(ModMachines.HIGH_ENERGY_INSPIRATION_ASSEMBLER);
-                        output.accept(ModMachines.HIGH_ENERGY_MATTER_RESHAPER);
-                        // 原料精炼机：与高能机型同档（高能核心 + 无恒合金）
-                        output.accept(ModMachines.RAW_REFINER);
-                        output.accept(ModMachines.ALKALINE_REACTOR);
-                        output.accept(ModMachines.RTG_GENERATOR);
+                        // 机器：遍历 MachineRegistry，注册了就会出现在这里，顺序 = 注册顺序
+                        // （也就是《机器体系》里那张表的顺序：先加工机器，最后两台发电机）
+                        for (MachineRegistry.MachineEntry entry : MachineRegistry.machines()) {
+                            output.accept(entry.block());
+                        }
                         // 注入合成：束缚器 —— 注入枪 —— 绑定器
                         output.accept(ModInjection.MATTER_BINDER);
                         output.accept(ModInjection.INJECTION_GUN);
@@ -166,6 +173,17 @@ public class ModCreativeModeTabs {
                         output.accept(ModItems.NUCLEAR_WASTE);
                         // 注入底材
                         output.accept(ModItems.BASALT_BASE);
+                        // 兜底：凡是本模组注册、又没被上面排到（也不属于材料页）的物品，一律追加到这里
+                        // —— 以后加物品忘了写位置也不会「从创造栏里消失」
+                        Set<Item> materials = materialItems();
+                        for (Item item : BuiltInRegistries.ITEM) {
+                            if (placed.contains(item) || materials.contains(item)) {
+                                continue;
+                            }
+                            if (Inspiration.MODID.equals(BuiltInRegistries.ITEM.getKey(item).getNamespace())) {
+                                output.accept(item);
+                            }
+                        }
                     })
                     .build());
 
@@ -191,6 +209,29 @@ public class ModCreativeModeTabs {
                         }
                     })
                     .build());
+
+    /**
+     * 锭类材料的全部形态（锭 / 块 / 粒 / 尘）。
+     * <p>
+     * 这些是材料页的常客，灵感页的兜底循环要把它们排除掉，否则同一件东西会出现两页。
+     * 只在 {@code displayItems} 里调用，那时材料已经注册完毕。
+     */
+    private static Set<Item> materialItems() {
+        Set<Item> items = new HashSet<>();
+        for (InspirationMaterial material : ModMaterials.ALL) {
+            items.add(material.item().get());
+            if (material.hasBlock()) {
+                items.add(material.block().get().asItem());
+            }
+            if (material.hasNugget()) {
+                items.add(material.nugget().get());
+            }
+            if (material.hasGrit()) {
+                items.add(material.grit().get());
+            }
+        }
+        return items;
+    }
 
     public static void register(IEventBus eventBus) {
         CREATIVE_MOD_TABS.register(eventBus);

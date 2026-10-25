@@ -159,7 +159,7 @@ public class ModItems {
     /** 反应核心：高能核心经物质重塑得到，炉心变红，是 RTG反应堆的核心部件。 */
     public static final DeferredItem<Item> REACTION_CORE=
             ITEMS.register("reaction_core", () ->new Item(new Item.Properties().rarity(Rarity.RARE)));
-    /** 核废料：RTG反应堆烧完一份放射性物质后的产物，按燃料的辐射值等量产出，目前暂无用途。 */
+    /** 核废料：RTG反应堆烧完一份放射性物质后的产物，按燃料的辐射值等量产出；原料精炼机可回收出铀粒与镎 / 钚尘。 */
     public static final DeferredItem<Item> NUCLEAR_WASTE=
             ITEMS.register("nuclear_waste", () ->new Item(new Item.Properties().rarity(Rarity.UNCOMMON)));
 

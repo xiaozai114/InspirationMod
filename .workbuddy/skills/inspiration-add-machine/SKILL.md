@@ -62,10 +62,10 @@ agent_created: true
    `baseChargeCapacity()`，配方侧的耗电倍率写在机器自己的 `energyCost(...)` 里。
    能量存储用 `PluginEnergyStorage`（普通 `EnergyStorageComponent` 无法被插件改容量）。
 5. `machine/ModMachines.java`：走 `MachineRegistry.register(registry, id, 中文名, 英文名, factory)`
-   —— 它会把机器登记进一份可遍历的清单，中英语言 / 方块状态 / 挖掘标签 / 战利品表由各 Provider
-   遍历生成，**这四项不用再手写**。注册顺序 = 标签 JSON 里的输出顺序，别乱排。
+   —— 它会把机器登记进一份可遍历的清单，中英语言 / 方块状态 / 挖掘标签 / 战利品表 /
+   **创造栏**都由各 Provider（或创造栏自己）遍历生成，**这五项不用再手写**。
+   注册顺序 = 标签 JSON 的输出顺序，也 = 创造栏里的排列顺序，别乱排。
 6. 仍需手工补的数据生成挂钩：`ModRecipesProvider`（机器本体合成 + 配方）、
-   `ModCreativeModeTabs`（创造栏按内容穿插排列，是刻意排的）、
    `client/tooltip/MachineTooltips` 的 `MACHINES` 集合（机器方块拿不到自定义物品类，
    tooltip 只能按物品 ID 匹配）。
 7. JEI（**在 `client/jei/` 下，P3 之后 JEI 包整体搬进了 `client/`**）：
@@ -134,7 +134,7 @@ JEI 面板背景用 `tools/textures/gen_jei_background.py`；`BACKGROUNDS` 表�
 | `ModBlockLootTablesProvider` | `dropSelf` / `dropOther` / `createSilkTouchDispatchTable` |
 | `ModBlockTagsProvider` | `MINEABLE_WITH_PICKAXE`、`NEEDS_IRON_TOOL` 等 |
 | `ModItemModelsProvider` | `blockItem(block)`（名字从 `getDescriptionId()` 推出） |
-| `ModCreativeModeTabs` | `output.accept(ModBlocks.XXX)` |
+| `ModCreativeModeTabs` | 机器不用管（遍历 `MachineRegistry`）；**普通方块**要 `output.accept(ModBlocks.XXX)`，漏了也会被灵感页末尾的兜底循环补上 |
 | 中英文语言文件 | 方块名；需要提示的话再加 `tooltip.inspiration.*` |
 
 **半透明方块**：模型 JSON 里写 `"render_type": "minecraft:translucent"`，属性加 `.noOcclusion()`。

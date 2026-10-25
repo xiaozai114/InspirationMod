@@ -19,7 +19,8 @@ import java.util.List;
  * 第 1 项是第 3 个输出槽。想只给一份副产物就只写一项。
  * <p>
  * 副产物的量级规则（与「9 粒 = 1 锭」一致）：主产物给锭 / 盐，副产物给粒或尘 ——
- * 一份粗料里那点杂质本来就不该凑成一整锭。
+ * 一份粗料里那点杂质本来就不该凑成一整锭。唯一例外是核废料：它是「回收」而不是「提炼」，
+ * 剩下的铀不够一整锭，主产物也给粒。
  */
 public final class RefiningRecipes {
 
@@ -63,9 +64,9 @@ public final class RefiningRecipes {
         refine(recipeOutput, "francium_salt", Ingredient.of(ModItems.FRANCIUM_SALT.get()),
                 new ItemStack(ModMaterials.FRANCIUM.item().get()), List.of(actiniumNugget));
 
-        // ===== 核废料：主产物铀锭，副产物是两个更重的锕系元素（尘） =====
+        // ===== 核废料：主产物铀粒（废料里剩下的铀不够一整锭），副产物是两个更重的锕系元素（尘） =====
         refine(recipeOutput, "nuclear_waste", Ingredient.of(ModItems.NUCLEAR_WASTE.get()),
-                new ItemStack(ModMaterials.URANIUM.item().get()),
+                uraniumNugget.copy(),
                 List.of(neptuniumGrit, plutoniumGrit), NUCLEAR_DURATION, NUCLEAR_ENERGY_PER_TICK);
     }
 

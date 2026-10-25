@@ -17,10 +17,11 @@
   循环调 `tile.serverTick(level,pos,state,tile)`。⚠️ 世界会在两次自检间存盘，开头先清空槽位。
   `getHandlerFromName`/`serverTick` 在 **`ActiveTile`** 上，不在 `BasicTile`。
 - **P2.1 后**注册走 `registry/MachineRegistry.register(registry,id,zhName,enName,factory)`，
-  中英语言 / 方块状态 / 挖掘标签 / 战利品表全部遍历清单。**创造栏与 JEI 映射仍手工
-  —— 新机器一定别忘了加 `ModCreativeModeTabs`**（漏过两次）。
-  创造栏两页：**材料页只放锭类材料（锭/块/粒/尘，遍历 `ModMaterials`）**，其余原料都在灵感页末尾。
-  **注册顺序 = 标签输出顺序**。`registerBlockWithTile` 第二参是 `Supplier<BasicTileBlock<?>>`（不变型）。
+  中英语言 / 方块状态 / 挖掘标签 / 战利品表全部遍历清单。**创造栏也自动了**：灵感页遍历
+  `MachineRegistry`，末尾还有兜底循环（本模组注册、两页都没收的物品自动补上）→ 加东西不会再漏；
+  **JEI 催化剂仍手工**。创造栏两页：材料页只放锭类材料（锭/块/粒/尘，遍历 `ModMaterials`），
+  其余原料在灵感页末尾。**注册顺序 = 标签输出顺序 = 创造栏顺序**。
+  `registerBlockWithTile` 第二参是 `Supplier<BasicTileBlock<?>>`（不变型）。
 - **只有 `MachineTile#onActivated` 会 `openGui()`**；直接继承 `ActiveTile/PoweredTile` 的要自己
   覆写（仓室打不开就是栽在这）。GUI 坐标与侧栏标签限制见 `machine/README.md`。
 - 插件倍率只在 `MachinePluginType#multiplier()` + `PluginEffects`（同类叠乘，speed 派生
