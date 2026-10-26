@@ -5,17 +5,20 @@
     "C": {
       "item": "inspiration:reinforced_core"
     },
-    "I": {
+    "M": {
       "item": "minecraft:iron_ingot"
     },
-    "N": {
+    "S": {
       "item": "inspiration:nickel_ingot"
+    },
+    "X": {
+      "item": "minecraft:iron_ingot"
     }
   },
   "pattern": [
-    "III",
-    "NCN",
-    "INI"
+    "MSM",
+    "SCS",
+    "MXM"
   ],
   "result": {
     "count": 1,

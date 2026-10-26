@@ -132,24 +132,18 @@ public final class MachineBlockRecipes {
                 .unlockedBy(getHasName(ModMaterials.JADE_STEEL.item().get()), has(ModMaterials.JADE_STEEL.item().get()))
                 .save(recipeOutput);
 
-        // 灵感高炉：5 铁 + 3 镍 + 1 强化核心
-        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModMachines.INSPIRATION_FURNACE.getBlock())
-                .pattern("III")
-                .pattern("NCN")
-                .pattern("INI")
-                .define('I', Items.IRON_INGOT)
-                .define('N', ModMaterials.NICKEL.item().get())
-                .define('C', ModItems.REINFORCED_CORE.get())
-                .unlockedBy(getHasName(ModItems.REINFORCED_CORE.get()), has(ModItems.REINFORCED_CORE.get()))
-                .save(recipeOutput);
+        // 灵感高炉：5 铁 + 3 镍 + 1 强化核心（镍是副材料：上面中间 + 中间两侧）
+        machine(recipeOutput, ModMachines.INSPIRATION_FURNACE.getBlock(),
+                Items.IRON_INGOT, ModMaterials.NICKEL.item().get(),
+                ModItems.REINFORCED_CORE.get(), null, ModItems.REINFORCED_CORE.get());
 
         machine(recipeOutput, ModMachines.ENERGIZED_INSPIRATION_FURNACE.getBlock(),
-                ModMaterials.NICKEL.item().get(), ModMaterials.ENERGIZED_JADE_STEEL.item().get(),
+                ModMaterials.ENERGIZED_JADE_STEEL.item().get(), ModMaterials.NICKEL.item().get(),
                 ModItems.POWERFUL_CORE.get(), ModMachines.INSPIRATION_FURNACE.getBlock(),
                 ModItems.POWERFUL_CORE.get());
 
         machine(recipeOutput, ModMachines.HIGH_ENERGY_INSPIRATION_FURNACE.getBlock(),
-                ModMaterials.NICKEL.item().get(), ModMaterials.EPHEMERAL_ALLOY.item().get(),
+                ModMaterials.EPHEMERAL_ALLOY.item().get(), ModMaterials.NICKEL.item().get(),
                 ModItems.HIGH_ENERGY_CORE.get(), ModMachines.ENERGIZED_INSPIRATION_FURNACE.getBlock(),
                 ModItems.HIGH_ENERGY_CORE.get());
 
