@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "C": {
+      "item": "inspiration:reinforced_core"
+    },
+    "I": {
+      "item": "minecraft:iron_ingot"
+    },
+    "N": {
+      "item": "inspiration:nickel_ingot"
+    }
+  },
+  "pattern": [
+    "III",
+    "NCN",
+    "INI"
+  ],
+  "result": {
+    "count": 1,
+    "id": "inspiration:inspiration_furnace"
+  }
+}

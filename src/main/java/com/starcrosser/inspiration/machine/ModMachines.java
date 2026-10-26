@@ -8,6 +8,7 @@ import com.starcrosser.inspiration.machine.block.CoreDrillerBlock;
 import com.starcrosser.inspiration.machine.block.CultureTankBlock;
 import com.starcrosser.inspiration.machine.block.FluidExtractorBlock;
 import com.starcrosser.inspiration.machine.block.InspirationAssemblerBlock;
+import com.starcrosser.inspiration.machine.block.InspirationFurnaceBlock;
 import com.starcrosser.inspiration.machine.block.MatterFusionMachineBlock;
 import com.starcrosser.inspiration.machine.block.MatterReshaperMachineBlock;
 import com.starcrosser.inspiration.machine.block.MineralTwisterBlock;
@@ -58,6 +59,11 @@ public class ModMachines {
     /** 培养缸：等级 1，1 个脑槽 + 1 个营养液罐。 */
     private static final MachineSpec CULTURE_TANK_T1 = MachineSpec.of(1, 1, DyeColor.LIME);
 
+    /** 灵感高炉：等级 1 / 2 / 3，都只有 1 个输入槽。 */
+    private static final MachineSpec FURNACE_T1 = MachineSpec.of(1, 1, DyeColor.YELLOW);
+    private static final MachineSpec FURNACE_T2 = MachineSpec.of(2, 1, DyeColor.YELLOW);
+    private static final MachineSpec FURNACE_T3 = MachineSpec.of(3, 1, DyeColor.YELLOW);
+
     /** 灵感装配台：等级 1，4 个物品输入槽 + 1 个流体输入槽。 */
     private static final MachineSpec ASSEMBLER_T1 = MachineSpec.of(1, 4, 1, DyeColor.YELLOW);
     /** 高能灵感装配台：等级 2，6 个物品输入槽 + 2 个流体输入槽。 */
@@ -89,6 +95,10 @@ public class ModMachines {
     public static BlockWithTile RAW_REFINER;
     /** 培养缸：村民脑产灵感、末影人脑产思维晶体，消耗营养液与电力。 */
     public static BlockWithTile CULTURE_TANK;
+    /** 灵感高炉：可跑熔炉 / 高炉 / 烟熏三类配方。 */
+    public static BlockWithTile INSPIRATION_FURNACE;
+    public static BlockWithTile ENERGIZED_INSPIRATION_FURNACE;
+    public static BlockWithTile HIGH_ENERGY_INSPIRATION_FURNACE;
 
     /**
      * 一次性注册所有机器。
@@ -153,6 +163,18 @@ public class ModMachines {
                 "培养缸", "Culture Tank",
                 () -> new CultureTankBlock("culture_tank", CULTURE_TANK_T1,
                         () -> CULTURE_TANK, 3.0F, 6.0F));
+        INSPIRATION_FURNACE = MachineRegistry.register(registry, "inspiration_furnace",
+                "灵感高炉", "Inspiration Furnace",
+                () -> new InspirationFurnaceBlock("inspiration_furnace", FURNACE_T1,
+                        () -> INSPIRATION_FURNACE, 4.5F, 9.0F));
+        ENERGIZED_INSPIRATION_FURNACE = MachineRegistry.register(registry, "energized_inspiration_furnace",
+                "强能灵感高炉", "Energized Inspiration Furnace",
+                () -> new InspirationFurnaceBlock("energized_inspiration_furnace", FURNACE_T2,
+                        () -> ENERGIZED_INSPIRATION_FURNACE, 4.5F, 10.0F));
+        HIGH_ENERGY_INSPIRATION_FURNACE = MachineRegistry.register(registry, "high_energy_inspiration_furnace",
+                "高能灵感高炉", "High-Energy Inspiration Furnace",
+                () -> new InspirationFurnaceBlock("high_energy_inspiration_furnace", FURNACE_T3,
+                        () -> HIGH_ENERGY_INSPIRATION_FURNACE, 5.0F, 12.0F));
 
         // 发电类：不跑配方，只烧燃料往外输电
         ALKALINE_REACTOR = MachineRegistry.register(registry, "alkaline_reactor",

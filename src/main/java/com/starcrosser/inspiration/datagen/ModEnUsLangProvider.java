@@ -269,6 +269,9 @@ public class ModEnUsLangProvider extends LanguageProvider {
         add("tooltip.inspiration.machine.fluid_extractor", "Recipe: Fluid Extracting\nMelts materials, one ingot = 144 mB, stored in the output tank.");
         add("tooltip.inspiration.machine.raw_refiner", "Recipe: Raw Refining\nOne input, three outputs; the last two are byproducts, doubled by a Recycling Upgrade.");
         add("tooltip.inspiration.machine.culture_tank", "Feeds brains with nutrient and power: villager brain 1 Inspiration / 10 s, enderman brain 1 Mind Crystal / 20 s.");
+        add("tooltip.inspiration.machine.inspiration_furnace", "Runs furnace, blast furnace and smoker recipes in 5 s.\\nCosts 10 FE/tick + 1 mB/tick inspiration charge; no experience.");
+        add("tooltip.inspiration.machine.energized_inspiration_furnace", "Same as the Inspiration Furnace; 2x speed, 2x power and charge.");
+        add("tooltip.inspiration.machine.high_energy_inspiration_furnace", "Same as the Inspiration Furnace; 4x speed, 4x power and charge.");
         add("tooltip.inspiration.machine.structure_simulator", "Simulates loot from structure data; costs 8 mB/tick inspiration charge.\n4x3x3 hollow casing shell with all five hatches.");
         add("tooltip.inspiration.brain.villager", "Culture Tank: 100 FE/tick + 1 mB/tick nutrient, 1 Inspiration per 10 s.\\nDies when nutrient runs out.");
         add("tooltip.inspiration.brain.enderman", "Culture Tank: 1000 FE/tick + 10 mB/tick nutrient, 1 Mind Crystal per 20 s.\\nNever dies.");

@@ -46,7 +46,10 @@ public final class MachineTooltips {
             "structure_simulator",
             "fluid_extractor",
             "raw_refiner",
-            "culture_tank");
+            "culture_tank",
+            "inspiration_furnace",
+            "energized_inspiration_furnace",
+            "high_energy_inspiration_furnace");
 
     private MachineTooltips() {
     }

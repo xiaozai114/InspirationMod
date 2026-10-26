@@ -1,7 +1,7 @@
 # 机器体系（`machine` 包）
 
 相关：[插件](plugin/README.md) ・ [充能](charge/README.md) ・ [配方](../recipe/README.md) ・
-[JEI](../client/jei/README.md)。**12 台用电机器 + 2 台发电机**，Titanium 组件拼装；用电机器
+[JEI](../client/jei/README.md)。**15 台用电机器 + 2 台发电机**，Titanium 组件拼装；用电机器
 右侧四个插件槽、能量**只进不出**，发电机相反（`maxReceive = 0`，每刻推六邻）。
 
 | 机器 | 配方 | 缓冲 / 功率（FE，FE·t⁻¹） | 充能 |
@@ -17,6 +17,9 @@
 | 流体提取机 | 流体提取 | 400k / 8k | 2 mB/刻 |
 | 原料精炼机 | 原料精炼 | 300k / 6k | 2 mB/刻 |
 | 培养缸 | 无（按脑类型固定产出） | 400k / 20k | 无 |
+| 灵感高炉 | 熔炉 / 高炉 / 烟熏 | 40k / 1k | 1 mB/刻 |
+| 强能灵感高炉 | 同上 | 80k / 2k | 2 mB/刻 |
+| 高能灵感高炉 | 同上 | 160k / 4k | 4 mB/刻 |
 | 地核钻探者 | 无（掏竖井） | 4M / 20k | 16,000 mB/次 |
 | 碱性发电机 | 无（烧碱性物质） | 1M / 输出 8k | 无 |
 | RTG反应堆 | 无（烧放射性物质） | 4M / 输出 64k | 无 |
@@ -60,6 +63,11 @@ C = 高能核心，S 换对应注能锭；发电机 C = 发电 / 反应核心。
 **故意不查营养液** —— 让 `onTickWork` 还有机会跑到那一格去失活；写反了就成了「进度卡住、脑永远不失活」。
 继承 `PoweredTile` 而不是 `InspiredMachineTile`（它不耗灵感充能，也就不该有充能槽）。
 方块右键用 `FluidUtil.interactWithFluidHandler` 处理桶进桶出。
+
+**灵感高炉**（三档）：一台机器同时接**原版**熔炉 / 高炉 / 烟熏三类配方 —— 用
+`SingleRecipeInput` 依次查 `RecipeType.SMELTING / BLASTING / SMOKING`，命中就缓存（输入变了才重查）。
+时长固定 100 刻（5 秒），**不按原配方的 cookingTime**，也**不给经验**；
+耗电 / 耗充能走 `InspiredMachineTile` 的等级倍率（tier 2 ×2、tier 3 ×4）。
 
 ## 各配方类型
 

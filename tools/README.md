@@ -37,6 +37,7 @@ D:/programfiles/conda/python.exe tools/textures/gen_plugin_textures.py <插件�
 | `gen_jade_steel_upgrade_template.py` | 两个升级模板（从原版下界合金升级模板取图，`PALETTES` 分别产出翡翠钢的绿色版与注能版的紫底电青宝石） |
 | `gen_molten_plasma_fluid.py` | 液态等离子的流动/静止方块贴图与桶（桶 = 原版 `water_bucket.png`，**只重映射偏蓝的像素**，桶身的金属灰与把手不动） |
 | `gen_brain_line.py` | 缸中之脑产线：村民 / 末影人 / 失活大脑、寄生虫与机械寄生虫、营养液（静止 / 流动 / 桶）、培养缸三面、两种效果图标 |
+| `gen_inspiration_furnace_blocks.py` | 灵感高炉三档的方块三面（同形换色：暖橙 / 青钢 / 紫，正面是发光的炉口） |
 | `gen_refinery_blocks.py` | 流体提取机（青蓝机身 + 喷嘴 + 液槽）与原料精炼机（暖铜机身 + 三道槽）的方块三面，共用 `gen_generator_blocks` 里的外壳绘制函数 |
 
 `tools/textures/base/` 放**底材与形状模板**（`netherrack.png`、`netherite_ingot.png`、`end_stone.png`、

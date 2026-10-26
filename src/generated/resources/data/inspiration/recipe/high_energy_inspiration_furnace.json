@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "C": {
+      "item": "inspiration:high_energy_core"
+    },
+    "M": {
+      "item": "inspiration:nickel_ingot"
+    },
+    "S": {
+      "item": "inspiration:ephemeral_alloy"
+    },
+    "X": {
+      "item": "inspiration:energized_inspiration_furnace"
+    }
+  },
+  "pattern": [
+    "MSM",
+    "SCS",
+    "MXM"
+  ],
+  "result": {
+    "count": 1,
+    "id": "inspiration:high_energy_inspiration_furnace"
+  }
+}

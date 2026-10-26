@@ -277,6 +277,9 @@ public class ModZhCnLangProvider extends LanguageProvider {
         add("tooltip.inspiration.machine.fluid_extractor", "配方类型：流体提取\n把材料熔成流体，一锭 = 144 mB，产物存输出罐。");
         add("tooltip.inspiration.machine.raw_refiner", "配方类型：原料精炼\n一进三出，后两格是副产物；回收升级让其翻倍。");
         add("tooltip.inspiration.machine.culture_tank", "用营养液与电力养脑：村民脑 10 秒 1 灵感，末影人脑 20 秒 1 思维晶体。");
+        add("tooltip.inspiration.machine.inspiration_furnace", "熔炉 / 高炉 / 烟熏三类配方通用，统一 5 秒。\\n耗 10 FE/刻 + 1 mB/刻灵感充能，产物不给经验。");
+        add("tooltip.inspiration.machine.energized_inspiration_furnace", "同灵感高炉；速度 ×2，耗电与耗充能 ×2。");
+        add("tooltip.inspiration.machine.high_energy_inspiration_furnace", "同灵感高炉；速度 ×4，耗电与耗充能 ×4。");
         add("tooltip.inspiration.machine.structure_simulator", "按结构数据模拟掉落，另耗 8 mB/刻灵感充能。\n4×3×3 中空高能外壳 + 五种仓室。");
         // ===================== 结构模拟机 =====================
         // 结构数据物品的三行参数

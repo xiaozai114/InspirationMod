@@ -25,9 +25,9 @@
 - **只有 `MachineTile#onActivated` 会 `openGui()`**；直接继承 `ActiveTile/PoweredTile` 的要自己
   覆写（仓室打不开就是栽在这）。GUI 坐标与侧栏标签限制见 `machine/README.md`。
 - 插件倍率只在 `MachinePluginType#multiplier()` + `PluginEffects`（同类叠乘，speed 派生
-  `energyUse=speed²`、`chargeUse=speed`）；容量类只改容量、缩容要截断。
-  ⚠️ **回收升级 `BYPRODUCT` 是唯一加算的**（`byproduct += multiplier-1`，两个是 ×3 不是 ×4），
-  也是唯一只有特定机器读它的插件（目前只有 `RawRefinerTile` 调 `byproductCount`）。
+  `energyUse=speed²`、`chargeUse=speed`）；缩容要截断。
+  ⚠️ **回收升级 `BYPRODUCT` 是唯一加算的**（`byproduct += multiplier-1`，两个是 ×3），
+  也只有 `RawRefinerTile` 读它。
 - ⚠️ 罐体 `Action` 挡机器自身读写（`FILL`→`drainForced`、`DRAIN`→`fillForced`）；
   **多输出槽**（原料精炼机 3 格）先试放全部格子再扣材料、写入失败整批回滚。
 - 发电类 `PowerGeneratorTile`：`maxReceive=0` + 每刻推六邻；燃料开工即扣、缓冲满时进度条打回 0
@@ -35,8 +35,8 @@
 
 ## 客户端隔离（P3 后）
 
-- **纯客户端代码一律在 `client/`**；别处要碰就标 `@OnlyIn(Dist.CLIENT)`。`util/ClientIsolationCheck`
-  开服时扫 class 找漏标打 ERROR（口径见 `client/README.md`）。
+- **纯客户端代码一律在 `client/`**；别处要碰就标 `@OnlyIn(Dist.CLIENT)`。
+  `util/ClientIsolationCheck` 开服时扫 class 找漏标打 ERROR。
 
 ## 多方块（结构模拟机）
 
@@ -50,8 +50,8 @@
 
 - **P1.2 后**四配方继承 `machine/recipe/InspiredRecipe`，**`getSerializer`/`getType` 仍在子类**；
   产物是**流体**时不继承它；副产物写成 List（`composite` 只到 6 通道）。
-- ⚠️ **round-trip 校验不能直接比 tag**：`Ingredient.CONTENTS_STREAM_CODEC` 发到客户端时把
-  `tag:minecraft:planks` **展开成具体物品**。材料按「接受哪些物品」语义比。
+- ⚠️ **round-trip 校验不能直接比 tag**：`Ingredient.CONTENTS_STREAM_CODEC` 会把
+  `tag:minecraft:planks` **展开成具体物品**，要按「接受哪些物品」语义比。
 - 一个自定义类型 = `XxxRecipe`（`MapCodec`）+ `XxxRecipeInput` + `XxxRecipeSerializer`；
   **≥7 字段必须手写 `StreamCodec.of(写,读)`**；`RecipeOutput#accept(id,recipe,null)`；
   **`save(output,"名字")` 落 `minecraft:` 命名空间**。
@@ -74,18 +74,16 @@
   `basalt_alloy_ingot`，忘了覆盖就注册出新 ID，而且配方 JSON 会**静默**改用新 ID。
 - 命名（用户拍板）：锭=`ingot`、粉=`dust`（4 个 `*_dust` 不动）、尘=`grit`（dust 已占用）、粒=`nugget`。
 - 贴图：锭/粒/尘都由 `tools/textures` 按「模板换色」生成；**尘 = 粉等比缩到 0.6**（`dust_base.png`）。
-- 碱性 `.alkalinity(int)` 与碱金属行为 `.alkaliRevert(target,radius)` **是两件事**。值 0 =
-  不写 data_map、不显示 tooltip、不能当燃料。有辐射且有方块时，方块与**方块物品**都要登记，
-  值 = 物品值 × 9。
+- 碱性 `.alkalinity(int)` 与碱金属行为 `.alkaliRevert(...)` 是两件事。值 0 = 不写 data_map、
+  不显示 tooltip、不能当燃料。有辐射且有方块时，方块与**方块物品**都要登记（值 ×9）。
 - **data_maps 改由 `ModDataMapsProvider` 生成**（**手写与生成不能并存**，同名文件撞）；
   非锭材料（粉/盐/矿）在 Provider 里显式登记。
 
 ## 缸中之脑产线
 
-- 培养缸继承 `PoweredTile`（不耗充能）而不是 `InspiredMachineTile`，按槽里的脑切产出（`BrainKind`）。
-  ⚠️ 村民脑的 `canIncrease` **故意不查营养液**，否则进度卡住、永远走不到「失活」那一格。
-- 营养液 = 食物 →（饱食 + 饱和）× 100 mB；`FoodProperties#saturation()` 已是**绝对饱和度**，别再 ×2。
-- 掉脑与感染在 `event/ParasiteHandler`，效果在 `effect/ModEffects`。
+- 培养缸继承 `PoweredTile`（不耗充能），按槽里的脑切产出（`BrainKind`）；村民脑的 `canIncrease`
+  **故意不查营养液**，否则进度卡住、永远走不到「失活」那一格。
+- 营养液 = 食物 →（饱食 + 饱和）× 100 mB；`FoodProperties#saturation()` 已是**绝对饱和度**。
 
 ## 灵感值
 
@@ -94,12 +92,20 @@
   一旦引客户端类，服务端加载时就会炸。
 - 物品栏控件用 `ScreenEvent.Init.Post` 挂到 `InventoryScreen`；点击发 `ExtractInspirationPayload`。
 
+## 灵感高炉 / 战利品
+
+- **一台机器吃多种原版配方**：灵感高炉用 `SingleRecipeInput` 依次查 `SMELTING / BLASTING / SMOKING`，
+  命中后缓存（输入变了才重查）；时长写死 100 刻、不给经验。
+- **箱子战利品走 GLM**：修改器放 `data/inspiration/loot_modifiers/`，但**索引必须在
+  `data/neoforge/loot_modifiers/global_loot_modifiers.json`**（管理器只读 neoforge 命名空间那份，
+  放自己命名空间里会静默不生效）。
+
 ## 注入 / 材料 / 工具
 
 - 注入：束缚器单槽、产物回同槽；右键放/取、潜行右键开 GUI，取放要返 `CONSUME`。
   超 `max_energy` 在束缚器处 `explode`——**刻意设计，别加保护**。
-- 工具：**`Properties#durability` 对 `TieredItem` 无效** → 用 `ModToolTiers.withDurability`。
-  蓄力 buff 的接口 `default` **打不过父类 `Item#use`**（P1.3 结论：保持现状，单继承无解）。
+- 工具：**`Properties#durability` 对 `TieredItem` 无效** → 用 `ModToolTiers.withDurability`；
+  蓄力 buff 的接口 `default` 打不过父类 `Item#use`（单继承无解，保持现状）。
 
 ## 事件
 
@@ -114,8 +120,8 @@
   → 提交前把 `.java`/`.md` 统一回 CRLF。
 - ⚠️ 按「文件组」提交用默认（mixed）`git reset`，别用 `--soft`（索引残留会把全部改动一起提）；
   旧路径的删除也要 stage。
-- **datagen 哈希缓存会漏判内容变化**：核对前删 `src/generated/resources/.cache/*`（不必删
-  整个目录，删了要重新生成 500+ 文件）再 `runData`，否则看到假的「零变化」。
+- **datagen 哈希缓存会漏判内容变化**：核对前删 `src/generated/resources/.cache/*` 再 `runData`，
+  否则看到假的「零变化」。
 - MC 1.21.1 / **NeoForge 21.1.256** / ModDevGradle **2.0.148** / Titanium 1.21-4.0.50 /
   **JEI 19.57.0.451**（`compileOnly + localRuntime`，**服务端也加载** → `runServer` 能验插件注册）。
 - 新方块要补 blockstates / loot / tags / `blockItem` / 创造页 / 中英语言（物品本体别忘了
@@ -144,10 +150,9 @@
    写错**不报编译错**。
 9. 物品栏黑紫棋盘格 = 缺 `models/item/<方块>.json`。
 10. 配置缓存按任务集存条目；动仓库 content/metadataSources 会让已缓存解析失效。
-11. **Git 远程** `origin = .../InspirationMod`（私有），代理对 **github.com:443 间歇 502**
-    （`api.github.com` 通常通）。兜底走 REST，**顺序 blob → tree → commit → ref**（只发 commit 会 422
-    「Tree SHA does not exist」）：`POST /git/blobs`（base64，删 `sha:null`）→ `/git/trees`
-    （`base_tree=<parent>^{tree}`）→ `/git/commits` → `PATCH /git/refs/heads/master` force，每步校 sha。
+11. **Git 远程** `origin = .../InspirationMod`（私有），**github.com:443 间歇 502**（api 通常通）。
+    兜底走 REST，顺序 **blob → tree → commit → ref**：树的 entries 用 `sha:null` 删、
+    **二进制必须先 `POST /git/blobs`**（trees 不认 `encoding`），`diff-tree A B` 的 A 是旧、B 是新。
 
 ## 重构
 

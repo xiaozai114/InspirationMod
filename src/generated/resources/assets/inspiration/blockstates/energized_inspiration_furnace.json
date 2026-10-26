@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "subfacing=east": {
+      "model": "inspiration:block/energized_inspiration_furnace",
+      "y": 90
+    },
+    "subfacing=north": {
+      "model": "inspiration:block/energized_inspiration_furnace"
+    },
+    "subfacing=south": {
+      "model": "inspiration:block/energized_inspiration_furnace",
+      "y": 180
+    },
+    "subfacing=west": {
+      "model": "inspiration:block/energized_inspiration_furnace",
+      "y": 270
+    }
+  }
+}
