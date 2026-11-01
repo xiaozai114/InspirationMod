@@ -9,10 +9,11 @@ Minecraft 1.21.1 / NeoForge 模组。在原有矿物与工具体系之上加了�
 | 项目 | 版本 |
 | --- | --- |
 | Minecraft | 1.21.1 |
-| NeoForge | 21.1.256 |
+| NeoForge | 21.1.265 |
 | Java | 21 |
-| Titanium | 1.21-4.0.50（机器框架：机器基类、组件、GUI 全部来自它） |
-| JEI | 19.57.0.451（`compileOnly`，运行时可选） |
+| Titanium | 1.21-4.0.51（机器框架：机器基类、组件、GUI 全部来自它） |
+| JEI | 19.70.0.469（`compileOnly`，运行时可选） |
+| Multiblocked2 / LDLib2 | 21.1.2 / 2.2.45（只借结构层） |
 
 ## 文档索引
 

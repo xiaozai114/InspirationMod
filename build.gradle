@@ -19,7 +19,6 @@ group = mod_group_id
 
 repositories {
     mavenCentral()
-    // ... 其他仓库 ...
     maven {
         // JEI 的官方 Maven 仓库（推荐）
         name = "Jared's maven"
@@ -147,27 +146,12 @@ dependencies {
     implementation "com.lowdragmc.multiblocked2:Multiblocked2-1.21-${minecraft_version}:${mbd2_version}"
     implementation "com.lowdragmc.ldlib2:ldlib2-neoforge-${minecraft_version}:${ldlib2_version}:all"
 
-    // Example optional mod dependency with JEI
-    // The JEI API is declared for compile time use, while the full JEI artifact is used at runtime
+    // JEI：只编译期要 API，完整 jar 进 localRuntime（不对外发布这个依赖）
     compileOnly "mezz.jei:jei-${minecraft_version}-common-api:${jei_version}"
     compileOnly "mezz.jei:jei-${minecraft_version}-neoforge-api:${jei_version}"
     // We add the full version to localRuntime, not runtimeOnly, so that we do not publish a dependency on it
     localRuntime "mezz.jei:jei-${minecraft_version}-neoforge:${jei_version}"
     localRuntime "curse.maven:jade-324717:${jade_curse_file_id}"
-    // Example mod dependency using a mod jar from ./libs with a flat dir repository
-    // This maps to ./libs/coolmod-${mc_version}-${coolmod_version}.jar
-    // The group id is ignored when searching -- in this case, it is "blank"
-    // implementation "blank:coolmod-${mc_version}:${coolmod_version}"
-
-    // Example mod dependency using a file as dependency
-    // implementation files("libs/coolmod-${mc_version}-${coolmod_version}.jar")
-
-    // Example project dependency using a sister or child project:
-    // implementation project(":myproject")
-
-    // For more info:
-    // http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html
-    // http://www.gradle.org/docs/current/userguide/dependency_management.html
 }
 
 // kotlin-stdlib（MBD2 / LDLib2 的传递依赖）会要求 org.jetbrains:annotations:13.0。
@@ -204,7 +188,7 @@ sourceSets.main.resources.srcDir generateModMetadata
 // To avoid having to run "generateModMetadata" manually, make it run on every project reload
 neoForge.ideSyncTask generateModMetadata
 
-// Example configuration to allow publishing using the maven-publish plugin
+// 发布配置：产物落到项目下的 repo 目录（目前只在本地验证打包时用到）
 publishing {
     publications {
         register('mavenJava', MavenPublication) {

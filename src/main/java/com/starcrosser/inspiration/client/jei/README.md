@@ -2,7 +2,7 @@
 
 相关：[客户端包](../README.md) ・ [机器体系](../../machine/README.md) ・ [注入](../../injection/README.md) ・
 [语言键出处](../../datagen/README.md)。插件以 `@JeiPlugin` 声明由 JEI 自动发现；依赖 `compileOnly`，
-运行时没有 JEI 也能正常游戏。**JEI 19.57.0.451 / MC 1.21.1**，升级时下面几条 API 约定要重新核对。
+运行时没有 JEI 也能正常游戏。**JEI 19.70.0.469 / MC 1.21.1**，升级时下面几条 API 约定要重新核对。
 
 ## 八个分类
 
@@ -51,17 +51,19 @@
 | 流体提取 | `WIDTH=104`、`TALL_HEIGHT=74`，罐 `(78, 6)`，文字 `TALL_TEXT_Y=46` |
 | 原料精炼 | `WIDTH=104`、`REFINING_HEIGHT=86`，产物列 `78`，文字 `REFINING_TEXT_Y=60` |
 
-## 必须避开的四个坑
+## 必须避开的五个坑
 
 1. **背景只能走 `IRecipeCategory#getBackground()`**：它从 19.19.0 起标了 `forRemoval`，
-   但到 19.57.0.451 `RecipeLayout#drawRecipe` 仍在调它（`getWidth()` / `getHeight()` 也必须显式覆写，
-   背景为 null 会抛异常）。绘制顺序是 背景 → 槽位 → 文字 → extras 的 `addDrawable`，
+   但到 19.70.0.469 `RecipeLayout#drawRecipe` 仍在调它（`getWidth()` / `getHeight()` 也必须显式覆写，
+   背景为 null 会抛异常）。绘制顺序是 背景 → 槽位 → 文字 → extras 里的贴图，
    背景放进 extras 会整块盖住内容。真删了就在 `draw()` 里自己画。
 2. **贴图路径必须带 `.png`**：纹理管理器按完整路径找文件，少了就渲染成黑紫棋盘格
    （`JeiLayout#background(name)` 已统一处理）。
 3. **独立小图必须 `drawableBuilder(loc,0,0,w,h).setTextureSize(w,h).build()`**：
    `createDrawable` 默认按 256×256 归一化取 UV，只能取到左上角一块再拉伸。
-4. **`addText(lines, maxWidth, maxHeight)` 先按宽度折行**，超 `maxHeight` 就整段截断成省略号。
+4. **往 extras 里放贴图用 `addDrawableWidget(drawable).setPosition(x, y)`**：
+   `addDrawable(drawable, x, y)` 在 19.70 已标 `forRemoval`，留着会吃编译警告。
+5. **`addText(lines, maxWidth, maxHeight)` 先按宽度折行**，超 `maxHeight` 就整段截断成省略号。
    排版按英文最长行估算：CJK 8px、空格 4px、其余 ASCII 5px、行高 9+2。
 
 另外：取配方用原版 `RecipeType`（`net.minecraft.world.item.crafting`），别引 JEI 的同名类；

@@ -97,8 +97,7 @@
 - **一台机器吃多种原版配方**：灵感高炉用 `SingleRecipeInput` 依次查 `SMELTING / BLASTING / SMOKING`，
   命中后缓存（输入变了才重查）；时长写死 100 刻、不给经验。
 - **箱子战利品走 GLM**：修改器放 `data/inspiration/loot_modifiers/`，但**索引必须在
-  `data/neoforge/loot_modifiers/global_loot_modifiers.json`**（管理器只读 neoforge 命名空间那份，
-  放自己命名空间里会静默不生效）。
+  `data/neoforge/loot_modifiers/global_loot_modifiers.json`**（放自己命名空间里会静默不生效）。
 
 ## 注入 / 材料 / 工具
 
@@ -122,8 +121,8 @@
   旧路径的删除也要 stage。
 - **datagen 哈希缓存会漏判内容变化**：核对前删 `src/generated/resources/.cache/*` 再 `runData`，
   否则看到假的「零变化」。
-- MC 1.21.1 / **NeoForge 21.1.256** / ModDevGradle **2.0.148** / Titanium 1.21-4.0.50 /
-  **JEI 19.57.0.451**（`compileOnly + localRuntime`，**服务端也加载** → `runServer` 能验插件注册）。
+- MC 1.21.1 / **NeoForge 21.1.265** / ModDevGradle **2.0.148** / Titanium 1.21-4.0.51 /
+  **JEI 19.70.0.469**（`compileOnly + localRuntime`，服务端也加载 → `runServer` 能验插件注册）/ MBD2 21.1.2 + LDLib2 2.2.45。
 - 新方块要补 blockstates / loot / tags / `blockItem` / 创造页 / 中英语言（物品本体别忘了
   `basicItem`）；半透明 `renderType("translucent")`；流体方块 `registerBlockOnly`。
 - **jar 不随 compileJava 更新**；**`assets/` 只能在客户端校验**；打包后 `unzip -l` 查有无自检残留。

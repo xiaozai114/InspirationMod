@@ -9,7 +9,7 @@ agent_created: true
 > 目录名保留 `inspiration-add-machine` 只是为避免改动引用；本技能实际覆盖三类内容：
 > **机器**（第 1~6 节）、**普通方块与自定义方块**（第 7 节）、**自定义配方类型**（第 4 节）。
 
-本模组的所有用电机器都建立在 **Titanium 4.0.50**（`com.hrznstudio.titanium`）之上，
+本模组的所有用电机器都建立在 **Titanium 4.0.51**（`com.hrznstudio.titanium`）之上，
 不要在 `MachineTile` 之外自造机器基类。GUI、能量与物品能力由库自动生成，
 因此一台新机器通常只需「注册 + 方块 + 方块实体」三个文件，外加若干数据生成挂钩。
 
@@ -191,7 +191,7 @@ add(block, createSilkTouchDispatchTable(block,
 - 配方若一次消耗多个材料，必须在 `canProcess` 里校验槽内数量足够，
   否则会出现「只扣 1 个却产出整份产物」。
 - 随机产量的配方，输出槽容量要按**上限**预留，否则结算时物品塞不进去。
-- **JEI 背景必须走 `IRecipeCategory#getBackground()`**（它标了 `forRemoval`，但 19.57.0.451 仍在调用；
+- **JEI 背景必须走 `IRecipeCategory#getBackground()`**（它标了 `forRemoval`，但 19.70.0.469 仍在调用；
   `getWidth()` / `getHeight()` 也要显式覆写，背景为 null 会抛异常）。
   **不要**放进 `createRecipeExtras` 的 `addDrawable` —— 绘制顺序是 背景 → 槽位 → widgets → extras，
   那样会整块盖住内容。贴图路径必须带 `.png`，且独立小图要 `setTextureSize(w, h)`。

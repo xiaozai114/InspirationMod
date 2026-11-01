@@ -102,8 +102,8 @@ public class InjectionRecipeCategory implements IRecipeCategory<InjectionRecipe>
 
     @Override
     public void createRecipeExtras(IRecipeExtrasBuilder builder, InjectionRecipe recipe, IFocusGroup focuses) {
-        builder.addDrawable(gunIcon, JeiLayout.INJECT_ICON_X, JeiLayout.INJECT_ICON_Y);
-        builder.addDrawable(binderIcon, JeiLayout.INJECT_ICON_X, JeiLayout.INJECT_BASE_ICON_Y);
+        builder.addDrawableWidget(gunIcon).setPosition(JeiLayout.INJECT_ICON_X, JeiLayout.INJECT_ICON_Y);
+        builder.addDrawableWidget(binderIcon).setPosition(JeiLayout.INJECT_ICON_X, JeiLayout.INJECT_BASE_ICON_Y);
 
         label(builder, "jei.inspiration.injection.role_inject",
                 JeiLayout.INJECT_LABEL_Y, ChatFormatting.LIGHT_PURPLE);
