@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "minecraft:iron_ingot"
+    },
+    {
+      "item": "inspiration:reinforced_core"
+    },
+    {
+      "item": "inspiration:sculk_alloy"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "inspiration:void_energy_relay"
+  }
+}

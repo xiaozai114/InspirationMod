@@ -1,6 +1,7 @@
 package com.starcrosser.inspiration.datagen;
 
 import com.starcrosser.inspiration.block.ModBlocks;
+import com.starcrosser.inspiration.voidenergy.ModVoidEnergy;
 import com.starcrosser.inspiration.injection.ModInjection;
 import com.starcrosser.inspiration.item.ModItems;
 import com.starcrosser.inspiration.multiblock.ModMultiblocks;
@@ -17,6 +18,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
 import net.minecraft.world.level.storage.loot.functions.ApplyBonusCount;
 import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
@@ -69,6 +71,11 @@ public class ModBlockLootTablesProvider extends BlockLootSubProvider {
         // 注入结构的两个方块同样注册在 Titanium 的注册表中
         dropSelf(ModInjection.MATTER_BINDER.getBlock());
         dropSelf(ModInjection.INJECTION_GUN.getBlock());
+
+        // 虚空能量体系：提取器与中继器掉落自身；开裂的基岩不可破坏，掉落表为空
+        dropSelf(ModVoidEnergy.VOID_ENERGY_EXTRACTOR.get());
+        dropSelf(ModVoidEnergy.VOID_ENERGY_RELAY.get());
+        add(ModVoidEnergy.CRACKED_BEDROCK.get(), LootTable.lootTable());
     }
     /**
      * 结晶类方块的掉落表：精准采集掉落方块本身，否则掉落指定物品并受时运加成
@@ -102,6 +109,9 @@ public class ModBlockLootTablesProvider extends BlockLootSubProvider {
         blocks.add(ModMultiblocks.STRUCTURE_SIMULATOR.getBlock());
         blocks.add(ModInjection.MATTER_BINDER.getBlock());
         blocks.add(ModInjection.INJECTION_GUN.getBlock());
+        blocks.add(ModVoidEnergy.CRACKED_BEDROCK.get());
+        blocks.add(ModVoidEnergy.VOID_ENERGY_EXTRACTOR.get());
+        blocks.add(ModVoidEnergy.VOID_ENERGY_RELAY.get());
         return blocks;
     }
 }

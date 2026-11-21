@@ -7,6 +7,7 @@ import com.starcrosser.inspiration.material.InspirationMaterial;
 import com.starcrosser.inspiration.material.ModMaterials;
 import com.starcrosser.inspiration.multiblock.ModMultiblocks;
 import com.starcrosser.inspiration.registry.MachineRegistry;
+import com.starcrosser.inspiration.voidenergy.ModVoidEnergy;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
@@ -117,6 +118,17 @@ public class ModCreativeModeTabs {
                         output.accept(ModItems.INACTIVE_BRAIN);
                         output.accept(ModItems.PARASITE);
                         output.accept(ModItems.MECHANICAL_PARASITE);
+                        output.accept(ModItems.SCULK_ALLOY_DRILL_BIT);
+                        output.accept(ModItems.UNSTABLE_METAL);
+                        output.accept(ModItems.WEAKENED_CORE);
+                        output.accept(ModItems.VOID_PLASMA_INGOT);
+                        output.accept(ModItems.VOID_DEW);
+                        output.accept(ModItems.NULL_POINT_MODULE);
+                        output.accept(ModItems.ZERO_POINT_AMPLIFIER);
+                        output.accept(ModItems.VOID_ALLOY);
+                        output.accept(ModVoidEnergy.VOID_ENERGY_EXTRACTOR);
+                        output.accept(ModVoidEnergy.VOID_ENERGY_RELAY);
+                        output.accept(ModVoidEnergy.CRACKED_BEDROCK);
                         // 思维流体反应生成的四类方块
                         output.accept(ModBlocks.DILUTED_INSPIRATION_CRYSTAL);
                         output.accept(ModBlocks.CONCENTRATED_INSPIRATION_CRYSTAL);

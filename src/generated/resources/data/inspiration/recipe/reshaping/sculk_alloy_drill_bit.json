@@ -1,0 +1,15 @@
+{
+  "type": "inspiration:reshaping",
+  "duration": 600,
+  "energy_per_tick": 400,
+  "input": {
+    "item": "inspiration:sculk_alloy"
+  },
+  "result": {
+    "count": 1,
+    "id": "inspiration:sculk_alloy_drill_bit"
+  },
+  "second_input": {
+    "item": "inspiration:basalt_alloy_drill_bit"
+  }
+}

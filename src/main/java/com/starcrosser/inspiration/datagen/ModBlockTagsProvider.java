@@ -2,6 +2,7 @@ package com.starcrosser.inspiration.datagen;
 
 import com.starcrosser.inspiration.Inspiration;
 import com.starcrosser.inspiration.block.ModBlocks;
+import com.starcrosser.inspiration.voidenergy.ModVoidEnergy;
 import com.starcrosser.inspiration.injection.InjectionTiers;
 import com.starcrosser.inspiration.injection.ModInjection;
 import com.starcrosser.inspiration.multiblock.ModMultiblocks;
@@ -57,6 +58,8 @@ public class ModBlockTagsProvider extends BlockTagsProvider {
         }
         pickaxeTag
                 .add(ModBlocks.HIGH_ENERGY_MACHINE_CASING.get())
+                .add(ModVoidEnergy.VOID_ENERGY_EXTRACTOR.get())
+                .add(ModVoidEnergy.VOID_ENERGY_RELAY.get())
                 .add(ModMultiblocks.INPUT_HATCH.getBlock())
                 .add(ModMultiblocks.OUTPUT_HATCH.getBlock())
                 .add(ModMultiblocks.ENERGY_PORT.getBlock())

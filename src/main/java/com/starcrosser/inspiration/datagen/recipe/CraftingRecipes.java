@@ -3,6 +3,7 @@ package com.starcrosser.inspiration.datagen.recipe;
 import com.starcrosser.inspiration.Inspiration;
 import com.starcrosser.inspiration.block.ModBlocks;
 import com.starcrosser.inspiration.item.ModItems;
+import com.starcrosser.inspiration.voidenergy.ModVoidEnergy;
 import com.starcrosser.inspiration.material.ModMaterials;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.RecipeOutput;
@@ -171,6 +172,33 @@ public final class CraftingRecipes {
                 .define('X', ModItems.EPHEMERAL_MATERIAL.get())
                 .define('Z', ModItems.EMPTY_BEACON.get())
                 .unlockedBy(getHasName(ModItems.UNSTABLE_CORE.get()), has(ModItems.UNSTABLE_CORE.get()))
+                .save(recipeOutput);
+
+        // 不稳核心 + 8 铁锭 -> 8 不稳金属：虚空能量提取器与虚空注入枪的主料
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ModItems.UNSTABLE_METAL.get(), 8)
+                .requires(ModItems.UNSTABLE_CORE.get())
+                .requires(Items.IRON_INGOT, 8)
+                .unlockedBy(getHasName(ModItems.UNSTABLE_CORE.get()), has(ModItems.UNSTABLE_CORE.get()))
+                .save(recipeOutput, "unstable_metal_from_unstable_core");
+
+        // 虚空能量提取器：4 铁锭 + 4 不稳金属 + 强化核心
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModVoidEnergy.VOID_ENERGY_EXTRACTOR.get())
+                .pattern("MSM")
+                .pattern("SCS")
+                .pattern("MSM")
+                .define('M', Items.IRON_INGOT)
+                .define('S', ModItems.UNSTABLE_METAL.get())
+                .define('C', ModItems.REINFORCED_CORE.get())
+                .unlockedBy(getHasName(ModItems.REINFORCED_CORE.get()), has(ModItems.REINFORCED_CORE.get()))
+                .save(recipeOutput);
+
+        // 虚空能量中继器：铁锭 + 强化核心 + 幽匿合金
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ModVoidEnergy.VOID_ENERGY_RELAY.get())
+                .requires(Items.IRON_INGOT)
+                .requires(ModItems.REINFORCED_CORE.get())
+                .requires(ModMaterials.SCULK_ALLOY.item().get())
+                .unlockedBy(getHasName(ModMaterials.SCULK_ALLOY.item().get()),
+                        has(ModMaterials.SCULK_ALLOY.item().get()))
                 .save(recipeOutput);
 
         // 灵感之剑（默认 ID "exp_sword"）

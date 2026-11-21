@@ -3,11 +3,13 @@ package com.starcrosser.inspiration.client;
 import com.starcrosser.inspiration.Inspiration;
 import com.starcrosser.inspiration.client.guide.GuideBookScreen;
 import com.starcrosser.inspiration.client.renderer.MatterBinderRenderer;
+import com.starcrosser.inspiration.client.renderer.VoidClusterRenderer;
 import com.starcrosser.inspiration.entity.ModEntities;
 import com.starcrosser.inspiration.guide.ModGuideMenus;
 import com.starcrosser.inspiration.injection.ModInjection;
 import com.starcrosser.inspiration.injection.blockentity.MatterBinderTile;
 import com.starcrosser.inspiration.item.ModItems;
+import com.starcrosser.inspiration.voidenergy.ModVoidEnergy;
 import net.minecraft.client.renderer.entity.TntRenderer;
 import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.resources.ResourceLocation;
@@ -32,6 +34,7 @@ public class ClientModEvents {
         // 两种强化 TNT 都沿用原版 TNT 的外观，只是爆炸威力不同
         event.registerEntityRenderer(ModEntities.INTENSIFIED_TNT.get(), TntRenderer::new);
         event.registerEntityRenderer(ModEntities.EMPOWERED_TNT.get(), TntRenderer::new);
+        event.registerEntityRenderer(ModVoidEnergy.VOID_CLUSTER.get(), VoidClusterRenderer::new);
 
         // 物质束缚器上方悬浮的那份物质。
         // Titanium 的 type() 是无 wildcard 的 BlockEntityType<?>，这里要收窄到具体类型

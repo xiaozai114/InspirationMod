@@ -22,6 +22,11 @@ public class DrillBitItem extends Item {
         super(properties);
     }
 
+    /** 能否把挖到底的基岩裂开（只有幽匿合金钻头为 true，见 {@link SculkAlloyDrillBit}）。 */
+    public boolean cracksBedrock() {
+        return false;
+    }
+
     @Override
     public void appendHoverText(ItemStack stack, Item.TooltipContext context,
                                 List<Component> tooltip, TooltipFlag flag) {

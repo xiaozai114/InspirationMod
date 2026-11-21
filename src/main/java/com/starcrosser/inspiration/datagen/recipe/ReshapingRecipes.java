@@ -81,6 +81,13 @@ public final class ReshapingRecipes {
                 new ItemStack(ModItems.BASALT_ALLOY_DRILL_BIT.get()),
                 PLASMA_DURATION, PLASMA_ENERGY_PER_TICK);
 
+        // 幽匿合金 + 玄武岩合金钻头 -> 幽匿合金钻头：挖到底会把基岩裂开
+        reshaping(recipeOutput, "reshaping/sculk_alloy_drill_bit", 1,
+                Ingredient.of(ModMaterials.SCULK_ALLOY.item().get()),
+                Ingredient.of(ModItems.BASALT_ALLOY_DRILL_BIT.get()),
+                new ItemStack(ModItems.SCULK_ALLOY_DRILL_BIT.get()),
+                PLASMA_DURATION, PLASMA_ENERGY_PER_TICK);
+
         // 玄武岩 -> 玄武岩基底：注入配方的底材
         reshaping(recipeOutput, "reshaping/basalt_base_from_basalt", 1,
                 Ingredient.of(Items.BASALT), null,

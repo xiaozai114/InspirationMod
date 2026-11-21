@@ -4,6 +4,7 @@ import com.hrznstudio.titanium.block.RotatableBlock;
 import com.hrznstudio.titanium.module.BlockWithTile;
 import com.starcrosser.inspiration.Inspiration;
 import com.starcrosser.inspiration.block.ModBlocks;
+import com.starcrosser.inspiration.voidenergy.ModVoidEnergy;
 import com.starcrosser.inspiration.block.custom.EmpoweredTNTBlock;
 import com.starcrosser.inspiration.injection.ModInjection;
 import com.starcrosser.inspiration.injection.block.InjectionGunBlock;
@@ -59,6 +60,9 @@ public class ModBlockStatesProvider extends BlockStateProvider {
 
         // 高能机器外壳：结构模拟机的机体材料
         simpleBlock(ModBlocks.HIGH_ENERGY_MACHINE_CASING.get(), cubeAll(ModBlocks.HIGH_ENERGY_MACHINE_CASING.get()));
+        simpleBlock(ModVoidEnergy.CRACKED_BEDROCK.get(), cubeAll(ModVoidEnergy.CRACKED_BEDROCK.get()));
+        simpleBlock(ModVoidEnergy.VOID_ENERGY_EXTRACTOR.get(), cubeAll(ModVoidEnergy.VOID_ENERGY_EXTRACTOR.get()));
+        simpleBlock(ModVoidEnergy.VOID_ENERGY_RELAY.get(), cubeAll(ModVoidEnergy.VOID_ENERGY_RELAY.get()));
         // 结构模拟机的五种仓室：没有朝向，六面同图，靠面板上的标记区分
         hatchBlock(ModMultiblocks.INPUT_HATCH);
         hatchBlock(ModMultiblocks.OUTPUT_HATCH);

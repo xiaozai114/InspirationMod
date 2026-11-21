@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "C": {
+      "item": "inspiration:reinforced_core"
+    },
+    "M": {
+      "item": "minecraft:iron_ingot"
+    },
+    "S": {
+      "item": "inspiration:unstable_metal"
+    }
+  },
+  "pattern": [
+    "MSM",
+    "SCS",
+    "MSM"
+  ],
+  "result": {
+    "count": 1,
+    "id": "inspiration:void_energy_extractor"
+  }
+}

@@ -16,6 +16,7 @@ import com.starcrosser.inspiration.player.InspirationValue;
 import com.starcrosser.inspiration.radiation.RadiationAttachments;
 import com.starcrosser.inspiration.recipe.ModRecipes;
 import com.starcrosser.inspiration.util.ClientIsolationCheck;
+import com.starcrosser.inspiration.voidenergy.ModVoidEnergy;
 import org.slf4j.Logger;
 
 import com.mojang.logging.LogUtils;
@@ -75,6 +76,7 @@ public class Inspiration {
         ModBlocks.register(modEventBus);
         // 强化/强能 TNT 点燃后生成的实体类型，必须注册，否则客户端绑定渲染器时拿到的是未绑定值
         ModEntities.ENTITIES.register(modEventBus);
+        ModVoidEnergy.register(modEventBus);
         ModMachines.register();
         // 注入结构（物质束缚器 + 注入枪）同样是 Titanium 方块，单独一组注册
         ModInjection.register();

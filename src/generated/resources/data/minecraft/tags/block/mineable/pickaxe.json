@@ -31,6 +31,8 @@
     "inspiration:alkaline_reactor",
     "inspiration:rtg_generator",
     "inspiration:high_energy_machine_casing",
+    "inspiration:void_energy_extractor",
+    "inspiration:void_energy_relay",
     "inspiration:simulator_input_hatch",
     "inspiration:simulator_output_hatch",
     "inspiration:simulator_energy_port",

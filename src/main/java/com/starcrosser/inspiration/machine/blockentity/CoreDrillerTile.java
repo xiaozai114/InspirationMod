@@ -7,6 +7,7 @@ import com.hrznstudio.titanium.component.progress.ProgressBarComponent;
 import com.starcrosser.inspiration.item.custom.DrillBitItem;
 import com.starcrosser.inspiration.machine.plugin.PluginEnergyStorage;
 import com.starcrosser.inspiration.machine.spec.MachineSpec;
+import com.starcrosser.inspiration.voidenergy.ModVoidEnergy;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
@@ -237,6 +238,27 @@ public class CoreDrillerTile extends InspiredMachineTile<CoreDrillerTile> {
             }
             processedBlocks++;
         }
+        if (processedBlocks >= columnCount().total()) {
+            crackBedrockIfAble(columnCount());
+        }
+    }
+
+    /**
+     * 幽匿合金钻头挖到底时，把紧贴竖井底部的那一格基岩裂开。
+     * <p>
+     * 只认 {@link DrillBitItem#cracksBedrock()}，基础钻头照样被基岩挡住；
+     * 换过之后那一格不再是基岩，所以重复调用是幂等的，不必额外记状态。
+     */
+    private void crackBedrockIfAble(Column scan) {
+        if (!(drillSlot.getStackInSlot(0).getItem() instanceof DrillBitItem bit) || !bit.cracksBedrock()) {
+            return;
+        }
+        BlockPos bottom = getBlockPos().below(scan.total() + 1);
+        if (!level.isLoaded(bottom) || !level.getBlockState(bottom).is(Blocks.BEDROCK)) {
+            return;
+        }
+        level.setBlockAndUpdate(bottom, ModVoidEnergy.CRACKED_BEDROCK.get().defaultBlockState());
+        markForUpdate();
     }
 
     private void endRun() {

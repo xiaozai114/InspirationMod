@@ -336,6 +336,35 @@ public class ModItems {
     public static final DeferredItem<Item> MECHANICAL_PARASITE =
             ITEMS.register("mechanical_parasite", () -> new Item(new Item.Properties().rarity(Rarity.UNCOMMON)));
 
+    /* ===================== 虚空能量体系 ===================== */
+
+    /** 幽匿合金钻头：挖到底时把基岩裂成「开裂的基岩」。 */
+    public static final DeferredItem<Item> SCULK_ALLOY_DRILL_BIT =
+            ITEMS.register("sculk_alloy_drill_bit",
+                    () -> new SculkAlloyDrillBit(new Item.Properties().durability(512).stacksTo(1)
+                            .rarity(Rarity.EPIC)));
+    /** 不稳金属：不稳核心 + 8 铁锭烧出来的合金，虚空能量提取器与注入枪的主料。 */
+    public static final DeferredItem<Item> UNSTABLE_METAL =
+            ITEMS.register("unstable_metal", () -> new Item(new Item.Properties().rarity(Rarity.UNCOMMON)));
+    /** 弱化核心：强化核心经虚空能量弱化而来，零点模块的原料。 */
+    public static final DeferredItem<Item> WEAKENED_CORE =
+            ITEMS.register("weakened_core", () -> new Item(new Item.Properties().rarity(Rarity.RARE)));
+    /** 虚空等离子锭：等离子锭经虚空能量注入得到。 */
+    public static final DeferredItem<Item> VOID_PLASMA_INGOT =
+            ITEMS.register("void_plasma_ingot", () -> new Item(new Item.Properties().rarity(Rarity.RARE)));
+    /** 虚空露珠：虚空能量凝聚器的产物，也是注入末地合金的材料。 */
+    public static final DeferredItem<Item> VOID_DEW =
+            ITEMS.register("void_dew", () -> new Item(new Item.Properties().rarity(Rarity.RARE)));
+    /** 零点模块：弱化核心经物质重塑得到。 */
+    public static final DeferredItem<Item> NULL_POINT_MODULE =
+            ITEMS.register("null_point_module", () -> new Item(new Item.Properties().rarity(Rarity.EPIC)));
+    /** 零点能量增幅器：零点能发电机的插卡，最多 64 个。 */
+    public static final DeferredItem<Item> ZERO_POINT_AMPLIFIER =
+            ITEMS.register("zero_point_amplifier", () -> new Item(new Item.Properties().rarity(Rarity.EPIC)));
+    /** 虚空合金：虚空露珠注入末地合金得到，增幅器的材料。 */
+    public static final DeferredItem<Item> VOID_ALLOY =
+            ITEMS.register("void_alloy", () -> new Item(new Item.Properties().rarity(Rarity.EPIC)));
+
     public static void register(IEventBus eventBus) {
         ITEMS.register(eventBus);
     }
