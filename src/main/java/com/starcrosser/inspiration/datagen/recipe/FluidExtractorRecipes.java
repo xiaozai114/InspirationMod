@@ -20,9 +20,15 @@ public final class FluidExtractorRecipes {
     }
 
     public static void build(RecipeOutput recipeOutput) {
-        melt(recipeOutput, "ephemeral_alloy_to_molten_ephemeral_alloy",
-                Ingredient.of(ModMaterials.EPHEMERAL_ALLOY.item().get()),
-                new FluidStack(ModFluids.Fluids.MOLTEN_EPHEMERAL_ALLOY.get(), FluidExtractingRecipe.INGOT_AMOUNT));
+        // 声明了 molten 的材料：锭 -> 144 mB 自身熔融流体
+        for (com.starcrosser.inspiration.material.InspirationMaterial m : ModMaterials.ALL) {
+            if (m.moltenEntry() == null) {
+                continue;
+            }
+            melt(recipeOutput, m.baseId() + "_to_" + m.moltenId(),
+                    Ingredient.of(m.item().get()),
+                    new FluidStack(m.moltenEntry().source().get(), FluidExtractingRecipe.INGOT_AMOUNT));
+        }
 
         melt(recipeOutput, "plasma_ingot_to_molten_plasma",
                 Ingredient.of(ModMaterials.PLASMA.item().get()),

@@ -140,6 +140,7 @@ public final class ModMaterials {
             .itemId("ephemeral_alloy")
             .itemName("§d无恒合金", "§dEphemeral Alloy")
             .rarity(Rarity.EPIC)
+                    .molten(true)
             .register();
 
     /** 幽匿合金：回响碎片 + 强化深板岩融合得到，方块是注入结构的 2 级底座（硬度 4.0/12.0）。 */

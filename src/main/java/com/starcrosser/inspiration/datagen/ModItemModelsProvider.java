@@ -47,7 +47,10 @@ public class ModItemModelsProvider extends ItemModelProvider {
         basicItem(ModItems.INACTIVE_BRAIN.get());
         basicItem(ModItems.PARASITE.get());
         basicItem(ModItems.MECHANICAL_PARASITE.get());
-        basicItem(ModItems.MOLTEN_EPHEMERAL_ALLOY_BUCKET.get());
+        for (com.starcrosser.inspiration.fluid.MoltenMetals.Entry entry
+                : com.starcrosser.inspiration.fluid.MoltenMetals.ALL) {
+            basicItem(entry.bucket().get());
+        }
         basicItem(ModItems.SCULK_ALLOY_DRILL_BIT.get());
         basicItem(ModItems.UNSTABLE_METAL.get());
         basicItem(ModItems.WEAKENED_CORE.get());

@@ -70,6 +70,9 @@ public final class InspirationMaterial {
     private boolean withNugget;
     private boolean withGrit;
     private boolean withMolten;
+    /** 熔融金属的染色（ARGB）；0xFFFFFF = 不染色，贴图自带颜色。 */
+    private int moltenTint = 0xFFFFFF;
+    private com.starcrosser.inspiration.fluid.MoltenMetals.Entry moltenEntry;
 
     /* ==================== 注册期产物 ==================== */
 
@@ -195,20 +198,26 @@ public final class InspirationMaterial {
     /**
      * 是否生成熔融流体（{@code molten_<base>}）。默认关。
      * <p>
-     * 预留开关：流体的注册与贴图要配合「流体提取机」一起做，那一期才会实现。
-     * 现在打开会直接抛异常，避免开关存在却什么都不做、看不出来。
+     * 打开后会一并登记：流体类型、源、流动、桶。贴图由
+     * {@code tools/textures/gen_molten_metals.py} 按需补（只补缺失的，不覆盖已有美术）。
      */
     public InspirationMaterial molten(boolean on) {
         this.withMolten = on;
         return this;
     }
 
+    /**
+     * 熔融流体的染色（ARGB 的 RGB 部分）。{@code 0xFFFFFF} 表示不染色 —— 已经有专属贴图时就用它，
+     * 没有专属贴图才靠这个颜色把通用白色纹理染成材料色。
+     */
+    public InspirationMaterial moltenTint(int rgb) {
+        this.moltenTint = rgb & 0xFFFFFF;
+        return this;
+    }
+
     /* ==================== 注册 ==================== */
 
     public InspirationMaterial register() {
-        if (withMolten) {
-            throw new IllegalStateException("熔融流体尚未实现（等流体提取机那一期），material=" + baseId);
-        }
         this.item = ModItems.ITEMS.register(itemId, this::createItem);
         if (withBlock) {
             this.block = ModBlocks.BLOCKS.register(blockId,
@@ -223,6 +232,9 @@ public final class InspirationMaterial {
         }
         if (withGrit) {
             this.grit = ModItems.ITEMS.register(gritId, () -> new Item(new Item.Properties()));
+        }
+        if (withMolten) {
+            this.moltenEntry = com.starcrosser.inspiration.fluid.MoltenMetals.register(moltenId, moltenTint);
         }
         ModMaterials.ALL.add(this);
         return this;
@@ -256,6 +268,11 @@ public final class InspirationMaterial {
 
     public String gritId() {
         return gritId;
+    }
+
+    /** 声明了熔融流体时返回登记结果，否则为 null。 */
+    public com.starcrosser.inspiration.fluid.MoltenMetals.Entry moltenEntry() {
+        return moltenEntry;
     }
 
     public String moltenId() {

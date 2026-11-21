@@ -39,14 +39,6 @@ public class ModFluids {
                 "molten_plasma",
                 () -> new MoltenPlasma.Source(MoltenPlasma.PROPERTIES)
         );
-        public static final DeferredHolder<Fluid, BaseFlowingFluid.Flowing> FLOWING_MOLTEN_EPHEMERAL_ALLOY = FLUIDS.register(
-                "flowing_molten_ephemeral_alloy",
-                () -> new MoltenEphemeralAlloy.Flowing(MoltenEphemeralAlloy.PROPERTIES)
-        );
-        public static final DeferredHolder<Fluid, BaseFlowingFluid.Source> MOLTEN_EPHEMERAL_ALLOY = FLUIDS.register(
-                "molten_ephemeral_alloy",
-                () -> new MoltenEphemeralAlloy.Source(MoltenEphemeralAlloy.PROPERTIES)
-        );
         public static final DeferredHolder<Fluid, BaseFlowingFluid.Flowing> FLOWING_NUTRIENT_FLUID = FLUIDS.register(
                 "flowing_nutrient_fluid",
                 () -> new NutrientFluid.Flowing(NutrientFluid.PROPERTIES)
@@ -72,11 +64,6 @@ public class ModFluids {
                 FLUID_TYPES.register(
                         "molten_plasma",
                         MoltenPlasmaFluidType::new
-                );
-        public static final DeferredHolder<FluidType, MoltenEphemeralAlloyFluidType> MOLTEN_EPHEMERAL_ALLOY_TYPE =
-                FLUID_TYPES.register(
-                        "molten_ephemeral_alloy",
-                        MoltenEphemeralAlloyFluidType::new
                 );
         public static final DeferredHolder<FluidType, NutrientFluidType> NUTRIENT_FLUID_TYPE =
                 FLUID_TYPES.register(

@@ -66,7 +66,7 @@ public final class AssemblingRecipes {
                         Ingredient.of(ModMaterials.ENERGIZED_REDSTONE.item().get())),
                 List.of(1, 4),
                 List.of(new FluidRequirement(
-                        FluidIngredient.of(ModFluids.Fluids.MOLTEN_EPHEMERAL_ALLOY.get()),
+                        FluidIngredient.of(ModMaterials.EPHEMERAL_ALLOY.moltenEntry().source().get()),
                         576)),
                 new ItemStack(ModItems.ZERO_POINT_AMPLIFIER.get()),
                 ASSEMBLE_DURATION, ASSEMBLE_ENERGY_PER_TICK);
