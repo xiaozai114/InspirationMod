@@ -14,6 +14,8 @@ import com.starcrosser.inspiration.machine.block.MatterReshaperMachineBlock;
 import com.starcrosser.inspiration.machine.block.MineralTwisterBlock;
 import com.starcrosser.inspiration.machine.block.RawRefinerBlock;
 import com.starcrosser.inspiration.machine.block.RtgGeneratorBlock;
+import com.starcrosser.inspiration.machine.block.VoidCondenserBlock;
+import com.starcrosser.inspiration.machine.block.ZeroPointGeneratorBlock;
 import com.starcrosser.inspiration.machine.spec.MachineSpec;
 import com.starcrosser.inspiration.registry.MachineRegistry;
 import net.minecraft.world.item.DyeColor;
@@ -64,6 +66,12 @@ public class ModMachines {
     private static final MachineSpec FURNACE_T2 = MachineSpec.of(2, 1, DyeColor.YELLOW);
     private static final MachineSpec FURNACE_T3 = MachineSpec.of(3, 1, DyeColor.YELLOW);
 
+    /** 虚空能量凝聚器：等级 1，没有输入槽（只吃能量）。 */
+    private static final MachineSpec VOID_CONDENSER_T1 = MachineSpec.of(1, 0, DyeColor.PURPLE);
+
+    /** 零点能发电机：等级 1，没有输入槽（增幅器是独立槽位）。 */
+    private static final MachineSpec ZERO_POINT_GENERATOR_T1 = MachineSpec.of(1, 0, DyeColor.LIME);
+
     /** 灵感装配台：等级 1，4 个物品输入槽 + 1 个流体输入槽。 */
     private static final MachineSpec ASSEMBLER_T1 = MachineSpec.of(1, 4, 1, DyeColor.YELLOW);
     /** 高能灵感装配台：等级 2，6 个物品输入槽 + 2 个流体输入槽。 */
@@ -99,6 +107,10 @@ public class ModMachines {
     public static BlockWithTile INSPIRATION_FURNACE;
     public static BlockWithTile ENERGIZED_INSPIRATION_FURNACE;
     public static BlockWithTile HIGH_ENERGY_INSPIRATION_FURNACE;
+    /** 虚空能量凝聚器：吃电与团簇 ve，产虚空露珠。 */
+    public static BlockWithTile VOID_CONDENSER;
+    /** 零点能发电机：每分钟按增幅器数量产 FE，缓冲 128 GFE（long）。 */
+    public static BlockWithTile ZERO_POINT_GENERATOR;
 
     /**
      * 一次性注册所有机器。
@@ -175,6 +187,14 @@ public class ModMachines {
                 "高能灵感高炉", "High-Energy Inspiration Furnace",
                 () -> new InspirationFurnaceBlock("high_energy_inspiration_furnace", FURNACE_T3,
                         () -> HIGH_ENERGY_INSPIRATION_FURNACE, 5.0F, 12.0F));
+        VOID_CONDENSER = MachineRegistry.register(registry, "void_condenser",
+                "虚空能量凝聚器", "Void Energy Condenser",
+                () -> new VoidCondenserBlock("void_condenser", VOID_CONDENSER_T1,
+                        () -> VOID_CONDENSER, 4.5F, 9.0F));
+        ZERO_POINT_GENERATOR = MachineRegistry.register(registry, "zero_point_generator",
+                "零点能发电机", "Zero-Point Generator",
+                () -> new ZeroPointGeneratorBlock("zero_point_generator",
+                        () -> ZERO_POINT_GENERATOR, 5.5F, 14.0F));
 
         // 发电类：不跑配方，只烧燃料往外输电
         ALKALINE_REACTOR = MachineRegistry.register(registry, "alkaline_reactor",

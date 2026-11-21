@@ -132,6 +132,16 @@ public final class MachineBlockRecipes {
                 .unlockedBy(getHasName(ModMaterials.JADE_STEEL.item().get()), has(ModMaterials.JADE_STEEL.item().get()))
                 .save(recipeOutput);
 
+        // 零点能发电机：4 虚空等离子锭 + 4 钚锭 + 1 零点模块
+        machine(recipeOutput, ModMachines.ZERO_POINT_GENERATOR.getBlock(),
+                ModItems.VOID_PLASMA_INGOT.get(), ModMaterials.PLUTONIUM.item().get(),
+                ModItems.NULL_POINT_MODULE.get(), null, ModItems.NULL_POINT_MODULE.get());
+
+        // 虚空能量凝聚器：4 虚空等离子锭 + 4 铷锭 + 1 弱化核心
+        machine(recipeOutput, ModMachines.VOID_CONDENSER.getBlock(),
+                ModItems.VOID_PLASMA_INGOT.get(), ModMaterials.RUBIDIUM.item().get(),
+                ModItems.WEAKENED_CORE.get(), null, ModItems.WEAKENED_CORE.get());
+
         // 灵感高炉：5 铁 + 3 镍 + 1 强化核心（镍是副材料：上面中间 + 中间两侧）
         machine(recipeOutput, ModMachines.INSPIRATION_FURNACE.getBlock(),
                 Items.IRON_INGOT, ModMaterials.NICKEL.item().get(),

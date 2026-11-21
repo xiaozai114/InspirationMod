@@ -215,6 +215,20 @@ def main():
     machine(VOID_DARK, (0x14, 0x0A, 0x22), SCULK_LIT,
             [(7, 5), (9, 7), (7, 9), (5, 7), (7, 7)]).save(BLOCK_DIR / "void_energy_relay.png")
 
+    machine(VOID_BODY, VOID_DARK, VOID_GLOW,
+            [(7, 7), (8, 8), (6, 8), (8, 6), (7, 11)]).save(BLOCK_DIR / "void_condenser_front.png")
+    machine(VOID_BODY, VOID_DARK, SCULK_LIT, [(4, 4), (4, 11), (11, 4), (11, 11)]) \
+        .save(BLOCK_DIR / "void_condenser_side.png")
+    machine(VOID_DARK, (0x14, 0x0A, 0x22), VOID_GLOW, [(7, 4), (7, 7), (7, 10)]) \
+        .save(BLOCK_DIR / "void_condenser_top.png")
+
+    machine((0x20, 0x3A, 0x2E), (0x0E, 0x1A, 0x14), (0x7B, 0xFF, 0xC4),
+            [(7, 7), (8, 8), (6, 8), (8, 6), (7, 11)]).save(BLOCK_DIR / "zero_point_generator_front.png")
+    machine((0x20, 0x3A, 0x2E), (0x0E, 0x1A, 0x14), (0x7B, 0xFF, 0xC4),
+            [(4, 4), (4, 11), (11, 4), (11, 11)]).save(BLOCK_DIR / "zero_point_generator_side.png")
+    machine((0x0E, 0x1A, 0x14), (0x08, 0x10, 0x0C), (0xDC, 0xFF, 0xEE),
+            [(7, 4), (7, 7), (7, 10)]).save(BLOCK_DIR / "zero_point_generator_top.png")
+
     cluster_glow().save(ENTITY_DIR / "void_cluster.png")
     print("wrote void energy textures")
 

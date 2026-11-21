@@ -1,0 +1,12 @@
+{
+  "type": "inspiration:reshaping",
+  "duration": 600,
+  "energy_per_tick": 400,
+  "input": {
+    "item": "inspiration:weakened_core"
+  },
+  "result": {
+    "count": 1,
+    "id": "inspiration:null_point_module"
+  }
+}

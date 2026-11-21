@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_null_point_module": {
+      "conditions": {
+        "items": [
+          {
+            "items": "inspiration:null_point_module"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "inspiration:zero_point_generator"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_null_point_module"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "inspiration:zero_point_generator"
+    ]
+  }
+}

@@ -60,6 +60,18 @@ public final class AssemblingRecipes {
                 new ItemStack(ModItems.RECYCLING_PLUGIN.get()),
                 ASSEMBLE_DURATION, ASSEMBLE_ENERGY_PER_TICK);
 
+        // 零点能量增幅器：虚空合金 + 4 注能红石锭 + 576 mB 液态金属
+        // 注：「液态无恒合金」目前没有对应的流体，暂用液态等离子代替，等流体补上再换。
+        assembling(recipeOutput, "assembling/zero_point_amplifier",
+                List.of(Ingredient.of(ModItems.VOID_ALLOY.get()),
+                        Ingredient.of(ModMaterials.ENERGIZED_REDSTONE.item().get())),
+                List.of(1, 4),
+                List.of(new FluidRequirement(
+                        FluidIngredient.of(ModFluids.Fluids.MOLTEN_PLASMA.get()),
+                        576)),
+                new ItemStack(ModItems.ZERO_POINT_AMPLIFIER.get()),
+                ASSEMBLE_DURATION, ASSEMBLE_ENERGY_PER_TICK);
+
         // 高能核心：强能核心 + 钫盐 + 强化深板岩 —— 三样材料缺一不可
         assembling(recipeOutput, "assembling/high_energy_core",
                 List.of(Ingredient.of(ModItems.POWERFUL_CORE.get()),

@@ -1,0 +1,27 @@
+{
+  "type": "inspiration:assembling",
+  "counts": [
+    1,
+    4
+  ],
+  "fluids": [
+    {
+      "amount": 576,
+      "ingredient": {
+        "fluid": "inspiration:molten_plasma"
+      }
+    }
+  ],
+  "ingredients": [
+    {
+      "item": "inspiration:void_alloy"
+    },
+    {
+      "item": "inspiration:energized_redstone_ingot"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "inspiration:zero_point_amplifier"
+  }
+}

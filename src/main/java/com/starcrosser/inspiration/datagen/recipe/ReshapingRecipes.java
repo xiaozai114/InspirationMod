@@ -88,6 +88,11 @@ public final class ReshapingRecipes {
                 new ItemStack(ModItems.SCULK_ALLOY_DRILL_BIT.get()),
                 PLASMA_DURATION, PLASMA_ENERGY_PER_TICK);
 
+        // 弱化核心 -> 零点模块：零点能发电机的核心部件
+        reshaping(recipeOutput, "reshaping/null_point_module", 1,
+                Ingredient.of(ModItems.WEAKENED_CORE.get()), null,
+                new ItemStack(ModItems.NULL_POINT_MODULE.get()), PLASMA_DURATION, PLASMA_ENERGY_PER_TICK);
+
         // 玄武岩 -> 玄武岩基底：注入配方的底材
         reshaping(recipeOutput, "reshaping/basalt_base_from_basalt", 1,
                 Ingredient.of(Items.BASALT), null,
