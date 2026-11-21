@@ -166,6 +166,8 @@ public class ModZhCnLangProvider extends LanguageProvider {
 
         // 流体
         add("fluid_type.inspiration.inspiration_charge", "灵感充能");
+        add("fluid_type.inspiration.molten_ephemeral_alloy", "液态无恒合金");
+        add("item.inspiration.molten_ephemeral_alloy_bucket", "液态无恒合金桶");
         add("fluid_type.inspiration.molten_plasma", "液态等离子");
 
         // 方块

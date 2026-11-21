@@ -5,6 +5,7 @@ import com.starcrosser.inspiration.Inspiration;
 import com.starcrosser.inspiration.client.extensions.EndAlloyShieldClientExtensions;
 import com.starcrosser.inspiration.client.extensions.InspirationChargeClientExtensions;
 import com.starcrosser.inspiration.client.extensions.MindFluidClientExtensions;
+import com.starcrosser.inspiration.client.extensions.MoltenEphemeralAlloyClientExtensions;
 import com.starcrosser.inspiration.client.extensions.MoltenPlasmaClientExtensions;
 import com.starcrosser.inspiration.client.extensions.NutrientFluidClientExtensions;
 import com.starcrosser.inspiration.fluid.ModFluids;
@@ -26,6 +27,8 @@ public class ClientExtensionsHandler {
         event.registerFluidType(extensions, ModFluids.FluidsTypes.MIND_FLUID_TYPE.get());
         event.registerFluidType(new InspirationChargeClientExtensions(),
                 ModFluids.FluidsTypes.INSPIRATION_CHARGE_TYPE.get());
+        event.registerFluidType(new MoltenEphemeralAlloyClientExtensions(),
+                ModFluids.FluidsTypes.MOLTEN_EPHEMERAL_ALLOY_TYPE.get());
         event.registerFluidType(new MoltenPlasmaClientExtensions(),
                 ModFluids.FluidsTypes.MOLTEN_PLASMA_TYPE.get());
         event.registerFluidType(new NutrientFluidClientExtensions(),

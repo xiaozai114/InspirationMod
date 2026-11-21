@@ -20,6 +20,10 @@ public final class FluidExtractorRecipes {
     }
 
     public static void build(RecipeOutput recipeOutput) {
+        melt(recipeOutput, "ephemeral_alloy_to_molten_ephemeral_alloy",
+                Ingredient.of(ModMaterials.EPHEMERAL_ALLOY.item().get()),
+                new FluidStack(ModFluids.Fluids.MOLTEN_EPHEMERAL_ALLOY.get(), FluidExtractingRecipe.INGOT_AMOUNT));
+
         melt(recipeOutput, "plasma_ingot_to_molten_plasma",
                 Ingredient.of(ModMaterials.PLASMA.item().get()),
                 new FluidStack(ModFluids.Fluids.MOLTEN_PLASMA.get(), FluidExtractingRecipe.INGOT_AMOUNT));

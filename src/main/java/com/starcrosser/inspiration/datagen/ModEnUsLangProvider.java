@@ -161,6 +161,8 @@ public class ModEnUsLangProvider extends LanguageProvider {
         add(ModMultiblocks.STRUCTURE_SIMULATOR.getBlock(), "Structure Simulator");
         // 流体
         add("fluid_type.inspiration.inspiration_charge", "Inspiration Charge");
+        add("fluid_type.inspiration.molten_ephemeral_alloy", "Molten Ephemeral Alloy");
+        add("item.inspiration.molten_ephemeral_alloy_bucket", "Molten Ephemeral Alloy Bucket");
         add("fluid_type.inspiration.molten_plasma", "Molten Plasma");
         // 方块
         add(ModBlocks.LIGNITE_BLOCK.get(), "lignite block");

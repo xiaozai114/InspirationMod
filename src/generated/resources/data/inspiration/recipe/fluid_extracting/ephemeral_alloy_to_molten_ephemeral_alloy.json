@@ -1,0 +1,10 @@
+{
+  "type": "inspiration:fluid_extracting",
+  "input": {
+    "item": "inspiration:ephemeral_alloy"
+  },
+  "result": {
+    "amount": 144,
+    "id": "inspiration:molten_ephemeral_alloy"
+  }
+}
