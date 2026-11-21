@@ -29,6 +29,13 @@ public final class InjectionRecipes {
                 1, 50_000, 150_000,
                 new ItemStack(ModMaterials.ENERGIZED_JADE_STEEL.item().get()));
 
+        // 末地合金 + 虚空露珠 -> 虚空合金（2 级；枪里必须恰好 1 FE）
+        injection(recipeOutput, "injection/void_alloy",
+                Ingredient.of(ModMaterials.END_ALLOY.item().get()),
+                Ingredient.of(ModItems.VOID_DEW.get()),
+                2, 1, 1,
+                new ItemStack(ModItems.VOID_ALLOY.get()));
+
         // 玄武岩基底 + 下界合金碎片 -> 3 玄武岩合金
         injection(recipeOutput, "injection/basalt_alloy",
                 Ingredient.of(ModItems.BASALT_BASE.get()),

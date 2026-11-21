@@ -127,6 +127,21 @@ public class ModBlockStatesProvider extends BlockStateProvider {
             };
         });
         simpleBlockItem(block, idle);
+
+        Block voidGun = ModInjection.VOID_INJECTION_GUN.getBlock();
+        ModelFile voidIdle = gunModel("void_injection_gun", "injection_gun_front");
+        ModelFile voidLinked = gunModel("void_injection_gun_linked", "injection_gun_front_linked");
+        getVariantBuilder(voidGun).forAllStates(state -> {
+            Direction direction = state.getValue(RotatableBlock.FACING_ALL);
+            ConfiguredModel.Builder<?> builder = ConfiguredModel.builder()
+                    .modelFile(state.getValue(InjectionGunBlock.LINKED) ? voidLinked : voidIdle);
+            return switch (direction) {
+                case UP -> builder.rotationX(270).build();
+                case DOWN -> builder.rotationX(90).build();
+                default -> builder.rotationY(((int) direction.toYRot() + 180) % 360).build();
+            };
+        });
+        simpleBlockItem(voidGun, voidIdle);
     }
 
     private ModelFile gunModel(String name, String muzzle) {

@@ -1,0 +1,16 @@
+{
+  "type": "inspiration:injection",
+  "base": {
+    "item": "inspiration:end_alloy"
+  },
+  "inject": {
+    "item": "inspiration:void_dew"
+  },
+  "max_energy": 1,
+  "min_energy": 1,
+  "result": {
+    "count": 1,
+    "id": "inspiration:void_alloy"
+  },
+  "tier": 2
+}

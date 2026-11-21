@@ -3,6 +3,7 @@ package com.starcrosser.inspiration.datagen;
 import com.starcrosser.inspiration.datagen.recipe.AssemblingRecipes;
 import com.starcrosser.inspiration.datagen.recipe.CookingRecipes;
 import com.starcrosser.inspiration.datagen.recipe.CraftingRecipes;
+import com.starcrosser.inspiration.datagen.recipe.VoidInjectionRecipes;
 import com.starcrosser.inspiration.datagen.recipe.FluidExtractorRecipes;
 import com.starcrosser.inspiration.datagen.recipe.FranciumRecipes;
 import com.starcrosser.inspiration.datagen.recipe.FusionRecipes;
@@ -70,6 +71,7 @@ public class ModRecipesProvider extends RecipeProvider {
 
         // 注入
         InjectionRecipes.build(recipeOutput);
+        VoidInjectionRecipes.build(recipeOutput);
 
         // 流体提取机与原料精炼机
         FluidExtractorRecipes.build(recipeOutput);

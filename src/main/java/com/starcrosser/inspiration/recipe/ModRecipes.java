@@ -16,6 +16,8 @@ import com.starcrosser.inspiration.machine.recipe.ReshapingRecipe;
 import com.starcrosser.inspiration.machine.recipe.ReshapingRecipeSerializer;
 import com.starcrosser.inspiration.machine.recipe.TwistingRecipe;
 import com.starcrosser.inspiration.machine.recipe.TwistingRecipeSerializer;
+import com.starcrosser.inspiration.voidenergy.recipe.VoidInjectionRecipe;
+import com.starcrosser.inspiration.voidenergy.recipe.VoidInjectionRecipeSerializer;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.crafting.RecipeSerializer;
@@ -83,4 +85,11 @@ public class ModRecipes {
     public static final DeferredHolder<RecipeType<?>, RecipeType<InjectionRecipe>> INJECTION_TYPE =
             TYPES.register("injection", () -> RecipeType.simple(
                     ResourceLocation.fromNamespaceAndPath(Inspiration.MODID, "injection")));
+
+    // 虚空注入（只消耗虚空能量）
+    public static final DeferredHolder<RecipeSerializer<?>, RecipeSerializer<VoidInjectionRecipe>> VOID_INJECTION_SERIALIZER =
+            SERIALIZERS.register("void_injection", VoidInjectionRecipeSerializer::new);
+    public static final DeferredHolder<RecipeType<?>, RecipeType<VoidInjectionRecipe>> VOID_INJECTION_TYPE =
+            TYPES.register("void_injection", () -> RecipeType.simple(
+                    ResourceLocation.fromNamespaceAndPath(Inspiration.MODID, "void_injection")));
 }

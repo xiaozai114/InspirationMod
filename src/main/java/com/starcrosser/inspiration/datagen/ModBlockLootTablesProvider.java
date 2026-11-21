@@ -71,6 +71,7 @@ public class ModBlockLootTablesProvider extends BlockLootSubProvider {
         // 注入结构的两个方块同样注册在 Titanium 的注册表中
         dropSelf(ModInjection.MATTER_BINDER.getBlock());
         dropSelf(ModInjection.INJECTION_GUN.getBlock());
+        dropSelf(ModInjection.VOID_INJECTION_GUN.getBlock());
 
         // 虚空能量体系：提取器与中继器掉落自身；开裂的基岩不可破坏，掉落表为空
         dropSelf(ModVoidEnergy.VOID_ENERGY_EXTRACTOR.get());
@@ -109,6 +110,7 @@ public class ModBlockLootTablesProvider extends BlockLootSubProvider {
         blocks.add(ModMultiblocks.STRUCTURE_SIMULATOR.getBlock());
         blocks.add(ModInjection.MATTER_BINDER.getBlock());
         blocks.add(ModInjection.INJECTION_GUN.getBlock());
+        blocks.add(ModInjection.VOID_INJECTION_GUN.getBlock());
         blocks.add(ModVoidEnergy.CRACKED_BEDROCK.get());
         blocks.add(ModVoidEnergy.VOID_ENERGY_EXTRACTOR.get());
         blocks.add(ModVoidEnergy.VOID_ENERGY_RELAY.get());

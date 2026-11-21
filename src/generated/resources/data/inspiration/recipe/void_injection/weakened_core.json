@@ -1,0 +1,12 @@
+{
+  "type": "inspiration:void_injection",
+  "base": {
+    "item": "inspiration:reinforced_core"
+  },
+  "max_ve": 256,
+  "min_ve": 64,
+  "result": {
+    "count": 1,
+    "id": "inspiration:weakened_core"
+  }
+}

@@ -1,0 +1,50 @@
+{
+  "variants": {
+    "facing=down,linked=false": {
+      "model": "inspiration:block/void_injection_gun",
+      "x": 90
+    },
+    "facing=down,linked=true": {
+      "model": "inspiration:block/void_injection_gun_linked",
+      "x": 90
+    },
+    "facing=east,linked=false": {
+      "model": "inspiration:block/void_injection_gun",
+      "y": 90
+    },
+    "facing=east,linked=true": {
+      "model": "inspiration:block/void_injection_gun_linked",
+      "y": 90
+    },
+    "facing=north,linked=false": {
+      "model": "inspiration:block/void_injection_gun"
+    },
+    "facing=north,linked=true": {
+      "model": "inspiration:block/void_injection_gun_linked"
+    },
+    "facing=south,linked=false": {
+      "model": "inspiration:block/void_injection_gun",
+      "y": 180
+    },
+    "facing=south,linked=true": {
+      "model": "inspiration:block/void_injection_gun_linked",
+      "y": 180
+    },
+    "facing=up,linked=false": {
+      "model": "inspiration:block/void_injection_gun",
+      "x": 270
+    },
+    "facing=up,linked=true": {
+      "model": "inspiration:block/void_injection_gun_linked",
+      "x": 270
+    },
+    "facing=west,linked=false": {
+      "model": "inspiration:block/void_injection_gun",
+      "y": 270
+    },
+    "facing=west,linked=true": {
+      "model": "inspiration:block/void_injection_gun_linked",
+      "y": 270
+    }
+  }
+}

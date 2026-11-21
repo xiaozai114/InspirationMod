@@ -16,11 +16,15 @@ public final class ModInjection {
 
     public static BlockWithTile MATTER_BINDER;
     public static BlockWithTile INJECTION_GUN;
+    /** 虚空注入枪：同样的结构，吃虚空能量而不是 FE。 */
+    public static BlockWithTile VOID_INJECTION_GUN;
 
     public static void register() {
         DeferredRegistryHelper registry = new DeferredRegistryHelper(Inspiration.MODID);
         MATTER_BINDER = registry.registerBlockWithTile("matter_binder", MatterBinderBlock::new, null);
         INJECTION_GUN = registry.registerBlockWithTile("injection_gun", InjectionGunBlock::new, null);
+        VOID_INJECTION_GUN = registry.registerBlockWithTile("void_injection_gun",
+                com.starcrosser.inspiration.voidenergy.block.VoidInjectionGunBlock::new, null);
     }
 
     private ModInjection() {

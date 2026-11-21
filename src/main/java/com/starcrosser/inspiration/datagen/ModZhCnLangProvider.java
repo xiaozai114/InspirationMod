@@ -60,6 +60,7 @@ public class ModZhCnLangProvider extends LanguageProvider {
         add("effect.inspiration.mechanical_parasite", "机械寄生");
         add("block.inspiration.cracked_bedrock", "开裂的基岩");
         add("block.inspiration.void_energy_extractor", "虚空能量提取器");
+        add("block.inspiration.void_injection_gun", "虚空注入枪");
         add("block.inspiration.void_energy_relay", "虚空能量中继器");
         add("item.inspiration.sculk_alloy_drill_bit", "幽匿合金钻头");
         add("item.inspiration.unstable_metal", "不稳金属");

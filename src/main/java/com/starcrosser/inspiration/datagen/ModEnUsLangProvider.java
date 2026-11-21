@@ -59,6 +59,7 @@ public class ModEnUsLangProvider extends LanguageProvider {
         add("effect.inspiration.mechanical_parasite", "Mechanically Parasitized");
         add("block.inspiration.cracked_bedrock", "Cracked Bedrock");
         add("block.inspiration.void_energy_extractor", "Void Energy Extractor");
+        add("block.inspiration.void_injection_gun", "Void Injection Gun");
         add("block.inspiration.void_energy_relay", "Void Energy Relay");
         add("item.inspiration.sculk_alloy_drill_bit", "Sculk Alloy Drill Bit");
         add("item.inspiration.unstable_metal", "Unstable Metal");

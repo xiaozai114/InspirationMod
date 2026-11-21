@@ -1,0 +1,12 @@
+{
+  "type": "inspiration:void_injection",
+  "base": {
+    "item": "inspiration:plasma_ingot"
+  },
+  "max_ve": 128,
+  "min_ve": 32,
+  "result": {
+    "count": 1,
+    "id": "inspiration:void_plasma_ingot"
+  }
+}
