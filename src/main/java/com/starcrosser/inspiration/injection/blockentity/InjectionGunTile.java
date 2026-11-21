@@ -75,7 +75,7 @@ public class InjectionGunTile extends PoweredTile<InjectionGunTile> {
     private static final int PLUGIN_SLOT_POS = 1;
 
     @Save
-    private SidedInventoryComponent<InjectionGunTile> injectSlot;
+    protected SidedInventoryComponent<InjectionGunTile> injectSlot;
 
     @Save
     private SidedInventoryComponent<InjectionGunTile> pluginSlots;
@@ -88,14 +88,14 @@ public class InjectionGunTile extends PoweredTile<InjectionGunTile> {
     private BlockPos binderPos;
 
     /** 上一刻的红石状态，用来识别上升沿。 */
-    private boolean powered;
+    protected boolean powered;
 
     /** 正在进行的注入；空闲时为 null。 */
     @Nullable
-    private InjectionRecipe activeRecipe;
+    protected InjectionRecipe activeRecipe;
     @Nullable
-    private InjectionOutcome activeOutcome;
-    private int remainingTicks;
+    protected InjectionOutcome activeOutcome;
+    protected int remainingTicks;
 
     /**
      * 进行中注入的配方 id，**只用于存档**。
@@ -105,7 +105,7 @@ public class InjectionGunTile extends PoweredTile<InjectionGunTile> {
      * 因此这里只存 id，配方对象在第一次 serverTick 里按 id 找回。
      */
     @Nullable
-    private ResourceLocation activeRecipeId;
+    protected ResourceLocation activeRecipeId;
 
     public InjectionGunTile(BlockPos pos, BlockState state) {
         super((BasicTileBlock<InjectionGunTile>) ModInjection.INJECTION_GUN.getBlock(),
@@ -255,9 +255,8 @@ public class InjectionGunTile extends PoweredTile<InjectionGunTile> {
         powered = signal > 0;
         if (remainingTicks > 0) {
             // 读档恢复的注入：配方对象还没解析出来，先按存档里的 id 找回
-            if (activeRecipe == null) {
-                this.activeRecipe = resolveActiveRecipe(level);
-                if (activeRecipe == null) {
+            if (!hasResolvedRecipe()) {
+                if (!ensureRecipeResolved(level)) {
                     // 配方已经不存在了（数据包/配方被改）：这次注入作废。
                     // 不补触发结算 —— 否则可能在玩家不知情时凭空爆炸。
                     this.activeOutcome = null;
@@ -270,9 +269,25 @@ public class InjectionGunTile extends PoweredTile<InjectionGunTile> {
         }
     }
 
+    /** 这次注入的配方对象是否已经拿到。虚空注入枪用自己那份配方字段，需要覆写。 */
+    protected boolean hasResolvedRecipe() {
+        return activeRecipe != null;
+    }
+
+    /** 读档后按 id 找回配方；失败返回 false（调用方会作废这次注入，不补结算）。 */
+    protected boolean ensureRecipeResolved(Level level) {
+        this.activeRecipe = resolveActiveRecipe(level);
+        return activeRecipe != null;
+    }
+
+    /** 这次注入成功时要产出的物品；没有配方时为空。 */
+    protected ItemStack pendingResult() {
+        return activeRecipe == null ? ItemStack.EMPTY : activeRecipe.result();
+    }
+
     /** 按存档里的配方 id 找回配方；找不到返回 null。 */
     @Nullable
-    private InjectionRecipe resolveActiveRecipe(Level level) {
+    protected InjectionRecipe resolveActiveRecipe(Level level) {
         if (activeRecipeId == null) {
             return null;
         }
@@ -299,7 +314,7 @@ public class InjectionGunTile extends PoweredTile<InjectionGunTile> {
 
     /* ============================ 注入流程 ============================ */
 
-    private void startInjection(Level level, BlockPos pos, BlockState state) {
+    protected void startInjection(Level level, BlockPos pos, BlockState state) {
         if (remainingTicks > 0) {
             return;
         }
@@ -362,7 +377,7 @@ public class InjectionGunTile extends PoweredTile<InjectionGunTile> {
         return found;
     }
 
-    private void advanceInjection(Level level, BlockPos pos, BlockState state) {
+    protected void advanceInjection(Level level, BlockPos pos, BlockState state) {
         MatterBinderTile binder = boundBinder();
         Direction facing = state.hasProperty(RotatableBlock.FACING_ALL)
                 ? state.getValue(RotatableBlock.FACING_ALL)
@@ -376,21 +391,21 @@ public class InjectionGunTile extends PoweredTile<InjectionGunTile> {
         finishInjection(level, pos, binder);
     }
 
-    private void finishInjection(Level level, BlockPos pos, @Nullable MatterBinderTile binder) {
-        InjectionRecipe recipe = activeRecipe;
+    protected void finishInjection(Level level, BlockPos pos, @Nullable MatterBinderTile binder) {
+        ItemStack result = pendingResult();
         InjectionOutcome outcome = activeOutcome;
         this.activeRecipe = null;
         this.activeRecipeId = null;
         this.activeOutcome = null;
         this.remainingTicks = 0;
-        if (recipe == null || outcome == null) {
+        if (result.isEmpty() || outcome == null) {
             return;
         }
 
         BlockPos target = binder != null ? binder.getBlockPos() : pos;
         Vec3 center = Vec3.atCenterOf(target).add(0.0, 0.35, 0.0);
         switch (outcome) {
-            case SUCCESS -> succeed(level, binder, target, recipe, center);
+            case SUCCESS -> succeed(level, binder, target, result, center);
             case INSUFFICIENT -> {
                 InjectionBeam.fizzle(level, center);
                 level.playSound(null, target, SoundEvents.FIRE_EXTINGUISH, SoundSource.BLOCKS, 0.7F, 0.7F);
@@ -400,9 +415,9 @@ public class InjectionGunTile extends PoweredTile<InjectionGunTile> {
         markForUpdate();
     }
 
-    private void succeed(Level level, @Nullable MatterBinderTile binder, BlockPos target,
-                         InjectionRecipe recipe, Vec3 center) {
-        ItemStack result = recipe.result().copy();
+    protected void succeed(Level level, @Nullable MatterBinderTile binder, BlockPos target,
+                           ItemStack pending, Vec3 center) {
+        ItemStack result = pending.copy();
         InjectionBeam.flash(level, center);
         level.playSound(null, target, SoundEvents.PLAYER_LEVELUP, SoundSource.BLOCKS, 0.7F, 1.8F);
         if (binder != null && binder.depositResult(result)) {
@@ -412,7 +427,7 @@ public class InjectionGunTile extends PoweredTile<InjectionGunTile> {
         Block.popResource(level, target.above(), result);
     }
 
-    private void overload(Level level, Vec3 center) {
+    protected void overload(Level level, Vec3 center) {
         if (level instanceof ServerLevel) {
             level.explode(null, center.x, center.y, center.z, OVERLOAD_RADIUS, Level.ExplosionInteraction.BLOCK);
         }

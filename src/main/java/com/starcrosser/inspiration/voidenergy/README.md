@@ -47,10 +47,20 @@
 团簇是一张始终朝向摄像机的发光面片（`VoidClusterRenderer`），颜色取阶段色、尺寸随能量
 在 0.45~0.8 之间长大。不开剔除、两面都画 —— 面片会随视角翻转，靠背面剔除会周期性闪没。
 
-## 4. 未完成
+## 4. 虚空注入（进行中）
 
-- 虚空注入：新方块 `void_injection_gun` 顶替注入结构的枪位；配方带 FE 窗口 + ve 窗口，
-  扣 `max(1, ve/10)` 并对这个扣量比窗口（> 上限爆炸、< 下限不生效）。
+**只吃 ve，不吃 FE**：虚空注入枪没有能量缓冲，配方也只有 ve 窗口。虚空合金例外 ——
+它走**普通注入**（末地合金 + 虚空露珠，tier 2，FE 窗口 `{1}`），不消耗 ve。
+
+- 配方：`VoidInjectionRecipe`（base 必填、inject 可空、tier、veMin、veMax、result、duration）。
+- 判定：`cost = max(1, ve/10)`，**拿 cost 比窗口**：`cost > veMax` 过载爆炸、`cost < veMin` 不生效
+  （材料照扣，与普通注入一致）、否则成功并扣 `cost`。
+- 枪：`VoidInjectionGunTile extends InjectionGunTile`，只重写
+  `startInjection` / `hasResolvedRecipe` / `ensureRecipeResolved` / `pendingResult`；
+  父类已把这四个方法与 `activeRecipe` 等字段开放为 `protected`，流程（绑定、红石上升沿、
+  进度、激光、爆炸）完全复用。
+- 中继器接入：`VoidEnergyNetwork.findCluster(level, gunPos)`，同格团簇或半径 2 内的中继器。
 - 虚空能量凝聚器：最多 16 ve/刻，每 1024 ve 产 1 虚空露珠。
 - 零点能发电机：long 能量缓冲（128 GFE），单槽最多 64 个增幅器，每分钟产 `1 + n×1.2G` FE。
-- 相关配方：弱化核心、虚空等离子锭、虚空合金（注入）；零点模块（重塑）；零点增幅器（装配）。
+- 相关配方：弱化核心、虚空等离子锭（虚空注入）；虚空合金（普通注入）；零点模块（重塑）；
+  零点增幅器（装配：液态无恒合金 576 mB + 注能红石锭 ×4 + 虚空合金）。
