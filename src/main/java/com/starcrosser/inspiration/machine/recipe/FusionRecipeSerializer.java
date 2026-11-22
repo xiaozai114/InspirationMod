@@ -36,6 +36,9 @@ public class FusionRecipeSerializer implements RecipeSerializer<FusionRecipe> {
         // 第三个输入槽给强能物质融合机用；没有写 third_input 时同步 Ingredient.EMPTY
         Ingredient.CONTENTS_STREAM_CODEC.encode(buffer, recipe.thirdInput());
         buffer.writeVarInt(recipe.thirdCount());
+        // 第四个输入槽给高能物质融合机用
+        Ingredient.CONTENTS_STREAM_CODEC.encode(buffer, recipe.fourthInput());
+        buffer.writeVarInt(recipe.fourthCount());
     }
 
     private static FusionRecipe decode(RegistryFriendlyByteBuf buffer) {
@@ -48,7 +51,9 @@ public class FusionRecipeSerializer implements RecipeSerializer<FusionRecipe> {
         int energyPerTick = buffer.readVarInt();
         Ingredient thirdInput = Ingredient.CONTENTS_STREAM_CODEC.decode(buffer);
         int thirdCount = buffer.readVarInt();
+        Ingredient fourthInput = Ingredient.CONTENTS_STREAM_CODEC.decode(buffer);
+        int fourthCount = buffer.readVarInt();
         return new FusionRecipe(firstInput, firstCount, secondInput, secondCount,
-                result, duration, energyPerTick, thirdInput, thirdCount);
+                result, duration, energyPerTick, thirdInput, thirdCount, fourthInput, fourthCount);
     }
 }

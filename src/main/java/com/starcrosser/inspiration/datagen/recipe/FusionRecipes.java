@@ -57,6 +57,17 @@ public final class FusionRecipes {
                         800, 600),
                 null);
 
+        // 镍 + 钍 + 虚空露珠 + 思维矩阵 -> 光谱合金（四材料，只有四槽的高能物质融合器能做）
+        recipeOutput.accept(
+                ResourceLocation.fromNamespaceAndPath(Inspiration.MODID, "spectrum_alloy_from_fusion"),
+                new FusionRecipe(Ingredient.of(ModMaterials.NICKEL.item().get()),
+                        Ingredient.of(ModMaterials.THORIUM.item().get()),
+                        Ingredient.of(ModItems.VOID_DEW.get()),
+                        Ingredient.of(ModMaterials.MIND_MATRIX.item().get()),
+                        new ItemStack(ModMaterials.SPECTRUM_ALLOY.item().get()),
+                        1000, 800),
+                null);
+
         // 回响碎片 + 强化深板岩 -> 幽匿合金 ×2
         // 强化深板岩只有地核钻探者能挖，所以这是中期之后才做得出来的材料
         recipeOutput.accept(

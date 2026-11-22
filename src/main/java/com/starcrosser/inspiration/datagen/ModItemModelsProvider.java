@@ -47,6 +47,7 @@ public class ModItemModelsProvider extends ItemModelProvider {
         basicItem(ModItems.INACTIVE_BRAIN.get());
         basicItem(ModItems.PARASITE.get());
         basicItem(ModItems.MECHANICAL_PARASITE.get());
+        basicItem(ModItems.COMPRESSED_REDSTONE_INGOT.get());
         for (com.starcrosser.inspiration.fluid.MoltenMetals.Entry entry
                 : com.starcrosser.inspiration.fluid.MoltenMetals.ALL) {
             basicItem(entry.bucket().get());

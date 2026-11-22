@@ -336,6 +336,10 @@ public class ModItems {
     public static final DeferredItem<Item> MECHANICAL_PARASITE =
             ITEMS.register("mechanical_parasite", () -> new Item(new Item.Properties().rarity(Rarity.UNCOMMON)));
 
+    /** 压缩红石锭：铀锭注入注能红石得到，高能物质融合器的次材料。 */
+    public static final DeferredItem<Item> COMPRESSED_REDSTONE_INGOT =
+            ITEMS.register("compressed_redstone_ingot", () -> new Item(new Item.Properties().rarity(Rarity.RARE)));
+
     /* ===================== 虚空能量体系 ===================== */
 
     /** 幽匿合金钻头：挖到底时把基岩裂成「开裂的基岩」。 */

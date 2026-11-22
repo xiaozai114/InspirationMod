@@ -1,0 +1,21 @@
+{
+  "type": "inspiration:fusion",
+  "duration": 1000,
+  "energy_per_tick": 800,
+  "first_input": {
+    "item": "inspiration:nickel_ingot"
+  },
+  "fourth_input": {
+    "item": "inspiration:mind_matrix_ingot"
+  },
+  "result": {
+    "count": 1,
+    "id": "inspiration:spectrum_alloy"
+  },
+  "second_input": {
+    "item": "inspiration:thorium_ingot"
+  },
+  "third_input": {
+    "item": "inspiration:void_dew"
+  }
+}

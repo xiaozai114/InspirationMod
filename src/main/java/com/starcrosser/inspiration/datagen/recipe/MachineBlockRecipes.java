@@ -148,6 +148,12 @@ public final class MachineBlockRecipes {
                         has(ModInjection.INJECTION_GUN.getBlock()))
                 .save(recipeOutput);
 
+        // 高能物质融合器：4 无恒合金 + 4 压缩红石锭 + 1 高能核心，中间放强能物质融合机
+        machine(recipeOutput, ModMachines.HIGH_ENERGY_MATTER_FUSION_MACHINE.getBlock(),
+                ModMaterials.EPHEMERAL_ALLOY.item().get(), ModItems.COMPRESSED_REDSTONE_INGOT.get(),
+                ModItems.HIGH_ENERGY_CORE.get(), ModMachines.ENERGIZED_MATTER_FUSION_MACHINE.getBlock(),
+                ModItems.HIGH_ENERGY_CORE.get());
+
         // 虚空能量凝聚器：4 虚空等离子锭 + 4 铷锭 + 1 弱化核心
         machine(recipeOutput, ModMachines.VOID_CONDENSER.getBlock(),
                 ModItems.VOID_PLASMA_INGOT.get(), ModMaterials.RUBIDIUM.item().get(),

@@ -40,7 +40,9 @@ public class FusionRecipe extends InspiredRecipe<FusionRecipeInput> {
             Codec.INT.optionalFieldOf("duration", DEFAULT_DURATION).forGetter(FusionRecipe::duration),
             Codec.INT.optionalFieldOf("energy_per_tick", DEFAULT_ENERGY_PER_TICK).forGetter(FusionRecipe::energyPerTick),
             Ingredient.CODEC.optionalFieldOf("third_input", Ingredient.EMPTY).forGetter(FusionRecipe::thirdInput),
-            Codec.intRange(1, MAX_COUNT).optionalFieldOf("third_count", 1).forGetter(FusionRecipe::thirdCount)
+            Codec.intRange(1, MAX_COUNT).optionalFieldOf("third_count", 1).forGetter(FusionRecipe::thirdCount),
+            Ingredient.CODEC.optionalFieldOf("fourth_input", Ingredient.EMPTY).forGetter(FusionRecipe::fourthInput),
+            Codec.intRange(1, MAX_COUNT).optionalFieldOf("fourth_count", 1).forGetter(FusionRecipe::fourthCount)
     ).apply(instance, FusionRecipe::new));
 
     private final Ingredient firstInput;
@@ -49,15 +51,17 @@ public class FusionRecipe extends InspiredRecipe<FusionRecipeInput> {
     private final int secondCount;
     private final Ingredient thirdInput;
     private final int thirdCount;
+    private final Ingredient fourthInput;
+    private final int fourthCount;
 
     /** 全参构造：参数顺序与 {@link #CODEC} 的字段顺序一一对应。 */
     public FusionRecipe(Ingredient firstInput, int firstCount, Ingredient secondInput, int secondCount,
                         ItemStack result, int duration, int energyPerTick,
-                        Ingredient thirdInput, int thirdCount) {
+                        Ingredient thirdInput, int thirdCount, Ingredient fourthInput, int fourthCount) {
         super(result, duration, energyPerTick);
-        if (firstCount < 1 || secondCount < 1 || thirdCount < 1) {
-            throw new IllegalArgumentException(
-                    "融合配方的材料数量至少为 1：" + firstCount + " / " + secondCount + " / " + thirdCount);
+        if (firstCount < 1 || secondCount < 1 || thirdCount < 1 || fourthCount < 1) {
+            throw new IllegalArgumentException("融合配方的材料数量至少为 1："
+                    + firstCount + " / " + secondCount + " / " + thirdCount + " / " + fourthCount);
         }
         this.firstInput = firstInput;
         this.firstCount = firstCount;
@@ -65,6 +69,23 @@ public class FusionRecipe extends InspiredRecipe<FusionRecipeInput> {
         this.secondCount = secondCount;
         this.thirdInput = thirdInput;
         this.thirdCount = thirdCount;
+        this.fourthInput = fourthInput;
+        this.fourthCount = fourthCount;
+    }
+
+    /** 三材料版本（第四个留空）。 */
+    public FusionRecipe(Ingredient firstInput, int firstCount, Ingredient secondInput, int secondCount,
+                        ItemStack result, int duration, int energyPerTick,
+                        Ingredient thirdInput, int thirdCount) {
+        this(firstInput, firstCount, secondInput, secondCount, result, duration, energyPerTick,
+                thirdInput, thirdCount, Ingredient.EMPTY, 1);
+    }
+
+    /** 四材料版本：给四槽的高能物质融合器用。 */
+    public FusionRecipe(Ingredient firstInput, Ingredient secondInput, Ingredient thirdInput,
+                        Ingredient fourthInput, ItemStack result, int duration, int energyPerTick) {
+        this(firstInput, 1, secondInput, 1, result, duration, energyPerTick,
+                thirdInput, 1, fourthInput, 1);
     }
 
     /** 三种材料、各自声明消耗数量。 */
@@ -97,8 +118,11 @@ public class FusionRecipe extends InspiredRecipe<FusionRecipeInput> {
                 Ingredient.EMPTY, 1);
     }
 
-    /** 本配方要求的材料清单；第三项为可选。 */
+    /** 本配方要求的材料清单；第三、第四项都可选，按顺序补齐。 */
     public List<Ingredient> ingredients() {
+        if (hasFourthInput()) {
+            return List.of(firstInput, secondInput, thirdInput, fourthInput);
+        }
         return hasThirdInput()
                 ? List.of(firstInput, secondInput, thirdInput)
                 : List.of(firstInput, secondInput);
@@ -106,6 +130,9 @@ public class FusionRecipe extends InspiredRecipe<FusionRecipeInput> {
 
     /** 与 {@link #ingredients()} 一一对应的消耗数量。 */
     public int[] counts() {
+        if (hasFourthInput()) {
+            return new int[]{firstCount, secondCount, thirdCount, fourthCount};
+        }
         return hasThirdInput()
                 ? new int[]{firstCount, secondCount, thirdCount}
                 : new int[]{firstCount, secondCount};
@@ -119,6 +146,18 @@ public class FusionRecipe extends InspiredRecipe<FusionRecipeInput> {
 
     public boolean hasThirdInput() {
         return !thirdInput.isEmpty();
+    }
+
+    public boolean hasFourthInput() {
+        return !fourthInput.isEmpty();
+    }
+
+    public Ingredient fourthInput() {
+        return fourthInput;
+    }
+
+    public int fourthCount() {
+        return fourthCount;
     }
 
     /**

@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "subfacing=east": {
+      "model": "inspiration:block/high_energy_matter_fusion_machine",
+      "y": 90
+    },
+    "subfacing=north": {
+      "model": "inspiration:block/high_energy_matter_fusion_machine"
+    },
+    "subfacing=south": {
+      "model": "inspiration:block/high_energy_matter_fusion_machine",
+      "y": 180
+    },
+    "subfacing=west": {
+      "model": "inspiration:block/high_energy_matter_fusion_machine",
+      "y": 270
+    }
+  }
+}

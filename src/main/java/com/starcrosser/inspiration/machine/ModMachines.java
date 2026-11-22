@@ -39,6 +39,9 @@ public class ModMachines {
     /** 强能物质融合机：等级 2，3 个物品输入槽。 */
     private static final MachineSpec FUSION_T2 = MachineSpec.of(2, 3, DyeColor.LIGHT_BLUE);
 
+    /** 高能物质融合器：等级 3、四个输入槽，属性在强能机型基础上再翻倍。 */
+    private static final MachineSpec FUSION_T3 = MachineSpec.of(3, 4, DyeColor.PURPLE);
+
     /** 物质重塑机：等级 1，2 个物品输入槽。 */
     private static final MachineSpec RESHAPER_T1 = MachineSpec.of(1, 2, DyeColor.GREEN);
     /** 高能物质重塑机：等级 2，仍是 2 个物品输入槽（两档共用同一套配方）。 */
@@ -82,6 +85,8 @@ public class ModMachines {
     public static BlockWithTile MATTER_FUSION_MACHINE;
     /** 强能物质融合机：物质融合器的升级版，三个输入槽、数值翻倍。 */
     public static BlockWithTile ENERGIZED_MATTER_FUSION_MACHINE;
+    /** 高能物质融合器：四槽，能跑四种材料的配方。 */
+    public static BlockWithTile HIGH_ENERGY_MATTER_FUSION_MACHINE;
     public static BlockWithTile MATTER_RESHAPER;
     public static BlockWithTile MINERAL_TWISTER;
     public static BlockWithTile INSPIRATION_ASSEMBLER;
@@ -133,6 +138,10 @@ public class ModMachines {
                 "强能物质融合机", "Energized Matter Fusion Machine",
                 () -> new MatterFusionMachineBlock("energized_matter_fusion_machine", FUSION_T2,
                         () -> ENERGIZED_MATTER_FUSION_MACHINE, 3.5F, 8.0F));
+        HIGH_ENERGY_MATTER_FUSION_MACHINE = MachineRegistry.register(registry, "high_energy_matter_fusion_machine",
+                "高能物质融合器", "High-Energy Matter Fusion Machine",
+                () -> new MatterFusionMachineBlock("high_energy_matter_fusion_machine", FUSION_T3,
+                        () -> HIGH_ENERGY_MATTER_FUSION_MACHINE, 4.0F, 10.0F));
         MATTER_RESHAPER = MachineRegistry.register(registry, "matter_reshaper",
                 "物质重塑机", "Matter Reshaper",
                 () -> new MatterReshaperMachineBlock("matter_reshaper", RESHAPER_T1,

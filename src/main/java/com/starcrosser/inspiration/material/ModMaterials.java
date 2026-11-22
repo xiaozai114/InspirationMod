@@ -143,6 +143,14 @@ public final class ModMaterials {
                     .molten(true)
             .register();
 
+    /** 光谱合金：镍 + 钍 + 虚空露珠 + 思维矩阵融合而来，带轻微辐射；矿物模拟机主方块的副材料。 */
+    public static final InspirationMaterial SPECTRUM_ALLOY = InspirationMaterial.create("spectrum_alloy")
+            .name("光谱合金", "Spectrum Alloy")
+            .itemId("spectrum_alloy")
+            .rarity(Rarity.EPIC)
+            .radiation(1)
+            .register();
+
     /** 幽匿合金：回响碎片 + 强化深板岩融合得到，方块是注入结构的 2 级底座（硬度 4.0/12.0）。 */
     public static final InspirationMaterial SCULK_ALLOY = InspirationMaterial.create("sculk_alloy")
             .name("幽匿合金", "Sculk Alloy")

@@ -1,0 +1,16 @@
+{
+  "type": "inspiration:injection",
+  "base": {
+    "item": "inspiration:energized_redstone_ingot"
+  },
+  "inject": {
+    "item": "inspiration:uranium_ingot"
+  },
+  "max_energy": 2000000,
+  "min_energy": 1000000,
+  "result": {
+    "count": 1,
+    "id": "inspiration:compressed_redstone_ingot"
+  },
+  "tier": 2
+}
