@@ -137,6 +137,17 @@ public final class MachineBlockRecipes {
                 ModItems.VOID_PLASMA_INGOT.get(), ModMaterials.PLUTONIUM.item().get(),
                 ModItems.NULL_POINT_MODULE.get(), null, ModItems.NULL_POINT_MODULE.get());
 
+        // 虚空注入枪：注入枪 + 8 不稳金属围一圈
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModInjection.VOID_INJECTION_GUN.getBlock())
+                .pattern("SSS")
+                .pattern("SGS")
+                .pattern("SSS")
+                .define('S', ModItems.UNSTABLE_METAL.get())
+                .define('G', ModInjection.INJECTION_GUN.getBlock())
+                .unlockedBy(getHasName(ModInjection.INJECTION_GUN.getBlock()),
+                        has(ModInjection.INJECTION_GUN.getBlock()))
+                .save(recipeOutput);
+
         // 虚空能量凝聚器：4 虚空等离子锭 + 4 铷锭 + 1 弱化核心
         machine(recipeOutput, ModMachines.VOID_CONDENSER.getBlock(),
                 ModItems.VOID_PLASMA_INGOT.get(), ModMaterials.RUBIDIUM.item().get(),

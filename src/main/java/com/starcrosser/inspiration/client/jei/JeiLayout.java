@@ -114,7 +114,7 @@ public final class JeiLayout {
     /* ---------------- 虚空注入 / 虚空凝聚 ---------------- */
 
     public static final int VOID_WIDTH = 104;
-    public static final int VOID_INJECTION_HEIGHT = 78;
+    public static final int VOID_INJECTION_HEIGHT = 92;
     public static final int VOID_CONDENSATION_HEIGHT = 78;
     /** 虚空注入：底材在左上，注入物在左下，产物在箭头另一侧。 */
     public static final int VOID_BASE_X = 20;

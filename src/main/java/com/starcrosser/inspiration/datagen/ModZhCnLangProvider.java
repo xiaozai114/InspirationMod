@@ -195,8 +195,9 @@ public class ModZhCnLangProvider extends LanguageProvider {
         add("jei.inspiration.refining.byproduct", "副产物");
         add("jei.inspiration.refining.recycling", "装回收升级可让副产物翻倍");
         add("jei.inspiration.void_injection", "虚空注入");
-        add("jei.inspiration.void_injection.window", "只吃团簇能量");
-        add("jei.inspiration.void_injection.range", "扣掉能量的 10%（%s ~ %s ve）");
+        add("jei.inspiration.void_injection.cost", "消耗能量的 10%");
+        add("jei.inspiration.void_injection.window", "成本 %s~%s ve");
+        add("jei.inspiration.void_injection.cluster", "团簇需 %s~%s ve");
         add("jei.inspiration.void_condensation", "虚空能量凝聚");
         add("jei.inspiration.void_condensation.intake", "每刻 16 ve + 500 FE");
         add("jei.inspiration.void_condensation.ratio", "每 %s ve（%s 刻）产出 1 个");

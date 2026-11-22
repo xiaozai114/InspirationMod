@@ -189,8 +189,9 @@ public class ModEnUsLangProvider extends LanguageProvider {
         add("jei.inspiration.refining.byproduct", "Byproduct");
         add("jei.inspiration.refining.recycling", "A Recycling Upgrade doubles byproducts");
         add("jei.inspiration.void_injection", "Void Injection");
-        add("jei.inspiration.void_injection.window", "Spends cluster energy only");
-        add("jei.inspiration.void_injection.range", "Costs 10% of the energy (%s ~ %s ve)");
+        add("jei.inspiration.void_injection.cost", "Spends 10% energy");
+        add("jei.inspiration.void_injection.window", "Cost %s~%s ve");
+        add("jei.inspiration.void_injection.cluster", "Cluster %s~%s ve");
         add("jei.inspiration.void_condensation", "Void Condensation");
         add("jei.inspiration.void_condensation.intake", "16 ve + 500 FE per tick");
         add("jei.inspiration.void_condensation.ratio", "1 unit per %s ve (%s ticks)");

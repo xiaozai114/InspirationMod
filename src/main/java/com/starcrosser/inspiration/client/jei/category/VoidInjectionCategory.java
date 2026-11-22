@@ -74,12 +74,14 @@ public class VoidInjectionCategory implements IRecipeCategory<VoidInjectionRecip
     @Override
     public void createRecipeExtras(mezz.jei.api.gui.widgets.IRecipeExtrasBuilder builder,
                                    VoidInjectionRecipe recipe, IFocusGroup focuses) {
-        builder.addText(Component.translatable("jei.inspiration.void_injection.window")
-                        .withStyle(ChatFormatting.DARK_PURPLE),
-                JeiLayout.VOID_BASE_X - 12, JeiLayout.VOID_INJECTION_TEXT_Y);
-        builder.addText(Component.translatable("jei.inspiration.void_injection.range",
+        int textX = JeiLayout.VOID_BASE_X - 16;
+        builder.addText(Component.translatable("jei.inspiration.void_injection.cost")
+                        .withStyle(ChatFormatting.DARK_PURPLE), textX, JeiLayout.VOID_INJECTION_TEXT_Y);
+        builder.addText(Component.translatable("jei.inspiration.void_injection.window",
                                 recipe.minVe(), recipe.maxVe())
-                        .withStyle(ChatFormatting.GRAY),
-                JeiLayout.VOID_BASE_X - 12, JeiLayout.VOID_INJECTION_TEXT_Y + 11);
+                        .withStyle(ChatFormatting.GRAY), textX, JeiLayout.VOID_INJECTION_TEXT_Y + 11);
+        builder.addText(Component.translatable("jei.inspiration.void_injection.cluster",
+                                recipe.minVe() * 10, recipe.maxVe() * 10 + 9)
+                        .withStyle(ChatFormatting.DARK_GRAY), textX, JeiLayout.VOID_INJECTION_TEXT_Y + 22);
     }
 }

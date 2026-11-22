@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "G": {
+      "item": "inspiration:injection_gun"
+    },
+    "S": {
+      "item": "inspiration:unstable_metal"
+    }
+  },
+  "pattern": [
+    "SSS",
+    "SGS",
+    "SSS"
+  ],
+  "result": {
+    "count": 1,
+    "id": "inspiration:void_injection_gun"
+  }
+}
