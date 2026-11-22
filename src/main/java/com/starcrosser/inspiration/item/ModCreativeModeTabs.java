@@ -25,7 +25,8 @@ import java.util.function.Supplier;
  * 创造模式物品栏：两页。
  * <p>
  * 分页规则是「是不是锭类材料」：<b>材料</b>页只放锭类材料及其附属形态（锭 / 粒 / 块 / 尘），
- * 遍历 {@link ModMaterials#ALL} 生成；<b>灵感</b>页放其余一切 —— 能拿起来就用的东西
+ * 遍历 {@link ModMaterials#ALL} 生成；**没有材料声明的锭类物品**（不稳金属、虚空等离子锭、
+ * 虚空合金这类纯配方产物）在遍历之后手写补上，同样归材料页；<b>灵感</b>页放其余一切 —— 能拿起来就用的东西
  * （食物、工具、机器、功能方块、插件、模板、结构数据、指导书），
  * 以及不是锭类材料的原料（矿、粉、盐、晶、煤、核心部件、废料）放在末尾。
  * <p>
@@ -119,13 +120,10 @@ public class ModCreativeModeTabs {
                         output.accept(ModItems.PARASITE);
                         output.accept(ModItems.MECHANICAL_PARASITE);
                         output.accept(ModItems.SCULK_ALLOY_DRILL_BIT);
-                        output.accept(ModItems.UNSTABLE_METAL);
                         output.accept(ModItems.WEAKENED_CORE);
-                        output.accept(ModItems.VOID_PLASMA_INGOT);
                         output.accept(ModItems.VOID_DEW);
                         output.accept(ModItems.NULL_POINT_MODULE);
                         output.accept(ModItems.ZERO_POINT_AMPLIFIER);
-                        output.accept(ModItems.VOID_ALLOY);
                         output.accept(ModVoidEnergy.VOID_ENERGY_EXTRACTOR);
                         output.accept(ModVoidEnergy.VOID_ENERGY_RELAY);
                         output.accept(ModVoidEnergy.CRACKED_BEDROCK);
@@ -225,6 +223,10 @@ public class ModCreativeModeTabs {
                                 output.accept(material.grit());
                             }
                         }
+                        // 没有材料声明的锭类物品（都是配方产物，不需要锭/块/粒/尘四形态）
+                        output.accept(ModItems.UNSTABLE_METAL);
+                        output.accept(ModItems.VOID_PLASMA_INGOT);
+                        output.accept(ModItems.VOID_ALLOY);
                     })
                     .build());
 

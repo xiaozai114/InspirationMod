@@ -108,8 +108,19 @@ public class InjectionGunTile extends PoweredTile<InjectionGunTile> {
     protected ResourceLocation activeRecipeId;
 
     public InjectionGunTile(BlockPos pos, BlockState state) {
-        super((BasicTileBlock<InjectionGunTile>) ModInjection.INJECTION_GUN.getBlock(),
+        this((BasicTileBlock<InjectionGunTile>) ModInjection.INJECTION_GUN.getBlock(),
                 ModInjection.INJECTION_GUN.type().get(), pos, state);
+    }
+
+    /**
+     * 供子类（虚空注入枪）指定自己的方块与方块实体类型。
+     * <p>
+     * 类型必须在构造时就绑对：{@code BlockEntityType} 会校验「这个实体声明的类型是不是我」，
+     * 子类若继续用注入枪的类型，方块一放下就抛 {@code Invalid block entity}。
+     */
+    protected InjectionGunTile(BasicTileBlock<InjectionGunTile> block, net.minecraft.world.level.block.entity.BlockEntityType<?> type,
+                               BlockPos pos, BlockState state) {
+        super(block, type, pos, state);
 
         SidedInventoryComponent<InjectionGunTile> slot =
                 new SidedInventoryComponent<>("inject", SLOT_X, SLOT_Y, 1, SLOT_POS);

@@ -30,8 +30,12 @@ public class VoidInjectionGunTile extends InjectionGunTile {
     @Nullable
     private VoidInjectionRecipe activeVoidRecipe;
 
+    @SuppressWarnings("unchecked")
     public VoidInjectionGunTile(BlockPos pos, BlockState state) {
-        super(pos, state);
+        super((com.hrznstudio.titanium.block.BasicTileBlock<com.starcrosser.inspiration.injection.blockentity.InjectionGunTile>)
+                        com.starcrosser.inspiration.injection.ModInjection.VOID_INJECTION_GUN.getBlock(),
+                com.starcrosser.inspiration.injection.ModInjection.VOID_INJECTION_GUN.type().get(),
+                pos, state);
     }
 
     @Override
