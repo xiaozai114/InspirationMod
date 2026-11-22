@@ -36,6 +36,13 @@ public final class InjectionRecipes {
                 2, 1_000_000, 2_000_000,
                 new ItemStack(ModItems.COMPRESSED_REDSTONE_INGOT.get()));
 
+        // 玻璃 + 虚空露珠 -> 虚空护目镜（2 级；窗口 100k~125k FE）
+        injection(recipeOutput, "injection/void_goggles",
+                Ingredient.of(Items.GLASS),
+                Ingredient.of(ModItems.VOID_DEW.get()),
+                2, 100_000, 125_000,
+                new ItemStack(ModItems.VOID_GOGGLES.get()));
+
         // 末地合金 + 虚空露珠 -> 虚空合金（2 级；枪里必须恰好 1 FE）
         injection(recipeOutput, "injection/void_alloy",
                 Ingredient.of(ModMaterials.END_ALLOY.item().get()),

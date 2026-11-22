@@ -69,6 +69,7 @@ public class ModEnUsLangProvider extends LanguageProvider {
         add("item.inspiration.null_point_module", "Null Point Module");
         add("item.inspiration.zero_point_amplifier", "Zero-Point Amplifier");
         add("item.inspiration.compressed_redstone_ingot", "Compressed Redstone Ingot");
+        add("item.inspiration.void_goggles", "Void Goggles");
         add("item.inspiration.void_alloy", "Void Alloy");
         add("tooltip.inspiration.sculk_drill_bit.cracks", "Cracks the bedrock block it finally reaches.");
         add("void_energy.stage.weak", "Weak");

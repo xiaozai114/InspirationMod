@@ -4,6 +4,11 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.starcrosser.inspiration.Inspiration;
 import com.starcrosser.inspiration.voidenergy.entity.VoidClusterEntity;
+import com.starcrosser.inspiration.item.armor.VoidGogglesItem;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.Font;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRenderer;
@@ -42,6 +47,30 @@ public class VoidClusterRenderer extends EntityRenderer<VoidClusterEntity> {
         quad(consumer, matrix, -size, size, color, alpha);
         quad(consumer, matrix, size, -size, color, alpha);
 
+        renderGogglesLabel(entity, pose, buffers);
+
+        pose.popPose();
+    }
+
+    /**
+     * 戴着虚空护目镜时，把团簇的具体能量写在它上方。
+     * <p>
+     * 只在本地玩家戴着头盔时绘制 —— 免得别人看不到、自己却以为所有人都能看到。
+     */
+    private void renderGogglesLabel(VoidClusterEntity entity, PoseStack pose, MultiBufferSource buffers) {
+        Minecraft minecraft = Minecraft.getInstance();
+        if (minecraft.player == null
+                || !(minecraft.player.getItemBySlot(EquipmentSlot.HEAD).getItem() instanceof VoidGogglesItem)) {
+            return;
+        }
+        Component label = Component.literal(entity.energy() + " ve");
+        pose.pushPose();
+        pose.translate(0.0F, 0.75F, 0.0F);
+        pose.mulPose(entityRenderDispatcher.cameraOrientation());
+        pose.scale(-0.025F, -0.025F, 0.025F);
+        Matrix4f matrix = pose.last().pose();
+        minecraft.font.drawInBatch(label, -minecraft.font.width(label) / 2.0F, 0.0F,
+                0xFFFFFFFF, false, matrix, buffers, Font.DisplayMode.SEE_THROUGH, 0, 0xF000F0);
         pose.popPose();
     }
 

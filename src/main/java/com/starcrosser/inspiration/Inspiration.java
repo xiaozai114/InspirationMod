@@ -65,6 +65,7 @@ public class Inspiration {
         // 材料必须在物品表/方块表冻结之前声明完：它们往这两张表里塞东西
         ModMaterials.init();
         ModItems.register(modEventBus);
+        com.starcrosser.inspiration.item.armor.ModArmorMaterials.register(modEventBus);
         // 指导书界面（空菜单）
         ModGuideMenus.register(modEventBus);
         // 玩家体内累积的辐射值挂在实体 attachment 上，注册表是 NeoForge 的

@@ -70,6 +70,7 @@ public class ModZhCnLangProvider extends LanguageProvider {
         add("item.inspiration.null_point_module", "零点模块");
         add("item.inspiration.zero_point_amplifier", "零点能量增幅器");
         add("item.inspiration.compressed_redstone_ingot", "压缩红石锭");
+        add("item.inspiration.void_goggles", "虚空护目镜");
         add("item.inspiration.void_alloy", "虚空合金");
         add("tooltip.inspiration.sculk_drill_bit.cracks", "挖到底时会把那一格基岩裂成开裂的基岩。");
         add("void_energy.stage.weak", "虚弱");

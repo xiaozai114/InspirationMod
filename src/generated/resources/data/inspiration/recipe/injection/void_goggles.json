@@ -1,0 +1,16 @@
+{
+  "type": "inspiration:injection",
+  "base": {
+    "item": "minecraft:glass"
+  },
+  "inject": {
+    "item": "inspiration:void_dew"
+  },
+  "max_energy": 125000,
+  "min_energy": 100000,
+  "result": {
+    "count": 1,
+    "id": "inspiration:void_goggles"
+  },
+  "tier": 2
+}

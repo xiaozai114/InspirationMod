@@ -336,6 +336,10 @@ public class ModItems {
     public static final DeferredItem<Item> MECHANICAL_PARASITE =
             ITEMS.register("mechanical_parasite", () -> new Item(new Item.Properties().rarity(Rarity.UNCOMMON)));
 
+    /** 虚空护目镜：头部装备，+2 护甲，戴着能看见团簇里的 ve。 */
+    public static final DeferredItem<Item> VOID_GOGGLES =
+            ITEMS.register("void_goggles", () -> new com.starcrosser.inspiration.item.armor.VoidGogglesItem());
+
     /** 压缩红石锭：铀锭注入注能红石得到，高能物质融合器的次材料。 */
     public static final DeferredItem<Item> COMPRESSED_REDSTONE_INGOT =
             ITEMS.register("compressed_redstone_ingot", () -> new Item(new Item.Properties().rarity(Rarity.RARE)));
