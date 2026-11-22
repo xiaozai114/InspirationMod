@@ -1,11 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_sculk_alloy": {
+    "has_reinforced_core": {
       "conditions": {
         "items": [
           {
-            "items": "inspiration:sculk_alloy"
+            "items": "inspiration:reinforced_core"
           }
         ]
       },
@@ -21,7 +21,7 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_sculk_alloy"
+      "has_reinforced_core"
     ]
   ],
   "rewards": {

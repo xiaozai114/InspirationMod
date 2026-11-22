@@ -11,6 +11,8 @@ import com.starcrosser.inspiration.client.jei.category.ReshapingRecipeCategory;
 import com.starcrosser.inspiration.client.jei.category.RightClickBlockRecipeCategory;
 import com.starcrosser.inspiration.client.jei.category.StructurePreviewCategory;
 import com.starcrosser.inspiration.client.jei.category.TwistingRecipeCategory;
+import com.starcrosser.inspiration.client.jei.category.VoidCondensationCategory;
+import com.starcrosser.inspiration.client.jei.category.VoidInjectionCategory;
 import com.starcrosser.inspiration.machine.ModMachines;
 import com.starcrosser.inspiration.multiblock.ModMultiblocks;
 import com.starcrosser.inspiration.multiblock.pattern.SimulatorPattern;
@@ -59,7 +61,9 @@ public class InspirationJeiPlugin implements IModPlugin {
                 new ReshapingRecipeCategory(guiHelper),
                 new RightClickBlockRecipeCategory(guiHelper),
                 new StructurePreviewCategory(guiHelper),
-                new TwistingRecipeCategory(guiHelper));
+                new TwistingRecipeCategory(guiHelper),
+                new VoidInjectionCategory(guiHelper),
+                new VoidCondensationCategory(guiHelper));
     }
 
     @Override
@@ -85,6 +89,16 @@ public class InspirationJeiPlugin implements IModPlugin {
                 collect(recipeManager, ModRecipes.FLUID_EXTRACTING_TYPE.get()));
         registration.addRecipes(ModJeiRecipeTypes.REFINING,
                 collect(recipeManager, ModRecipes.REFINING_TYPE.get()));
+        registration.addRecipes(ModJeiRecipeTypes.VOID_INJECTION,
+                collect(recipeManager, ModRecipes.VOID_INJECTION_TYPE.get()));
+        // 虚空凝聚没有数据包配方：凝聚器是固定行为，用一条静态记录展示数值
+        registration.addRecipes(ModJeiRecipeTypes.VOID_CONDENSATION,
+                List.of(new com.starcrosser.inspiration.voidenergy.recipe.VoidCondensationInfo(
+                        new net.minecraft.world.item.ItemStack(
+                                com.starcrosser.inspiration.item.ModItems.VOID_DEW.get()),
+                        com.starcrosser.inspiration.machine.blockentity.VoidCondenserTile.VE_PER_TICK,
+                        com.starcrosser.inspiration.machine.blockentity.VoidCondenserTile.VE_PER_DEW,
+                        com.starcrosser.inspiration.machine.blockentity.VoidCondenserTile.ENERGY_PER_TICK)));
         // 结构预览不是数据包配方：层数直接由形状常量决定，一层一条，翻页即翻层
         registration.addRecipes(ModJeiRecipeTypes.STRUCTURE_PREVIEW,
                 IntStream.range(0, SimulatorPattern.depth())
@@ -118,6 +132,10 @@ public class InspirationJeiPlugin implements IModPlugin {
         // 结构预览挂在结构模拟机的用途里：在 JEI 里对着控制器按 U 就能看到结构
         registration.addRecipeCatalyst(ModMultiblocks.STRUCTURE_SIMULATOR,
                 ModJeiRecipeTypes.STRUCTURE_PREVIEW);
+        // 虚空注入同样要「束缚器 + 枪」两件套，只是枪换成虚空版
+        registration.addRecipeCatalyst(ModInjection.MATTER_BINDER, ModJeiRecipeTypes.VOID_INJECTION);
+        registration.addRecipeCatalyst(ModInjection.VOID_INJECTION_GUN, ModJeiRecipeTypes.VOID_INJECTION);
+        registration.addRecipeCatalyst(ModMachines.VOID_CONDENSER, ModJeiRecipeTypes.VOID_CONDENSATION);
     }
 
     /** 从配方管理器取出某一类型的全部配方（去掉 RecipeHolder 外壳）。 */

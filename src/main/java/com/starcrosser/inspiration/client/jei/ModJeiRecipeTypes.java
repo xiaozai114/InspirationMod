@@ -9,6 +9,8 @@ import com.starcrosser.inspiration.machine.recipe.RefiningRecipe;
 import com.starcrosser.inspiration.machine.recipe.ReshapingRecipe;
 import com.starcrosser.inspiration.machine.recipe.TwistingRecipe;
 import com.starcrosser.inspiration.recipe.RightClickBlockRecipe;
+import com.starcrosser.inspiration.voidenergy.recipe.VoidCondensationInfo;
+import com.starcrosser.inspiration.voidenergy.recipe.VoidInjectionRecipe;
 import mezz.jei.api.recipe.RecipeType;
 
 /**
@@ -56,4 +58,12 @@ public final class ModJeiRecipeTypes {
 
     private ModJeiRecipeTypes() {
     }
+
+    /** 虚空注入：只消耗团簇能量。 */
+    public static final RecipeType<VoidInjectionRecipe> VOID_INJECTION =
+            RecipeType.create(Inspiration.MODID, "void_injection", VoidInjectionRecipe.class);
+
+    /** 虚空能量凝聚：固定行为，只有一条展示用记录。 */
+    public static final RecipeType<VoidCondensationInfo> VOID_CONDENSATION =
+            RecipeType.create(Inspiration.MODID, "void_condensation", VoidCondensationInfo.class);
 }

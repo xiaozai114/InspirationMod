@@ -194,6 +194,12 @@ public class ModZhCnLangProvider extends LanguageProvider {
         add("jei.inspiration.refining", "原料精炼");
         add("jei.inspiration.refining.byproduct", "副产物");
         add("jei.inspiration.refining.recycling", "装回收升级可让副产物翻倍");
+        add("jei.inspiration.void_injection", "虚空注入");
+        add("jei.inspiration.void_injection.window", "只吃团簇能量");
+        add("jei.inspiration.void_injection.range", "扣掉能量的 10%（%s ~ %s ve）");
+        add("jei.inspiration.void_condensation", "虚空能量凝聚");
+        add("jei.inspiration.void_condensation.intake", "每刻 16 ve + 500 FE");
+        add("jei.inspiration.void_condensation.ratio", "每 %s ve（%s 刻）产出 1 个");
         add("jei.inspiration.injection", "物质注入");
         add("jei.inspiration.injection.role_inject", "注入物质");
         add("jei.inspiration.injection.role_base", "基底物质");
@@ -275,6 +281,7 @@ public class ModZhCnLangProvider extends LanguageProvider {
         add("tooltip.inspiration.brain.inactive", "放进原料精炼机可回收 2 个寄生虫。");
         add("tooltip.inspiration.parasite", "右键村民使其寄生；击杀寄生村民大概率掉落村民大脑。");
         add("tooltip.inspiration.mechanical_parasite", "右键末影人 / 村民使其寄生。\\n击杀寄生末影人掉末影人大脑；寄生村民被杀时回收它。");
+        add("gui.inspiration.zero_point_generator.status", "电量 %s / %s GFE ・ 增幅器 %s/%s");
         add("gui.inspiration.inspiration_value", "灵感值");
         add("gui.inspiration.inspiration_value.tip", "灵感值：%s / %s");
         add("gui.inspiration.inspiration_value.extract", "点击提取 100 点 → 1 灵感");
@@ -302,6 +309,11 @@ public class ModZhCnLangProvider extends LanguageProvider {
         add("tooltip.inspiration.machine.culture_tank", "用营养液与电力养脑：村民脑 10 秒 1 灵感，末影人脑 20 秒 1 思维晶体。");
         add("tooltip.inspiration.machine.inspiration_furnace", "熔炉 / 高炉 / 烟熏三类配方通用，统一 5 秒。\\n耗 10 FE/刻 + 1 mB/刻灵感充能，产物不给经验。");
         add("tooltip.inspiration.machine.energized_inspiration_furnace", "同灵感高炉；速度 ×2，耗电与耗充能 ×2。");
+        add("tooltip.inspiration.machine.void_condenser", "把团簇的能量凝成虚空露珠：16 ve + 500 FE/刻，1024 ve 出 1 个。\n需要中继器或直接站在团簇上。");
+        add("tooltip.inspiration.machine.zero_point_generator", "每分钟按增幅器数量产出 1 + n×1.2G FE（最多 64 个），缓冲 128 GFE。\n不会自己攒电：缓冲满了就只往邻居送。");
+        add("tooltip.inspiration.machine.void_energy_extractor", "站在开裂的基岩上，每刻把 1 ve 送进上方那一格。\n需要 50 FE/刻；没有电就不产出。");
+        add("tooltip.inspiration.machine.void_energy_relay", "必须放在团簇所在的那一格；让 5×5×5 内的机器取到它的能量。");
+        add("tooltip.inspiration.machine.void_injection_gun", "虚空注入：只消耗团簇能量（能量的 10%），不耗 FE。\n低于配方的下限不生效、高于上限会过载爆炸。");
         add("tooltip.inspiration.machine.high_energy_inspiration_furnace", "同灵感高炉；速度 ×4，耗电与耗充能 ×4。");
         add("tooltip.inspiration.machine.structure_simulator", "按结构数据模拟掉落，另耗 8 mB/刻灵感充能。\n4×3×3 中空高能外壳 + 五种仓室。");
         // ===================== 结构模拟机 =====================

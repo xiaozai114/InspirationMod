@@ -192,13 +192,16 @@ public final class CraftingRecipes {
                 .unlockedBy(getHasName(ModItems.REINFORCED_CORE.get()), has(ModItems.REINFORCED_CORE.get()))
                 .save(recipeOutput);
 
-        // 虚空能量中继器：铁锭 + 强化核心 + 幽匿合金
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ModVoidEnergy.VOID_ENERGY_RELAY.get())
-                .requires(Items.IRON_INGOT)
-                .requires(ModItems.REINFORCED_CORE.get())
-                .requires(ModMaterials.SCULK_ALLOY.item().get())
-                .unlockedBy(getHasName(ModMaterials.SCULK_ALLOY.item().get()),
-                        has(ModMaterials.SCULK_ALLOY.item().get()))
+        // 虚空能量中继器：5 铁锭 + 3 幽匿合金 + 1 强化核心（与其它机器同形状）
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModVoidEnergy.VOID_ENERGY_RELAY.get())
+                .pattern("MSM")
+                .pattern("SCS")
+                .pattern("MXM")
+                .define('M', Items.IRON_INGOT)
+                .define('S', ModMaterials.SCULK_ALLOY.item().get())
+                .define('C', ModItems.REINFORCED_CORE.get())
+                .define('X', Items.IRON_INGOT)
+                .unlockedBy(getHasName(ModItems.REINFORCED_CORE.get()), has(ModItems.REINFORCED_CORE.get()))
                 .save(recipeOutput);
 
         // 灵感之剑（默认 ID "exp_sword"）

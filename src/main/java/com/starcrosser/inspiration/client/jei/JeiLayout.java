@@ -111,6 +111,24 @@ public final class JeiLayout {
      * 高度按「每行都不折行」留足余量——一旦超出 maxHeight，
      * addText 会直接截断成省略号，玩家就什么都看不到了。
      */
+    /* ---------------- 虚空注入 / 虚空凝聚 ---------------- */
+
+    public static final int VOID_WIDTH = 104;
+    public static final int VOID_INJECTION_HEIGHT = 78;
+    public static final int VOID_CONDENSATION_HEIGHT = 78;
+    /** 虚空注入：底材在左上，注入物在左下，产物在箭头另一侧。 */
+    public static final int VOID_BASE_X = 20;
+    public static final int VOID_BASE_Y = 18;
+    public static final int VOID_INJECT_X = 20;
+    public static final int VOID_INJECT_Y = 40;
+    public static final int VOID_RESULT_X = 78;
+    public static final int VOID_RESULT_Y = 18;
+    public static final int VOID_INJECTION_TEXT_Y = 56;
+    /** 虚空凝聚：面板只有一个产物槽，其余是说明。 */
+    public static final int CONDENSE_RESULT_X = 62;
+    public static final int CONDENSE_RESULT_Y = 16;
+    public static final int CONDENSE_TEXT_Y = 52;
+
     public static final int INJECT_WIDTH = 150;
     public static final int INJECT_HEIGHT = 112;
 

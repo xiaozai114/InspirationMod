@@ -188,6 +188,12 @@ public class ModEnUsLangProvider extends LanguageProvider {
         add("jei.inspiration.refining", "Raw Refining");
         add("jei.inspiration.refining.byproduct", "Byproduct");
         add("jei.inspiration.refining.recycling", "A Recycling Upgrade doubles byproducts");
+        add("jei.inspiration.void_injection", "Void Injection");
+        add("jei.inspiration.void_injection.window", "Spends cluster energy only");
+        add("jei.inspiration.void_injection.range", "Costs 10% of the energy (%s ~ %s ve)");
+        add("jei.inspiration.void_condensation", "Void Condensation");
+        add("jei.inspiration.void_condensation.intake", "16 ve + 500 FE per tick");
+        add("jei.inspiration.void_condensation.ratio", "1 unit per %s ve (%s ticks)");
         add("jei.inspiration.injection", "Matter Injection");
         add("jei.inspiration.injection.role_inject", "Injected material");
         add("jei.inspiration.injection.role_base", "Base material");
@@ -294,6 +300,11 @@ public class ModEnUsLangProvider extends LanguageProvider {
         add("tooltip.inspiration.machine.culture_tank", "Feeds brains with nutrient and power: villager brain 1 Inspiration / 10 s, enderman brain 1 Mind Crystal / 20 s.");
         add("tooltip.inspiration.machine.inspiration_furnace", "Runs furnace, blast furnace and smoker recipes in 5 s.\\nCosts 10 FE/tick + 1 mB/tick inspiration charge; no experience.");
         add("tooltip.inspiration.machine.energized_inspiration_furnace", "Same as the Inspiration Furnace; 2x speed, 2x power and charge.");
+        add("tooltip.inspiration.machine.void_condenser", "Condenses cluster energy into Void Dew: 16 ve + 500 FE/tick, 1 Dew per 1024 ve.\nNeeds a relay, or the cluster in its own block.");
+        add("tooltip.inspiration.machine.zero_point_generator", "Produces 1 + n*1.2G FE per minute (up to 64 amplifiers), buffer 128 GFE.\nIt only pushes power out; a full buffer simply stops accumulating.");
+        add("tooltip.inspiration.machine.void_energy_extractor", "Standing on cracked bedrock, feeds 1 ve/tick into the block above.\nCosts 50 FE/tick; no power, no output.");
+        add("tooltip.inspiration.machine.void_energy_relay", "Must be placed in the cluster's own block; machines within 5x5x5 can draw from it.");
+        add("tooltip.inspiration.machine.void_injection_gun", "Void injection: spends only cluster energy (10% of it), never FE.\nBelow the recipe minimum nothing happens; above the maximum it overloads.");
         add("tooltip.inspiration.machine.high_energy_inspiration_furnace", "Same as the Inspiration Furnace; 4x speed, 4x power and charge.");
         add("tooltip.inspiration.machine.structure_simulator", "Simulates loot from structure data; costs 8 mB/tick inspiration charge.\n4x3x3 hollow casing shell with all five hatches.");
         add("tooltip.inspiration.brain.villager", "Culture Tank: 100 FE/tick + 1 mB/tick nutrient, 1 Inspiration per 10 s.\\nDies when nutrient runs out.");
@@ -301,6 +312,7 @@ public class ModEnUsLangProvider extends LanguageProvider {
         add("tooltip.inspiration.brain.inactive", "Recycle in a Raw Refiner for 2 Parasites.");
         add("tooltip.inspiration.parasite", "Right-click a villager to infest it; killing it most likely drops a Villager Brain.");
         add("tooltip.inspiration.mechanical_parasite", "Right-click an enderman or villager to infest it.\\nKilling an infested enderman drops an Enderman Brain; a villager returns the parasite.");
+        add("gui.inspiration.zero_point_generator.status", "Power %s / %s GFE ・ Amplifiers %s/%s");
         add("gui.inspiration.inspiration_value", "Inspiration");
         add("gui.inspiration.inspiration_value.tip", "Inspiration: %s / %s");
         add("gui.inspiration.inspiration_value.extract", "Click to extract 100 -> 1 Inspiration");

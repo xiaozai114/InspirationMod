@@ -49,7 +49,12 @@ public final class MachineTooltips {
             "culture_tank",
             "inspiration_furnace",
             "energized_inspiration_furnace",
-            "high_energy_inspiration_furnace");
+            "high_energy_inspiration_furnace",
+            "void_condenser",
+            "zero_point_generator",
+            "void_energy_extractor",
+            "void_energy_relay",
+            "void_injection_gun");
 
     private MachineTooltips() {
     }

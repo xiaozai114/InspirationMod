@@ -64,6 +64,12 @@ BACKGROUNDS = {
     # 原料精炼：单输入 -> 三个输出槽竖排（主产物在上、两个副产物在下），
     # 箭头仍指向最上面那个主产物；面板加高到 86 才放得下三格加两行说明
     "refining": Background((0xE8, 0x8A, 0x3A, 0xFF), 41, 86),
+    # 虚空注入：底材与注入物分两行摆（注入物可空），右侧一个产物槽，分隔线下方写能量窗口。
+    # 颜色取虚空紫，与普通注入的紫再亮一档以示区分。
+    "void_injection": Background((0xC9, 0x8A, 0xFF, 0xFF), 41, 78, 33, 104, 54),
+    # 虚空凝聚：不是「输入→输出」而是「每刻消耗 → 每 N 点产 1」，所以不画箭头，
+    # 面板只放一个产物槽，其余全是说明文字。
+    "void_condensation": Background((0xC9, 0x8A, 0xFF, 0xFF), -1, 78, 0, 104, 50),
 }
 
 OUTPUT_DIR = Path(__file__).resolve().parents[2] / "src/main/resources/assets/inspiration/textures/gui/jei"

@@ -163,5 +163,7 @@ public class ZeroPointGeneratorTile extends ActiveTile<ZeroPointGeneratorTile> {
     public void initClient() {
         super.initClient();
         FacingLabels.add(this, amplifierSlot);
+        addGuiAddonFactory(() -> new com.starcrosser.inspiration.client.extensions
+                .ZeroPointStatusAddon(this));
     }
 }

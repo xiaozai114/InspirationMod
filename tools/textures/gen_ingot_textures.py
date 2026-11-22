@@ -30,6 +30,8 @@ PALETTES = {
     # 注能翡翠钢：在翡翠钢的绿上叠一层青白辉光，暗部压成深青
     "energized_jade_steel": ((0x0B, 0x52, 0x5C), (0xD2, 0xFF, 0xF4)),
     # 思维矩阵锭：淡紫主色，暗部偏深紫，亮部接近淡紫白（参考无尽贪婪的水晶矩阵锭配色）
+    # 不稳金属：病态的灰绿，暗部近墨绿，亮部是发白的黄绿（不稳核心熔出来的）
+    "unstable_metal": ((0x22, 0x2E, 0x24), (0xB6, 0xC8, 0x9A)),
     "mind_matrix_ingot": ((0x4B, 0x22, 0x7A), (0xEC, 0xDB, 0xFF)),
     # 注能青金石锭：青金石的群青往靛紫偏（灵感掺进去的痕迹），亮部拉到淡紫白
     "energized_lapis_ingot": ((0x1A, 0x1F, 0x8F), (0xC6, 0xC2, 0xFF)),
@@ -47,6 +49,12 @@ for _base, _colors in MATERIAL_COLORS.items():
 
 # 白色星点：键为锭名，值是星心坐标。每颗星画成十字 —— 星心纯白，四臂往白里混 3/4，
 # 于是看起来是嵌在晶体里的闪烁点，而不是贴上去的加号。星心必须落在锭的不透明区域里。
+# 半透明的锭：值是不透明度的倍数（1.0 = 全不透明）。不稳金属刻意做成半透明，
+# 让它看起来像一块「还没定型」的金属。
+ALPHA = {
+    "unstable_metal": 0.62,
+}
+
 SPARKLES = {
     "mind_matrix_ingot": [(4, 6), (11, 5), (7, 11)],
     # 注能锭：星点比思维矩阵锭更密，突出「灌满了灵感」的感觉
@@ -91,7 +99,16 @@ def main():
             raise SystemExit(f"未知的锭：{name}，可选 {sorted(PALETTES)}")
         dark, light = PALETTES[name]
         path = ITEM_DIR / f"{name}.png"
-        build(name, dark, light).save(path)
+        image = build(name, dark, light)
+        factor = ALPHA.get(name)
+        if factor is not None:
+            image = image.copy()
+            for py in range(image.height):
+                for px in range(image.width):
+                    r, g, b, a = image.getpixel((px, py))
+                    if a > 0:
+                        image.putpixel((px, py), (r, g, b, round(a * factor)))
+        image.save(path)
         print(f"written {path}")
 
 

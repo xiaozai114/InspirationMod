@@ -204,7 +204,6 @@ def main():
     shift_hue(base("plasma_ingot"), 0.78).save(ITEM_DIR / "void_plasma_ingot.png")
     shift_hue(base("end_alloy"), 0.78).save(ITEM_DIR / "void_alloy.png")
 
-    ingot((0x2C, 0x2C, 0x30), (0x5E, 0x63, 0x58), (0x9E, 0xA8, 0x8E)).save(ITEM_DIR / "unstable_metal.png")
     drop().save(ITEM_DIR / "void_dew.png")
     module().save(ITEM_DIR / "null_point_module.png")
     amplifier().save(ITEM_DIR / "zero_point_amplifier.png")
