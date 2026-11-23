@@ -311,6 +311,7 @@ public class ModEnUsLangProvider extends LanguageProvider {
         add("tooltip.inspiration.machine.void_energy_relay", "Must be placed in the cluster's own block; machines within 5x5x5 can draw from it.");
         add("tooltip.inspiration.machine.void_injection_gun", "Void injection: spends only cluster energy (10% of it), never FE.\nBelow the recipe minimum nothing happens; above the maximum it overloads.");
         add("tooltip.inspiration.machine.mineral_simulator", "3x5x3 multiblock: rolls ores by the weight table of the dimension data in the data hatch.\\nThe data is not consumed; it only draws power from the energy port.");
+        add("tooltip.inspiration.machine.high_energy_matter_fusion_machine", "Recipe: Matter Fusion (four materials).\\nFour input slots; every stat is doubled again over the energized machine.");
         add("tooltip.inspiration.machine.high_energy_inspiration_furnace", "Same as the Inspiration Furnace; 4x speed, 4x power and charge.");
         add("tooltip.inspiration.machine.structure_simulator", "Simulates loot from structure data; costs 8 mB/tick inspiration charge.\n4x3x3 hollow casing shell with all five hatches.");
         add("tooltip.inspiration.brain.villager", "Culture Tank: 100 FE/tick + 1 mB/tick nutrient, 1 Inspiration per 10 s.\\nDies when nutrient runs out.");

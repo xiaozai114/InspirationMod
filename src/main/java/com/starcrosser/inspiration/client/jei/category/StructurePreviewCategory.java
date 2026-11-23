@@ -5,7 +5,6 @@ import com.starcrosser.inspiration.client.jei.JeiLayout;
 import com.starcrosser.inspiration.client.jei.ModJeiRecipeTypes;
 import com.starcrosser.inspiration.client.jei.StructurePreview;
 import com.starcrosser.inspiration.multiblock.ModMultiblocks;
-import com.starcrosser.inspiration.multiblock.pattern.SimulatorPattern;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.drawable.IDrawable;
 import mezz.jei.api.gui.ingredient.IRecipeSlotsView;
@@ -42,14 +41,13 @@ public class StructurePreviewCategory implements IRecipeCategory<StructurePrevie
     private final IDrawable background;
     private final IDrawable icon;
     private final ItemStack casingStack;
-    private final ItemStack controllerStack;
 
     public StructurePreviewCategory(IGuiHelper guiHelper) {
         this.background = JeiLayout.backgroundDrawable(guiHelper, "structure_preview",
                 JeiLayout.STRUCTURE_WIDTH, JeiLayout.STRUCTURE_HEIGHT);
-        this.controllerStack = new ItemStack(ModMultiblocks.STRUCTURE_SIMULATOR.getBlock());
         this.casingStack = new ItemStack(ModBlocks.HIGH_ENERGY_MACHINE_CASING.get());
-        this.icon = guiHelper.createDrawableItemStack(this.controllerStack);
+        this.icon = guiHelper.createDrawableItemStack(
+                com.starcrosser.inspiration.multiblock.MultiblockKind.STRUCTURE.controllerStack());
     }
 
     @Override
@@ -88,32 +86,32 @@ public class StructurePreviewCategory implements IRecipeCategory<StructurePrevie
     public void setRecipe(IRecipeLayoutBuilder builder, StructurePreview recipe, IFocusGroup focuses) {
         builder.addInputSlot(JeiLayout.STRUCTURE_SLOT_X, JeiLayout.STRUCTURE_SLOT_Y)
                 .setStandardSlotBackground()
-                .addItemStack(controllerStack);
+                .addItemStack(recipe.kind().controllerStack());
     }
 
     @Override
     public void draw(StructurePreview recipe, IRecipeSlotsView slotsView, GuiGraphics gui,
                      double mouseX, double mouseY) {
         int layer = recipe.layer();
-        int height = SimulatorPattern.height();
-        int width = SimulatorPattern.width();
+        int height = recipe.kind().height();
+        int width = recipe.kind().width();
 
         for (int row = 0; row < height; row++) {
             for (int column = 0; column < width; column++) {
                 int x = JeiLayout.STRUCTURE_GRID_X + column * PITCH;
                 // 图案的行自下而上，GUI 的 y 向下，所以要翻过来
                 int y = JeiLayout.STRUCTURE_GRID_Y + (height - 1 - row) * PITCH;
-                char symbol = SimulatorPattern.symbolAt(layer, row, column);
+                char symbol = recipe.kind().symbolAt(layer, row, column);
                 if (symbol == ' ') {
                     gui.fill(x, y, x + CELL, y + CELL, EMPTY_CELL);
                 } else {
-                    gui.renderItem(symbol == 'M' ? controllerStack : casingStack, x, y);
+                    gui.renderItem(symbol == 'M' ? recipe.kind().controllerStack() : casingStack, x, y);
                 }
             }
         }
 
         Component label = Component.translatable("jei.inspiration.structure_preview.layer",
-                layer + 1, SimulatorPattern.depth(),
+                layer + 1, recipe.kind().depth(),
                 Component.translatable("jei.inspiration.structure_preview.layer." + layer));
         gui.drawString(Minecraft.getInstance().font, label,
                 JeiLayout.STRUCTURE_TEXT_X, JeiLayout.STRUCTURE_TEXT_Y, TEXT_COLOR, false);

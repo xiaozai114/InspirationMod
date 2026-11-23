@@ -64,7 +64,8 @@ public final class SimulatorPreviewRenderer {
         pose.pushPose();
         Vec3 view = camera.getPosition();
         pose.translate(anchor.getX() - view.x, anchor.getY() - view.y, anchor.getZ() - view.z);
-        for (SimulatorPattern.PreviewCell cell : SimulatorPattern.previewCells(ProjectorPreviewHandler.facing())) {
+        for (com.starcrosser.inspiration.multiblock.MultiblockKind.Cell cell
+                : ProjectorPreviewHandler.kind().cells(ProjectorPreviewHandler.facing())) {
             BlockPos offset = cell.offset();
             pose.pushPose();
             pose.translate(offset.getX() + 0.5F, offset.getY() + 0.5F, offset.getZ() + 0.5F);

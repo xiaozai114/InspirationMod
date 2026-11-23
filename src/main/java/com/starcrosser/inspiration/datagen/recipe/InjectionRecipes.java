@@ -29,9 +29,9 @@ public final class InjectionRecipes {
                 1, 50_000, 150_000,
                 new ItemStack(ModMaterials.ENERGIZED_JADE_STEEL.item().get()));
 
-        // 注能红石锭 + 铀锭 -> 压缩红石锭（2 级；窗口 1M~2M FE）
+        // 注能红石块 + 铀锭 -> 压缩红石锭（2 级；窗口 1M~2M FE）
         injection(recipeOutput, "injection/compressed_redstone_ingot",
-                Ingredient.of(ModMaterials.ENERGIZED_REDSTONE.item().get()),
+                Ingredient.of(ModMaterials.ENERGIZED_REDSTONE.block().get()),
                 Ingredient.of(ModMaterials.URANIUM.item().get()),
                 2, 1_000_000, 2_000_000,
                 new ItemStack(ModItems.COMPRESSED_REDSTONE_INGOT.get()));

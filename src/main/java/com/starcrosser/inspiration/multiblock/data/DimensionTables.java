@@ -21,15 +21,13 @@ public final class DimensionTables {
      */
     public static final MineralTable OVERWORLD = new MineralTable("minecraft:overworld",
             List.of(
-                    new MineralTable.Ore(() -> new ItemStack(Items.RAW_IRON, 2), 24),
-                    new MineralTable.Ore(() -> new ItemStack(Items.RAW_COPPER, 3), 22),
-                    new MineralTable.Ore(() -> new ItemStack(Items.COAL, 3), 20),
-                    new MineralTable.Ore(() -> new ItemStack(Items.RAW_GOLD, 2), 10),
-                    new MineralTable.Ore(() -> new ItemStack(Items.REDSTONE, 4), 10),
-                    new MineralTable.Ore(() -> new ItemStack(Items.LAPIS_LAZULI, 4), 6),
-                    new MineralTable.Ore(() -> new ItemStack(Items.DIAMOND), 3),
-                    new MineralTable.Ore(() -> new ItemStack(Items.EMERALD), 2),
-                    new MineralTable.Ore(() -> new ItemStack(ModMaterials.NICKEL.item().get(), 2), 6),
-                    new MineralTable.Ore(() -> new ItemStack(ModMaterials.URANIUM.item().get()), 3)),
+                    new MineralTable.Ore(() -> new ItemStack(Items.IRON_ORE, 2), 24),
+                    new MineralTable.Ore(() -> new ItemStack(Items.COPPER_ORE, 3), 22),
+                    new MineralTable.Ore(() -> new ItemStack(Items.COAL_ORE, 3), 20),
+                    new MineralTable.Ore(() -> new ItemStack(Items.GOLD_ORE, 2), 10),
+                    new MineralTable.Ore(() -> new ItemStack(Items.REDSTONE_ORE, 4), 12),
+                    new MineralTable.Ore(() -> new ItemStack(Items.LAPIS_ORE, 4), 6),
+                    new MineralTable.Ore(() -> new ItemStack(Items.DIAMOND_ORE), 3),
+                    new MineralTable.Ore(() -> new ItemStack(Items.EMERALD_ORE), 2)),
             1_200, 200);
 }

@@ -104,4 +104,28 @@ public final class MineralPattern {
     public static int depth() {
         return DEPTH;
     }
+
+    /** 图案里某一格的符号：{@code C} 外壳/仓室、{@code M} 主方块、空格是内部空腔。 */
+    public static char symbolAt(int layer, int row, int column) {
+        return SHAPE[layer][row].charAt(column);
+    }
+
+    /** 虚影里的一格：相对主方块的世界坐标偏移 + 该格该摆什么方块。 */
+    public record PreviewCell(net.minecraft.core.BlockPos offset, net.minecraft.world.level.block.state.BlockState state) {
+    }
+
+    /** 与结构模拟机同法：几何必须由 MBD2 自己给，不能另算一套 rotate。 */
+    public static java.util.List<PreviewCell> previewCells(net.minecraft.core.Direction facing) {
+        net.minecraft.world.level.block.state.BlockState casing =
+                com.starcrosser.inspiration.block.ModBlocks.HIGH_ENERGY_MACHINE_CASING.get().defaultBlockState();
+        net.minecraft.world.level.block.state.BlockState controller =
+                com.starcrosser.inspiration.multiblock.ModMultiblocks.MINERAL_SIMULATOR.getBlock().defaultBlockState();
+        java.util.List<PreviewCell> cells = new java.util.ArrayList<>();
+        for (long packed : get().collectTrackedPositions(net.minecraft.core.BlockPos.ZERO, facing)) {
+            net.minecraft.core.BlockPos offset = net.minecraft.core.BlockPos.of(packed);
+            cells.add(new PreviewCell(offset,
+                    offset.equals(net.minecraft.core.BlockPos.ZERO) ? controller : casing));
+        }
+        return cells;
+    }
 }

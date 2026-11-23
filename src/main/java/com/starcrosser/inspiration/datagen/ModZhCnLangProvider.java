@@ -320,6 +320,7 @@ public class ModZhCnLangProvider extends LanguageProvider {
         add("tooltip.inspiration.machine.void_energy_relay", "必须放在团簇所在的那一格；让 5×5×5 内的机器取到它的能量。");
         add("tooltip.inspiration.machine.void_injection_gun", "虚空注入：只消耗团簇能量（能量的 10%），不耗 FE。\n低于配方的下限不生效、高于上限会过载爆炸。");
         add("tooltip.inspiration.machine.mineral_simulator", "3×5×3，按数据仓里那份维度数据的权重产矿。\\n数据不消耗；只吃能量端口送来的电。");
+        add("tooltip.inspiration.machine.high_energy_matter_fusion_machine", "配方：物质融合（四种材料）。\\n四个输入槽，属性是强能机型的又一级翻倍。");
         add("tooltip.inspiration.machine.high_energy_inspiration_furnace", "同灵感高炉；速度 ×4，耗电与耗充能 ×4。");
         add("tooltip.inspiration.machine.structure_simulator", "按结构数据模拟掉落，另耗 8 mB/刻灵感充能。\n4×3×3 中空高能外壳 + 五种仓室。");
         // ===================== 结构模拟机 =====================

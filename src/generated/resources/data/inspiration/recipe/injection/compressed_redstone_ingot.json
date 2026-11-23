@@ -1,7 +1,7 @@
 {
   "type": "inspiration:injection",
   "base": {
-    "item": "inspiration:energized_redstone_ingot"
+    "item": "inspiration:energized_redstone_block"
   },
   "inject": {
     "item": "inspiration:uranium_ingot"

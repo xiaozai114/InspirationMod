@@ -86,6 +86,11 @@ public class FusionRecipeCategory implements IRecipeCategory<FusionRecipe> {
             JeiSlots.input(builder, JeiLayout.THIRD_INPUT_X, JeiLayout.THIRD_INPUT_Y,
                     recipe.thirdInput(), recipe.thirdCount());
         }
+        // 四材料配方（光谱合金）：第四槽摆在第三槽右边，只有四槽的高能物质融合器能摆满
+        if (recipe.hasFourthInput()) {
+            JeiSlots.input(builder, JeiLayout.FOURTH_INPUT_X, JeiLayout.FOURTH_INPUT_Y,
+                    recipe.fourthInput(), recipe.fourthCount());
+        }
     }
 
     @Override

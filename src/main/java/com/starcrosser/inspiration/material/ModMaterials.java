@@ -113,6 +113,7 @@ public final class ModMaterials {
     public static final InspirationMaterial ENERGIZED_REDSTONE = InspirationMaterial.create("energized_redstone")
             .name("注能红石", "Energized Redstone")
             .rarity(Rarity.RARE)
+            .block(true)
             .register();
 
     /** 注能翡翠钢：翡翠钢注入灵感的产物，名字不带「锭」。 */

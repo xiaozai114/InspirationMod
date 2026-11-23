@@ -90,6 +90,9 @@ public final class JeiLayout {
     /** 三材料配方（强能物质融合机）的第三槽：放在两个输入槽正下方居中。 */
     public static final int THIRD_INPUT_X = 19;
     public static final int THIRD_INPUT_Y = 24;
+    /** 四材料配方（光谱合金）：第四个输入槽摆在第三槽右边。 */
+    public static final int FOURTH_INPUT_X = 41;
+    public static final int FOURTH_INPUT_Y = 24;
 
     /* ---------------- 原料精炼：单输入 -> 三个输出槽竖排 ---------------- */
 

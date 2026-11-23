@@ -55,7 +55,8 @@ public final class MachineTooltips {
             "void_energy_extractor",
             "void_energy_relay",
             "void_injection_gun",
-            "mineral_simulator");
+            "mineral_simulator",
+            "high_energy_matter_fusion_machine");
 
     private MachineTooltips() {
     }

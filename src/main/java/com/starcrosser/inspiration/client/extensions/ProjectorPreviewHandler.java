@@ -33,6 +33,9 @@ public final class ProjectorPreviewHandler {
     private static BlockPos anchor;
     /** 投影用的结构朝向。 */
     private static Direction facing = Direction.NORTH;
+    /** 投影的是哪一种多方块（决定尺寸与虚影形状）。 */
+    private static com.starcrosser.inspiration.multiblock.MultiblockKind kind =
+            com.starcrosser.inspiration.multiblock.MultiblockKind.STRUCTURE;
     /** 到期时刻（客户端游戏刻）。 */
     private static long expiresAt;
     /** 投影发生在哪个维度；换维度后刻数会重算，必须一并作废。 */
@@ -63,6 +66,10 @@ public final class ProjectorPreviewHandler {
         return facing;
     }
 
+    public static com.starcrosser.inspiration.multiblock.MultiblockKind kind() {
+        return kind;
+    }
+
     @SubscribeEvent
     public static void onRightClickBlock(PlayerInteractEvent.RightClickBlock event) {
         if (!(event.getLevel() instanceof ClientLevel level)) {
@@ -73,9 +80,14 @@ public final class ProjectorPreviewHandler {
             return;
         }
         BlockPos pos = event.getPos();
-        if (level.getBlockState(pos).getBlock() != ModMultiblocks.STRUCTURE_SIMULATOR.getBlock()) {
+        // 所有多方块的控制器都认：靠 MultiblockKind 查表，新增结构不用改这里
+        com.starcrosser.inspiration.multiblock.MultiblockKind matched =
+                com.starcrosser.inspiration.multiblock.MultiblockKind
+                        .byController(level.getBlockState(pos).getBlock());
+        if (matched == null) {
             return;
         }
+        kind = matched;
         anchor = pos.immutable();
         // 结构沿 -facing 方向展开（正面那一层就在主方块这一层，见 SimulatorPattern#previewCells），
         // 所以要取玩家朝向的**反**方向：玩家面朝主方块时，结构才会朝他视线的方向延伸（远离玩家），

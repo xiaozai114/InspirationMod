@@ -101,8 +101,9 @@ public class InspirationJeiPlugin implements IModPlugin {
                         com.starcrosser.inspiration.machine.blockentity.VoidCondenserTile.ENERGY_PER_TICK)));
         // 结构预览不是数据包配方：层数直接由形状常量决定，一层一条，翻页即翻层
         registration.addRecipes(ModJeiRecipeTypes.STRUCTURE_PREVIEW,
-                IntStream.range(0, SimulatorPattern.depth())
-                        .mapToObj(StructurePreview::new)
+                java.util.Arrays.stream(com.starcrosser.inspiration.multiblock.MultiblockKind.values())
+                        .flatMap(kind -> IntStream.range(0, kind.depth())
+                                .mapToObj(layer -> new StructurePreview(kind, layer)))
                         .toList());
     }
 
@@ -131,6 +132,8 @@ public class InspirationJeiPlugin implements IModPlugin {
         registration.addRecipeCatalyst(ModMachines.RAW_REFINER, ModJeiRecipeTypes.REFINING);
         // 结构预览挂在结构模拟机的用途里：在 JEI 里对着控制器按 U 就能看到结构
         registration.addRecipeCatalyst(ModMultiblocks.STRUCTURE_SIMULATOR,
+                ModJeiRecipeTypes.STRUCTURE_PREVIEW);
+        registration.addRecipeCatalyst(ModMultiblocks.MINERAL_SIMULATOR,
                 ModJeiRecipeTypes.STRUCTURE_PREVIEW);
         // 虚空注入同样要「束缚器 + 枪」两件套，只是枪换成虚空版
         registration.addRecipeCatalyst(ModInjection.MATTER_BINDER, ModJeiRecipeTypes.VOID_INJECTION);

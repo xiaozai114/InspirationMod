@@ -6,7 +6,7 @@
     64,
     64,
     64,
-    64
+    1
   ],
   "duration": 600,
   "energy_per_tick": 400,
@@ -32,10 +32,10 @@
       "item": "minecraft:andesite"
     },
     {
-      "item": "minecraft:tuff"
+      "item": "minecraft:deepslate"
     },
     {
-      "item": "minecraft:deepslate"
+      "item": "inspiration:blank_data"
     }
   ],
   "result": {
