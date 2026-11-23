@@ -60,7 +60,7 @@ public final class AssemblingRecipes {
                 new ItemStack(ModItems.RECYCLING_PLUGIN.get()),
                 ASSEMBLE_DURATION, ASSEMBLE_ENERGY_PER_TICK);
 
-        // 主世界数据：5 种 64 个主世界岩石 + 1 空白数据 + 16 mB 水
+        // 主世界数据：5 种 64 个主世界岩石 + 1 空白数据 + 16 B（16000 mB）水
         assembling(recipeOutput, "assembling/overworld_data",
                 List.of(Ingredient.of(Items.STONE),
                         Ingredient.of(Items.DIORITE),
@@ -71,7 +71,7 @@ public final class AssemblingRecipes {
                 List.of(64, 64, 64, 64, 64, 1),
                 List.of(new FluidRequirement(
                         FluidIngredient.of(net.minecraft.world.level.material.Fluids.WATER),
-                        16)),
+                        16_000)),
                 new ItemStack(ModItems.OVERWORLD_DATA.get()),
                 600, 400);
 

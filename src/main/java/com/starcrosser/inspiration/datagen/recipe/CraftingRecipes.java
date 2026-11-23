@@ -190,16 +190,6 @@ public final class CraftingRecipes {
                         has(ModMaterials.ENERGIZED_REDSTONE.block().get()))
                 .save(recipeOutput, "energized_redstone_ingots_from_block");
 
-        // 空白数据：纸 + 玻璃板，矿物模拟机的数据基材
-        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.BLANK_DATA.get())
-                .pattern("PPP")
-                .pattern("PGP")
-                .pattern("PPP")
-                .define('P', Items.PAPER)
-                .define('G', Items.GLASS_PANE)
-                .unlockedBy(getHasName(Items.PAPER), has(Items.PAPER))
-                .save(recipeOutput);
-
         // 不稳核心 + 8 铁锭 -> 8 不稳金属：虚空能量提取器与虚空注入枪的主料
         ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ModItems.UNSTABLE_METAL.get(), 8)
                 .requires(ModItems.UNSTABLE_CORE.get())

@@ -12,7 +12,7 @@
   "energy_per_tick": 400,
   "fluids": [
     {
-      "amount": 16,
+      "amount": 16000,
       "ingredient": {
         "fluid": "minecraft:water"
       }
