@@ -60,6 +60,21 @@ public final class AssemblingRecipes {
                 new ItemStack(ModItems.RECYCLING_PLUGIN.get()),
                 ASSEMBLE_DURATION, ASSEMBLE_ENERGY_PER_TICK);
 
+        // 主世界数据：6 种 64 个主世界岩石 + 16 mB 水
+        assembling(recipeOutput, "assembling/overworld_data",
+                List.of(Ingredient.of(Items.STONE),
+                        Ingredient.of(Items.DIORITE),
+                        Ingredient.of(Items.GRANITE),
+                        Ingredient.of(Items.ANDESITE),
+                        Ingredient.of(Items.TUFF),
+                        Ingredient.of(Items.DEEPSLATE)),
+                List.of(64, 64, 64, 64, 64, 64),
+                List.of(new FluidRequirement(
+                        FluidIngredient.of(net.minecraft.world.level.material.Fluids.WATER),
+                        16)),
+                new ItemStack(ModItems.OVERWORLD_DATA.get()),
+                600, 400);
+
         // 零点能量增幅器：虚空合金 + 4 注能红石锭 + 576 mB 液态无恒合金
         assembling(recipeOutput, "assembling/zero_point_amplifier",
                 List.of(Ingredient.of(ModItems.VOID_ALLOY.get()),

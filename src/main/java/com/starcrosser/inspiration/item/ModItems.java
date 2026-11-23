@@ -336,6 +336,13 @@ public class ModItems {
     public static final DeferredItem<Item> MECHANICAL_PARASITE =
             ITEMS.register("mechanical_parasite", () -> new Item(new Item.Properties().rarity(Rarity.UNCOMMON)));
 
+    /** 主世界数据：矿物模拟机用，灵感装配台做出来，本身不消耗。 */
+    public static final DeferredItem<Item> OVERWORLD_DATA =
+            ITEMS.register("overworld_data",
+                    () -> new com.starcrosser.inspiration.multiblock.data.DimensionDataItem(
+                            new Item.Properties().rarity(Rarity.RARE),
+                            com.starcrosser.inspiration.multiblock.data.DimensionTables.OVERWORLD));
+
     /** 虚空护目镜：头部装备，+2 护甲，戴着能看见团簇里的 ve。 */
     public static final DeferredItem<Item> VOID_GOGGLES =
             ITEMS.register("void_goggles", () -> new com.starcrosser.inspiration.item.armor.VoidGogglesItem());

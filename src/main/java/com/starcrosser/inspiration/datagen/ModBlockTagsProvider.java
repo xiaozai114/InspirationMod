@@ -65,7 +65,8 @@ public class ModBlockTagsProvider extends BlockTagsProvider {
                 .add(ModMultiblocks.ENERGY_PORT.getBlock())
                 .add(ModMultiblocks.INSPIRATION_HATCH.getBlock())
                 .add(ModMultiblocks.DATA_HATCH.getBlock())
-                .add(ModMultiblocks.STRUCTURE_SIMULATOR.getBlock());
+                .add(ModMultiblocks.STRUCTURE_SIMULATOR.getBlock())
+                .add(ModMultiblocks.MINERAL_SIMULATOR.getBlock());
 
         // 注入结构
         tag(BlockTags.MINEABLE_WITH_PICKAXE)

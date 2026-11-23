@@ -80,6 +80,7 @@ public class ModBlockStatesProvider extends BlockStateProvider {
         }
         // 结构模拟机的主方块：与单方块机器一样按 subfacing 转四个朝向
         machineBlock(ModMultiblocks.STRUCTURE_SIMULATOR);
+        machineBlock(ModMultiblocks.MINERAL_SIMULATOR);
 
         // 注入结构：两个不完整方块
         matterBinder();

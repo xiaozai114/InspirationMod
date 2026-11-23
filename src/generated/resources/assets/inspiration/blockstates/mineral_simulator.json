@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "subfacing=east": {
+      "model": "inspiration:block/mineral_simulator",
+      "y": 90
+    },
+    "subfacing=north": {
+      "model": "inspiration:block/mineral_simulator"
+    },
+    "subfacing=south": {
+      "model": "inspiration:block/mineral_simulator",
+      "y": 180
+    },
+    "subfacing=west": {
+      "model": "inspiration:block/mineral_simulator",
+      "y": 270
+    }
+  }
+}

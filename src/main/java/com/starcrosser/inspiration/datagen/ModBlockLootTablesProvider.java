@@ -67,6 +67,7 @@ public class ModBlockLootTablesProvider extends BlockLootSubProvider {
         dropSelf(ModMultiblocks.INSPIRATION_HATCH.getBlock());
         dropSelf(ModMultiblocks.DATA_HATCH.getBlock());
         dropSelf(ModMultiblocks.STRUCTURE_SIMULATOR.getBlock());
+        dropSelf(ModMultiblocks.MINERAL_SIMULATOR.getBlock());
 
         // 注入结构的两个方块同样注册在 Titanium 的注册表中
         dropSelf(ModInjection.MATTER_BINDER.getBlock());
@@ -108,6 +109,7 @@ public class ModBlockLootTablesProvider extends BlockLootSubProvider {
         blocks.add(ModMultiblocks.INSPIRATION_HATCH.getBlock());
         blocks.add(ModMultiblocks.DATA_HATCH.getBlock());
         blocks.add(ModMultiblocks.STRUCTURE_SIMULATOR.getBlock());
+        blocks.add(ModMultiblocks.MINERAL_SIMULATOR.getBlock());
         blocks.add(ModInjection.MATTER_BINDER.getBlock());
         blocks.add(ModInjection.INJECTION_GUN.getBlock());
         blocks.add(ModInjection.VOID_INJECTION_GUN.getBlock());

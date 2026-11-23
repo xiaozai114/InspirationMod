@@ -4,6 +4,7 @@ import com.hrznstudio.titanium.module.BlockWithTile;
 import com.hrznstudio.titanium.module.DeferredRegistryHelper;
 import com.starcrosser.inspiration.Inspiration;
 import com.starcrosser.inspiration.multiblock.block.HatchBlock;
+import com.starcrosser.inspiration.multiblock.block.MineralSimulatorBlock;
 import com.starcrosser.inspiration.multiblock.block.StructureSimulatorBlock;
 import com.starcrosser.inspiration.multiblock.blockentity.part.DataHatchTile;
 import com.starcrosser.inspiration.multiblock.blockentity.part.EnergyPortTile;
@@ -34,6 +35,8 @@ public class ModMultiblocks {
     public static BlockWithTile DATA_HATCH;
     /** 结构模拟机控制器（主方块）。 */
     public static BlockWithTile STRUCTURE_SIMULATOR;
+    /** 矿物模拟机控制器（主方块）：3×5×3，按维度数据产矿。 */
+    public static BlockWithTile MINERAL_SIMULATOR;
 
     /** 所有仓室与控制器共用一套方块属性：比铁块硬一点，需要镐。 */
     private static BlockBehaviour.Properties properties() {
@@ -56,5 +59,7 @@ public class ModMultiblocks {
                 () -> new HatchBlock<>(properties(), DataHatchTile.class, DataHatchTile::new), null);
         STRUCTURE_SIMULATOR = registry.registerBlockWithTile(
                 "structure_simulator", StructureSimulatorBlock::new, null);
+        MINERAL_SIMULATOR = registry.registerBlockWithTile(
+                "mineral_simulator", MineralSimulatorBlock::new, null);
     }
 }

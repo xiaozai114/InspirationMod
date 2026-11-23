@@ -178,6 +178,10 @@ public final class MachineBlockRecipes {
         // ==================== 结构模拟机（多方块） ====================
 
         // 结构模拟机：无恒合金 + 幽匿合金锭 + 高能核心，形状与其他机器一致
+        machine(recipeOutput, ModMultiblocks.MINERAL_SIMULATOR.getBlock(),
+                ModMaterials.EPHEMERAL_ALLOY.item().get(), ModMaterials.SPECTRUM_ALLOY.item().get(),
+                ModItems.HIGH_ENERGY_CORE.get(), null, ModItems.HIGH_ENERGY_CORE.get());
+
         machine(recipeOutput, ModMultiblocks.STRUCTURE_SIMULATOR.getBlock(),
                 ModMaterials.EPHEMERAL_ALLOY.item().get(), ModMaterials.SCULK_ALLOY.item().get(),
                 ModItems.HIGH_ENERGY_CORE.get(), null, ModItems.HIGH_ENERGY_CORE.get());

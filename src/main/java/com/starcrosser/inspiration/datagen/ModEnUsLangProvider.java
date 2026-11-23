@@ -70,6 +70,7 @@ public class ModEnUsLangProvider extends LanguageProvider {
         add("item.inspiration.zero_point_amplifier", "Zero-Point Amplifier");
         add("item.inspiration.compressed_redstone_ingot", "Compressed Redstone Ingot");
         add("item.inspiration.void_goggles", "Void Goggles");
+        add("item.inspiration.overworld_data", "Overworld Data");
         add("item.inspiration.void_alloy", "Void Alloy");
         add("tooltip.inspiration.sculk_drill_bit.cracks", "Cracks the bedrock block it finally reaches.");
         add("void_energy.stage.weak", "Weak");
@@ -161,6 +162,7 @@ public class ModEnUsLangProvider extends LanguageProvider {
             add(machine.block(), machine.enName());
         }
         add(ModMultiblocks.STRUCTURE_SIMULATOR.getBlock(), "Structure Simulator");
+        add(ModMultiblocks.MINERAL_SIMULATOR.getBlock(), "Mineral Simulator");
         // 流体
         add("fluid_type.inspiration.inspiration_charge", "Inspiration Charge");
         add("fluid_type.inspiration.molten_ephemeral_alloy", "Molten Ephemeral Alloy");
@@ -308,6 +310,7 @@ public class ModEnUsLangProvider extends LanguageProvider {
         add("tooltip.inspiration.machine.void_energy_extractor", "Standing on cracked bedrock, feeds 1 ve/tick into the block above.\nCosts 50 FE/tick; no power, no output.");
         add("tooltip.inspiration.machine.void_energy_relay", "Must be placed in the cluster's own block; machines within 5x5x5 can draw from it.");
         add("tooltip.inspiration.machine.void_injection_gun", "Void injection: spends only cluster energy (10% of it), never FE.\nBelow the recipe minimum nothing happens; above the maximum it overloads.");
+        add("tooltip.inspiration.machine.mineral_simulator", "3x5x3 multiblock: rolls ores by the weight table of the dimension data in the data hatch.\\nThe data is not consumed; it only draws power from the energy port.");
         add("tooltip.inspiration.machine.high_energy_inspiration_furnace", "Same as the Inspiration Furnace; 4x speed, 4x power and charge.");
         add("tooltip.inspiration.machine.structure_simulator", "Simulates loot from structure data; costs 8 mB/tick inspiration charge.\n4x3x3 hollow casing shell with all five hatches.");
         add("tooltip.inspiration.brain.villager", "Culture Tank: 100 FE/tick + 1 mB/tick nutrient, 1 Inspiration per 10 s.\\nDies when nutrient runs out.");
@@ -320,6 +323,10 @@ public class ModEnUsLangProvider extends LanguageProvider {
         add("gui.inspiration.inspiration_value.tip", "Inspiration: %s / %s");
         add("gui.inspiration.inspiration_value.extract", "Click to extract 100 -> 1 Inspiration");
         // ===================== Structure Simulator =====================
+        add("tooltip.inspiration.dimension_data.duration", "Duration %s ticks");
+        add("tooltip.inspiration.dimension_data.energy", "%s FE per tick");
+        add("tooltip.inspiration.dimension_data.ores", "%s ore types");
+        add("tooltip.inspiration.dimension_data.unconsumed", "Not consumed");
         add("tooltip.inspiration.structure_data.duration", "Duration: %s ticks");
         add("tooltip.inspiration.structure_data.energy", "Power: %s FE/tick");
         add("tooltip.inspiration.structure_data.charge", "Inspiration charge: %s mB/tick");

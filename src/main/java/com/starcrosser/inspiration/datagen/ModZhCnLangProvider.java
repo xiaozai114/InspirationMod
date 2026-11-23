@@ -71,6 +71,7 @@ public class ModZhCnLangProvider extends LanguageProvider {
         add("item.inspiration.zero_point_amplifier", "零点能量增幅器");
         add("item.inspiration.compressed_redstone_ingot", "压缩红石锭");
         add("item.inspiration.void_goggles", "虚空护目镜");
+        add("item.inspiration.overworld_data", "主世界数据");
         add("item.inspiration.void_alloy", "虚空合金");
         add("tooltip.inspiration.sculk_drill_bit.cracks", "挖到底时会把那一格基岩裂成开裂的基岩。");
         add("void_energy.stage.weak", "虚弱");
@@ -165,6 +166,7 @@ public class ModZhCnLangProvider extends LanguageProvider {
             add(machine.block(), machine.zhName());
         }
         add(ModMultiblocks.STRUCTURE_SIMULATOR.getBlock(),"结构模拟机");
+        add(ModMultiblocks.MINERAL_SIMULATOR.getBlock(),"矿物模拟机");
 
         // 流体
         add("fluid_type.inspiration.inspiration_charge", "灵感充能");
@@ -317,10 +319,15 @@ public class ModZhCnLangProvider extends LanguageProvider {
         add("tooltip.inspiration.machine.void_energy_extractor", "站在开裂的基岩上，每刻把 1 ve 送进上方那一格。\n需要 50 FE/刻；没有电就不产出。");
         add("tooltip.inspiration.machine.void_energy_relay", "必须放在团簇所在的那一格；让 5×5×5 内的机器取到它的能量。");
         add("tooltip.inspiration.machine.void_injection_gun", "虚空注入：只消耗团簇能量（能量的 10%），不耗 FE。\n低于配方的下限不生效、高于上限会过载爆炸。");
+        add("tooltip.inspiration.machine.mineral_simulator", "3×5×3，按数据仓里那份维度数据的权重产矿。\\n数据不消耗；只吃能量端口送来的电。");
         add("tooltip.inspiration.machine.high_energy_inspiration_furnace", "同灵感高炉；速度 ×4，耗电与耗充能 ×4。");
         add("tooltip.inspiration.machine.structure_simulator", "按结构数据模拟掉落，另耗 8 mB/刻灵感充能。\n4×3×3 中空高能外壳 + 五种仓室。");
         // ===================== 结构模拟机 =====================
         // 结构数据物品的三行参数
+        add("tooltip.inspiration.dimension_data.duration", "耗时 %s 刻");
+        add("tooltip.inspiration.dimension_data.energy", "每刻 %s FE");
+        add("tooltip.inspiration.dimension_data.ores", "共 %s 种矿物");
+        add("tooltip.inspiration.dimension_data.unconsumed", "不消耗");
         add("tooltip.inspiration.structure_data.duration", "模拟时长：%s tick");
         add("tooltip.inspiration.structure_data.energy", "耗电：%s FE/tick");
         add("tooltip.inspiration.structure_data.charge", "灵感充能：%s mB/tick");

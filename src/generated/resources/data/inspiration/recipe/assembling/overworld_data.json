@@ -1,0 +1,45 @@
+{
+  "type": "inspiration:assembling",
+  "counts": [
+    64,
+    64,
+    64,
+    64,
+    64,
+    64
+  ],
+  "duration": 600,
+  "energy_per_tick": 400,
+  "fluids": [
+    {
+      "amount": 16,
+      "ingredient": {
+        "fluid": "minecraft:water"
+      }
+    }
+  ],
+  "ingredients": [
+    {
+      "item": "minecraft:stone"
+    },
+    {
+      "item": "minecraft:diorite"
+    },
+    {
+      "item": "minecraft:granite"
+    },
+    {
+      "item": "minecraft:andesite"
+    },
+    {
+      "item": "minecraft:tuff"
+    },
+    {
+      "item": "minecraft:deepslate"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "inspiration:overworld_data"
+  }
+}
