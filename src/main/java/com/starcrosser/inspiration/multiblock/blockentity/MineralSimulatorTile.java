@@ -9,6 +9,10 @@ import com.lowdragmc.mbd2.api.pattern.MultiblockState;
 import com.starcrosser.inspiration.multiblock.ModMultiblocks;
 import com.starcrosser.inspiration.multiblock.data.DimensionDataItem;
 import com.starcrosser.inspiration.multiblock.data.MineralTable;
+import com.starcrosser.inspiration.multiblock.data.DimensionTables;
+import com.starcrosser.inspiration.multiblock.data.SimulationProgress;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.nbt.CompoundTag;
 import com.starcrosser.inspiration.multiblock.pattern.MineralPattern;
 import com.starcrosser.inspiration.multiblock.blockentity.part.DataHatchTile;
 import com.starcrosser.inspiration.multiblock.blockentity.part.EnergyPortTile;
@@ -63,13 +67,14 @@ public class MineralSimulatorTile extends MachineTile<MineralSimulatorTile> {
 
     /** 本轮使用的表；每轮开始时从数据仓读取。 */
     private MineralTable activeTable;
+    private final SimulationProgress work = new SimulationProgress("overworld_data");
 
     @SuppressWarnings("unchecked")
     public MineralSimulatorTile(BlockPos pos, BlockState state) {
         super((BasicTileBlock<MineralSimulatorTile>) ModMultiblocks.MINERAL_SIMULATOR.getBlock(),
                 ModMultiblocks.MINERAL_SIMULATOR.type().get(), pos, state);
         ProgressBarComponent<MineralSimulatorTile> bar =
-                new ProgressBarComponent<>(PROGRESS_X, PROGRESS_Y, 1_200);
+                new ProgressBarComponent<>(PROGRESS_X, PROGRESS_Y, DimensionTables.STANDARD_DURATION);
         bar.setBarDirection(ProgressBarComponent.BarDirection.ARROW_RIGHT);
         bar.setCanIncrease(this::canWork);
         bar.setCanReset(tile -> tile.progressBar.getProgress() >= tile.progressBar.getMaxProgress());
@@ -197,12 +202,12 @@ public class MineralSimulatorTile extends MachineTile<MineralSimulatorTile> {
 
     /* ============================ 作业 ============================ */
 
-    private MineralTable table() {
+    private DimensionDataItem dataItem() {
         for (BlockPos p : dataHatches) {
             if (level.getBlockEntity(p) instanceof DataHatchTile hatch) {
                 ItemStack data = hatch.getInventory().getStackInSlot(0);
                 if (data.getItem() instanceof DimensionDataItem item) {
-                    return item.table();
+                    return item;
                 }
             }
         }
@@ -223,14 +228,15 @@ public class MineralSimulatorTile extends MachineTile<MineralSimulatorTile> {
         if (level == null || level.isClientSide || !formed) {
             return false;
         }
-        MineralTable table = table();
-        if (table == null) {
+        DimensionDataItem card = dataItem();
+        if (card == null) {
             activeTable = null;
             return false;
         }
-        if (activeTable != table) {
-            activeTable = table;
-            progressBar.setMaxProgress(table.duration());
+        MineralTable table = card.table();
+        activeTable = table;
+        if (work.bind(card, table.duration(), progressBar)) {
+            setChanged();
         }
         return getEnergyStorage().getEnergyStored() >= table.energyPerTick()
                 && hasOutputRoom(table.pick(net.minecraft.util.RandomSource.create(0)));
@@ -289,11 +295,23 @@ public class MineralSimulatorTile extends MachineTile<MineralSimulatorTile> {
         return left;
     }
 
+    @Override
+    protected void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
+        super.saveAdditional(tag, registries);
+        work.save(tag);
+    }
+
+    @Override
+    public void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
+        super.loadAdditional(tag, registries);
+        work.load(tag);
+    }
+
     private void refreshStatus() {
         int next;
         if (!formed) {
             next = STATUS_NOT_FORMED;
-        } else if (table() == null) {
+        } else if (dataItem() == null) {
             next = STATUS_NO_DATA;
         } else if (getEnergyStorage().getEnergyStored() < (activeTable == null ? 1 : activeTable.energyPerTick())) {
             next = STATUS_NO_ENERGY;

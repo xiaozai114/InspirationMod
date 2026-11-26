@@ -23,6 +23,8 @@ public final class InspirationCharge {
     /** 机器内部罐体的容量（mB）。 */
     public static final int TANK_CAPACITY = 16_000;
 
+    public static final int MB_PER_RESONANT_INSPIRATION = 4_000;
+
     private InspirationCharge() {
     }
 
@@ -47,6 +49,9 @@ public final class InspirationCharge {
     public static int chargeValue(ItemStack stack) {
         if (stack.is(ModItems.INSPIRATION.get())) {
             return MB_PER_ITEM;
+        }
+        if (stack.is(ModItems.RESONANT_INSPIRATION.get())) {
+            return MB_PER_RESONANT_INSPIRATION;
         }
         if (stack.is(ModItems.INSPIRATION_SHARD.get())) {
             return MB_PER_SHARD;

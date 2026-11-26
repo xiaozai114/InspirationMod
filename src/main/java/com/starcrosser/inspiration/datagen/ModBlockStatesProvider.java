@@ -39,8 +39,11 @@ public class ModBlockStatesProvider extends BlockStateProvider {
         // 红石锭块
         // 青金石锭块
         // 无恒矿石
+        simpleBlock(ModBlocks.TUNGSTEN_ORE.get(), cubeAll(ModBlocks.TUNGSTEN_ORE.get()));
         simpleBlock(ModBlocks.EPHEMERAL_ORE.get(), cubeAll(ModBlocks.EPHEMERAL_ORE.get()));
         simpleBlock(ModBlocks.CESIUM_SALT_ORE.get(), cubeAll(ModBlocks.CESIUM_SALT_ORE.get()));
+        simpleBlock(ModBlocks.VOID_FLUID.get(), models().getBuilder("void_fluid")
+                .texture("particle", mcLoc("block/water_still")));
         simpleBlock(ModBlocks.MIND_FLUID_BLOCK.get(), cubeAll(ModBlocks.MIND_FLUID_BLOCK.get()));
         simpleBlock(ModBlocks.CESIUM_SALT_BLOCK.get(), cubeAll(ModBlocks.CESIUM_SALT_BLOCK.get()));
         // 材料块：六面同贴图，遍历清单
@@ -62,6 +65,7 @@ public class ModBlockStatesProvider extends BlockStateProvider {
         simpleBlock(ModBlocks.HIGH_ENERGY_MACHINE_CASING.get(), cubeAll(ModBlocks.HIGH_ENERGY_MACHINE_CASING.get()));
         simpleBlock(ModVoidEnergy.CRACKED_BEDROCK.get(), cubeAll(ModVoidEnergy.CRACKED_BEDROCK.get()));
         simpleBlock(ModVoidEnergy.VOID_ENERGY_EXTRACTOR.get(), cubeAll(ModVoidEnergy.VOID_ENERGY_EXTRACTOR.get()));
+        simpleBlock(ModVoidEnergy.VOID_ENERGY_COLLECTOR.get(), cubeAll(ModVoidEnergy.VOID_ENERGY_COLLECTOR.get()));
         simpleBlock(ModVoidEnergy.VOID_ENERGY_RELAY.get(), cubeAll(ModVoidEnergy.VOID_ENERGY_RELAY.get()));
         // 结构模拟机的五种仓室：没有朝向，六面同图，靠面板上的标记区分
         hatchBlock(ModMultiblocks.INPUT_HATCH);

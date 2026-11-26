@@ -1,0 +1,15 @@
+{
+  "type": "inspiration:injection",
+  "base": {
+    "item": "minecraft:golden_apple"
+  },
+  "inject": {
+    "item": "inspiration:inspiration"
+  },
+  "max_energy": 250000,
+  "min_energy": 150000,
+  "result": {
+    "count": 1,
+    "id": "inspiration:energized_golden_apple"
+  }
+}

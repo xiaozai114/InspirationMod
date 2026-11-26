@@ -28,6 +28,7 @@ PLUGINS = {
     "inspiration_plugin": (0xC7, 0x7D, 0xFF, 0xFF),
     "speed_plugin": (0x5F, 0xE0, 0xFF, 0xFF),
     "capacitor_downgrade_plugin": (0xFF, 0x6B, 0x6B, 0xFF),
+    "parallel_plugin": (0xF2, 0xAA, 0xFB, 0xFF),
     "recycling_plugin": (0x6B, 0xE8, 0x8A, 0xFF),
 }
 
@@ -59,6 +60,9 @@ SYMBOLS = {
     "inspiration_plugin": STAR,
     "speed_plugin": CHEVRONS,
     "capacitor_downgrade_plugin": CHEVRONS_DOWN,
+    "parallel_plugin": [(x, y) for x in range(4, 12) for y in (5, 10)]
+                       + [(5, 6), (5, 7), (4, 7), (4, 8), (5, 8), (5, 9),
+                          (10, 4), (10, 6), (10, 9), (10, 11)],
     "recycling_plugin": RECYCLE,
 }
 
@@ -90,19 +94,45 @@ def draw_symbol(img, shape, color):
         put(img, x, y, color)
 
 
+HIGH_ENERGY_BASE = {
+    "high_energy_capacitor_plugin": "capacitor_plugin",
+    "high_energy_inspiration_plugin": "inspiration_plugin",
+    "high_energy_speed_plugin": "speed_plugin",
+}
+
+
+def draw_high_energy_frame(img):
+    """紫钢边框、亮角和两枚金色引脚，保留同类插件的中心标志。"""
+    for i in range(3, 13):
+        put(img, i, 2, (0xB5, 0x94, 0xDD, 0xFF))
+        put(img, 2, i, (0x89, 0x65, 0x9E, 0xFF))
+        put(img, 13, i, (0x67, 0x48, 0x78, 0xFF))
+        put(img, i, 13, (0x53, 0x36, 0x61, 0xFF))
+    for x in (3, 12):
+        put(img, x, 2, (0xEB, 0xDE, 0xFC, 0xFF))
+    for x in (5, 9):
+        for pin in (x, x + 1):
+            put(img, pin, 13, (0xF2, 0xD1, 0x8C, 0xFF))
+            put(img, pin, 14, (0xA7, 0x70, 0x40, 0xFF))
+
+
 def build(name):
     img = Image.new("RGBA", (SIZE, SIZE), (0, 0, 0, 0))
     draw_plate(img)
-    draw_symbol(img, SYMBOLS[name], PLUGINS[name])
+    base = HIGH_ENERGY_BASE.get(name, name)
+    if name in HIGH_ENERGY_BASE:
+        draw_high_energy_frame(img)
+    draw_symbol(img, SYMBOLS[base], PLUGINS[base])
     return img
 
 
 def main():
-    names = sys.argv[1:] or list(PLUGINS)
+    available = [*PLUGINS, *HIGH_ENERGY_BASE]
+    names = sys.argv[1:] or available
     ITEM_DIR.mkdir(parents=True, exist_ok=True)
     for name in names:
-        if name not in PLUGINS:
-            raise SystemExit(f"未知的插件：{name}，可选 {sorted(PLUGINS)}")
+        if name not in available:
+            raise SystemExit(f"未知的插件：{name}，可选 {sorted(available)}")
         path = ITEM_DIR / f"{name}.png"
         build(name).save(path)
         print(f"written {path}")

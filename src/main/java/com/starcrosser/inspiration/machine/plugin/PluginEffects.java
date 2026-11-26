@@ -14,14 +14,20 @@ import java.util.List;
  *     <li>{@code energyUse} —— 每刻耗电，为速度的平方（速度 ×2 时耗电 ×4）；</li>
  *     <li>{@code chargeUse} —— 每刻灵感充能消耗，与速度同步增长；</li>
  *     <li>{@code energyCapacity} / {@code chargeCapacity} —— 两种缓冲的容量；</li>
+ *     <li>{@code parallel} —— 采用并行加工的机器每轮最多能运行的配方份数；</li>
  *     <li>{@code byproduct} —— 副产物产量倍率（唯一按加算叠加的那一项）。</li>
  * </ul>
- * 同类插件每多装一个就再乘一次 {@link MachinePluginType#multiplier()}，
+ * 同类插件每多装一个就再乘一次 {@link MachinePluginItem#multiplier()}，
  * **只有 {@link MachinePluginType#BYPRODUCT} 是加算**：每个回收升级加 100%，
  * 装两个就是 3 倍而不是 4 倍。
  */
 public record PluginEffects(float speed, float energyUse, float chargeUse,
-                            float energyCapacity, float chargeCapacity, float byproduct) {
+                            float energyCapacity, float chargeCapacity, float byproduct, int parallel) {
+
+    public PluginEffects(float speed, float energyUse, float chargeUse, float energyCapacity,
+                         float chargeCapacity, float byproduct) {
+        this(speed, energyUse, chargeUse, energyCapacity, chargeCapacity, byproduct, 1);
+    }
 
     /** 没装任何插件时的中性倍率。 */
     public static final PluginEffects NONE = new PluginEffects(1F, 1F, 1F, 1F, 1F, 1F);
@@ -32,13 +38,15 @@ public record PluginEffects(float speed, float energyUse, float chargeUse,
         float energyCapacity = 1F;
         float chargeCapacity = 1F;
         float byproduct = 1F;
+        int parallel = 1;
         for (ItemStack stack : installed) {
             if (stack.isEmpty() || !(stack.getItem() instanceof MachinePluginItem plugin)) {
                 continue;
             }
             MachinePluginType type = plugin.pluginType();
-            float factor = type.multiplier();
+            float factor = plugin.multiplier();
             switch (type) {
+                case PARALLEL -> parallel *= Math.round(factor);
                 case SPEED -> speed *= factor;
                 case ENERGY_CAPACITY, ENERGY_CAPACITY_DOWNGRADE -> energyCapacity *= factor;
                 case CHARGE_CAPACITY -> chargeCapacity *= factor;
@@ -46,7 +54,11 @@ public record PluginEffects(float speed, float energyUse, float chargeUse,
                 case BYPRODUCT -> byproduct += factor - 1F;
             }
         }
-        return new PluginEffects(speed, speed * speed, speed, energyCapacity, chargeCapacity, byproduct);
+        return new PluginEffects(speed, speedEnergyUse(speed), speed, energyCapacity, chargeCapacity, byproduct, parallel);
+    }
+
+    public static float speedEnergyUse(float speed) {
+        return speed * speed;
     }
 
     /**
@@ -88,6 +100,6 @@ public record PluginEffects(float speed, float energyUse, float chargeUse,
 
     /** 是否装了任何插件。 */
     public boolean isEmpty() {
-        return speed == 1F && energyCapacity == 1F && chargeCapacity == 1F && byproduct == 1F;
+        return speed == 1F && energyCapacity == 1F && chargeCapacity == 1F && byproduct == 1F && parallel == 1;
     }
 }

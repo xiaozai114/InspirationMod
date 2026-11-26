@@ -1,0 +1,29 @@
+{
+  "type": "inspiration:assembling",
+  "counts": [
+    1,
+    16,
+    8,
+    1
+  ],
+  "duration": 600,
+  "energy_per_tick": 400,
+  "ingredients": [
+    {
+      "item": "inspiration:blank_data"
+    },
+    {
+      "item": "minecraft:hay_block"
+    },
+    {
+      "item": "minecraft:emerald"
+    },
+    {
+      "item": "minecraft:bell"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "inspiration:village_data"
+  }
+}

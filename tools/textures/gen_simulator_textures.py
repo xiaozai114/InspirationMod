@@ -10,8 +10,7 @@
 - 灵感提供仓：灵感充能那颗菱形
 - 数据仓：带引脚的芯片
 
-控制器沿用机器家族的三面语言：正面是内凹屏幕里 3×3 的结构网格（正中那格最亮，就是主方块），
-侧面横向散热帯，顶面菱形接口。两份数据物品是同一张卡的两种状态：
+两台控制器的六个面图由 simulator_controllers 生成。两份数据物品是同一张卡的两种状态：
 空白数据是一块空白屏幕，沉船数据在屏幕上画了一艘小船。
 结构投影仪是一台机身在右下、镜头朝左上打出紫色光锥的小装置。
 
@@ -21,7 +20,7 @@
     src/main/resources/assets/inspiration/textures/block/{high_energy_machine_casing,
         simulator_input_hatch, simulator_output_hatch, simulator_energy_port,
         simulator_inspiration_hatch, simulator_data_hatch,
-        structure_simulator_{front,side,top}}.png
+        {structure,mineral}_simulator_{front,side,top}}.png
     src/main/resources/assets/inspiration/textures/item/{blank_data,shipwreck_data,projector}.png
 """
 
@@ -31,6 +30,7 @@ import zipfile
 from pathlib import Path
 
 from PIL import Image
+from simulator_controllers import controller_textures
 
 TEXTURE_ROOT = Path(__file__).resolve().parents[2] / "src/main/resources/assets/inspiration/textures"
 BLOCK_DIR = TEXTURE_ROOT / "block"
@@ -46,12 +46,6 @@ CASING_SAT = 0.24
 # 内凹面板：仓室中央那块深色底板
 PLATE_DARK = (0x3A, 0x2B, 0x4E, 255)
 PLATE_EDGE = (0x26, 0x1B, 0x36, 255)
-
-# 控制器三面沿用机器家族的倒角色
-BEVEL = (0x6A, 0x51, 0x8C, 255)
-GLOW = (0xC6, 0x9B, 0xFF, 255)
-GLINT = (0xF2, 0xE4, 0xFF, 255)
-
 
 def find_client_extra():
     """没传参数时，去构建目录里找 client-extra 资源包。"""
@@ -158,47 +152,6 @@ def hatch_texture(casing, shape, color):
     img = casing.copy()
     inset_plate(img)
     pixels(img, shape, color)
-    return img
-
-
-def simulator_front(casing):
-    """控制器正面：内凹屏幕里 3×3 的结构网格，正中那格最亮（就是主方块自己）。"""
-    img = casing.copy()
-    rect(img, 2, 2, 13, 13, BEVEL)
-    rect(img, 3, 3, 12, 12, PLATE_DARK)
-    for row, y in enumerate((4, 7, 10)):
-        for column, x in enumerate((4, 7, 10)):
-            rect(img, x, y, x + 1, y + 1,
-                 GLINT if (row, column) == (1, 1) else GLOW)
-    return img
-
-
-def simulator_side(casing):
-    """控制器侧面：横向散热帯，帯上三个光点。"""
-    img = casing.copy()
-    rect(img, 3, 6, 12, 9, PLATE_DARK)
-    for x in range(3, 13):
-        put(img, x, 5, BEVEL)
-        put(img, x, 10, BEVEL)
-    for x in (5, 8, 11):
-        put(img, x, 7, GLOW)
-        put(img, x, 8, GLOW)
-    put(img, 5, 7, GLINT)
-    return img
-
-
-def simulator_top(casing):
-    """控制器顶面：菱形接口 + 中心亮芯。"""
-    img = casing.copy()
-    for y, xs in ((3, range(7, 9)), (4, range(6, 10)), (5, range(5, 11)),
-                  (6, range(5, 11)), (7, range(5, 11)), (8, range(5, 11)),
-                  (9, range(5, 11)), (10, range(6, 10)), (11, range(7, 9))):
-        pixels(img, [(x, y) for x in xs], BEVEL)
-    for y, xs in ((5, range(6, 10)), (6, range(6, 10)), (7, range(6, 10)),
-                  (8, range(6, 10)), (9, range(6, 10))):
-        pixels(img, [(x, y) for x in xs], PLATE_DARK)
-    rect(img, 7, 7, 8, 8, GLOW)
-    put(img, 7, 7, GLINT)
     return img
 
 
@@ -309,10 +262,8 @@ def main():
     outputs = [("block/high_energy_machine_casing", casing)]
     for name, shape, color in HATCHES:
         outputs.append((f"block/{name}", hatch_texture(casing, shape, color)))
+    outputs.extend(controller_textures(casing))
     outputs += [
-        ("block/structure_simulator_front", simulator_front(casing)),
-        ("block/structure_simulator_side", simulator_side(casing)),
-        ("block/structure_simulator_top", simulator_top(casing)),
         ("item/blank_data", blank_data()),
         ("item/shipwreck_data", shipwreck_data()),
         ("item/projector", projector()),

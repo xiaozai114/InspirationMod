@@ -1,0 +1,29 @@
+{
+  "type": "inspiration:assembling",
+  "counts": [
+    1,
+    64,
+    16,
+    2
+  ],
+  "duration": 600,
+  "energy_per_tick": 400,
+  "ingredients": [
+    {
+      "item": "inspiration:blank_data"
+    },
+    {
+      "item": "minecraft:tuff_bricks"
+    },
+    {
+      "item": "minecraft:copper_grate"
+    },
+    {
+      "item": "minecraft:breeze_rod"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "inspiration:trial_chambers_data"
+  }
+}

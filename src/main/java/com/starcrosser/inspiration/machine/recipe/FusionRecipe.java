@@ -168,6 +168,11 @@ public class FusionRecipe extends InspiredRecipe<FusionRecipeInput> {
      * 避免出现「只扣一部分材料却产出整份产物」。
      */
     public int[] resolveSlots(List<ItemStack> slots) {
+        return resolveSlots(slots, 1);
+    }
+
+    @org.jetbrains.annotations.Nullable
+    public int[] resolveSlots(List<ItemStack> slots, int batches) {
         List<Ingredient> required = ingredients();
         if (slots == null || slots.size() < required.size()) {
             return null;
@@ -181,7 +186,7 @@ public class FusionRecipe extends InspiredRecipe<FusionRecipeInput> {
                 (material, slot) -> {
                     ItemStack stack = slots.get(slot);
                     return !stack.isEmpty()
-                            && stack.getCount() >= counts[material]
+                            && stack.getCount() >= (long) counts[material] * batches
                             && required.get(material).test(stack);
                 });
     }

@@ -12,7 +12,7 @@
 public static final InspirationMaterial CESIUM = InspirationMaterial.create("cesium")
         .name("铯", "Cesium")                          // 派生出「铯锭 / 铯块 / 铯粒 / 铯尘」
         .alkalinity(4)                                 // > 0 才写进 data_map
-        .alkaliRevert(() -> ModItems.CESIUM_SALT.get(), 4f)  // 用 AlkaliItem：遇水炸开变回铯盐
+        .alkaliExplosion(4f)  // 用 AlkaliItem：遇水炸开
         .block(true)                                   // 生成铯块 + 方块物品
         .register();
 ```

@@ -1,6 +1,5 @@
 package com.starcrosser.inspiration.material;
 
-import com.starcrosser.inspiration.item.ModItems;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.block.SoundType;
@@ -25,13 +24,13 @@ public final class ModMaterials {
     /* ==================== 基础材料 ==================== */
 
     /**
-     * 铯：铯粉高炉冶炼得到，遇水炸开并变回铯盐（半径 4 格），碱性 4。
+     * 铯：铯粉高炉冶炼得到，遇水炸开（半径 4 格），碱性 4。
      * 方块是铯块（9 枚锭压一块，硬度 2.5/6.0，镐挖）。
      */
     public static final InspirationMaterial CESIUM = InspirationMaterial.create("cesium")
             .name("铯", "Cesium")
             .alkalinity(4)
-            .alkaliRevert(() -> ModItems.CESIUM_SALT.get(), 4f)
+            .alkaliExplosion(4f)
             .block(true)
             .register();
 
@@ -84,13 +83,13 @@ public final class ModMaterials {
     /* ==================== 钫（碱性强于铯，且全流程带辐射） ==================== */
 
     /**
-     * 钫锭：钫粉高炉冶炼得到，遇水炸开并变回钫盐（半径 6 格），碱性 6、辐射 3。
+     * 钫锭：钫粉高炉冶炼得到，遇水炸开（半径 6 格），碱性 6、辐射 3。
      * 钫块的辐射取 27（= 3 × 9），物品表与方块表各登记一份 —— 玩家把钫块带在背包里同样会放辐射。
      */
     public static final InspirationMaterial FRANCIUM = InspirationMaterial.create("francium")
             .name("钫", "Francium")
             .alkalinity(6)
-            .alkaliRevert(() -> ModItems.FRANCIUM_SALT.get(), 6f)
+            .alkaliExplosion(6f)
             .radiation(3)
             .block(true)
             .register();

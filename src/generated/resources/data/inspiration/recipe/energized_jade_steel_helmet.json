@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:smithing_transform",
+  "addition": {
+    "item": "inspiration:energized_jade_steel"
+  },
+  "base": {
+    "item": "minecraft:netherite_helmet"
+  },
+  "result": {
+    "count": 1,
+    "id": "inspiration:energized_jade_steel_helmet"
+  },
+  "template": {
+    "item": "inspiration:energized_jade_steel_upgrade_template"
+  }
+}

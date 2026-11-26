@@ -114,7 +114,7 @@ public final class RadiationTicker {
             return;
         }
         int step = value / PLAYER_DECAY_DIVISOR;
-        RadiationAttachments.set(player, value - 2 * step);
+        RadiationAttachments.add(player, -2 * step);
         if (step > 0) {
             data.add(player.chunkPosition(), step);
         }

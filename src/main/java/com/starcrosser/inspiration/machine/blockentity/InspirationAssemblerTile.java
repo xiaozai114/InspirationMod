@@ -20,7 +20,6 @@ import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.fluids.FluidStack;
@@ -44,7 +43,7 @@ import net.neoforged.api.distmarker.OnlyIn;
  * 等级 1 是 4 物品槽 + 1 流体槽，等级 2 是 6 物品槽 + 2 流体槽；
  * 容量、速率那些数值另按 {@code 2^(tier-1)} 放大。
  */
-public class InspirationAssemblerTile extends InspiredMachineTile<InspirationAssemblerTile> {
+public class InspirationAssemblerTile extends BatchProcessingTile<InspirationAssemblerTile> {
 
     /** tier 1 的能量缓冲容量（FE）。 */
     public static final int BASE_ENERGY_CAPACITY = 300_000;
@@ -55,7 +54,7 @@ public class InspirationAssemblerTile extends InspiredMachineTile<InspirationAss
     /** tier 1 每刻消耗的灵感充能（mB）。 */
     public static final int BASE_CHARGE_PER_TICK = 2;
 
-    /** 单个流体输入槽容量（mB），两档一致。 */
+    /** 普通装配台的单罐容量（mB），高能机按等级翻倍。 */
     public static final int FLUID_CAPACITY = 8_000;
 
     /** 物品输入区固定 2 列，行数由槽数决定。 */
@@ -136,7 +135,7 @@ public class InspirationAssemblerTile extends InspiredMachineTile<InspirationAss
         bar.setColor(spec.barColor());
         bar.setCanIncrease(this::canProcess);
         bar.setCanReset(tile -> tile.isFinished() || tile.findRecipe() == null);
-        bar.setOnTickWork(this::consumeEnergy);
+        bar.setOnTickWork(this::consumeBatchEnergy);
         bar.setOnFinishWork(this::finishCraft);
         this.progressBar = bar;
         addProgressBar(this.progressBar);
@@ -157,7 +156,7 @@ public class InspirationAssemblerTile extends InspiredMachineTile<InspirationAss
     /** 建一个只进不出、拒绝灵感充能的原料罐。 */
     private SidedFluidTankComponent<InspirationAssemblerTile> fluidTank(String name, int x, int pos, int facingX) {
         SidedFluidTankComponent<InspirationAssemblerTile> tank =
-                new SidedFluidTankComponent<>(name, FLUID_CAPACITY, x, FLUID_TANK_Y, pos);
+                new SidedFluidTankComponent<>(name, spec().scale(FLUID_CAPACITY), x, FLUID_TANK_Y, pos);
         tank.setTankType(FluidTankComponent.Type.NORMAL);
         // 只进不出：原料流体只能灌入，不能被抽走
         tank.setTankAction(FluidTankComponent.Action.FILL);
@@ -219,35 +218,10 @@ public class InspirationAssemblerTile extends InspiredMachineTile<InspirationAss
         if (recipe == null) {
             return false;
         }
-        if (progressBar.getMaxProgress() != recipe.duration()) {
-            progressBar.setMaxProgress(recipe.duration());
-        }
-        return getEnergyStorage().getEnergyStored() >= effectiveEnergyPerTick(recipe.energyPerTick())
-                && hasCharge(effectiveChargePerTick())
-                && canAcceptResult(recipe.result());
-    }
-
-    private boolean canAcceptResult(ItemStack result) {
-        ItemStack current = outputInventory.getStackInSlot(0);
-        if (current.isEmpty()) {
-            return true;
-        }
-        if (!ItemStack.isSameItemSameComponents(current, result)) {
-            return false;
-        }
-        int limit = Math.min(outputInventory.getSlotLimit(0), result.getMaxStackSize());
-        return current.getCount() + result.getCount() <= limit;
-    }
-
-    private void consumeEnergy() {
-        AssemblingRecipe recipe = findRecipe();
-        if (recipe == null) {
-            return;
-        }
-        PluginEnergyStorage<InspirationAssemblerTile> storage =
-                (PluginEnergyStorage<InspirationAssemblerTile>) getEnergyStorage();
-        storage.setEnergyStored(storage.getEnergyStored() - effectiveEnergyPerTick(recipe.energyPerTick()));
-        consumeCharge(effectiveChargePerTick());
+        return prepareBatch(recipe.duration(), recipe.energyPerTick(),
+                n -> recipe.resolveSlots(collectInputs(), n) != null
+                        && recipe.resolveFluids(collectFluids(), n) != null
+                        && fitsOutput(outputInventory, 0, recipe.result(), n));
     }
 
     private void finishCraft() {
@@ -255,23 +229,23 @@ public class InspirationAssemblerTile extends InspiredMachineTile<InspirationAss
         if (recipe == null || level == null) {
             return;
         }
-        int[] slots = recipe.resolveSlots(collectInputs());
-        int[] tanks = recipe.resolveFluids(collectFluids());
+        int[] slots = recipe.resolveSlots(collectInputs(), batchSize());
+        int[] tanks = recipe.resolveFluids(collectFluids(), batchSize());
         if (slots == null || tanks == null) {
             return;
         }
-        ItemStack result = recipe.getResultItem(level.registryAccess());
+        ItemStack result = batchOutput(recipe.getResultItem(level.registryAccess()));
         if (!outputInventory.insertItem(0, result.copy(), true).isEmpty()) {
             return;
         }
         outputInventory.insertItem(0, result.copy(), false);
         for (int index = 0; index < slots.length; index++) {
             // 配方可声明「这种材料一次吃几个」（沉船数据要 64 块木板）
-            inputInventory.extractItem(slots[index], recipe.countOf(index), false);
+            inputInventory.extractItem(slots[index], recipe.countOf(index) * batchSize(), false);
         }
         for (int index = 0; index < tanks.length; index++) {
             // 罐体被配置为只进不出，机器自身扣料走 drainForced
-            tankAt(tanks[index]).drainForced(recipe.fluids().get(index).amount(),
+            tankAt(tanks[index]).drainForced(recipe.fluids().get(index).amount() * batchSize(),
                     IFluidHandler.FluidAction.EXECUTE);
         }
         invalidateCache();
@@ -305,7 +279,7 @@ public class InspirationAssemblerTile extends InspiredMachineTile<InspirationAss
         cachedFluids = tanks.stream().map(FluidStack::copy).toList();
         cachedRecipe = level.getRecipeManager()
                 .getRecipeFor(ModRecipes.ASSEMBLING_TYPE.get(), input, level)
-                .map(RecipeHolder::value)
+                .map(this::trackRecipe)
                 .orElse(null);
         return cachedRecipe;
     }

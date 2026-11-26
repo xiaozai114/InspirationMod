@@ -2,20 +2,27 @@ package com.starcrosser.inspiration.client.jei;
 
 import com.starcrosser.inspiration.Inspiration;
 import com.starcrosser.inspiration.injection.ModInjection;
+import com.starcrosser.inspiration.item.ModItems;
 import com.starcrosser.inspiration.client.jei.category.AssemblingRecipeCategory;
 import com.starcrosser.inspiration.client.jei.category.FluidExtractingRecipeCategory;
 import com.starcrosser.inspiration.client.jei.category.FusionRecipeCategory;
 import com.starcrosser.inspiration.client.jei.category.InjectionRecipeCategory;
 import com.starcrosser.inspiration.client.jei.category.RefiningRecipeCategory;
 import com.starcrosser.inspiration.client.jei.category.ReshapingRecipeCategory;
+import com.starcrosser.inspiration.client.jei.category.ResonanceCategory;
+import com.starcrosser.inspiration.client.jei.category.RadiationAbsorptionCategory;
 import com.starcrosser.inspiration.client.jei.category.RightClickBlockRecipeCategory;
 import com.starcrosser.inspiration.client.jei.category.StructurePreviewCategory;
+import com.starcrosser.inspiration.client.jei.category.StructureProductionCategory;
+import com.starcrosser.inspiration.client.jei.category.MineralProductionCategory;
 import com.starcrosser.inspiration.client.jei.category.TwistingRecipeCategory;
 import com.starcrosser.inspiration.client.jei.category.VoidCondensationCategory;
 import com.starcrosser.inspiration.client.jei.category.VoidInjectionCategory;
 import com.starcrosser.inspiration.machine.ModMachines;
 import com.starcrosser.inspiration.multiblock.ModMultiblocks;
-import com.starcrosser.inspiration.multiblock.pattern.SimulatorPattern;
+import com.starcrosser.inspiration.multiblock.MultiblockKind;
+import com.starcrosser.inspiration.multiblock.data.DimensionDataItem;
+import com.starcrosser.inspiration.multiblock.data.StructureDataItem;
 import com.starcrosser.inspiration.recipe.ModRecipes;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
@@ -25,6 +32,7 @@ import mezz.jei.api.registration.IRecipeCategoryRegistration;
 import mezz.jei.api.registration.IRecipeRegistration;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeHolder;
@@ -33,7 +41,7 @@ import net.minecraft.world.item.crafting.RecipeManager;
 import net.minecraft.world.item.crafting.RecipeType;
 
 import java.util.List;
-import java.util.stream.IntStream;
+import java.util.Arrays;
 
 /**
  * JEI 插件入口。
@@ -59,8 +67,12 @@ public class InspirationJeiPlugin implements IModPlugin {
                 new InjectionRecipeCategory(guiHelper),
                 new RefiningRecipeCategory(guiHelper),
                 new ReshapingRecipeCategory(guiHelper),
+                new ResonanceCategory(guiHelper),
+                new RadiationAbsorptionCategory(guiHelper),
                 new RightClickBlockRecipeCategory(guiHelper),
                 new StructurePreviewCategory(guiHelper),
+                new StructureProductionCategory(guiHelper),
+                new MineralProductionCategory(guiHelper),
                 new TwistingRecipeCategory(guiHelper),
                 new VoidInjectionCategory(guiHelper),
                 new VoidCondensationCategory(guiHelper));
@@ -75,6 +87,9 @@ public class InspirationJeiPlugin implements IModPlugin {
         RecipeManager recipeManager = level.getRecipeManager();
         registration.addRecipes(ModJeiRecipeTypes.FUSION,
                 collect(recipeManager, ModRecipes.FUSION_TYPE.get()));
+        registration.addRecipes(ModJeiRecipeTypes.RADIATION_ABSORPTION, List.of(
+                ModItems.NUCLEAR_WASTE.get().getDefaultInstance()));
+        registration.addRecipes(ModJeiRecipeTypes.RESONANCE, collect(recipeManager, ModRecipes.RESONANCE_TYPE.get()));
         registration.addRecipes(ModJeiRecipeTypes.RESHAPING,
                 collect(recipeManager, ModRecipes.RESHAPING_TYPE.get()));
         registration.addRecipes(ModJeiRecipeTypes.RIGHT_CLICK_BLOCK,
@@ -99,11 +114,14 @@ public class InspirationJeiPlugin implements IModPlugin {
                         com.starcrosser.inspiration.machine.blockentity.VoidCondenserTile.VE_PER_TICK,
                         com.starcrosser.inspiration.machine.blockentity.VoidCondenserTile.VE_PER_DEW,
                         com.starcrosser.inspiration.machine.blockentity.VoidCondenserTile.ENERGY_PER_TICK)));
-        // 结构预览不是数据包配方：层数直接由形状常量决定，一层一条，翻页即翻层
         registration.addRecipes(ModJeiRecipeTypes.STRUCTURE_PREVIEW,
-                java.util.Arrays.stream(com.starcrosser.inspiration.multiblock.MultiblockKind.values())
-                        .flatMap(kind -> IntStream.range(0, kind.depth())
-                                .mapToObj(layer -> new StructurePreview(kind, layer)))
+                Arrays.stream(MultiblockKind.values()).map(StructurePreview::of).toList());
+        registration.addRecipes(ModJeiRecipeTypes.STRUCTURE_PRODUCTION,
+                BuiltInRegistries.ITEM.stream().filter(StructureDataItem.class::isInstance)
+                        .map(StructureDataItem.class::cast).toList());
+        registration.addRecipes(ModJeiRecipeTypes.MINERAL_PRODUCTION,
+                BuiltInRegistries.ITEM.stream().filter(DimensionDataItem.class::isInstance)
+                        .map(DimensionDataItem.class::cast).flatMap(card -> MineralProductionPage.forCard(card).stream())
                         .toList());
     }
 
@@ -130,14 +148,15 @@ public class InspirationJeiPlugin implements IModPlugin {
         registration.addRecipeCatalyst(ModInjection.INJECTION_GUN, ModJeiRecipeTypes.INJECTION);
         registration.addRecipeCatalyst(ModMachines.FLUID_EXTRACTOR, ModJeiRecipeTypes.FLUID_EXTRACTING);
         registration.addRecipeCatalyst(ModMachines.RAW_REFINER, ModJeiRecipeTypes.REFINING);
-        // 结构预览挂在结构模拟机的用途里：在 JEI 里对着控制器按 U 就能看到结构
         registration.addRecipeCatalyst(ModMultiblocks.STRUCTURE_SIMULATOR,
-                ModJeiRecipeTypes.STRUCTURE_PREVIEW);
+                ModJeiRecipeTypes.STRUCTURE_PRODUCTION);
         registration.addRecipeCatalyst(ModMultiblocks.MINERAL_SIMULATOR,
-                ModJeiRecipeTypes.STRUCTURE_PREVIEW);
+                ModJeiRecipeTypes.MINERAL_PRODUCTION);
         // 虚空注入同样要「束缚器 + 枪」两件套，只是枪换成虚空版
         registration.addRecipeCatalyst(ModInjection.MATTER_BINDER, ModJeiRecipeTypes.VOID_INJECTION);
         registration.addRecipeCatalyst(ModInjection.VOID_INJECTION_GUN, ModJeiRecipeTypes.VOID_INJECTION);
+        registration.addRecipeCatalyst(ModMachines.RADIATION_ABSORBER, ModJeiRecipeTypes.RADIATION_ABSORPTION);
+        registration.addRecipeCatalyst(ModMachines.RESONANCE_CHAMBER, ModJeiRecipeTypes.RESONANCE);
         registration.addRecipeCatalyst(ModMachines.VOID_CONDENSER, ModJeiRecipeTypes.VOID_CONDENSATION);
     }
 

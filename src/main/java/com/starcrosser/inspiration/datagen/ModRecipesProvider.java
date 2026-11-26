@@ -12,7 +12,9 @@ import com.starcrosser.inspiration.datagen.recipe.MachineBlockRecipes;
 import com.starcrosser.inspiration.datagen.recipe.MaterialRecipes;
 import com.starcrosser.inspiration.datagen.recipe.RefiningRecipes;
 import com.starcrosser.inspiration.datagen.recipe.ReshapingRecipes;
+import com.starcrosser.inspiration.datagen.recipe.ResonanceRecipes;
 import com.starcrosser.inspiration.datagen.recipe.RightClickRecipes;
+import com.starcrosser.inspiration.datagen.recipe.SimulatorCardRecipes;
 import com.starcrosser.inspiration.datagen.recipe.SmithingRecipes;
 import com.starcrosser.inspiration.datagen.recipe.TwistingRecipes;
 import net.minecraft.core.HolderLookup;
@@ -66,8 +68,10 @@ public class ModRecipesProvider extends RecipeProvider {
         MachineBlockRecipes.build(recipeOutput);
         FusionRecipes.build(recipeOutput);
         ReshapingRecipes.build(recipeOutput);
+        ResonanceRecipes.build(recipeOutput);
         TwistingRecipes.build(recipeOutput);
         AssemblingRecipes.build(recipeOutput);
+        SimulatorCardRecipes.build(recipeOutput);
 
         // 注入
         InjectionRecipes.build(recipeOutput);

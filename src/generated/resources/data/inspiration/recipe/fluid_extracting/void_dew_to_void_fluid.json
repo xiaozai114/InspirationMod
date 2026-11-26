@@ -1,0 +1,10 @@
+{
+  "type": "inspiration:fluid_extracting",
+  "input": {
+    "item": "inspiration:void_dew"
+  },
+  "result": {
+    "amount": 1000,
+    "id": "inspiration:void_fluid"
+  }
+}

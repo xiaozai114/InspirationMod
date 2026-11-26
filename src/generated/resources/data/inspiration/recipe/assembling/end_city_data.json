@@ -1,0 +1,29 @@
+{
+  "type": "inspiration:assembling",
+  "counts": [
+    1,
+    64,
+    16,
+    2
+  ],
+  "duration": 600,
+  "energy_per_tick": 400,
+  "ingredients": [
+    {
+      "item": "inspiration:blank_data"
+    },
+    {
+      "item": "minecraft:purpur_block"
+    },
+    {
+      "item": "minecraft:end_rod"
+    },
+    {
+      "item": "minecraft:shulker_shell"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "inspiration:end_city_data"
+  }
+}

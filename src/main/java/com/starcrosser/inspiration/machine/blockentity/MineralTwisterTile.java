@@ -13,7 +13,6 @@ import com.starcrosser.inspiration.util.OreFortuneBonus;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 
@@ -32,7 +31,7 @@ import net.neoforged.api.distmarker.OnlyIn;
  * （见 {@link #effectiveFortune}）：tier 1 是 6、tier 2 是 12，取它与配方声明值的较大者，
  * 所以配方里写更高的时运时仍然生效。
  */
-public class MineralTwisterTile extends InspiredMachineTile<MineralTwisterTile> {
+public class MineralTwisterTile extends BatchProcessingTile<MineralTwisterTile> {
 
     /** tier 1 的能量缓冲容量（FE）。 */
     public static final int BASE_ENERGY_CAPACITY = 400_000;
@@ -84,7 +83,7 @@ public class MineralTwisterTile extends InspiredMachineTile<MineralTwisterTile> 
         bar.setColor(spec.barColor());
         bar.setCanIncrease(this::canProcess);
         bar.setCanReset(tile -> tile.isFinished() || tile.findRecipe() == null);
-        bar.setOnTickWork(this::consumeEnergy);
+        bar.setOnTickWork(this::consumeBatchEnergy);
         bar.setOnFinishWork(this::finishCraft);
         this.progressBar = bar;
         addProgressBar(this.progressBar);
@@ -139,24 +138,9 @@ public class MineralTwisterTile extends InspiredMachineTile<MineralTwisterTile> 
         if (recipe == null) {
             return false;
         }
-        if (progressBar.getMaxProgress() != recipe.duration()) {
-            progressBar.setMaxProgress(recipe.duration());
-        }
-        return getEnergyStorage().getEnergyStored() >= effectiveEnergyPerTick(recipe.energyPerTick())
-                && hasCharge(effectiveChargePerTick())
-                && canAcceptResult(recipe);
-    }
-
-    /** 产量是随机的，因此按上限预留槽位，避免结算时塞不进去。 */
-    private boolean canAcceptResult(TwistingRecipe recipe) {
-        ItemStack current = outputInventory.getStackInSlot(0);
-        if (current.isEmpty()) {
-            return true;
-        }
-        if (!ItemStack.isSameItemSameComponents(current, recipe.result())) {
-            return false;
-        }
-        return current.getCount() + maxResultCount(recipe) <= resultLimit(recipe);
+        return prepareBatch(recipe.duration(), recipe.energyPerTick(),
+                n -> inputInventory.getStackInSlot(0).getCount() >= n
+                        && fitsOutput(outputInventory, 0, recipe.result().copyWithCount(maxResultCount(recipe)), n));
     }
 
     /** 一次扭曲的产出上限，按本机等效时运计算后还要受槽位与物品堆叠上限约束。 */
@@ -177,17 +161,6 @@ public class MineralTwisterTile extends InspiredMachineTile<MineralTwisterTile> 
         return Math.max(recipe.fortuneLevel(), spec().scale(BASE_FORTUNE_LEVEL));
     }
 
-    private void consumeEnergy() {
-        TwistingRecipe recipe = findRecipe();
-        if (recipe == null) {
-            return;
-        }
-        PluginEnergyStorage<MineralTwisterTile> storage =
-                (PluginEnergyStorage<MineralTwisterTile>) getEnergyStorage();
-        storage.setEnergyStored(storage.getEnergyStored() - effectiveEnergyPerTick(recipe.energyPerTick()));
-        consumeCharge(effectiveChargePerTick());
-    }
-
     private void finishCraft() {
         if (level == null) {
             return;
@@ -197,14 +170,17 @@ public class MineralTwisterTile extends InspiredMachineTile<MineralTwisterTile> 
             return;
         }
         ItemStack result = recipe.result().copy();
-        result.setCount(Math.min(
-                recipe.result().getCount() * OreFortuneBonus.rollMultiplier(level.random, effectiveFortune(recipe)),
-                resultLimit(recipe)));
+        int total = 0;
+        for (int i = 0; i < batchSize(); i++) {
+            int roll = OreFortuneBonus.rollMultiplier(level.random, effectiveFortune(recipe));
+            total += Math.min(recipe.result().getCount() * roll, resultLimit(recipe));
+        }
+        result.setCount(total);
         if (!outputInventory.insertItem(0, result.copy(), true).isEmpty()) {
             return;
         }
         outputInventory.insertItem(0, result.copy(), false);
-        inputInventory.extractItem(0, 1, false);
+        inputInventory.extractItem(0, batchSize(), false);
         invalidateCache();
         markForUpdate();
     }
@@ -229,7 +205,7 @@ public class MineralTwisterTile extends InspiredMachineTile<MineralTwisterTile> 
         cachedInput = input.copy();
         cachedRecipe = level.getRecipeManager()
                 .getRecipeFor(ModRecipes.TWISTING_TYPE.get(), new TwistingRecipeInput(input), level)
-                .map(RecipeHolder::value)
+                .map(this::trackRecipe)
                 .orElse(null);
         return cachedRecipe;
     }

@@ -2,6 +2,7 @@ package com.starcrosser.inspiration.radiation;
 
 import com.mojang.serialization.Codec;
 import com.starcrosser.inspiration.Inspiration;
+import com.starcrosser.inspiration.item.armor.EnergizedJadeSteelArmorItem;
 import net.minecraft.world.entity.player.Player;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.attachment.AttachmentType;
@@ -28,6 +29,11 @@ public final class RadiationAttachments {
             ATTACHMENT_TYPES.register("radiation",
                     () -> AttachmentType.builder(() -> 0).serialize(Codec.INT).build());
 
+    // Hundredths of an absorbed point survive low-dose exposures and player saves.
+    private static final Supplier<AttachmentType<Integer>> EXPOSURE_REMAINDER =
+            ATTACHMENT_TYPES.register("radiation_hundredths",
+                    () -> AttachmentType.builder(() -> 0).serialize(Codec.intRange(0, 99)).build());
+
     private RadiationAttachments() {
     }
 
@@ -41,10 +47,29 @@ public final class RadiationAttachments {
 
     /** 写入玩家辐射值，负数一律夹到 0。 */
     public static void set(Player player, int value) {
-        player.setData(RADIATION.get(), Math.max(0, value));
+        store(player, (long) value * 100);
     }
 
     public static void add(Player player, int delta) {
-        set(player, get(player) + delta);
+        long change = (long) delta * 100;
+        if (delta > 0) {
+            change = (long) delta * (100 - EnergizedJadeSteelArmorItem.resistancePercent(player));
+        }
+        store(player, hundredths(player) + change);
+    }
+
+    public static void copy(Player original, Player replacement, boolean died) {
+        long dose = hundredths(original);
+        store(replacement, died ? dose / 2 : dose);
+    }
+
+    private static long hundredths(Player player) {
+        return (long) get(player) * 100 + player.getData(EXPOSURE_REMAINDER.get());
+    }
+
+    private static void store(Player player, long dose) {
+        long clamped = Math.clamp(dose, 0L, (long) Integer.MAX_VALUE * 100);
+        player.setData(RADIATION.get(), (int) (clamped / 100));
+        player.setData(EXPOSURE_REMAINDER.get(), (int) (clamped % 100));
     }
 }

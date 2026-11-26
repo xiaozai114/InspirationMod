@@ -5,7 +5,9 @@ import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.starcrosser.inspiration.injection.InjectionOutcome;
 import com.starcrosser.inspiration.recipe.ModRecipes;
+import java.util.Optional;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.Recipe;
@@ -43,7 +45,8 @@ public class InjectionRecipe implements Recipe<InjectionRecipeInput> {
             Codec.INT.optionalFieldOf("max_energy", SEEDED_PLACEHOLDER).forGetter(InjectionRecipe::maxEnergy),
             ItemStack.CODEC.fieldOf("result").forGetter(InjectionRecipe::result),
             Codec.INT.optionalFieldOf("duration", DEFAULT_DURATION).forGetter(InjectionRecipe::duration),
-            Codec.BOOL.optionalFieldOf("seeded_energy", false).forGetter(InjectionRecipe::seeded)
+            Codec.BOOL.optionalFieldOf("seeded_energy", false).forGetter(InjectionRecipe::seeded),
+            ResourceLocation.CODEC.optionalFieldOf("window_source").forGetter(InjectionRecipe::windowSource)
     ).apply(instance, InjectionRecipe::new));
 
     private final Ingredient base;
@@ -54,6 +57,7 @@ public class InjectionRecipe implements Recipe<InjectionRecipeInput> {
     private final ItemStack result;
     private final int duration;
     private final boolean seeded;
+    private final Optional<ResourceLocation> windowSource;
 
     /**
      * 全参构造，参数顺序与 {@link #CODEC} 的字段顺序一致。
@@ -62,7 +66,7 @@ public class InjectionRecipe implements Recipe<InjectionRecipeInput> {
      * 为假时必须给出合法的窗口。
      */
     public InjectionRecipe(Ingredient base, Ingredient inject, int tier, int minEnergy, int maxEnergy,
-                           ItemStack result, int duration, boolean seeded) {
+                           ItemStack result, int duration, boolean seeded, Optional<ResourceLocation> windowSource) {
         if (!seeded) {
             if (minEnergy < 0 || maxEnergy < 0) {
                 throw new IllegalArgumentException(
@@ -84,17 +88,23 @@ public class InjectionRecipe implements Recipe<InjectionRecipeInput> {
         this.result = result;
         this.duration = duration;
         this.seeded = seeded;
+        this.windowSource = windowSource;
+    }
+
+    public InjectionRecipe(Ingredient base, Ingredient inject, int tier, int minEnergy, int maxEnergy,
+                           ItemStack result, int duration, boolean seeded) {
+        this(base, inject, tier, minEnergy, maxEnergy, result, duration, seeded, Optional.empty());
     }
 
     /** 固定能量窗口的配方。 */
     public InjectionRecipe(Ingredient base, Ingredient inject, int tier, int minEnergy, int maxEnergy,
                            ItemStack result, int duration) {
-        this(base, inject, tier, minEnergy, maxEnergy, result, duration, false);
+        this(base, inject, tier, minEnergy, maxEnergy, result, duration, false, Optional.empty());
     }
 
     /** 能量窗口由世界种子决定的配方，JSON 里不必写 min_energy / max_energy。 */
     public InjectionRecipe(Ingredient base, Ingredient inject, ItemStack result, int tier, int duration) {
-        this(base, inject, tier, SEEDED_PLACEHOLDER, SEEDED_PLACEHOLDER, result, duration, true);
+        this(base, inject, tier, SEEDED_PLACEHOLDER, SEEDED_PLACEHOLDER, result, duration, true, Optional.empty());
     }
 
     @Override
@@ -176,5 +186,16 @@ public class InjectionRecipe implements Recipe<InjectionRecipeInput> {
     /** 能量窗口是否由世界种子随机决定；为真时 {@link #minEnergy()} 与 {@link #maxEnergy()} 无意义。 */
     public boolean seeded() {
         return seeded;
+    }
+
+    public Optional<ResourceLocation> windowSource() {
+        return windowSource;
+    }
+
+    /** A different base uses the same injection window, including in existing worlds. */
+    public InjectionRecipe withBaseAndYield(Ingredient variant, int multiplier, ResourceLocation originalId) {
+        return new InjectionRecipe(variant, inject, tier, minEnergy, maxEnergy,
+                result.copyWithCount(result.getCount() * multiplier), duration, seeded,
+                seeded ? Optional.of(originalId) : Optional.empty());
     }
 }

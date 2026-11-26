@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "subfacing=east": {
+      "model": "inspiration:block/resonance_chamber",
+      "y": 90
+    },
+    "subfacing=north": {
+      "model": "inspiration:block/resonance_chamber"
+    },
+    "subfacing=south": {
+      "model": "inspiration:block/resonance_chamber",
+      "y": 180
+    },
+    "subfacing=west": {
+      "model": "inspiration:block/resonance_chamber",
+      "y": 270
+    }
+  }
+}

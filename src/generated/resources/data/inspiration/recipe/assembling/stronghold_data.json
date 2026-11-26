@@ -1,0 +1,29 @@
+{
+  "type": "inspiration:assembling",
+  "counts": [
+    1,
+    64,
+    16,
+    4
+  ],
+  "duration": 600,
+  "energy_per_tick": 400,
+  "ingredients": [
+    {
+      "item": "inspiration:blank_data"
+    },
+    {
+      "item": "minecraft:stone_bricks"
+    },
+    {
+      "item": "minecraft:bookshelf"
+    },
+    {
+      "item": "minecraft:ender_eye"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "inspiration:stronghold_data"
+  }
+}

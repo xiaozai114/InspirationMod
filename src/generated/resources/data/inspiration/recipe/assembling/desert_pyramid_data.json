@@ -1,0 +1,33 @@
+{
+  "type": "inspiration:assembling",
+  "counts": [
+    1,
+    32,
+    16,
+    4,
+    1
+  ],
+  "duration": 600,
+  "energy_per_tick": 400,
+  "ingredients": [
+    {
+      "item": "inspiration:blank_data"
+    },
+    {
+      "item": "minecraft:cut_sandstone"
+    },
+    {
+      "item": "minecraft:orange_terracotta"
+    },
+    {
+      "item": "minecraft:tnt"
+    },
+    {
+      "item": "minecraft:brush"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "inspiration:desert_pyramid_data"
+  }
+}

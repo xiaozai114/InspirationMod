@@ -59,6 +59,7 @@ public class ModEnUsLangProvider extends LanguageProvider {
         add("effect.inspiration.mechanical_parasite", "Mechanically Parasitized");
         add("block.inspiration.cracked_bedrock", "Cracked Bedrock");
         add("block.inspiration.void_energy_extractor", "Void Energy Extractor");
+        add("block.inspiration.void_energy_collector", "Void Energy Collector");
         add("block.inspiration.void_injection_gun", "Void Injection Gun");
         add("block.inspiration.void_energy_relay", "Void Energy Relay");
         add("item.inspiration.sculk_alloy_drill_bit", "Sculk Alloy Drill Bit");
@@ -70,8 +71,95 @@ public class ModEnUsLangProvider extends LanguageProvider {
         add("item.inspiration.zero_point_amplifier", "Zero-Point Amplifier");
         add("item.inspiration.compressed_redstone_ingot", "Compressed Redstone Ingot");
         add("item.inspiration.void_goggles", "Void Goggles");
+        add("item.inspiration.mineshaft_data", "Mineshaft Data");
+        add("item.inspiration.monster_room_data", "Monster Room Data");
+        add("item.inspiration.desert_pyramid_data", "Desert Pyramid Data");
+        add("item.inspiration.desert_well_data", "Desert Well Data");
+        add("item.inspiration.jungle_temple_data", "Jungle Temple Data");
+        add("item.inspiration.igloo_data", "Igloo Data");
+        add("item.inspiration.ocean_ruin_data", "Ocean Ruins Data");
+        add("item.inspiration.trail_ruins_data", "Trail Ruins Data");
+        add("item.inspiration.buried_treasure_data", "Buried Treasure Data");
+        add("item.inspiration.village_data", "Village Data");
+        add("item.inspiration.pillager_outpost_data", "Pillager Outpost Data");
+        add("item.inspiration.stronghold_data", "Stronghold Data");
+        add("item.inspiration.woodland_mansion_data", "Woodland Mansion Data");
+        add("item.inspiration.ancient_city_data", "Ancient City Data");
+        add("item.inspiration.ruined_portal_data", "Ruined Portal Data");
+        add("item.inspiration.nether_fortress_data", "Nether Fortress Data");
+        add("item.inspiration.bastion_remnant_data", "Bastion Remnant Data");
+        add("item.inspiration.end_city_data", "End City Data");
+        add("item.inspiration.trial_chambers_data", "Trial Chambers Data");
+        add("item.inspiration.trial_vault_data", "Vault Data");
+        add("item.inspiration.ominous_vault_data", "Ominous Vault Data");
+        add("item.inspiration.nether_data", "Nether Data");
+        add("item.inspiration.end_data", "End Data");
+        add("block.inspiration.tungsten_ore", "Tungsten Ore");
+        add("fluid_type.inspiration.void_fluid", "Void Fluid");
+        add("block.inspiration.void_fluid", "Void Fluid");
+        add("item.inspiration.void_fluid_bucket", "Void Fluid Bucket");
+        add("jei.inspiration.loot.minecraft.chests.abandoned_mineshaft", "Minecart chest");
+        add("jei.inspiration.loot.minecraft.chests.simple_dungeon", "Dungeon chest");
+        add("jei.inspiration.loot.minecraft.chests.desert_pyramid", "Pyramid chest");
+        add("jei.inspiration.loot.minecraft.archaeology.desert_pyramid", "Suspicious sand");
+        add("jei.inspiration.loot.minecraft.archaeology.desert_well", "Well archaeology");
+        add("jei.inspiration.loot.minecraft.chests.jungle_temple", "Temple chest");
+        add("jei.inspiration.loot.minecraft.chests.jungle_temple_dispenser", "Arrow trap");
+        add("jei.inspiration.loot.minecraft.chests.igloo_chest", "Basement chest");
+        add("jei.inspiration.loot.minecraft.chests.underwater_ruin_big", "Large ruin chest");
+        add("jei.inspiration.loot.minecraft.chests.underwater_ruin_small", "Small ruin chest");
+        add("jei.inspiration.loot.minecraft.archaeology.ocean_ruin_warm", "Warm ruin sand");
+        add("jei.inspiration.loot.minecraft.archaeology.ocean_ruin_cold", "Cold ruin gravel");
+        add("jei.inspiration.loot.minecraft.archaeology.trail_ruins_common", "Common archaeology");
+        add("jei.inspiration.loot.minecraft.archaeology.trail_ruins_rare", "Rare archaeology");
+        add("jei.inspiration.loot.minecraft.chests.buried_treasure", "Treasure chest");
+        add("jei.inspiration.loot.minecraft.chests.pillager_outpost", "Outpost chest");
+        add("jei.inspiration.loot.minecraft.chests.stronghold_corridor", "Corridor chest");
+        add("jei.inspiration.loot.minecraft.chests.stronghold_crossing", "Crossing chest");
+        add("jei.inspiration.loot.minecraft.chests.stronghold_library", "Library chest");
+        add("jei.inspiration.loot.minecraft.chests.woodland_mansion", "Mansion chest");
+        add("jei.inspiration.loot.minecraft.chests.ancient_city", "City chest");
+        add("jei.inspiration.loot.minecraft.chests.ancient_city_ice_box", "Ice box");
+        add("jei.inspiration.loot.minecraft.chests.ruined_portal", "Portal chest");
+        add("jei.inspiration.loot.minecraft.chests.nether_bridge", "Fortress chest");
+        add("jei.inspiration.loot.minecraft.chests.bastion_bridge", "Bridge chest");
+        add("jei.inspiration.loot.minecraft.chests.bastion_hoglin_stable", "Stable chest");
+        add("jei.inspiration.loot.minecraft.chests.bastion_other", "Generic chest");
+        add("jei.inspiration.loot.minecraft.chests.bastion_treasure", "Treasure chest");
+        add("jei.inspiration.loot.minecraft.chests.end_city_treasure", "City treasure");
+        add("jei.inspiration.loot.minecraft.chests.trial_chambers.entrance", "Entrance chest");
+        add("jei.inspiration.loot.minecraft.chests.trial_chambers.corridor", "Corridor chest");
+        add("jei.inspiration.loot.minecraft.chests.trial_chambers.intersection", "Junction chest");
+        add("jei.inspiration.loot.minecraft.chests.trial_chambers.intersection_barrel", "Junction barrel");
+        add("jei.inspiration.loot.minecraft.chests.trial_chambers.supply", "Supply chest");
+        add("jei.inspiration.loot.minecraft.pots.trial_chambers.corridor", "Corridor pot");
+        add("jei.inspiration.loot.minecraft.dispensers.trial_chambers.chamber", "Chamber dispenser");
+        add("jei.inspiration.loot.minecraft.dispensers.trial_chambers.corridor", "Corridor dispenser");
+        add("jei.inspiration.loot.minecraft.dispensers.trial_chambers.water", "Water dispenser");
+        add("jei.inspiration.loot.minecraft.chests.trial_chambers.reward", "Vault reward");
+        add("jei.inspiration.loot.minecraft.chests.trial_chambers.reward_ominous", "Ominous reward");
+        add("jei.inspiration.loot.minecraft.chests.village.village_armorer", "Armorer");
+        add("jei.inspiration.loot.minecraft.chests.village.village_butcher", "Butcher");
+        add("jei.inspiration.loot.minecraft.chests.village.village_cartographer", "Cartographer");
+        add("jei.inspiration.loot.minecraft.chests.village.village_desert_house", "Desert house");
+        add("jei.inspiration.loot.minecraft.chests.village.village_fisher", "Fisherman");
+        add("jei.inspiration.loot.minecraft.chests.village.village_fletcher", "Fletcher");
+        add("jei.inspiration.loot.minecraft.chests.village.village_mason", "Mason");
+        add("jei.inspiration.loot.minecraft.chests.village.village_plains_house", "Plains house");
+        add("jei.inspiration.loot.minecraft.chests.village.village_savanna_house", "Savanna house");
+        add("jei.inspiration.loot.minecraft.chests.village.village_shepherd", "Shepherd");
+        add("jei.inspiration.loot.minecraft.chests.village.village_snowy_house", "Snowy house");
+        add("jei.inspiration.loot.minecraft.chests.village.village_taiga_house", "Taiga house");
+        add("jei.inspiration.loot.minecraft.chests.village.village_tannery", "Tannery");
+        add("jei.inspiration.loot.minecraft.chests.village.village_temple", "Temple");
+        add("jei.inspiration.loot.minecraft.chests.village.village_toolsmith", "Toolsmith");
+        add("jei.inspiration.loot.minecraft.chests.village.village_weaponsmith", "Weaponsmith");
         add("item.inspiration.overworld_data", "Overworld Data");
         add("item.inspiration.void_alloy", "Void Alloy");
+        add(ModItems.RESONANT_MIND_LATTICE.get(), "Resonant Mind Lattice");
+        add(ModItems.RESONANT_INSPIRATION.get(), "Resonant Inspiration");
+        add(ModItems.RESONANT_END_ALLOY.get(), "Resonant End Alloy");
+        add(ModItems.QUANTUM_INGOT.get(), "Quantum Ingot");
         add("tooltip.inspiration.sculk_drill_bit.cracks", "Cracks the bedrock block it finally reaches.");
         add("void_energy.stage.weak", "Weak");
         add("void_energy.stage.climbing", "Climbing");
@@ -108,8 +196,11 @@ public class ModEnUsLangProvider extends LanguageProvider {
         add(ModItems.BASALT_ALLOY_FIRESTRIKER.get(), "Basalt Alloy Firestriker");
         add(ModItems.BASALT_ALLOY_DRILL_BIT.get(), "Basalt Alloy Drill Bit");
         add(ModItems.CAPACITOR_PLUGIN.get(), "Capacitor Plugin");
+        add(ModItems.HIGH_ENERGY_CAPACITOR_PLUGIN.get(), "High-Energy Capacitor Plugin");
         add(ModItems.INSPIRATION_PLUGIN.get(), "Inspiration Plugin");
+        add(ModItems.HIGH_ENERGY_INSPIRATION_PLUGIN.get(), "High-Energy Inspiration Plugin");
         add(ModItems.SPEED_PLUGIN.get(), "Speed Plugin");
+        add(ModItems.HIGH_ENERGY_SPEED_PLUGIN.get(), "High-Energy Speed Plugin");
         add(ModItems.CAPACITOR_DOWNGRADE_PLUGIN.get(), "Capacitor Downgrade Plugin");
         add(ModItems.RECYCLING_PLUGIN.get(), "Recycling Upgrade");
         add(ModItems.INSPIRATION_SHARD.get(), "Inspiration Shard");
@@ -257,9 +348,9 @@ public class ModEnUsLangProvider extends LanguageProvider {
         // 翡翠钢升级模板（文案结构对齐下界合金升级模板）
         add("upgrade.inspiration.jade_steel_upgrade", "Jade Steel Upgrade");
         add("item.inspiration.energized_jade_steel_upgrade.applies_to",
-                "Jade Steel Sword, Axe, Pickaxe, Shovel and Hoe");
+                "Jade Steel Tools and Netherite Armor");
         add("item.inspiration.energized_jade_steel_upgrade.ingredients", "Energized Jade Steel");
-        add("item.inspiration.energized_jade_steel_upgrade.base_slot_description", "Add a jade steel tool");
+        add("item.inspiration.energized_jade_steel_upgrade.base_slot_description", "Add a jade steel tool or a piece of netherite armor");
         add("item.inspiration.energized_jade_steel_upgrade.additions_slot_description", "Add Energized Jade Steel");
         add("upgrade.inspiration.energized_jade_steel_upgrade", "Energized Jade Steel Upgrade");
         add("item.inspiration.jade_steel_upgrade.applies_to", "Inspiration Sword, Axe, Pickaxe, Shovel and Hoe");
@@ -269,10 +360,12 @@ public class ModEnUsLangProvider extends LanguageProvider {
 
         // 机器插件
         add("tooltip.inspiration.plugin.slot", "Insert into a plugin slot on the right of a machine");
-        add("tooltip.inspiration.plugin.energy_capacity", "Machine energy capacity x2");
-        add("tooltip.inspiration.plugin.charge_capacity", "Machine inspiration charge capacity x2");
-        add("tooltip.inspiration.plugin.speed", "Speed x2, energy per tick x4, charge per tick x2");
+        add("tooltip.inspiration.plugin.energy_capacity", "Machine energy capacity x%1$s");
+        add("tooltip.inspiration.plugin.charge_capacity", "Machine inspiration charge capacity x%1$s");
+        add("tooltip.inspiration.plugin.speed", "Speed x%1$s, energy per tick x%2$s, charge per tick x%1$s");
         add("tooltip.inspiration.plugin.energy_capacity_downgrade", "Machine energy capacity x0.67");
+        add(ModItems.PARALLEL_PLUGIN.get(), "Parallel Plugin");
+        add("tooltip.inspiration.plugin.parallel", "Batch capacity x%1$s. Power and charge scale with the number of recipes run.");
         add("tooltip.inspiration.plugin.byproduct", "Refiner byproduct output +100%");
         add("tooltip.inspiration.plugin.stack", "Same-type plugins stack, each x%s");
 
@@ -298,6 +391,7 @@ public class ModEnUsLangProvider extends LanguageProvider {
                 "Recipe type: Mineral Twisting\nOutput equals Fortune 12; 2x speed.");
         add("tooltip.inspiration.machine.high_energy_inspiration_assembler",
                 "Recipe type: Inspiration Assembling\nSix input slots and two fluid tanks unlock bigger recipes; 2x speed.");
+        add("tooltip.inspiration.machine.combustion_generator", "Burns furnace fuel for 40 FE/t. Place beside a machine to power it.");
         add("tooltip.inspiration.machine.alkaline_reactor", "Burns alkaline items: 100x FE/tick, 12000 ticks.\nx is alkalinity.");
         add("tooltip.inspiration.machine.rtg_generator", "Burns radioactive items: 1000x FE/tick, 24000 ticks.\nLeaks (x-1)^3 radiation per minute; if x>9 it may explode with (x-9)/1000 chance. Yields x Nuclear Waste.");
         add("tooltip.inspiration.machine.fluid_extractor", "Recipe: Fluid Extracting\nMelts materials, one ingot = 144 mB, stored in the output tank.");
@@ -306,6 +400,22 @@ public class ModEnUsLangProvider extends LanguageProvider {
         add("tooltip.inspiration.machine.inspiration_furnace", "Runs furnace, blast furnace and smoker recipes in 5 s.\\nCosts 10 FE/tick + 1 mB/tick inspiration charge; no experience.");
         add("tooltip.inspiration.machine.energized_inspiration_furnace", "Same as the Inspiration Furnace; 2x speed, 2x power and charge.");
         add("tooltip.inspiration.machine.void_condenser", "Condenses cluster energy into Void Dew: 16 ve + 500 FE/tick, 1 Dew per 1024 ve.\nNeeds a relay, or the cluster in its own block.");
+        add("jei.inspiration.resonance.cost", "%s FE/t and %s VE/t");
+        add("jei.inspiration.resonance.failure", "Losing VE destroys the item in progress.");
+        add("tooltip.inspiration.machine.resonance_chamber", "Uses FE and 2 VE per tick. Losing VE destroys the item in progress.");
+        add("item.inspiration.energized_jade_steel_helmet", "Energized Jade Steel Helmet");
+        add("item.inspiration.energized_jade_steel_chestplate", "Energized Jade Steel Chestplate");
+        add("item.inspiration.energized_jade_steel_leggings", "Energized Jade Steel Leggings");
+        add("item.inspiration.energized_jade_steel_boots", "Energized Jade Steel Boots");
+        add("item.inspiration.energized_golden_apple", "Energized Golden Apple");
+        add("item.inspiration.energized_enchanted_golden_apple", "Energized Enchanted Golden Apple");
+        add("effect.inspiration.radiation_resistance", "Radiation Resistance");
+        add("tooltip.inspiration.radiation_armor", "Reduces incoming body radiation by %s%% per piece");
+        add("tooltip.inspiration.radiation_apple", "Removes %s body radiation and grants %s minutes of Radiation Resistance");
+        add("tooltip.inspiration.machine.radiation_absorber", "Uses 400 FE/t to remove 1 radiation from this chunk every 60 seconds. Produces 1 Nuclear Waste per 64 points removed.");
+        add("jei.inspiration.absorber.rate", "Removes 1 chunk radiation every %s s");
+        add("jei.inspiration.absorber.waste", "Produces 1 Nuclear Waste per %s points");
+        add("tooltip.inspiration.machine.void_energy_collector", "Draws up to 16 VE/t from each cluster in a 5×5×5 area into the cluster directly above.");
         add("tooltip.inspiration.machine.zero_point_generator", "Produces 1 + n*1.2G FE per minute (up to 64 amplifiers), buffer 128 GFE.\nIt only pushes power out; a full buffer simply stops accumulating.");
         add("tooltip.inspiration.machine.void_energy_extractor", "Standing on cracked bedrock, feeds 1 ve/tick into the block above.\nCosts 50 FE/tick; no power, no output.");
         add("tooltip.inspiration.machine.void_energy_relay", "Must be placed in the cluster's own block; machines within 5x5x5 can draw from it.");
@@ -335,12 +445,24 @@ public class ModEnUsLangProvider extends LanguageProvider {
         // 结构投影仪
         add("tooltip.inspiration.projector.usage", "Right-click the Structure Simulator controller to project the full structure.");
         add("tooltip.inspiration.projector.duration", "The ghost stays for 30 seconds; the projector is not consumed.");
-        // JEI 里的结构预览：每层一页
-        add("jei.inspiration.structure_preview", "Structure Simulator Structure");
-        add("jei.inspiration.structure_preview.layer", "Layer %s/%s · %s");
-        add("jei.inspiration.structure_preview.layer.0", "Back");
-        add("jei.inspiration.structure_preview.layer.1", "Middle");
-        add("jei.inspiration.structure_preview.layer.2", "Front");
+        add("jei.inspiration.structure_preview", "Multiblock Assembly");
+        add("jei.inspiration.preview.title", "%s  %s×%s×%s");
+        add("jei.inspiration.preview.all", "All floors");
+        add("jei.inspiration.preview.floor", "Floor %s / %s");
+        add("jei.inspiration.preview.hint", "Drag to rotate · Example build");
+        add("jei.inspiration.preview.parts", "Example build: %s × %s");
+        add("jei.inspiration.sim.retained", "Data hatch · Reusable");
+        add("jei.inspiration.sim.time_power", "%s ticks · %s FE/t");
+        add("jei.inspiration.sim.total_fe", "Energy per cycle: %s FE");
+        add("jei.inspiration.sim.total_charge", "Charge per cycle: %s mB");
+        add("jei.inspiration.sim.charge", "Inspiration charge: %s mB/t");
+        add("jei.inspiration.sim.loot", "Roll one loot table per cycle");
+        add("jei.inspiration.sim.table_chance", "%s  ·  %s/%s");
+        add("jei.inspiration.loot.minecraft.chests.shipwreck_supply", "Supply chest");
+        add("jei.inspiration.loot.minecraft.chests.shipwreck_treasure", "Treasure chest");
+        add("jei.inspiration.loot.minecraft.chests.shipwreck_map", "Map chest");
+        add("jei.inspiration.sim.one_ore", "One of these stacks per cycle");
+        add("jei.inspiration.sim.weight", "Draw weight: %s / %s");
         // 主方块界面上的运行状态（顺序即优先级，见 SimulatorStatus）
         add("gui.inspiration.structure_simulator.status.not_formed", "Structure not formed");
         add("gui.inspiration.structure_simulator.status.no_data", "No structure data in the data hatch");
@@ -378,19 +500,19 @@ public class ModEnUsLangProvider extends LanguageProvider {
                         + "and most also drink inspiration charge.");
         add("guide.inspiration.chapter.energy", "Power and Charge");
         add("guide.inspiration.chapter.energy.body",
-                "The energy bar on a machine only ever goes down,\n"
-                        + "so power has to be fed in from outside.\n\n"
-                        + "Inspiration charge lives in its own tank\n"
-                        + "1 inspiration = 1000 mB, 1 shard = 100 mB.\n"
-                        + "Run dry and progress halts,\n"
-                        + "but nothing already inserted is lost.");
+                "Burn furnace fuel in the basic generator for 40 FE/t.\n"
+                        + "Place a machine next to it.\n"
+                        + "Coal supplies 64,000 FE.\n"
+                        + "Feed its charge slot too:\n"
+                        + "Inspiration = 1,000 mB.\n"
+                        + "A shard = 100 mB.");
         add("guide.inspiration.chapter.plugins", "Plugins");
         add("guide.inspiration.chapter.plugins.body",
-                "Each machine has four plugin slots on the right.\n\n"
-                        + "Speed Plugin: twice the speed, more power and charge.\n"
-                        + "Capacity Plugin: raises the energy buffer.\n"
-                        + "Capacitor Downgrade: caps the buffer at 67%.\n"
-                        + "Not a downgrade - it shrinks a single discharge.");
+                "Four slots. Effects stack.\n"
+                        + "Capacitor stores FE. Inspiration stores charge. Speed raises both costs.\n"
+                        + "Basic x2. High-energy x4.\n"
+                        + "Parallel processes up to twice as many recipes per slot.\n"
+                        + "Capacitor Downgrade: x0.67.");
         add("guide.inspiration.chapter.injection", "Injection");
         add("guide.inspiration.chapter.injection.body",
                 "Set a tier base under the Matter Binder, ring it\n"

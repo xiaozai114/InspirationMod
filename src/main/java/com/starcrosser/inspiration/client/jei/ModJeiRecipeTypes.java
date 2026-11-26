@@ -1,17 +1,20 @@
 package com.starcrosser.inspiration.client.jei;
 
 import com.starcrosser.inspiration.Inspiration;
+import com.starcrosser.inspiration.multiblock.data.StructureDataItem;
 import com.starcrosser.inspiration.injection.recipe.InjectionRecipe;
 import com.starcrosser.inspiration.machine.recipe.AssemblingRecipe;
 import com.starcrosser.inspiration.machine.recipe.FluidExtractingRecipe;
 import com.starcrosser.inspiration.machine.recipe.FusionRecipe;
 import com.starcrosser.inspiration.machine.recipe.RefiningRecipe;
 import com.starcrosser.inspiration.machine.recipe.ReshapingRecipe;
+import com.starcrosser.inspiration.machine.recipe.ResonanceRecipe;
 import com.starcrosser.inspiration.machine.recipe.TwistingRecipe;
 import com.starcrosser.inspiration.recipe.RightClickBlockRecipe;
 import com.starcrosser.inspiration.voidenergy.recipe.VoidCondensationInfo;
 import com.starcrosser.inspiration.voidenergy.recipe.VoidInjectionRecipe;
 import mezz.jei.api.recipe.RecipeType;
+import net.minecraft.world.item.ItemStack;
 
 /**
  * 本模组在 JEI 中注册的配方分类标识。
@@ -23,6 +26,9 @@ public final class ModJeiRecipeTypes {
     /** 物质融合器。 */
     public static final RecipeType<FusionRecipe> FUSION =
             RecipeType.create(Inspiration.MODID, "fusion", FusionRecipe.class);
+
+    public static final RecipeType<ResonanceRecipe> RESONANCE =
+            RecipeType.create(Inspiration.MODID, "resonance", ResonanceRecipe.class);
 
     /** 物质重塑机。 */
     public static final RecipeType<ReshapingRecipe> RESHAPING =
@@ -52,9 +58,17 @@ public final class ModJeiRecipeTypes {
     public static final RecipeType<RefiningRecipe> REFINING =
             RecipeType.create(Inspiration.MODID, "refining", RefiningRecipe.class);
 
-    /** 结构模拟机的结构预览：每一层一条，翻页即翻层。不是真配方，只是给 JEI 的展示载体。 */
+    public static final RecipeType<StructureDataItem> STRUCTURE_PRODUCTION =
+            RecipeType.create(Inspiration.MODID, "structure_production", StructureDataItem.class);
+    public static final RecipeType<MineralProductionPage> MINERAL_PRODUCTION =
+            RecipeType.create(Inspiration.MODID, "mineral_production", MineralProductionPage.class);
+
+    /** 每台机器一条搭建示例。 */
     public static final RecipeType<StructurePreview> STRUCTURE_PREVIEW =
             RecipeType.create(Inspiration.MODID, "structure_preview", StructurePreview.class);
+
+    public static final RecipeType<ItemStack> RADIATION_ABSORPTION =
+            RecipeType.create(Inspiration.MODID, "radiation_absorption", ItemStack.class);
 
     private ModJeiRecipeTypes() {
     }

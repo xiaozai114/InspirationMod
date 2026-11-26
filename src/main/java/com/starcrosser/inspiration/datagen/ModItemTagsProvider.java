@@ -1,6 +1,8 @@
 package com.starcrosser.inspiration.datagen;
 
 import com.starcrosser.inspiration.Inspiration;
+import com.starcrosser.inspiration.item.ModItems;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.ItemTagsProvider;
@@ -18,6 +20,10 @@ public class ModItemTagsProvider extends ItemTagsProvider {
 
     @Override
     protected void addTags(HolderLookup.Provider provider) {
+        tag(ItemTags.HEAD_ARMOR).add(ModItems.ENERGIZED_JADE_STEEL_HELMET.get());
+        tag(ItemTags.CHEST_ARMOR).add(ModItems.ENERGIZED_JADE_STEEL_CHESTPLATE.get());
+        tag(ItemTags.LEG_ARMOR).add(ModItems.ENERGIZED_JADE_STEEL_LEGGINGS.get());
+        tag(ItemTags.FOOT_ARMOR).add(ModItems.ENERGIZED_JADE_STEEL_BOOTS.get());
 
     }
 }

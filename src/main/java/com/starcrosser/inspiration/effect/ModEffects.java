@@ -22,6 +22,9 @@ public final class ModEffects {
             EFFECTS.register("mechanical_parasite",
                     () -> new MarkedEffect(MobEffectCategory.HARMFUL, 0x3FBFB0));
 
+    public static final DeferredHolder<MobEffect, MobEffect> RADIATION_RESISTANCE =
+            EFFECTS.register("radiation_resistance", RadiationResistanceEffect::new);
+
     private ModEffects() {
     }
 

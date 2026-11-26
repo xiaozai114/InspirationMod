@@ -1,10 +1,13 @@
 package com.starcrosser.inspiration.item.custom;
 
 import com.starcrosser.inspiration.machine.plugin.MachinePluginType;
+import com.starcrosser.inspiration.machine.plugin.PluginEffects;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.TooltipFlag;
 
 import java.util.List;
@@ -17,11 +20,27 @@ import java.util.List;
  */
 public class MachinePluginItem extends Item {
 
+    public static final float HIGH_ENERGY_MULTIPLIER = 4F;
+
     private final MachinePluginType pluginType;
+    private final float multiplier;
 
     public MachinePluginItem(MachinePluginType pluginType) {
-        super(new Item.Properties().stacksTo(1).rarity(net.minecraft.world.item.Rarity.UNCOMMON));
+        this(pluginType, pluginType.multiplier(), Rarity.UNCOMMON);
+    }
+
+    private MachinePluginItem(MachinePluginType pluginType, float multiplier, Rarity rarity) {
+        super(new Item.Properties().stacksTo(1).rarity(rarity));
         this.pluginType = pluginType;
+        this.multiplier = multiplier;
+    }
+
+    public static MachinePluginItem highEnergy(MachinePluginType type) {
+        return new MachinePluginItem(type, HIGH_ENERGY_MULTIPLIER, Rarity.RARE);
+    }
+
+    public float multiplier() {
+        return multiplier;
     }
 
     public MachinePluginType pluginType() {
@@ -33,10 +52,14 @@ public class MachinePluginItem extends Item {
                                 List<Component> tooltip, TooltipFlag flag) {
         tooltip.add(Component.translatable("tooltip.inspiration.plugin.slot")
                 .withStyle(ChatFormatting.DARK_GRAY));
-        tooltip.add(Component.translatable(pluginType.descriptionKey())
-                .withStyle(ChatFormatting.GRAY));
+        String factor = MachinePluginType.formatMultiplier(multiplier);
+        MutableComponent description = pluginType == MachinePluginType.SPEED
+                ? Component.translatable(pluginType.descriptionKey(), factor,
+                        MachinePluginType.formatMultiplier(PluginEffects.speedEnergyUse(multiplier)))
+                : Component.translatable(pluginType.descriptionKey(), factor);
+        tooltip.add(description.withStyle(ChatFormatting.GRAY));
         tooltip.add(Component.translatable("tooltip.inspiration.plugin.stack",
-                        pluginType.multiplierText())
+                        factor)
                 .withStyle(ChatFormatting.DARK_GRAY));
     }
 }

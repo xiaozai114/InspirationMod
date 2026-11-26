@@ -5,6 +5,7 @@ import com.starcrosser.inspiration.block.ModBlocks;
 import com.starcrosser.inspiration.injection.ModInjection;
 import com.starcrosser.inspiration.item.ModItems;
 import com.starcrosser.inspiration.machine.ModMachines;
+import com.starcrosser.inspiration.voidenergy.ModVoidEnergy;
 import com.starcrosser.inspiration.multiblock.ModMultiblocks;
 import com.starcrosser.inspiration.material.ModMaterials;
 import net.minecraft.data.recipes.RecipeCategory;
@@ -93,6 +94,16 @@ public final class MachineBlockRecipes {
                 ModItems.HIGH_ENERGY_CORE.get(), ModMachines.INSPIRATION_ASSEMBLER.getBlock(),
                 ModItems.HIGH_ENERGY_CORE.get());
 
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModMachines.COMBUSTION_GENERATOR.getBlock())
+                .pattern(" I ")
+                .pattern("IFI")
+                .pattern(" R ")
+                .define('I', Items.IRON_INGOT)
+                .define('F', Blocks.FURNACE)
+                .define('R', Items.REDSTONE)
+                .unlockedBy(getHasName(Items.FURNACE), has(Items.FURNACE))
+                .save(recipeOutput);
+
         // 碱性发电机：翡翠钢 + 红石锭 + 发电核心（发电类机器，不跑配方）
         machine(recipeOutput, ModMachines.ALKALINE_REACTOR.getBlock(),
                 ModMaterials.JADE_STEEL.item().get(), ModMaterials.REDSTONE.item().get(),
@@ -157,6 +168,17 @@ public final class MachineBlockRecipes {
         // 虚空能量凝聚器：4 虚空等离子锭 + 4 铷锭 + 1 弱化核心
         machine(recipeOutput, ModMachines.VOID_CONDENSER.getBlock(),
                 ModItems.VOID_PLASMA_INGOT.get(), ModMaterials.RUBIDIUM.item().get(),
+                ModItems.WEAKENED_CORE.get(), null, ModItems.WEAKENED_CORE.get());
+
+        machine(recipeOutput, ModMachines.RADIATION_ABSORBER.getBlock(),
+                ModMaterials.EPHEMERAL_ALLOY.item().get(), ModMaterials.URANIUM.item().get(),
+                ModItems.HIGH_ENERGY_CORE.get(), null, ModItems.HIGH_ENERGY_CORE.get());
+
+        machine(recipeOutput, ModMachines.RESONANCE_CHAMBER.getBlock(),
+                ModItems.VOID_PLASMA_INGOT.get(), ModMaterials.ACTINIUM.item().get(),
+                ModItems.WEAKENED_CORE.get(), null, ModItems.WEAKENED_CORE.get());
+        machine(recipeOutput, ModVoidEnergy.VOID_ENERGY_COLLECTOR.get(),
+                ModItems.VOID_PLASMA_INGOT.get(), ModMaterials.FRANCIUM.item().get(),
                 ModItems.WEAKENED_CORE.get(), null, ModItems.WEAKENED_CORE.get());
 
         // 灵感高炉：5 铁 + 3 镍 + 1 强化核心（镍是副材料：上面中间 + 中间两侧）

@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "inspiration:resonance_chamber"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "has_weakened_core": {
+      "conditions": {
+        "items": [
+          {
+            "items": "inspiration:weakened_core"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_weakened_core"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "inspiration:resonance_chamber"
+    ]
+  }
+}

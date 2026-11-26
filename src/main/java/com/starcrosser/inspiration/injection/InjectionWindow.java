@@ -24,7 +24,7 @@ public record InjectionWindow(int min, int max) {
         if (!recipe.seeded()) {
             return new InjectionWindow(recipe.minEnergy(), recipe.maxEnergy());
         }
-        SeededEnergyWindow window = level == null ? null : SeededEnergyWindow.of(level, holder.id());
+        SeededEnergyWindow window = level == null ? null : SeededEnergyWindow.of(level, recipe.windowSource().orElse(holder.id()));
         return window == null ? null : new InjectionWindow(window.minEnergy(), window.maxEnergy());
     }
 

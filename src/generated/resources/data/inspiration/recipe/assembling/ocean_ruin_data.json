@@ -1,0 +1,33 @@
+{
+  "type": "inspiration:assembling",
+  "counts": [
+    1,
+    32,
+    32,
+    16,
+    1
+  ],
+  "duration": 600,
+  "energy_per_tick": 400,
+  "ingredients": [
+    {
+      "item": "inspiration:blank_data"
+    },
+    {
+      "item": "minecraft:gravel"
+    },
+    {
+      "item": "minecraft:sand"
+    },
+    {
+      "item": "minecraft:prismarine"
+    },
+    {
+      "item": "minecraft:brush"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "inspiration:ocean_ruin_data"
+  }
+}

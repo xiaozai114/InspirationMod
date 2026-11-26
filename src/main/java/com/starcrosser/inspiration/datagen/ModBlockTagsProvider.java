@@ -28,6 +28,7 @@ public class ModBlockTagsProvider extends BlockTagsProvider {
         // 镐子可挖掘
         // 同一个 tag 反复 tag(...) 拿到的是同一个收集器，这里存成局部变量好往里续机器清单
         var pickaxeTag = tag(BlockTags.MINEABLE_WITH_PICKAXE);
+        pickaxeTag.add(ModBlocks.TUNGSTEN_ORE.get());
         // 铯盐块/铯块
         pickaxeTag
                 .add(ModBlocks.CESIUM_SALT_BLOCK.get())
@@ -59,6 +60,7 @@ public class ModBlockTagsProvider extends BlockTagsProvider {
         pickaxeTag
                 .add(ModBlocks.HIGH_ENERGY_MACHINE_CASING.get())
                 .add(ModVoidEnergy.VOID_ENERGY_EXTRACTOR.get())
+                .add(ModVoidEnergy.VOID_ENERGY_COLLECTOR.get())
                 .add(ModVoidEnergy.VOID_ENERGY_RELAY.get())
                 .add(ModMultiblocks.INPUT_HATCH.getBlock())
                 .add(ModMultiblocks.OUTPUT_HATCH.getBlock())

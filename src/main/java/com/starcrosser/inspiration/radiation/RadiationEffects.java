@@ -2,7 +2,7 @@ package com.starcrosser.inspiration.radiation;
 
 import net.minecraft.core.Holder;
 import net.minecraft.world.effect.MobEffect;
-import net.minecraft.world.effect.MobEffectInstance;
+import com.starcrosser.inspiration.effect.ModEffects;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.player.Player;
 
@@ -30,11 +30,6 @@ public final class RadiationEffects {
     public static final int ACUTE = 500_000;
     /** 1M：凋零 1 + 饥饿 2 + 缓慢 2 + 挖掘疲劳 3 + 虚弱 3。 */
     public static final int LETHAL = 1_000_000;
-
-    /** 效果时长（刻）。每秒刷新，给 3 秒留余量。 */
-    private static final int DURATION = 60;
-    /** 剩余时间短于这个值就重新施加，避免效果在下一次刷新前断档。 */
-    private static final int REFRESH_THRESHOLD = 30;
 
     /** 治疗换算成辐射衰减的比例：1 点治疗换 10 点辐射衰减。 */
     public static final int HEALING_CONVERSION_RATE = 10;
@@ -67,10 +62,18 @@ public final class RadiationEffects {
         return radiation > SEVERE;
     }
 
+    public static boolean isProtected(Player player) {
+        return player.hasEffect(ModEffects.RADIATION_RESISTANCE);
+    }
+
     /** 按当前辐射值施加对应的负面效果。 */
     public static void apply(Player player, int radiation) {
+        if (isProtected(player)) {
+            RadiationSymptoms.clear(player);
+            return;
+        }
         for (Map.Entry<Holder<MobEffect>, Integer> entry : effectsFor(radiation).entrySet()) {
-            refresh(player, entry.getKey(), entry.getValue());
+            RadiationSymptoms.refresh(player, entry.getKey(), entry.getValue());
         }
     }
 
@@ -101,19 +104,4 @@ public final class RadiationEffects {
         return effects;
     }
 
-    /**
-     * 刷新单个效果：等级不符或剩余时间不足时先移除再施加。
-     * 直接 {@code addEffect} 不行 —— 原版在已有更强/更久的同种效果时会忽略新效果，
-     * 降级（比如从虚弱 2 退回虚弱 1）就永远退不回去。
-     */
-    private static void refresh(Player player, Holder<MobEffect> effect, int amplifier) {
-        MobEffectInstance current = player.getEffect(effect);
-        if (current != null
-                && current.getAmplifier() == amplifier
-                && current.getDuration() > REFRESH_THRESHOLD) {
-            return;
-        }
-        player.removeEffect(effect);
-        player.addEffect(new MobEffectInstance(effect, DURATION, amplifier, false, false, true));
-    }
 }

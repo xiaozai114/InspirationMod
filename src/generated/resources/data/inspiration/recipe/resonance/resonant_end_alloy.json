@@ -1,0 +1,10 @@
+{
+  "type": "inspiration:resonance",
+  "input": {
+    "item": "inspiration:end_alloy"
+  },
+  "result": {
+    "count": 1,
+    "id": "inspiration:resonant_end_alloy"
+  }
+}

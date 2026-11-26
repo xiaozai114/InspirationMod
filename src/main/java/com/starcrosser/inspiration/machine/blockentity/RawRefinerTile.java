@@ -12,7 +12,6 @@ import com.starcrosser.inspiration.recipe.ModRecipes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.api.distmarker.Dist;
@@ -33,7 +32,7 @@ import java.util.List;
  * 结算的顺序很关键：**先确认三个输出格都塞得下，才开始扣材料**。
  * 否则副产物槽满了就会吞掉原料而不产出，玩家会莫名其妙少东西。
  */
-public class RawRefinerTile extends InspiredMachineTile<RawRefinerTile> {
+public class RawRefinerTile extends BatchProcessingTile<RawRefinerTile> {
 
     /** tier 1 的能量缓冲容量（FE）。 */
     public static final int BASE_ENERGY_CAPACITY = 300_000;
@@ -101,7 +100,7 @@ public class RawRefinerTile extends InspiredMachineTile<RawRefinerTile> {
         bar.setColor(spec.barColor());
         bar.setCanIncrease(this::canProcess);
         bar.setCanReset(tile -> tile.isFinished() || tile.findRecipe() == null);
-        bar.setOnTickWork(this::consumeEnergy);
+        bar.setOnTickWork(this::consumeBatchEnergy);
         bar.setOnFinishWork(this::finishCraft);
         this.progressBar = bar;
         addProgressBar(this.progressBar);
@@ -154,25 +153,16 @@ public class RawRefinerTile extends InspiredMachineTile<RawRefinerTile> {
         if (recipe == null) {
             return false;
         }
-        if (progressBar.getMaxProgress() != recipe.duration()) {
-            progressBar.setMaxProgress(recipe.duration());
-        }
-        return inputInventory.getStackInSlot(0).getCount() >= recipe.inputCount()
-                && getEnergyStorage().getEnergyStored() >= effectiveEnergyPerTick(recipe.energyPerTick())
-                && hasCharge(effectiveChargePerTick())
-                && canAcceptOutputs(recipe);
+        return prepareBatch(recipe.duration(), recipe.energyPerTick(),
+                n -> inputInventory.getStackInSlot(0).getCount() >= (long) recipe.inputCount() * n
+                        && canAcceptOutputs(recipe, n));
     }
 
     /** 三个输出格必须**同时**塞得下：副产物槽满了的话这次作业就不该开始。 */
-    private boolean canAcceptOutputs(RefiningRecipe recipe) {
-        return fits(0, recipe.result())
-                && fits(1, outputStack(recipe.byproduct(0)))
-                && fits(2, outputStack(recipe.byproduct(1)));
-    }
-
-    /** 往第 {@code slot} 格试放一份，放得下返回 true。空栈（配方没写这份副产物）直接算过。 */
-    private boolean fits(int slot, ItemStack stack) {
-        return stack.isEmpty() || outputInventory.insertItem(slot, stack.copy(), true).isEmpty();
+    private boolean canAcceptOutputs(RefiningRecipe recipe, int n) {
+        return fitsOutput(outputInventory, 0, recipe.result(), n)
+                && fitsOutput(outputInventory, 1, outputStack(recipe.byproduct(0)), n)
+                && fitsOutput(outputInventory, 2, outputStack(recipe.byproduct(1)), n);
     }
 
     /**
@@ -198,23 +188,12 @@ public class RawRefinerTile extends InspiredMachineTile<RawRefinerTile> {
         return stack;
     }
 
-    private void consumeEnergy() {
-        RefiningRecipe recipe = findRecipe();
-        if (recipe == null) {
-            return;
-        }
-        PluginEnergyStorage<RawRefinerTile> storage =
-                (PluginEnergyStorage<RawRefinerTile>) getEnergyStorage();
-        storage.setEnergyStored(storage.getEnergyStored() - effectiveEnergyPerTick(recipe.energyPerTick()));
-        consumeCharge(effectiveChargePerTick());
-    }
-
     private void finishCraft() {
         if (level == null) {
             return;
         }
         RefiningRecipe recipe = findRecipe();
-        if (recipe == null || !canAcceptOutputs(recipe)) {
+        if (recipe == null || !canAcceptOutputs(recipe, batchSize())) {
             return;
         }
         // 三格要么全成、要么全不动：主产物放进去了副产物放不下的话，原料照样不扣，
@@ -223,15 +202,15 @@ public class RawRefinerTile extends InspiredMachineTile<RawRefinerTile> {
                 outputInventory.getStackInSlot(0).copy(),
                 outputInventory.getStackInSlot(1).copy(),
                 outputInventory.getStackInSlot(2).copy());
-        if (!insert(0, recipe.result())
-                || !insert(1, outputStack(recipe.byproduct(0)))
-                || !insert(2, outputStack(recipe.byproduct(1)))) {
+        if (!insert(0, batchOutput(recipe.result()))
+                || !insert(1, batchOutput(outputStack(recipe.byproduct(0))))
+                || !insert(2, batchOutput(outputStack(recipe.byproduct(1))))) {
             for (int slot = 0; slot < before.size(); slot++) {
                 outputInventory.setStackInSlot(slot, before.get(slot));
             }
             return;
         }
-        inputInventory.extractItem(0, recipe.inputCount(), false);
+        inputInventory.extractItem(0, recipe.inputCount() * batchSize(), false);
         invalidateCache();
         markForUpdate();
     }
@@ -256,7 +235,7 @@ public class RawRefinerTile extends InspiredMachineTile<RawRefinerTile> {
         cachedInput = input.copy();
         cachedRecipe = level.getRecipeManager()
                 .getRecipeFor(ModRecipes.REFINING_TYPE.get(), new RefiningRecipeInput(input), level)
-                .map(RecipeHolder::value)
+                .map(this::trackRecipe)
                 .orElse(null);
         return cachedRecipe;
     }

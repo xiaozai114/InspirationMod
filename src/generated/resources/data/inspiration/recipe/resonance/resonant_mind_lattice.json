@@ -1,0 +1,10 @@
+{
+  "type": "inspiration:resonance",
+  "input": {
+    "item": "inspiration:mind_matrix_ingot"
+  },
+  "result": {
+    "count": 1,
+    "id": "inspiration:resonant_mind_lattice"
+  }
+}

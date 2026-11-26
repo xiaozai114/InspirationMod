@@ -1,0 +1,37 @@
+{
+  "type": "inspiration:assembling",
+  "counts": [
+    1,
+    64,
+    64,
+    64
+  ],
+  "duration": 600,
+  "energy_per_tick": 400,
+  "fluids": [
+    {
+      "amount": 16000,
+      "ingredient": {
+        "fluid": "inspiration:void_fluid"
+      }
+    }
+  ],
+  "ingredients": [
+    {
+      "item": "inspiration:blank_data"
+    },
+    {
+      "item": "minecraft:end_stone"
+    },
+    {
+      "item": "minecraft:obsidian"
+    },
+    {
+      "item": "minecraft:purpur_block"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "inspiration:end_data"
+  }
+}

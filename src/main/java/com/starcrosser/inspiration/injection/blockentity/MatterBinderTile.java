@@ -128,8 +128,9 @@ public class MatterBinderTile extends ActiveTile<MatterBinderTile> {
     public boolean depositResult(ItemStack result) {
         ItemStack current = baseSlot.getStackInSlot(0);
         if (current.isEmpty()) {
-            baseSlot.setStackInSlot(0, result);
-        } else if (ItemStack.isSameItemSameComponents(current, result)) {
+            baseSlot.setStackInSlot(0, result.copy());
+        } else if (ItemStack.isSameItemSameComponents(current, result)
+                && result.getCount() <= current.getMaxStackSize() - current.getCount()) {
             baseSlot.setStackInSlot(0, current.copyWithCount(current.getCount() + result.getCount()));
         } else {
             return false;

@@ -1,0 +1,10 @@
+{
+  "type": "inspiration:resonance",
+  "input": {
+    "item": "inspiration:plasma_ingot"
+  },
+  "result": {
+    "count": 1,
+    "id": "inspiration:quantum_ingot"
+  }
+}

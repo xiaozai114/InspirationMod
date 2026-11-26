@@ -4,6 +4,7 @@ import com.hrznstudio.titanium.module.BlockWithTile;
 import com.hrznstudio.titanium.module.DeferredRegistryHelper;
 import com.starcrosser.inspiration.Inspiration;
 import com.starcrosser.inspiration.machine.block.AlkalineReactorBlock;
+import com.starcrosser.inspiration.machine.block.CombustionGeneratorBlock;
 import com.starcrosser.inspiration.machine.block.CoreDrillerBlock;
 import com.starcrosser.inspiration.machine.block.CultureTankBlock;
 import com.starcrosser.inspiration.machine.block.FluidExtractorBlock;
@@ -14,6 +15,8 @@ import com.starcrosser.inspiration.machine.block.MatterReshaperMachineBlock;
 import com.starcrosser.inspiration.machine.block.MineralTwisterBlock;
 import com.starcrosser.inspiration.machine.block.RawRefinerBlock;
 import com.starcrosser.inspiration.machine.block.RtgGeneratorBlock;
+import com.starcrosser.inspiration.machine.block.ResonanceChamberBlock;
+import com.starcrosser.inspiration.machine.block.RadiationAbsorberBlock;
 import com.starcrosser.inspiration.machine.block.VoidCondenserBlock;
 import com.starcrosser.inspiration.machine.block.ZeroPointGeneratorBlock;
 import com.starcrosser.inspiration.machine.spec.MachineSpec;
@@ -98,6 +101,7 @@ public class ModMachines {
     public static BlockWithTile HIGH_ENERGY_INSPIRATION_ASSEMBLER;
     /** 高能物质重塑机：与物质重塑机共用配方，数值翻倍且无额外效果。 */
     public static BlockWithTile HIGH_ENERGY_MATTER_RESHAPER;
+    public static BlockWithTile COMBUSTION_GENERATOR;
     /** 碱性发电机：烧碱性物质发电的发电机，无副产物、无辐射。 */
     public static BlockWithTile ALKALINE_REACTOR;
     /** RTG反应堆：烧放射性物质发电，代价是往区块里放辐射。 */
@@ -114,6 +118,8 @@ public class ModMachines {
     public static BlockWithTile HIGH_ENERGY_INSPIRATION_FURNACE;
     /** 虚空能量凝聚器：吃电与团簇 ve，产虚空露珠。 */
     public static BlockWithTile VOID_CONDENSER;
+    public static BlockWithTile RESONANCE_CHAMBER;
+    public static BlockWithTile RADIATION_ABSORBER;
     /** 零点能发电机：每分钟按增幅器数量产 FE，缓冲 128 GFE（long）。 */
     public static BlockWithTile ZERO_POINT_GENERATOR;
 
@@ -200,12 +206,18 @@ public class ModMachines {
                 "虚空能量凝聚器", "Void Energy Condenser",
                 () -> new VoidCondenserBlock("void_condenser", VOID_CONDENSER_T1,
                         () -> VOID_CONDENSER, 4.5F, 9.0F));
+        RADIATION_ABSORBER = MachineRegistry.register(registry, "radiation_absorber",
+                "辐射吸收器", "Radiation Absorber", RadiationAbsorberBlock::new);
+        RESONANCE_CHAMBER = MachineRegistry.register(registry, "resonance_chamber",
+                "谐振腔", "Resonance Chamber", ResonanceChamberBlock::new);
         ZERO_POINT_GENERATOR = MachineRegistry.register(registry, "zero_point_generator",
                 "零点能发电机", "Zero-Point Generator",
                 () -> new ZeroPointGeneratorBlock("zero_point_generator",
                         () -> ZERO_POINT_GENERATOR, 5.5F, 14.0F));
 
         // 发电类：不跑配方，只烧燃料往外输电
+        COMBUSTION_GENERATOR = MachineRegistry.register(registry, "combustion_generator",
+                "简易火力发电机", "Basic Combustion Generator", CombustionGeneratorBlock::new);
         ALKALINE_REACTOR = MachineRegistry.register(registry, "alkaline_reactor",
                 "碱性发电机", "Alkaline Generator", AlkalineReactorBlock::new);
         RTG_GENERATOR = MachineRegistry.register(registry, "rtg_generator",

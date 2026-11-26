@@ -1,7 +1,6 @@
 package com.starcrosser.inspiration.multiblock.data;
 
-import com.starcrosser.inspiration.item.ModItems;
-import com.starcrosser.inspiration.material.ModMaterials;
+import com.starcrosser.inspiration.block.ModBlocks;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 
@@ -15,9 +14,10 @@ public final class DimensionTables {
     private DimensionTables() {
     }
 
+    public static final int STANDARD_DURATION = 120;
+
     /**
      * 主世界：以铁矿与铜矿为大宗，钻石/绿宝石是稀有条目。
-     * 时长 1200 刻（一分钟）、每刻 200 FE —— 与结构模拟机同档的「慢但稳定」。
      */
     public static final MineralTable OVERWORLD = new MineralTable("minecraft:overworld",
             List.of(
@@ -29,5 +29,20 @@ public final class DimensionTables {
                     new MineralTable.Ore(() -> new ItemStack(Items.LAPIS_ORE, 4), 6),
                     new MineralTable.Ore(() -> new ItemStack(Items.DIAMOND_ORE), 3),
                     new MineralTable.Ore(() -> new ItemStack(Items.EMERALD_ORE), 2)),
-            1_200, 200);
+            STANDARD_DURATION, 200);
+
+    public static final MineralTable NETHER = new MineralTable("minecraft:the_nether",
+            List.of(
+                    new MineralTable.Ore(() -> new ItemStack(Items.NETHER_GOLD_ORE, 2), 34),
+                    new MineralTable.Ore(() -> new ItemStack(Items.GILDED_BLACKSTONE), 12),
+                    new MineralTable.Ore(() -> new ItemStack(Items.NETHER_QUARTZ_ORE, 3), 40),
+                    new MineralTable.Ore(() -> new ItemStack(ModBlocks.FRANCIUM_SALT_ORE.get()), 12),
+                    new MineralTable.Ore(() -> new ItemStack(Items.ANCIENT_DEBRIS), 2)),
+            STANDARD_DURATION, 400);
+
+    public static final MineralTable END = new MineralTable("minecraft:the_end",
+            List.of(
+                    new MineralTable.Ore(() -> new ItemStack(ModBlocks.EPHEMERAL_ORE.get()), 75),
+                    new MineralTable.Ore(() -> new ItemStack(ModBlocks.TUNGSTEN_ORE.get()), 25)),
+            1_200, 1200);
 }

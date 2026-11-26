@@ -29,6 +29,13 @@ public final class InjectionRecipes {
                 1, 50_000, 150_000,
                 new ItemStack(ModMaterials.ENERGIZED_JADE_STEEL.item().get()));
 
+        injection(recipeOutput, "injection/energized_golden_apple",
+                Ingredient.of(Items.GOLDEN_APPLE), Ingredient.of(ModItems.INSPIRATION.get()),
+                1, 150_000, 250_000, new ItemStack(ModItems.ENERGIZED_GOLDEN_APPLE.get()));
+        injection(recipeOutput, "injection/energized_enchanted_golden_apple",
+                Ingredient.of(Items.ENCHANTED_GOLDEN_APPLE), Ingredient.of(ModItems.INSPIRATION.get()),
+                2, 500_000, 1_000_000, new ItemStack(ModItems.ENERGIZED_ENCHANTED_GOLDEN_APPLE.get()));
+
         // 注能红石块 + 铀锭 -> 压缩红石锭（2 级；窗口 1M~2M FE）
         injection(recipeOutput, "injection/compressed_redstone_ingot",
                 Ingredient.of(ModMaterials.ENERGIZED_REDSTONE.block().get()),
@@ -44,11 +51,9 @@ public final class InjectionRecipes {
                 new ItemStack(ModItems.VOID_GOGGLES.get()));
 
         // 末地合金 + 虚空露珠 -> 虚空合金（2 级；枪里必须恰好 1 FE）
-        injection(recipeOutput, "injection/void_alloy",
-                Ingredient.of(ModMaterials.END_ALLOY.item().get()),
-                Ingredient.of(ModItems.VOID_DEW.get()),
-                2, 1, 1,
-                new ItemStack(ModItems.VOID_ALLOY.get()));
+        endAlloyPair(recipeOutput, "void_alloy", new InjectionRecipe(
+                Ingredient.of(ModMaterials.END_ALLOY.item().get()), Ingredient.of(ModItems.VOID_DEW.get()),
+                2, 1, 1, new ItemStack(ModItems.VOID_ALLOY.get()), InjectionRecipe.DEFAULT_DURATION));
 
         // 玄武岩基底 + 下界合金碎片 -> 3 玄武岩合金
         injection(recipeOutput, "injection/basalt_alloy",
@@ -59,10 +64,9 @@ public final class InjectionRecipes {
 
         // 末地合金 + 无恒物质 -> 无恒合金
         // 这条不写死能量：窗口由存档种子随机决定（见 SeededEnergyWindow），JEI 里只显示 ???
-        seededInjection(recipeOutput, "injection/ephemeral_alloy",
-                Ingredient.of(ModMaterials.END_ALLOY.item().get()),
-                Ingredient.of(ModItems.EPHEMERAL_MATERIAL.get()),
-                1, new ItemStack(ModMaterials.EPHEMERAL_ALLOY.item().get()));
+        endAlloyPair(recipeOutput, "ephemeral_alloy", new InjectionRecipe(
+                Ingredient.of(ModMaterials.END_ALLOY.item().get()), Ingredient.of(ModItems.EPHEMERAL_MATERIAL.get()),
+                new ItemStack(ModMaterials.EPHEMERAL_ALLOY.item().get()), 1, InjectionRecipe.DEFAULT_DURATION));
 
         // 打火石 + 玄武岩合金 -> 玄武岩合金打火石
         // 窗口很窄（25k~50k），逼玩家把注入枪精确充到这一档再用
@@ -139,15 +143,10 @@ public final class InjectionRecipes {
                 null);
     }
 
-    /**
-     * 种子随机窗口的注入配方：JSON 里不写 {@code min_energy} / {@code max_energy}，
-     * 实际窗口由存档种子决定，玩家只能用世界数据探测器读。
-     */
-    private static void seededInjection(RecipeOutput recipeOutput, String path, Ingredient base, Ingredient inject,
-                                        int tier, ItemStack result) {
-        recipeOutput.accept(
-                ResourceLocation.fromNamespaceAndPath(Inspiration.MODID, path),
-                new InjectionRecipe(base, inject, result, tier, InjectionRecipe.DEFAULT_DURATION),
-                null);
+    private static void endAlloyPair(RecipeOutput out, String material, InjectionRecipe original) {
+        ResourceLocation id = ResourceLocation.fromNamespaceAndPath(Inspiration.MODID, "injection/" + material);
+        out.accept(id, original, null);
+        out.accept(id.withSuffix("_from_resonant_end_alloy"), original.withBaseAndYield(
+                Ingredient.of(ModItems.RESONANT_END_ALLOY.get()), 2, id), null);
     }
 }

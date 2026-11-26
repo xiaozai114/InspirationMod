@@ -41,15 +41,15 @@ public final class ReshaperTaskResolver {
     @Nullable
     private static ReshaperTask resolveReshaping(Level level, ItemStack first, ItemStack second) {
         ReshapingRecipeInput input = new ReshapingRecipeInput(first, second);
-        ReshapingRecipe recipe = level.getRecipeManager()
+        var holder = level.getRecipeManager()
                 .getRecipeFor(ModRecipes.RESHAPING_TYPE.get(), input, level)
-                .map(RecipeHolder::value)
                 .orElse(null);
-        if (recipe == null) {
+        if (holder == null) {
             return null;
         }
+        ReshapingRecipe recipe = holder.value();
         return new ReshaperTask(recipe.result().copy(), recipe.inputCount(), recipe.duration(),
-                recipe.energyPerTick(), recipe.hasSecondInput() ? 1 : 0);
+                recipe.energyPerTick(), recipe.hasSecondInput() ? 1 : 0, holder.id());
     }
 
     @Nullable
@@ -68,7 +68,7 @@ public final class ReshaperTaskResolver {
                 continue;
             }
             return new ReshaperTask(result.copy(), ReshapingRecipe.DEFAULT_INPUT_COUNT, RIGHT_CLICK_DURATION,
-                    RIGHT_CLICK_ENERGY_PER_TICK, recipe.inputItem().getCount());
+                    RIGHT_CLICK_ENERGY_PER_TICK, recipe.inputItem().getCount(), holder.id());
         }
         return null;
     }

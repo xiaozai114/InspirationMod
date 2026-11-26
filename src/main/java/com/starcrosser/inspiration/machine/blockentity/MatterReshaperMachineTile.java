@@ -27,7 +27,7 @@ import net.neoforged.api.distmarker.OnlyIn;
  * 两档机器**共用同一套配方**，差别只在等级倍率上（见 {@link MachineSpec#multiplier}）：
  * 能量容量、输入功率、每刻耗电、充能消耗、运行速度全部按等级放大，没有本机专属效果。
  */
-public class MatterReshaperMachineTile extends InspiredMachineTile<MatterReshaperMachineTile> {
+public class MatterReshaperMachineTile extends BatchProcessingTile<MatterReshaperMachineTile> {
 
     /** tier 1 的能量缓冲容量（FE）。 */
     public static final int BASE_ENERGY_CAPACITY = 200_000;
@@ -77,7 +77,7 @@ public class MatterReshaperMachineTile extends InspiredMachineTile<MatterReshape
         bar.setColor(spec.barColor());
         bar.setCanIncrease(this::canProcess);
         bar.setCanReset(tile -> tile.isFinished() || tile.findTask() == null);
-        bar.setOnTickWork(this::consumeEnergy);
+        bar.setOnTickWork(this::consumeBatchEnergy);
         bar.setOnFinishWork(this::finishCraft);
         this.progressBar = bar;
         addProgressBar(this.progressBar);
@@ -132,47 +132,11 @@ public class MatterReshaperMachineTile extends InspiredMachineTile<MatterReshape
         if (task == null) {
             return false;
         }
-        if (progressBar.getMaxProgress() != task.duration()) {
-            progressBar.setMaxProgress(task.duration());
-        }
-        if (!hasEnoughInput(task)) {
-            return false;
-        }
-        return getEnergyStorage().getEnergyStored() >= effectiveEnergyPerTick(task.energyPerTick())
-                && hasCharge(effectiveChargePerTick())
-                && canAcceptResult(task.result());
-    }
-
-    /** 配方可能一次消耗多个材料，必须凑齐整份才开始工作，否则会白扣材料。 */
-    private boolean hasEnoughInput(ReshaperTask task) {
-        if (inputInventory.getStackInSlot(0).getCount() < task.firstInputCount()) {
-            return false;
-        }
-        return !task.consumesSecondInput()
-                || inputInventory.getStackInSlot(1).getCount() >= task.secondInputCount();
-    }
-
-    private boolean canAcceptResult(ItemStack result) {
-        ItemStack current = outputInventory.getStackInSlot(0);
-        if (current.isEmpty()) {
-            return true;
-        }
-        if (!ItemStack.isSameItemSameComponents(current, result)) {
-            return false;
-        }
-        int limit = Math.min(outputInventory.getSlotLimit(0), result.getMaxStackSize());
-        return current.getCount() + result.getCount() <= limit;
-    }
-
-    private void consumeEnergy() {
-        ReshaperTask task = findTask();
-        if (task == null) {
-            return;
-        }
-        PluginEnergyStorage<MatterReshaperMachineTile> storage =
-                (PluginEnergyStorage<MatterReshaperMachineTile>) getEnergyStorage();
-        storage.setEnergyStored(storage.getEnergyStored() - effectiveEnergyPerTick(task.energyPerTick()));
-        consumeCharge(effectiveChargePerTick());
+        selectRecipe(task.recipeId());
+        return prepareBatch(task.duration(), task.energyPerTick(),
+                n -> inputInventory.getStackInSlot(0).getCount() >= (long) task.firstInputCount() * n
+                        && (!task.consumesSecondInput() || inputInventory.getStackInSlot(1).getCount() >= (long) task.secondInputCount() * n)
+                        && fitsOutput(outputInventory, 0, task.result(), n));
     }
 
     private void finishCraft() {
@@ -180,14 +144,14 @@ public class MatterReshaperMachineTile extends InspiredMachineTile<MatterReshape
         if (task == null) {
             return;
         }
-        ItemStack result = task.result().copy();
+        ItemStack result = batchOutput(task.result());
         if (!outputInventory.insertItem(0, result.copy(), true).isEmpty()) {
             return;
         }
         outputInventory.insertItem(0, result.copy(), false);
-        inputInventory.extractItem(0, task.firstInputCount(), false);
+        inputInventory.extractItem(0, task.firstInputCount() * batchSize(), false);
         if (task.consumesSecondInput()) {
-            inputInventory.extractItem(1, task.secondInputCount(), false);
+            inputInventory.extractItem(1, task.secondInputCount() * batchSize(), false);
         }
         invalidateCache();
         markForUpdate();

@@ -26,3 +26,6 @@ runs
 run-data
 
 repo
+
+# Python texture generators
+/tools/textures/__pycache__/

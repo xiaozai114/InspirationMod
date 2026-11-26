@@ -14,7 +14,6 @@ import com.starcrosser.inspiration.recipe.ModRecipes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.api.distmarker.Dist;
@@ -33,7 +32,7 @@ import javax.annotation.Nonnull;
  * 输出罐容量固定 16000 mB（约 111 锭），目前只有 tier 1 机型，所以不做等级倍率；
  * 将来要是加高能版，记得把 {@code applyTier} 那条路子也用到罐子上。
  */
-public class FluidExtractorTile extends InspiredMachineTile<FluidExtractorTile> {
+public class FluidExtractorTile extends BatchProcessingTile<FluidExtractorTile> {
 
     /** tier 1 的能量缓冲容量（FE）。 */
     public static final int BASE_ENERGY_CAPACITY = 400_000;
@@ -88,7 +87,7 @@ public class FluidExtractorTile extends InspiredMachineTile<FluidExtractorTile> 
         bar.setColor(spec.barColor());
         bar.setCanIncrease(this::canProcess);
         bar.setCanReset(tile -> tile.isFinished() || tile.findRecipe() == null);
-        bar.setOnTickWork(this::consumeEnergy);
+        bar.setOnTickWork(this::consumeBatchEnergy);
         bar.setOnFinishWork(this::finishCraft);
         this.progressBar = bar;
         addProgressBar(this.progressBar);
@@ -141,36 +140,22 @@ public class FluidExtractorTile extends InspiredMachineTile<FluidExtractorTile> 
         if (recipe == null) {
             return false;
         }
-        if (progressBar.getMaxProgress() != recipe.duration()) {
-            progressBar.setMaxProgress(recipe.duration());
-        }
-        return getEnergyStorage().getEnergyStored() >= effectiveEnergyPerTick(recipe.energyPerTick())
-                && hasCharge(effectiveChargePerTick())
-                && canAccept(recipe);
+        return prepareBatch(recipe.duration(), recipe.energyPerTick(),
+                n -> inputInventory.getStackInSlot(0).getCount() >= (long) recipe.inputCount() * n
+                        && canAccept(recipe, n));
     }
 
     /** 罐里能装下这次产物：要么是空的，要么装的同一种流体且剩余空间够。 */
-    private boolean canAccept(FluidExtractingRecipe recipe) {
+    private boolean canAccept(FluidExtractingRecipe recipe, int n) {
         FluidStack current = outputTank.getFluid();
         FluidStack result = recipe.result();
         if (current.isEmpty()) {
-            return outputTank.getCapacity() >= result.getAmount();
+            return outputTank.getCapacity() >= (long) result.getAmount() * n;
         }
         if (!FluidStack.isSameFluidSameComponents(current, result)) {
             return false;
         }
-        return outputTank.getCapacity() - current.getAmount() >= result.getAmount();
-    }
-
-    private void consumeEnergy() {
-        FluidExtractingRecipe recipe = findRecipe();
-        if (recipe == null) {
-            return;
-        }
-        PluginEnergyStorage<FluidExtractorTile> storage =
-                (PluginEnergyStorage<FluidExtractorTile>) getEnergyStorage();
-        storage.setEnergyStored(storage.getEnergyStored() - effectiveEnergyPerTick(recipe.energyPerTick()));
-        consumeCharge(effectiveChargePerTick());
+        return outputTank.getCapacity() - current.getAmount() >= (long) result.getAmount() * n;
     }
 
     private void finishCraft() {
@@ -178,13 +163,13 @@ public class FluidExtractorTile extends InspiredMachineTile<FluidExtractorTile> 
             return;
         }
         FluidExtractingRecipe recipe = findRecipe();
-        if (recipe == null || !canAccept(recipe)) {
+        if (recipe == null || !canAccept(recipe, batchSize())) {
             return;
         }
         // 必须 fillForced：罐体被设成只出不进（Action.DRAIN），普通 fill 会被动作校验挡掉返回 0，
         // 表现为「原料被吃掉、罐里一滴都没有」。与充能罐扣减要 drainForced 是同一个坑。
-        outputTank.fillForced(recipe.result().copy(), IFluidHandler.FluidAction.EXECUTE);
-        inputInventory.extractItem(0, recipe.inputCount(), false);
+        outputTank.fillForced(recipe.result().copyWithAmount(recipe.result().getAmount() * batchSize()), IFluidHandler.FluidAction.EXECUTE);
+        inputInventory.extractItem(0, recipe.inputCount() * batchSize(), false);
         invalidateCache();
         markForUpdate();
     }
@@ -209,7 +194,7 @@ public class FluidExtractorTile extends InspiredMachineTile<FluidExtractorTile> 
         cachedInput = input.copy();
         cachedRecipe = level.getRecipeManager()
                 .getRecipeFor(ModRecipes.FLUID_EXTRACTING_TYPE.get(), new FluidExtractingRecipeInput(input), level)
-                .map(RecipeHolder::value)
+                .map(this::trackRecipe)
                 .orElse(null);
         return cachedRecipe;
     }

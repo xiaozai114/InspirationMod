@@ -93,7 +93,7 @@ public class RtgGeneratorTile extends PowerGeneratorTile<RtgGeneratorTile> {
     }
 
     @Override
-    protected int burnTicks() {
+    protected int burnTicks(int fuelValue) {
         return BURN_TICKS;
     }
 

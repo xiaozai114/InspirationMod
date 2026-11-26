@@ -71,6 +71,18 @@ public final class SmithingRecipes {
         // ========== 翡翠钢升级：模板 + 灵感工具 + 翡翠钢锭 ==========
         buildJadeSteelUpgrades(recipeOutput);
         buildEnergizedJadeSteelUpgrades(recipeOutput);
+        smithingUpgrade(recipeOutput, ModItems.ENERGIZED_JADE_STEEL_UPGRADE_TEMPLATE.get(),
+                ModMaterials.ENERGIZED_JADE_STEEL.item().get(), "energized_jade_steel_helmet",
+                Items.NETHERITE_HELMET, ModItems.ENERGIZED_JADE_STEEL_HELMET.get(), RecipeCategory.COMBAT);
+        smithingUpgrade(recipeOutput, ModItems.ENERGIZED_JADE_STEEL_UPGRADE_TEMPLATE.get(),
+                ModMaterials.ENERGIZED_JADE_STEEL.item().get(), "energized_jade_steel_chestplate",
+                Items.NETHERITE_CHESTPLATE, ModItems.ENERGIZED_JADE_STEEL_CHESTPLATE.get(), RecipeCategory.COMBAT);
+        smithingUpgrade(recipeOutput, ModItems.ENERGIZED_JADE_STEEL_UPGRADE_TEMPLATE.get(),
+                ModMaterials.ENERGIZED_JADE_STEEL.item().get(), "energized_jade_steel_leggings",
+                Items.NETHERITE_LEGGINGS, ModItems.ENERGIZED_JADE_STEEL_LEGGINGS.get(), RecipeCategory.COMBAT);
+        smithingUpgrade(recipeOutput, ModItems.ENERGIZED_JADE_STEEL_UPGRADE_TEMPLATE.get(),
+                ModMaterials.ENERGIZED_JADE_STEEL.item().get(), "energized_jade_steel_boots",
+                Items.NETHERITE_BOOTS, ModItems.ENERGIZED_JADE_STEEL_BOOTS.get(), RecipeCategory.COMBAT);
     }
 
     /**

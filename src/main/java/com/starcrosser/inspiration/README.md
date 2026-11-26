@@ -44,8 +44,7 @@
 
 ## 测试环境附加 mod
 
-放 `run/mods`，不参与构建、不作为依赖：Powah! (Rearchitected) 6.2.10 + Cloth Config API 15.0.140 +
-GuideME 21.1.19（后两个是 Powah! 的前置）。下载后 `unzip -t` 验一遍。
+开发启动配置通过 Gradle 的 `localRuntime` 加载 Powah! 6.2.10、Cloth Config API 15.0.140 和 GuideME 21.1.22。刷新 Gradle 后即可在 IDEA 的 Client 配置中使用这些模组。
 
 ## 通用坑
 

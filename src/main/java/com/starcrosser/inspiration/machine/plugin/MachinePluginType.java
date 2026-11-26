@@ -34,7 +34,8 @@ public enum MachinePluginType implements IAugmentType {
      * 「每装一个就多一份」比「叠乘」更好理解，玩家也不会因为忘了叠乘规则而算错产量。
      * 结算见 {@link PluginEffects#from}。
      */
-    BYPRODUCT("byproduct", 2.0F);
+    BYPRODUCT("byproduct", 2.0F),
+    PARALLEL("parallel", 2.0F);
 
     private final String type;
     private final float multiplier;
@@ -59,6 +60,10 @@ public enum MachinePluginType implements IAugmentType {
      * 语言文件里用 {@code %s} 接住即可。
      */
     public String multiplierText() {
+        return formatMultiplier(multiplier);
+    }
+
+    public static String formatMultiplier(float multiplier) {
         if (multiplier == (long) multiplier) {
             return String.valueOf((long) multiplier);
         }

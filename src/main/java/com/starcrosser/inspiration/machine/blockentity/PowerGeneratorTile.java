@@ -35,7 +35,7 @@ import javax.annotation.Nonnull;
  * 右侧同样是四个插件槽。
  * <p>
  * 子类只需回答四个问题：什么东西算燃料（{@link #isFuel} / {@link #fuelValue}）、
- * 一份烧多久（{@link #burnTicks}）、每刻发多少电（{@link #energyPerTick}）、
+ * 一份烧多久（{@link #burnTicks(int)}）、每刻发多少电（{@link #energyPerTick}）、
  * 以及缓冲与输出上限（{@link #baseEnergyCapacity} / {@link #baseMaxExtract}）。
  * 烧完要做的事（例如吐出核废料）与每分钟的副作用（例如释放辐射）分别覆写
  * {@link #onBurnComplete} 与 {@link #onGenerationMinute}。
@@ -91,7 +91,7 @@ public abstract class PowerGeneratorTile<T extends PowerGeneratorTile<T>> extend
         this.fuelInventory = fuel;
         addInventory(this.fuelInventory);
 
-        ProgressBarComponent<T> bar = new ProgressBarComponent<>(PROGRESS_X, PROGRESS_Y, burnTicks());
+        ProgressBarComponent<T> bar = new ProgressBarComponent<>(PROGRESS_X, PROGRESS_Y, burnTicks(1));
         bar.setBarDirection(ProgressBarComponent.BarDirection.ARROW_RIGHT);
         bar.setColor(DyeColor.ORANGE);
         bar.setCanIncrease(this::canBurn);
@@ -114,8 +114,12 @@ public abstract class PowerGeneratorTile<T extends PowerGeneratorTile<T>> extend
     /** 一份燃料的强度；碱性发电机取碱性值，RTG 取辐射值。 */
     protected abstract int fuelValue(ItemStack stack);
 
+    protected ItemStack fuelRemainder(ItemStack used) {
+        return ItemStack.EMPTY;
+    }
+
     /** 一份燃料烧多少刻。 */
-    protected abstract int burnTicks();
+    protected abstract int burnTicks(int fuelValue);
 
     /** 强度为 {@code value} 的燃料每刻发多少电（不含插件加成）。 */
     protected abstract int energyPerTick(int value);
@@ -180,7 +184,12 @@ public abstract class PowerGeneratorTile<T extends PowerGeneratorTile<T>> extend
 
     /** 含速度倍率后每刻的实际产能；燃烧时间同步缩短，所以一份燃料的总发电量不变。 */
     private int productionPerTick(int value) {
-        return energyPerTick(value) * pluginEffects.progressIncrease(1);
+        return energyPerTick(value) * burnStep(value);
+    }
+
+    /** 高速燃烧的最后一刻只结算燃料剩余的单位数。 */
+    private int burnStep(int value) {
+        return Math.min(pluginEffects.progressIncrease(1), burnTicks(value) - burnedTicks);
     }
 
     /* ============================ 燃烧流程 ============================ */
@@ -211,8 +220,8 @@ public abstract class PowerGeneratorTile<T extends PowerGeneratorTile<T>> extend
                 return false;
             }
         }
-        if (progressBar.getMaxProgress() != burnTicks()) {
-            progressBar.setMaxProgress(burnTicks());
+        if (progressBar.getMaxProgress() != burnTicks(value)) {
+            progressBar.setMaxProgress(burnTicks(value));
         }
         // 缓冲要留得下这一刻的产能，否则停下来等，避免燃料白白烧掉
         int room = getEnergyStorage().getMaxEnergyStored() - getEnergyStorage().getEnergyStored();
@@ -225,7 +234,15 @@ public abstract class PowerGeneratorTile<T extends PowerGeneratorTile<T>> extend
         if (value <= 0) {
             return;
         }
-        fuelInventory.extractItem(0, 1, false);
+        ItemStack used = fuelInventory.extractItem(0, 1, false);
+        ItemStack remainder = fuelRemainder(used);
+        if (!remainder.isEmpty()) {
+            if (fuelInventory.getStackInSlot(0).isEmpty()) {
+                fuelInventory.setStackInSlot(0, remainder);
+            } else {
+                net.minecraft.world.level.block.Block.popResource(level, worldPosition, remainder);
+            }
+        }
         this.burningValue = value;
         this.minuteCounter = 0;
         this.burnedTicks = 0;
@@ -238,7 +255,7 @@ public abstract class PowerGeneratorTile<T extends PowerGeneratorTile<T>> extend
         int produced = storage.getEnergyStored() + productionPerTick(burningValue);
         storage.setEnergyStored(Math.min(produced, storage.getMaxEnergyStored()));
 
-        int step = pluginEffects.progressIncrease(1);
+        int step = burnStep(burningValue);
         minuteCounter += step;
         while (minuteCounter >= TICKS_PER_MINUTE) {
             minuteCounter -= TICKS_PER_MINUTE;
@@ -248,7 +265,7 @@ public abstract class PowerGeneratorTile<T extends PowerGeneratorTile<T>> extend
         // 自己数烧了多少单位，不依赖进度条归零的那一步 ——
         // 缓冲满了的时候进度条会被外部直接打回 0、并且不会回调 onFinishWork。
         burnedTicks += step;
-        if (burnedTicks >= burnTicks()) {
+        if (burnedTicks >= burnTicks(burningValue)) {
             finishBurn();
         }
     }
@@ -279,8 +296,8 @@ public abstract class PowerGeneratorTile<T extends PowerGeneratorTile<T>> extend
 
     @Override
     public void serverTick(Level level, BlockPos pos, BlockState state, T self) {
-        super.serverTick(level, pos, state, self);
         plugins.refresh();
+        super.serverTick(level, pos, state, self);
         pushEnergy(level, pos);
     }
 

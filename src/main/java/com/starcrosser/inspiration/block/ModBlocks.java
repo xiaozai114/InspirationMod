@@ -15,6 +15,8 @@ import com.starcrosser.inspiration.multiblock.block.MachineCasingBlock;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.LiquidBlock;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.MapColor;
@@ -58,6 +60,9 @@ public class ModBlocks {
     public static final DeferredBlock<Block> EPHEMERAL_ORE =
             registerBlocks("ephemeral_ore",()->new Block(BlockBehaviour.Properties.of().strength(1.0F,10.0F)
                     .requiresCorrectToolForDrops()));
+    public static final DeferredBlock<Block> TUNGSTEN_ORE =
+            registerBlocks("tungsten_ore", () -> new Block(BlockBehaviour.Properties.of()
+                    .strength(4.0F, 6.0F).requiresCorrectToolForDrops()));
     public static final DeferredBlock<Block> CESIUM_SALT_ORE =
             registerBlocks("cesium_salt_ore",()->new Block(BlockBehaviour.Properties.of().strength(1.0F,6.0F)
                     .requiresCorrectToolForDrops()));
@@ -76,6 +81,10 @@ public class ModBlocks {
     public static final DeferredBlock<ReinforcedTNTBlock> INTENSIFIED_TNT =
             registerBlocks("intensified_tnt",()->new ReinforcedTNTBlock(BlockBehaviour.Properties.of().strength(0.0F,0.0F)
                     ));
+    public static final DeferredBlock<LiquidBlock> VOID_FLUID = registerBlockOnly(
+            "void_fluid", () -> new LiquidBlock(ModFluids.Fluids.VOID_FLUID.get(),
+                    BlockBehaviour.Properties.ofFullCopy(Blocks.WATER)
+                            .mapColor(MapColor.COLOR_PURPLE).noLootTable()));
     public static final DeferredBlock<MindFluidBlock> MIND_FLUID_BLOCK = registerBlockOnly(
             "mind_fluid_block",
             () -> new MindFluidBlock(
@@ -149,7 +158,6 @@ public class ModBlocks {
             ModItems.ITEMS.register("empowered_tnt", () -> new AlkaliBlockItem(
                     EMPOWERED_TNT.get(),
                     new Item.Properties(),
-                    ModItems.CESIUM_SALT.get(),
                     6.0f
             ));
 

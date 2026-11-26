@@ -4,19 +4,20 @@ import com.starcrosser.inspiration.Inspiration;
 import com.starcrosser.inspiration.fluid.ModFluids;
 import com.starcrosser.inspiration.injection.item.BindingWandItem;
 import com.starcrosser.inspiration.item.custom.*;
+import com.starcrosser.inspiration.item.armor.EnergizedJadeSteelArmorItem;
+import com.starcrosser.inspiration.radiation.item.EnergizedGoldenAppleItem;
 import com.starcrosser.inspiration.radiation.item.GeigerCounterItem;
 import com.starcrosser.inspiration.item.tool.ModToolTiers;
 import com.starcrosser.inspiration.item.tool.ToolDurability;
 import com.starcrosser.inspiration.machine.plugin.MachinePluginType;
-import com.starcrosser.inspiration.multiblock.data.SimulationSpec;
-import com.starcrosser.inspiration.multiblock.data.StructureDataItem;
+import com.starcrosser.inspiration.multiblock.data.StructureSite;
+import com.starcrosser.inspiration.multiblock.data.DimensionDataItem;
+import com.starcrosser.inspiration.multiblock.data.DimensionTables;
+import com.starcrosser.inspiration.multiblock.data.MineralTable;
 import com.starcrosser.inspiration.multiblock.item.ProjectorItem;
-import net.minecraft.core.registries.Registries;
-import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.*;
 
-import java.util.List;
+import java.util.Map;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredItem;
@@ -33,9 +34,9 @@ public class ModItems {
     public static final DeferredItem<Item> CALCIUM_HYDROXIDE_DUST=
             ITEMS.register("calcium_hydroxide_dust", () ->new Item(new Item.Properties()));
     public static final DeferredItem<Item> CALCIUM_DUST=
-            ITEMS.register("calcium_dust", () ->new AlkaliItem(new Item.Properties(),ModItems.CALCIUM_HYDROXIDE_DUST.get(),0.1f));
+            ITEMS.register("calcium_dust", () ->new AlkaliItem(new Item.Properties(), 0.1f));
     public static final DeferredItem<Item> CESIUM_DUST=
-            ITEMS.register("cesium_dust", () ->new AlkaliItem(new Item.Properties(),ModItems.CESIUM_SALT.get(),4f));
+            ITEMS.register("cesium_dust", () ->new AlkaliItem(new Item.Properties(), 4f));
     // 铯锭改由 material/ModMaterials 声明（一次性生成锭、块、data_maps 与配套资源）
 
     public static final DeferredItem<Item> RAW_CESIUM_SALT=
@@ -165,27 +166,11 @@ public class ModItems {
 
     /* ==================== 结构模拟机的结构数据 ==================== */
 
-    /** 沉船模拟的持续时间（刻）。 */
-    private static final int SHIPWRECK_DURATION = 12000;
-    /** 沉船模拟每刻消耗的 FE。 */
-    private static final int SHIPWRECK_ENERGY_PER_TICK = 1000;
-    /** 沉船的三种箱子，产出时随机取一张 roll。 */
-    private static final List<ResourceLocation> SHIPWRECK_LOOT_TABLES = List.of(
-            ResourceLocation.withDefaultNamespace("chests/shipwreck_supply"),
-            ResourceLocation.withDefaultNamespace("chests/shipwreck_treasure"),
-            ResourceLocation.withDefaultNamespace("chests/shipwreck_map"));
-
     /** 空白数据：结构数据的底材，本身不带模拟参数，装配成具体结构数据后才能用。 */
     public static final DeferredItem<Item> BLANK_DATA=
             ITEMS.register("blank_data", () ->new Item(new Item.Properties()));
-    /**
-     * 沉船数据：模拟一艘沉船，12000 刻、每刻 1000 FE，
-     * 产出是沉船三种箱子（补给 / 宝藏 / 地图）里随机一种的内容。
-     */
-    public static final DeferredItem<Item> SHIPWRECK_DATA=
-            ITEMS.register("shipwreck_data", () ->new StructureDataItem(
-                    new Item.Properties().rarity(Rarity.UNCOMMON), new SimulationSpec(
-                            SHIPWRECK_DURATION, SHIPWRECK_ENERGY_PER_TICK, SHIPWRECK_LOOT_TABLES)));
+    public static final Map<StructureSite, DeferredItem<Item>> STRUCTURE_DATA = StructureSite.registerCards(ITEMS);
+    public static final DeferredItem<Item> SHIPWRECK_DATA = STRUCTURE_DATA.get(StructureSite.SHIPWRECK);
 
     /**
      * 结构投影仪：手持右键结构模拟机的主方块，把 4×3×3 的结构以虚影的形式投在原地，
@@ -232,6 +217,16 @@ public class ModItems {
     public static final DeferredItem<Item> SPEED_PLUGIN=
             ITEMS.register("speed_plugin",
                     () ->new MachinePluginItem(MachinePluginType.SPEED));
+    public static final DeferredItem<Item> HIGH_ENERGY_CAPACITOR_PLUGIN =
+            ITEMS.register("high_energy_capacitor_plugin", () -> MachinePluginItem.highEnergy(MachinePluginType.ENERGY_CAPACITY));
+    public static final DeferredItem<Item> HIGH_ENERGY_INSPIRATION_PLUGIN =
+            ITEMS.register("high_energy_inspiration_plugin", () -> MachinePluginItem.highEnergy(MachinePluginType.CHARGE_CAPACITY));
+    public static final DeferredItem<Item> HIGH_ENERGY_SPEED_PLUGIN =
+            ITEMS.register("high_energy_speed_plugin", () -> MachinePluginItem.highEnergy(MachinePluginType.SPEED));
+
+    public static final DeferredItem<Item> PARALLEL_PLUGIN =
+            ITEMS.register("parallel_plugin", () -> new MachinePluginItem(MachinePluginType.PARALLEL));
+
     /** 电容降级插件：机器能量缓冲上限降到 67%，用来压低一次注入的放电量。 */
     public static final DeferredItem<Item> CAPACITOR_DOWNGRADE_PLUGIN=
             ITEMS.register("capacitor_downgrade_plugin",
@@ -252,10 +247,9 @@ public class ModItems {
     /** 钫盐：粗钫盐熔炼得到，与铯盐同流程。 */
     public static final DeferredItem<Item> FRANCIUM_SALT =
             ITEMS.register("francium_salt", () -> new Item(new Item.Properties()));
-    /** 钫粉：碱类物品，遇水炸开并变回钫盐。 */
+    /** 钫粉：碱类物品，遇水炸开。 */
     public static final DeferredItem<Item> FRANCIUM_DUST =
-            ITEMS.register("francium_dust", () -> new AlkaliItem(new Item.Properties(),
-                    ModItems.FRANCIUM_SALT.get(), 6f));
+            ITEMS.register("francium_dust", () -> new AlkaliItem(new Item.Properties(), 6f));
     /** 钫锭：钫粉高炉冶炼得到。 */
 
     /* ===================== 注入合成相关 ===================== */
@@ -321,6 +315,10 @@ public class ModItems {
 
     /* ===================== 缸中之脑产线 ===================== */
 
+    public static final DeferredItem<BucketItem> VOID_FLUID_BUCKET = ITEMS.register("void_fluid_bucket",
+            () -> new BucketItem(ModFluids.Fluids.VOID_FLUID.get(),
+                    new Item.Properties().stacksTo(1).craftRemainder(Items.BUCKET)));
+
     public static final DeferredHolder<Item, BucketItem> NUTRIENT_FLUID_BUCKET = ITEMS.register(
             "nutrient_fluid_bucket",
             ()->new BucketItem(ModFluids.Fluids.NUTRIENT_FLUID.get(), new Item.Properties())
@@ -337,11 +335,13 @@ public class ModItems {
             ITEMS.register("mechanical_parasite", () -> new Item(new Item.Properties().rarity(Rarity.UNCOMMON)));
 
     /** 主世界数据：矿物模拟机用，灵感装配台做出来，本身不消耗。 */
-    public static final DeferredItem<Item> OVERWORLD_DATA =
-            ITEMS.register("overworld_data",
-                    () -> new com.starcrosser.inspiration.multiblock.data.DimensionDataItem(
-                            new Item.Properties().rarity(Rarity.RARE),
-                            com.starcrosser.inspiration.multiblock.data.DimensionTables.OVERWORLD));
+    public static final DeferredItem<Item> OVERWORLD_DATA = dimensionCard("overworld_data", DimensionTables.OVERWORLD);
+    public static final DeferredItem<Item> NETHER_DATA = dimensionCard("nether_data", DimensionTables.NETHER);
+    public static final DeferredItem<Item> END_DATA = dimensionCard("end_data", DimensionTables.END);
+
+    private static DeferredItem<Item> dimensionCard(String id, MineralTable table) {
+        return ITEMS.register(id, () -> new DimensionDataItem(new Item.Properties().rarity(Rarity.RARE), table));
+    }
 
     /** 虚空护目镜：头部装备，+2 护甲，戴着能看见团簇里的 ve。 */
     public static final DeferredItem<Item> VOID_GOGGLES =
@@ -379,6 +379,32 @@ public class ModItems {
     /** 虚空合金：虚空露珠注入末地合金得到，增幅器的材料。 */
     public static final DeferredItem<Item> VOID_ALLOY =
             ITEMS.register("void_alloy", () -> new Item(new Item.Properties().rarity(Rarity.EPIC)));
+
+    public static final DeferredItem<Item> QUANTUM_INGOT =
+            ITEMS.register("quantum_ingot", () -> new Item(new Item.Properties().rarity(Rarity.RARE)));
+
+    public static final DeferredItem<Item> RESONANT_END_ALLOY =
+            ITEMS.register("resonant_end_alloy", () -> new Item(new Item.Properties().rarity(Rarity.RARE)));
+
+    public static final DeferredItem<Item> RESONANT_INSPIRATION =
+            ITEMS.register("resonant_inspiration", () -> new InspirationChargeItem(new Item.Properties().rarity(Rarity.RARE)));
+
+    public static final DeferredItem<Item> RESONANT_MIND_LATTICE =
+            ITEMS.register("resonant_mind_lattice", () -> new Item(new Item.Properties().rarity(Rarity.RARE)));
+
+    public static final DeferredItem<EnergizedJadeSteelArmorItem> ENERGIZED_JADE_STEEL_HELMET =
+            ITEMS.register("energized_jade_steel_helmet", () -> new EnergizedJadeSteelArmorItem(ArmorItem.Type.HELMET));
+    public static final DeferredItem<EnergizedJadeSteelArmorItem> ENERGIZED_JADE_STEEL_CHESTPLATE =
+            ITEMS.register("energized_jade_steel_chestplate", () -> new EnergizedJadeSteelArmorItem(ArmorItem.Type.CHESTPLATE));
+    public static final DeferredItem<EnergizedJadeSteelArmorItem> ENERGIZED_JADE_STEEL_LEGGINGS =
+            ITEMS.register("energized_jade_steel_leggings", () -> new EnergizedJadeSteelArmorItem(ArmorItem.Type.LEGGINGS));
+    public static final DeferredItem<EnergizedJadeSteelArmorItem> ENERGIZED_JADE_STEEL_BOOTS =
+            ITEMS.register("energized_jade_steel_boots", () -> new EnergizedJadeSteelArmorItem(ArmorItem.Type.BOOTS));
+
+    public static final DeferredItem<EnergizedGoldenAppleItem> ENERGIZED_GOLDEN_APPLE =
+            ITEMS.register("energized_golden_apple", EnergizedGoldenAppleItem::ordinary);
+    public static final DeferredItem<EnergizedGoldenAppleItem> ENERGIZED_ENCHANTED_GOLDEN_APPLE =
+            ITEMS.register("energized_enchanted_golden_apple", EnergizedGoldenAppleItem::enchanted);
 
     public static void register(IEventBus eventBus) {
         ITEMS.register(eventBus);

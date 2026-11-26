@@ -104,10 +104,15 @@ public class AssemblingRecipe extends InspiredRecipe<AssemblingRecipeInput> {
      */
     @Nullable
     public int[] resolveSlots(List<ItemStack> stacks) {
+        return resolveSlots(stacks, 1);
+    }
+
+    @Nullable
+    public int[] resolveSlots(List<ItemStack> stacks, int batches) {
         return RecipeSlotMatcher.assign(ingredients.size(), stacks.size(), (material, slot) -> {
             ItemStack stack = stacks.get(slot);
             return !stack.isEmpty()
-                    && stack.getCount() >= countOf(material)
+                    && stack.getCount() >= (long) countOf(material) * batches
                     && ingredients.get(material).test(stack);
         });
     }
@@ -119,11 +124,17 @@ public class AssemblingRecipe extends InspiredRecipe<AssemblingRecipeInput> {
      */
     @Nullable
     public int[] resolveFluids(List<FluidStack> tanks) {
+        return resolveFluids(tanks, 1);
+    }
+
+    @Nullable
+    public int[] resolveFluids(List<FluidStack> tanks, int batches) {
         if (fluids.isEmpty()) {
             return new int[0];
         }
         return RecipeSlotMatcher.assign(fluids.size(), tanks.size(),
-                (requirement, tank) -> fluids.get(requirement).matches(tanks.get(tank)));
+                (requirement, tank) -> fluids.get(requirement).matches(tanks.get(tank))
+                        && tanks.get(tank).getAmount() >= (long) fluids.get(requirement).amount() * batches);
     }
 
     @Override

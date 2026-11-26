@@ -1,0 +1,41 @@
+{
+  "type": "inspiration:assembling",
+  "counts": [
+    1,
+    64,
+    64,
+    64,
+    64
+  ],
+  "duration": 600,
+  "energy_per_tick": 400,
+  "fluids": [
+    {
+      "amount": 16000,
+      "ingredient": {
+        "fluid": "minecraft:lava"
+      }
+    }
+  ],
+  "ingredients": [
+    {
+      "item": "inspiration:blank_data"
+    },
+    {
+      "item": "minecraft:netherrack"
+    },
+    {
+      "item": "minecraft:basalt"
+    },
+    {
+      "item": "minecraft:blackstone"
+    },
+    {
+      "item": "minecraft:soul_sand"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "inspiration:nether_data"
+  }
+}

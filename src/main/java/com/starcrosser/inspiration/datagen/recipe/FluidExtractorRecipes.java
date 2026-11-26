@@ -3,6 +3,7 @@ package com.starcrosser.inspiration.datagen.recipe;
 import com.starcrosser.inspiration.Inspiration;
 import com.starcrosser.inspiration.fluid.ModFluids;
 import com.starcrosser.inspiration.machine.recipe.FluidExtractingRecipe;
+import com.starcrosser.inspiration.item.ModItems;
 import com.starcrosser.inspiration.material.ModMaterials;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -33,6 +34,9 @@ public final class FluidExtractorRecipes {
         melt(recipeOutput, "plasma_ingot_to_molten_plasma",
                 Ingredient.of(ModMaterials.PLASMA.item().get()),
                 new FluidStack(ModFluids.Fluids.MOLTEN_PLASMA.get(), FluidExtractingRecipe.INGOT_AMOUNT));
+
+        melt(recipeOutput, "void_dew_to_void_fluid", Ingredient.of(ModItems.VOID_DEW.get()),
+                new FluidStack(ModFluids.Fluids.VOID_FLUID.get(), 1000));
 
         for (Item item : BuiltInRegistries.ITEM) {
             FoodProperties food = item.getDefaultInstance().get(DataComponents.FOOD);

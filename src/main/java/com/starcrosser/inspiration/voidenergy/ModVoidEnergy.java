@@ -3,8 +3,10 @@ package com.starcrosser.inspiration.voidenergy;
 import com.starcrosser.inspiration.Inspiration;
 import com.starcrosser.inspiration.voidenergy.block.CrackedBedrockBlock;
 import com.starcrosser.inspiration.voidenergy.block.VoidEnergyExtractorBlock;
+import com.starcrosser.inspiration.voidenergy.block.VoidEnergyCollectorBlock;
 import com.starcrosser.inspiration.voidenergy.block.VoidEnergyRelayBlock;
 import com.starcrosser.inspiration.voidenergy.blockentity.VoidEnergyExtractorTile;
+import com.starcrosser.inspiration.voidenergy.blockentity.VoidEnergyCollectorTile;
 import com.starcrosser.inspiration.voidenergy.entity.VoidClusterEntity;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.entity.EntityType;
@@ -34,12 +36,17 @@ public final class ModVoidEnergy {
             BLOCKS.register("cracked_bedrock", CrackedBedrockBlock::new);
     public static final DeferredBlock<VoidEnergyExtractorBlock> VOID_ENERGY_EXTRACTOR =
             BLOCKS.register("void_energy_extractor", VoidEnergyExtractorBlock::new);
+    public static final DeferredBlock<VoidEnergyCollectorBlock> VOID_ENERGY_COLLECTOR =
+            BLOCKS.register("void_energy_collector", VoidEnergyCollectorBlock::new);
     public static final DeferredBlock<VoidEnergyRelayBlock> VOID_ENERGY_RELAY =
             BLOCKS.register("void_energy_relay", VoidEnergyRelayBlock::new);
 
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<VoidEnergyExtractorTile>>
             VOID_ENERGY_EXTRACTOR_TYPE = BLOCK_ENTITIES.register("void_energy_extractor",
             () -> BlockEntityType.Builder.of(VoidEnergyExtractorTile::new, VOID_ENERGY_EXTRACTOR.get()).build(null));
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<VoidEnergyCollectorTile>>
+            VOID_ENERGY_COLLECTOR_TYPE = BLOCK_ENTITIES.register("void_energy_collector",
+            () -> BlockEntityType.Builder.of(VoidEnergyCollectorTile::new, VOID_ENERGY_COLLECTOR.get()).build(null));
 
     public static final DeferredHolder<EntityType<?>, EntityType<VoidClusterEntity>> VOID_CLUSTER =
             ENTITIES.register("void_cluster", () -> EntityType.Builder
@@ -60,6 +67,7 @@ public final class ModVoidEnergy {
         ENTITIES.register(bus);
         ITEMS.registerSimpleBlockItem(CRACKED_BEDROCK);
         ITEMS.registerSimpleBlockItem(VOID_ENERGY_EXTRACTOR);
+        ITEMS.registerSimpleBlockItem(VOID_ENERGY_COLLECTOR);
         ITEMS.registerSimpleBlockItem(VOID_ENERGY_RELAY);
     }
 }

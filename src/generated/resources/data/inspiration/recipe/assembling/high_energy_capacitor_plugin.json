@@ -1,0 +1,23 @@
+{
+  "type": "inspiration:assembling",
+  "counts": [
+    1
+  ],
+  "fluids": [
+    {
+      "amount": 288,
+      "ingredient": {
+        "fluid": "inspiration:molten_plasma"
+      }
+    }
+  ],
+  "ingredients": [
+    {
+      "item": "inspiration:redstone_ingot"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "inspiration:high_energy_capacitor_plugin"
+  }
+}

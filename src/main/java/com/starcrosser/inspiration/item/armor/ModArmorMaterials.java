@@ -5,6 +5,8 @@ import com.starcrosser.inspiration.item.ModItems;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
+import com.starcrosser.inspiration.material.ModMaterials;
+import net.minecraft.world.item.ArmorMaterials;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -37,6 +39,16 @@ public final class ModArmorMaterials {
                             ResourceLocation.fromNamespaceAndPath(Inspiration.MODID, "void_goggles"))),
                     0.0F,
                     0.0F));
+
+    public static final DeferredHolder<ArmorMaterial, ArmorMaterial> ENERGIZED_JADE_STEEL =
+            ARMOR_MATERIALS.register("energized_jade_steel", () -> {
+                ArmorMaterial base = ArmorMaterials.NETHERITE.value();
+                return new ArmorMaterial(base.defense(), base.enchantmentValue(), base.equipSound(),
+                        () -> Ingredient.of(ModMaterials.ENERGIZED_JADE_STEEL.item().get()),
+                        List.of(new ArmorMaterial.Layer(ResourceLocation.fromNamespaceAndPath(
+                                Inspiration.MODID, "energized_jade_steel"))),
+                        base.toughness() + 1.0F, base.knockbackResistance());
+            });
 
     private ModArmorMaterials() {
     }

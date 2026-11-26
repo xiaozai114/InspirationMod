@@ -21,9 +21,6 @@ import net.neoforged.neoforge.event.server.ServerStoppingEvent;
 @EventBusSubscriber(modid = Inspiration.MODID)
 public final class RadiationEvents {
 
-    /** 死亡后辐射减半的分母。 */
-    private static final int DEATH_PENALTY_DIVISOR = 2;
-
     private RadiationEvents() {
     }
 
@@ -74,9 +71,7 @@ public final class RadiationEvents {
         if (original.level().isClientSide) {
             return;
         }
-        int carried = RadiationAttachments.get(original);
-        RadiationAttachments.set(respawned,
-                event.isWasDeath() ? carried / DEATH_PENALTY_DIVISOR : carried);
+        RadiationAttachments.copy(original, respawned, event.isWasDeath());
     }
 
     /**
@@ -89,7 +84,7 @@ public final class RadiationEvents {
             return;
         }
         int radiation = RadiationAttachments.get(player);
-        if (!RadiationEffects.convertsHealing(radiation)) {
+        if (RadiationEffects.isProtected(player) || !RadiationEffects.convertsHealing(radiation)) {
             return;
         }
         event.setCanceled(true);

@@ -1,6 +1,7 @@
 package com.starcrosser.inspiration.machine.blockentity;
 
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.resources.ResourceLocation;
 
 /**
  * 物质重塑机当前待执行的一次重塑。
@@ -14,7 +15,11 @@ import net.minecraft.world.item.ItemStack;
  * @param secondInputCount 需要从第二个输入槽扣除的数量，0 表示该配方只用主输入
  */
 public record ReshaperTask(ItemStack result, int firstInputCount, int duration, int energyPerTick,
-                           int secondInputCount) {
+                           int secondInputCount, ResourceLocation recipeId) {
+
+    public ReshaperTask(ItemStack result, int firstInputCount, int duration, int energyPerTick, int secondInputCount) {
+        this(result, firstInputCount, duration, energyPerTick, secondInputCount, null);
+    }
 
     public boolean consumesSecondInput() {
         return secondInputCount > 0;

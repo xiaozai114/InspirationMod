@@ -47,6 +47,7 @@ public class ModBlockLootTablesProvider extends BlockLootSubProvider {
         dropSelf(ModBlocks.FRANCIUM_SALT_BLOCK.get());
         dropSelf(ModBlocks.EMPOWERED_TNT.get());
 
+        dropSelf(ModBlocks.TUNGSTEN_ORE.get());
         dropOther(ModBlocks.EPHEMERAL_ORE.get(), ModItems.EPHEMERAL_MATERIAL.get());
         dropOther(ModBlocks.CESIUM_SALT_ORE.get(), ModItems.RAW_CESIUM_SALT.get());
         dropOther(ModBlocks.FRANCIUM_SALT_ORE.get(), ModItems.RAW_FRANCIUM_SALT.get());
@@ -76,6 +77,7 @@ public class ModBlockLootTablesProvider extends BlockLootSubProvider {
 
         // 虚空能量体系：提取器与中继器掉落自身；开裂的基岩不可破坏，掉落表为空
         dropSelf(ModVoidEnergy.VOID_ENERGY_EXTRACTOR.get());
+        dropSelf(ModVoidEnergy.VOID_ENERGY_COLLECTOR.get());
         dropSelf(ModVoidEnergy.VOID_ENERGY_RELAY.get());
         add(ModVoidEnergy.CRACKED_BEDROCK.get(), LootTable.lootTable());
     }
@@ -115,6 +117,7 @@ public class ModBlockLootTablesProvider extends BlockLootSubProvider {
         blocks.add(ModInjection.VOID_INJECTION_GUN.getBlock());
         blocks.add(ModVoidEnergy.CRACKED_BEDROCK.get());
         blocks.add(ModVoidEnergy.VOID_ENERGY_EXTRACTOR.get());
+        blocks.add(ModVoidEnergy.VOID_ENERGY_COLLECTOR.get());
         blocks.add(ModVoidEnergy.VOID_ENERGY_RELAY.get());
         return blocks;
     }

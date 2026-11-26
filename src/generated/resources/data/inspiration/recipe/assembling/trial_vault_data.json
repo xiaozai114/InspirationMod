@@ -1,0 +1,29 @@
+{
+  "type": "inspiration:assembling",
+  "counts": [
+    1,
+    32,
+    8,
+    1
+  ],
+  "duration": 600,
+  "energy_per_tick": 400,
+  "ingredients": [
+    {
+      "item": "inspiration:blank_data"
+    },
+    {
+      "item": "minecraft:tuff_bricks"
+    },
+    {
+      "item": "minecraft:chiseled_copper"
+    },
+    {
+      "item": "minecraft:trial_key"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "inspiration:trial_vault_data"
+  }
+}

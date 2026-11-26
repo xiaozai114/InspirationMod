@@ -8,6 +8,7 @@ import com.starcrosser.inspiration.client.extensions.MindFluidClientExtensions;
 import com.starcrosser.inspiration.client.extensions.MoltenMetalClientExtensions;
 import com.starcrosser.inspiration.client.extensions.MoltenPlasmaClientExtensions;
 import com.starcrosser.inspiration.client.extensions.NutrientFluidClientExtensions;
+import com.starcrosser.inspiration.client.extensions.VoidFluidClientExtensions;
 import com.starcrosser.inspiration.fluid.MoltenMetals;
 import com.starcrosser.inspiration.fluid.ModFluids;
 import com.starcrosser.inspiration.item.ModItems;
@@ -33,6 +34,7 @@ public class ClientExtensionsHandler {
         }
         event.registerFluidType(new MoltenPlasmaClientExtensions(),
                 ModFluids.FluidsTypes.MOLTEN_PLASMA_TYPE.get());
+        event.registerFluidType(new VoidFluidClientExtensions(), ModFluids.FluidsTypes.VOID_FLUID_TYPE.get());
         event.registerFluidType(new NutrientFluidClientExtensions(),
                 ModFluids.FluidsTypes.NUTRIENT_FLUID_TYPE.get());
 

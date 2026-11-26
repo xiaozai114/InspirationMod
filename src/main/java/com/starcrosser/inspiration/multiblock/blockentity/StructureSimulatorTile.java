@@ -14,6 +14,7 @@ import com.starcrosser.inspiration.multiblock.blockentity.part.EnergyPortTile;
 import com.starcrosser.inspiration.multiblock.blockentity.part.InspirationHatchTile;
 import com.starcrosser.inspiration.multiblock.blockentity.part.OutputHatchTile;
 import com.starcrosser.inspiration.multiblock.data.SimulationSpec;
+import com.starcrosser.inspiration.multiblock.data.SimulationProgress;
 import com.starcrosser.inspiration.multiblock.data.StructureDataItem;
 import com.starcrosser.inspiration.multiblock.item.ProjectorItem;
 import com.starcrosser.inspiration.multiblock.pattern.SimulatorPattern;
@@ -80,6 +81,8 @@ public class StructureSimulatorTile extends MachineTile<StructureSimulatorTile> 
     private static final int PROGRESS_X = 78;
     private static final int PROGRESS_Y = 38;
 
+    private final SimulationProgress work = new SimulationProgress("shipwreck_data");
+
     private final Lock patternLock = new ReentrantLock();
 
     /** 上一次校验得到的多方块状态，里面保存着成员位置与错误信息。 */
@@ -132,7 +135,6 @@ public class StructureSimulatorTile extends MachineTile<StructureSimulatorTile> 
         bar.setColor(DyeColor.PURPLE);
         bar.setCanIncrease(this::canWork);
         bar.setCanReset(tile -> ((StructureSimulatorTile) tile).isProgressFull());
-        bar.setOnStart(this::onWorkStart);
         bar.setOnTickWork(this::onWorkTick);
         bar.setOnFinishWork(this::onWorkFinish);
         this.progressBar = bar;
@@ -290,23 +292,16 @@ public class StructureSimulatorTile extends MachineTile<StructureSimulatorTile> 
         if (!pendingOutput.isEmpty()) {
             return false;
         }
-        SimulationSpec spec = currentSpec();
-        if (spec == null) {
+        StructureDataItem card = dataItem();
+        if (card == null) {
             return false;
         }
-        if (progressBar.getMaxProgress() != spec.duration()) {
-            progressBar.setMaxProgress(Math.max(1, spec.duration()));
+        SimulationSpec spec = card.spec();
+        if (work.bind(card, spec.duration(), progressBar)) {
+            setChanged();
         }
         return getEnergyStorage().getEnergyStored() >= spec.energyPerTick()
                 && totalCharge() >= CHARGE_PER_TICK;
-    }
-
-    private void onWorkStart() {
-        // 换了一份数据时把进度条上限同步过去，免得进度按上一份数据的时长走
-        SimulationSpec spec = currentSpec();
-        if (spec != null && progressBar.getMaxProgress() != spec.duration()) {
-            progressBar.setMaxProgress(Math.max(1, spec.duration()));
-        }
     }
 
     private void onWorkTick() {
@@ -526,6 +521,7 @@ public class StructureSimulatorTile extends MachineTile<StructureSimulatorTile> 
     @Override
     protected void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
         super.saveAdditional(tag, registries);
+        work.save(tag);
         tag.putString("SimulatorFacing", facing.getName());
         if (!pendingOutput.isEmpty()) {
             ListTag list = new ListTag();
@@ -541,6 +537,7 @@ public class StructureSimulatorTile extends MachineTile<StructureSimulatorTile> 
     @Override
     public void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
         super.loadAdditional(tag, registries);
+        work.load(tag);
         Direction saved = Direction.byName(tag.getString("SimulatorFacing"));
         if (saved != null) {
             this.facing = saved;

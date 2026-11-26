@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/orientable",
+  "textures": {
+    "front": "inspiration:block/resonance_chamber_front",
+    "side": "inspiration:block/resonance_chamber_side",
+    "top": "inspiration:block/resonance_chamber_top"
+  }
+}

@@ -1,16 +1,20 @@
 package com.starcrosser.inspiration.injection.recipe;
 
 import com.mojang.serialization.MapCodec;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 
+import java.util.Optional;
+
 /**
  * 注入配方的序列化器。
  * <p>
- * 字段有 8 个，超过了 {@code StreamCodec.composite} 支持的上限，因此手写编解码。
+ * 字段有 9 个，超过了 {@code StreamCodec.composite} 支持的上限，因此手写编解码。
  * 编码顺序必须与 {@link InjectionRecipe} 的构造参数顺序一一对应。
  */
 public class InjectionRecipeSerializer implements RecipeSerializer<InjectionRecipe> {
@@ -34,6 +38,7 @@ public class InjectionRecipeSerializer implements RecipeSerializer<InjectionReci
         ItemStack.STREAM_CODEC.encode(buffer, recipe.result());
         buffer.writeVarInt(recipe.duration());
         buffer.writeBoolean(recipe.seeded());
+        buffer.writeOptional(recipe.windowSource(), FriendlyByteBuf::writeResourceLocation);
     }
 
     private static InjectionRecipe decode(RegistryFriendlyByteBuf buffer) {
@@ -45,6 +50,7 @@ public class InjectionRecipeSerializer implements RecipeSerializer<InjectionReci
         ItemStack result = ItemStack.STREAM_CODEC.decode(buffer);
         int duration = buffer.readVarInt();
         boolean seeded = buffer.readBoolean();
-        return new InjectionRecipe(base, inject, tier, minEnergy, maxEnergy, result, duration, seeded);
+        Optional<ResourceLocation> source = buffer.readOptional(FriendlyByteBuf::readResourceLocation);
+        return new InjectionRecipe(base, inject, tier, minEnergy, maxEnergy, result, duration, seeded, source);
     }
 }

@@ -20,6 +20,11 @@ public class ModItemModelsProvider extends ItemModelProvider {
     protected void registerModels() {
         // ========== 普通物品（generated） ==========
         basicItem(ModItems.INSPIRATION.get());
+        basicItem(ModItems.ENERGIZED_GOLDEN_APPLE.get());
+        basicItem(ModItems.ENERGIZED_ENCHANTED_GOLDEN_APPLE.get());
+        for (String piece : java.util.List.of("helmet", "chestplate", "leggings", "boots")) {
+            armorWithTrims(piece);
+        }
         basicItem(ModItems.COOKED_INSPIRATION.get());
         basicItem(ModItems.LIGNITE.get());
         basicItem(ModItems.INSPIREAD.get());
@@ -48,6 +53,9 @@ public class ModItemModelsProvider extends ItemModelProvider {
         basicItem(ModItems.PARASITE.get());
         basicItem(ModItems.MECHANICAL_PARASITE.get());
         basicItem(ModItems.OVERWORLD_DATA.get());
+        basicItem(ModItems.NETHER_DATA.get());
+        basicItem(ModItems.END_DATA.get());
+        basicItem(ModItems.VOID_FLUID_BUCKET.get());
         basicItem(ModItems.VOID_GOGGLES.get());
         basicItem(ModItems.COMPRESSED_REDSTONE_INGOT.get());
         for (com.starcrosser.inspiration.fluid.MoltenMetals.Entry entry
@@ -62,8 +70,13 @@ public class ModItemModelsProvider extends ItemModelProvider {
         basicItem(ModItems.NULL_POINT_MODULE.get());
         basicItem(ModItems.ZERO_POINT_AMPLIFIER.get());
         basicItem(ModItems.VOID_ALLOY.get());
+        basicItem(ModItems.RESONANT_MIND_LATTICE.get());
+        basicItem(ModItems.RESONANT_INSPIRATION.get());
+        basicItem(ModItems.RESONANT_END_ALLOY.get());
+        basicItem(ModItems.QUANTUM_INGOT.get());
         blockItem(ModVoidEnergy.CRACKED_BEDROCK.get());
         blockItem(ModVoidEnergy.VOID_ENERGY_EXTRACTOR.get());
+        blockItem(ModVoidEnergy.VOID_ENERGY_COLLECTOR.get());
         blockItem(ModVoidEnergy.VOID_ENERGY_RELAY.get());
         basicItem(ModItems.CALCIUM_HYDROXIDE_DUST.get());
         basicItem(ModItems.CALCIUM_DUST.get());
@@ -87,7 +100,7 @@ public class ModItemModelsProvider extends ItemModelProvider {
         basicItem(ModItems.REACTION_CORE.get());
         basicItem(ModItems.NUCLEAR_WASTE.get());
         basicItem(ModItems.BLANK_DATA.get());
-        basicItem(ModItems.SHIPWRECK_DATA.get());
+        ModItems.STRUCTURE_DATA.values().forEach(card -> basicItem(card.get()));
         basicItem(ModItems.PROJECTOR.get());
         basicItem(ModItems.JADE_STEEL_UPGRADE_TEMPLATE.get());
         basicItem(ModItems.JADE_STEEL_SWORD.get());
@@ -100,8 +113,12 @@ public class ModItemModelsProvider extends ItemModelProvider {
         basicItem(ModItems.ENERGIZED_JADE_STEEL_HOE.get());
         basicItem(ModItems.ENERGIZED_JADE_STEEL_SHOVEL.get());
         basicItem(ModItems.CAPACITOR_PLUGIN.get());
+        basicItem(ModItems.HIGH_ENERGY_CAPACITOR_PLUGIN.get());
         basicItem(ModItems.INSPIRATION_PLUGIN.get());
+        basicItem(ModItems.HIGH_ENERGY_INSPIRATION_PLUGIN.get());
         basicItem(ModItems.SPEED_PLUGIN.get());
+        basicItem(ModItems.HIGH_ENERGY_SPEED_PLUGIN.get());
+        basicItem(ModItems.PARALLEL_PLUGIN.get());
         basicItem(ModItems.CAPACITOR_DOWNGRADE_PLUGIN.get());
         basicItem(ModItems.RECYCLING_PLUGIN.get());
         basicItem(ModItems.INSPIRATION_SHARD.get());
@@ -135,6 +152,7 @@ public class ModItemModelsProvider extends ItemModelProvider {
 
         // ========== 方块物品（指向对应的方块模型） ==========
         blockItem(ModBlocks.LIGNITE_BLOCK.get());
+        blockItem(ModBlocks.TUNGSTEN_ORE.get());
         blockItem(ModBlocks.EPHEMERAL_ORE.get());
         blockItem(ModBlocks.CESIUM_SALT_ORE.get());
         blockItem(ModBlocks.INTENSIFIED_TNT.get());
@@ -154,6 +172,21 @@ public class ModItemModelsProvider extends ItemModelProvider {
         blockItem(ModBlocks.MIND_CRYSTAL_ROCK.get());
         // 结构模拟机的机体材料：没有这一条，方块物品就没有模型，物品栏里是黑紫的缺失贴图
         blockItem(ModBlocks.HIGH_ENERGY_MACHINE_CASING.get());
+    }
+
+    private void armorWithTrims(String piece) {
+        String name = "energized_jade_steel_" + piece;
+        String texture = "item/" + name;
+        var base = withExistingParent(name, mcLoc("item/generated")).texture("layer0", modLoc(texture));
+        var trims = java.util.List.of("quartz", "iron", "netherite", "redstone", "copper", "gold",
+                "emerald", "diamond", "lapis", "amethyst");
+        for (int i = 0; i < trims.size(); i++) {
+            String trim = trims.get(i);
+            var variant = withExistingParent(name + "_" + trim + "_trim", mcLoc("item/generated"))
+                    .texture("layer0", modLoc(texture))
+                    .texture("layer1", mcLoc("trims/items/" + piece + "_trim_" + trim));
+            base.override().predicate(mcLoc("trim_type"), (i + 1) / 10.0F).model(variant).end();
+        }
     }
 
     /** 生成方块物品模型：父模型为对应方块的模型 */

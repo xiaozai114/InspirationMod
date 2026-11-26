@@ -1,0 +1,23 @@
+{
+  "type": "inspiration:assembling",
+  "counts": [
+    1
+  ],
+  "fluids": [
+    {
+      "amount": 288,
+      "ingredient": {
+        "fluid": "inspiration:molten_plasma"
+      }
+    }
+  ],
+  "ingredients": [
+    {
+      "item": "inspiration:spectrum_alloy"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "inspiration:parallel_plugin"
+  }
+}

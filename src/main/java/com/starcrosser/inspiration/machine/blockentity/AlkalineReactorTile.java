@@ -50,7 +50,7 @@ public class AlkalineReactorTile extends PowerGeneratorTile<AlkalineReactorTile>
     }
 
     @Override
-    protected int burnTicks() {
+    protected int burnTicks(int fuelValue) {
         return BURN_TICKS;
     }
 

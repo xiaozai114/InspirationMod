@@ -12,7 +12,6 @@ import com.starcrosser.inspiration.recipe.ModRecipes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 
@@ -35,7 +34,7 @@ import net.neoforged.api.distmarker.OnlyIn;
  * 槽数决定一次能吃几种材料（2 槽 → 3 槽）。两者互相独立，所以本类里看不到任何
  * 「高能」分支 —— 将来加等级 3 只要再注册一份配置。
  */
-public class MatterFusionMachineTile extends InspiredMachineTile<MatterFusionMachineTile> {
+public class MatterFusionMachineTile extends BatchProcessingTile<MatterFusionMachineTile> {
 
     /** tier 1 的能量缓冲容量（FE）。 */
     public static final int BASE_ENERGY_CAPACITY = 60_000;
@@ -83,7 +82,7 @@ public class MatterFusionMachineTile extends InspiredMachineTile<MatterFusionMac
         bar.setColor(spec.barColor());
         bar.setCanIncrease(this::canProcess);
         bar.setCanReset(tile -> tile.isFinished() || !tile.hasRecipe());
-        bar.setOnTickWork(this::consumeEnergy);
+        bar.setOnTickWork(this::consumeBatchEnergy);
         bar.setOnFinishWork(this::finishCraft);
         this.progressBar = bar;
         addProgressBar(this.progressBar);
@@ -138,38 +137,9 @@ public class MatterFusionMachineTile extends InspiredMachineTile<MatterFusionMac
         if (recipe == null) {
             return false;
         }
-        if (progressBar.getMaxProgress() != recipe.duration()) {
-            progressBar.setMaxProgress(recipe.duration());
-        }
-        if (getEnergyStorage().getEnergyStored() < effectiveEnergyPerTick(recipe.energyPerTick())) {
-            return false;
-        }
-        return hasCharge(effectiveChargePerTick()) && canAcceptResult(recipe);
-    }
-
-    private boolean canAcceptResult(FusionRecipe recipe) {
-        ItemStack result = recipe.result();
-        ItemStack current = outputInventory.getStackInSlot(0);
-        if (current.isEmpty()) {
-            return true;
-        }
-        if (!ItemStack.isSameItemSameComponents(current, result)) {
-            return false;
-        }
-        int limit = Math.min(outputInventory.getSlotLimit(0), result.getMaxStackSize());
-        return current.getCount() + result.getCount() <= limit;
-    }
-
-    /** 每刻同时扣电与扣充能，两者缺一机器都不会推进进度；两个数值都已计入等级与插件加成。 */
-    private void consumeEnergy() {
-        FusionRecipe recipe = findRecipe();
-        if (recipe == null) {
-            return;
-        }
-        PluginEnergyStorage<MatterFusionMachineTile> storage =
-                (PluginEnergyStorage<MatterFusionMachineTile>) getEnergyStorage();
-        storage.setEnergyStored(storage.getEnergyStored() - effectiveEnergyPerTick(recipe.energyPerTick()));
-        consumeCharge(effectiveChargePerTick());
+        return prepareBatch(recipe.duration(), recipe.energyPerTick(),
+                n -> recipe.resolveSlots(inputStacks(), n) != null
+                        && fitsOutput(outputInventory, 0, recipe.result(), n));
     }
 
     private void finishCraft() {
@@ -180,17 +150,17 @@ public class MatterFusionMachineTile extends InspiredMachineTile<MatterFusionMac
         if (recipe == null) {
             return;
         }
-        ItemStack result = recipe.getResultItem(level.registryAccess());
+        ItemStack result = batchOutput(recipe.getResultItem(level.registryAccess()));
         if (!outputInventory.insertItem(0, result.copy(), true).isEmpty()) {
             return;
         }
-        outputInventory.insertItem(0, result.copy(), false);
-        int[] assignment = recipe.resolveSlots(inputStacks());
-        if (assignment != null) {
-            // 每种材料按配方声明的数量扣除，指派顺序即材料下标
-            for (int material = 0; material < assignment.length; material++) {
-                inputInventory.extractItem(assignment[material], recipe.countFor(material), false);
-            }
+        int[] assignment = recipe.resolveSlots(inputStacks(), batchSize());
+        if (assignment == null) {
+            return;
+        }
+        outputInventory.insertItem(0, result, false);
+        for (int material = 0; material < assignment.length; material++) {
+            inputInventory.extractItem(assignment[material], recipe.countFor(material) * batchSize(), false);
         }
         markForUpdate();
     }
@@ -227,7 +197,7 @@ public class MatterFusionMachineTile extends InspiredMachineTile<MatterFusionMac
         }
         cachedRecipe = level.getRecipeManager()
                 .getRecipeFor(ModRecipes.FUSION_TYPE.get(), input, level)
-                .map(RecipeHolder::value)
+                .map(this::trackRecipe)
                 .orElse(null);
         return cachedRecipe;
     }

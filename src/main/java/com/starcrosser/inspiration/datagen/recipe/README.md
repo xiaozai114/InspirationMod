@@ -13,7 +13,7 @@
 | `RightClickRecipes` | 手持物品右键方块转换（含铯盐块→铯块、钫盐块→钫块） |
 | `MachineBlockRecipes` | 机器、多方块结构方块与注入结构方块本身（含 `machine()` / `hatch()` 模板） |
 | `FusionRecipes` | 物质融合机 |
-| `ReshapingRecipes` | 物质重塑机（含「装备回炉成材料」那一大组） |
+| `ReshapingRecipes` | 物质重塑机的材料转换、模板和核心配方 |
 | `TwistingRecipes` | 矿物扭曲机 |
 | `AssemblingRecipes` | 灵感装配台 |
 | `InjectionRecipes` | 注入（含能量窗口写死的与种子随机的两种） |

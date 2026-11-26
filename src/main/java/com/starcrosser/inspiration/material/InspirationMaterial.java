@@ -13,7 +13,6 @@ import net.neoforged.neoforge.registries.DeferredBlock;
 import net.neoforged.neoforge.registries.DeferredItem;
 
 import java.util.function.Function;
-import java.util.function.Supplier;
 import java.util.function.UnaryOperator;
 
 /**
@@ -57,8 +56,6 @@ public final class InspirationMaterial {
     private int alkalinity;
     private int radiation;
 
-    /** 非空时锭用 {@code AlkaliItem}（遇水炸开并变回该物品），半径单位是格。 */
-    private Supplier<Item> alkaliRevert;
     private float alkaliRadius;
 
     private float hardness = 2.5F;
@@ -143,11 +140,10 @@ public final class InspirationMaterial {
     }
 
     /**
-     * 碱金属行为：锭用 {@code AlkaliItem}，遇水炸开并变回指定物品，爆炸半径按格计。
+     * 碱金属行为：锭用 {@code AlkaliItem}，遇水炸开，爆炸半径按格计。
      * 与 {@link #alkalinity(int)} 是两回事 —— 钙粉碱性 1、半径却只有 0.1f。
      */
-    public InspirationMaterial alkaliRevert(Supplier<Item> revertTo, float radius) {
-        this.alkaliRevert = revertTo;
+    public InspirationMaterial alkaliExplosion(float radius) {
         this.alkaliRadius = radius;
         return this;
     }
@@ -242,8 +238,8 @@ public final class InspirationMaterial {
 
     private Item createItem() {
         Item.Properties props = new Item.Properties().rarity(rarity);
-        if (alkaliRevert != null) {
-            return new AlkaliItem(props, alkaliRevert.get(), alkaliRadius);
+        if (alkaliRadius > 0) {
+            return new AlkaliItem(props, alkaliRadius);
         }
         return new Item(props);
     }

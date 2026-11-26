@@ -1,6 +1,7 @@
 package com.starcrosser.inspiration.item;
 
 import com.starcrosser.inspiration.Inspiration;
+import com.starcrosser.inspiration.multiblock.data.StructureSite;
 import com.starcrosser.inspiration.block.ModBlocks;
 import com.starcrosser.inspiration.injection.ModInjection;
 import com.starcrosser.inspiration.material.InspirationMaterial;
@@ -63,6 +64,8 @@ public class ModCreativeModeTabs {
                         // 灵感本体与食物
                         output.accept(ModItems.INSPIRATION);
                         output.accept(ModItems.COOKED_INSPIRATION);
+                        output.accept(ModItems.ENERGIZED_GOLDEN_APPLE);
+                        output.accept(ModItems.ENERGIZED_ENCHANTED_GOLDEN_APPLE);
                         output.accept(ModItems.INSPIREAD);
                         output.accept(ModItems.INSPIRRY);
                         output.accept(ModItems.SOD);
@@ -85,6 +88,10 @@ public class ModCreativeModeTabs {
                         output.accept(ModItems.JADE_STEEL_SHOVEL);
                         // 注能翡翠钢系列五件工具（长按右键蓄力换增益）
                         output.accept(ModItems.ENERGIZED_JADE_STEEL_SWORD);
+                        output.accept(ModItems.ENERGIZED_JADE_STEEL_HELMET);
+                        output.accept(ModItems.ENERGIZED_JADE_STEEL_CHESTPLATE);
+                        output.accept(ModItems.ENERGIZED_JADE_STEEL_LEGGINGS);
+                        output.accept(ModItems.ENERGIZED_JADE_STEEL_BOOTS);
                         output.accept(ModItems.ENERGIZED_JADE_STEEL_AXE);
                         output.accept(ModItems.ENERGIZED_JADE_STEEL_PICKAXE);
                         output.accept(ModItems.ENERGIZED_JADE_STEEL_HOE);
@@ -102,8 +109,12 @@ public class ModCreativeModeTabs {
                         output.accept(ModItems.BASALT_ALLOY_DRILL_BIT);
                         // 机器插件：五种，装进机器侧栏改变性能
                         output.accept(ModItems.CAPACITOR_PLUGIN);
+                        output.accept(ModItems.HIGH_ENERGY_CAPACITOR_PLUGIN);
                         output.accept(ModItems.INSPIRATION_PLUGIN);
+                        output.accept(ModItems.HIGH_ENERGY_INSPIRATION_PLUGIN);
                         output.accept(ModItems.SPEED_PLUGIN);
+                        output.accept(ModItems.HIGH_ENERGY_SPEED_PLUGIN);
+                        output.accept(ModItems.PARALLEL_PLUGIN);
                         output.accept(ModItems.CAPACITOR_DOWNGRADE_PLUGIN);
                         output.accept(ModItems.RECYCLING_PLUGIN);
                         // 信标与 TNT
@@ -114,6 +125,7 @@ public class ModCreativeModeTabs {
                         output.accept(ModItems.MIND_FLUID_BUCKET.get());
                         output.accept(ModItems.MOLTEN_PLASMA_BUCKET.get());
                         output.accept(ModItems.NUTRIENT_FLUID_BUCKET.get());
+                        output.accept(ModItems.VOID_FLUID_BUCKET.get());
                         output.accept(ModItems.VILLAGER_BRAIN);
                         output.accept(ModItems.ENDERMAN_BRAIN);
                         output.accept(ModItems.INACTIVE_BRAIN);
@@ -125,6 +137,7 @@ public class ModCreativeModeTabs {
                         output.accept(ModItems.NULL_POINT_MODULE);
                         output.accept(ModItems.ZERO_POINT_AMPLIFIER);
                         output.accept(ModVoidEnergy.VOID_ENERGY_EXTRACTOR);
+                        output.accept(ModVoidEnergy.VOID_ENERGY_COLLECTOR);
                         output.accept(ModVoidEnergy.VOID_ENERGY_RELAY);
                         output.accept(ModVoidEnergy.CRACKED_BEDROCK);
                         // 思维流体反应生成的四类方块
@@ -150,7 +163,12 @@ public class ModCreativeModeTabs {
                         output.accept(ModMultiblocks.DATA_HATCH);
                         output.accept(ModMultiblocks.STRUCTURE_SIMULATOR);
                         output.accept(ModItems.BLANK_DATA);
-                        output.accept(ModItems.SHIPWRECK_DATA);
+                        for (var site : StructureSite.values()) {
+                            output.accept(ModItems.STRUCTURE_DATA.get(site).get());
+                        }
+                        output.accept(ModItems.OVERWORLD_DATA);
+                        output.accept(ModItems.NETHER_DATA);
+                        output.accept(ModItems.END_DATA);
                         output.accept(ModItems.PROJECTOR);
                         output.accept(ModItems.GUIDE_BOOK);
                         // 以下是非锭类原料：锭类材料都在材料页，这些没有锭形态，放在灵感页末尾
@@ -158,7 +176,7 @@ public class ModCreativeModeTabs {
                         output.accept(ModItems.LIGNITE);
                         output.accept(ModBlocks.LIGNITE_BLOCK);
                         output.accept(ModItems.COKE);
-                        // 钙系粉：钙粉遇水变氢氧化钙粉，还原粉是冶炼助剂
+                        // 钙系粉：钙粉遇水消耗，还原粉是冶炼助剂
                         output.accept(ModItems.CALCIUM_DUST);
                         output.accept(ModItems.CALCIUM_HYDROXIDE_DUST);
                         output.accept(ModItems.REDUCTION_POWDER);
@@ -169,6 +187,7 @@ public class ModCreativeModeTabs {
                         output.accept(ModBlocks.CESIUM_SALT_BLOCK);
                         output.accept(ModItems.CESIUM_DUST);
                         // 钫盐系列（流程与铯逐一对应，但全流程带辐射）
+                        output.accept(ModBlocks.TUNGSTEN_ORE);
                         output.accept(ModBlocks.FRANCIUM_SALT_ORE);
                         output.accept(ModItems.RAW_FRANCIUM_SALT);
                         output.accept(ModItems.FRANCIUM_SALT);
@@ -227,6 +246,10 @@ public class ModCreativeModeTabs {
                         output.accept(ModItems.UNSTABLE_METAL);
                         output.accept(ModItems.VOID_PLASMA_INGOT);
                         output.accept(ModItems.VOID_ALLOY);
+                        output.accept(ModItems.RESONANT_MIND_LATTICE);
+                        output.accept(ModItems.RESONANT_INSPIRATION);
+                        output.accept(ModItems.RESONANT_END_ALLOY);
+                        output.accept(ModItems.QUANTUM_INGOT);
                     })
                     .build());
 

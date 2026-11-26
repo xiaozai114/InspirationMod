@@ -1,7 +1,8 @@
-"""两种发电机的方块贴图生成脚本。
+"""发电机的方块贴图生成脚本。
 
 沿用机器家族的外壳语言（1px 描边 + 顶部高光 + 内凹面板），只把主色与正面纹样换掉：
 
+- 简易火力发电机使用钢灰外壳与橙色炉膛。
 - 碱性反应堆：青绿机身，正面是一个圆形反应腔（深色腔体 + 亮绿环 + 中心炉心），
   侧面是三条竖排的电解槽，顶面是家用菱形接口 + 绿色炉心 —— 一眼能认出是「烧东西出电」的罐子。
 - RTG 发电机：暗红机身，正面沿用高能机型的同心方框，方框四角外侧补三个辐射点，
@@ -10,12 +11,12 @@
 用法：
     python tools/textures/gen_generator_blocks.py
 输出：
-    src/main/resources/assets/inspiration/textures/block/{alkaline_reactor,rtg_generator}_{front,side,top}.png
+    src/main/resources/assets/inspiration/textures/block/{combustion_generator,alkaline_reactor,rtg_generator}_{front,side,top}.png
 """
 
 from pathlib import Path
 
-from PIL import Image
+from PIL import Image, ImageColor, ImageDraw
 
 SIZE = 16
 OUTPUT_DIR = (Path(__file__).resolve().parents[2]
@@ -220,7 +221,23 @@ def top_port(p):
     return img
 
 
+def combustion_faces():
+    colors = ("#686976", "#292b34", "#474a55", "#373843", "#24252d",
+              "#b37545", "#dfd6bf", "#a55831", "#ffc56e", "#90939b")
+    iron = Palette(*(ImageColor.getcolor(color, "RGBA") for color in colors))
+    front = new_canvas(iron)
+    draw_shell(front, iron)
+    grate = ImageDraw.Draw(front)
+    grate.rectangle((3, 5, 12, 12), fill=iron.dark, outline=iron.bevel)
+    grate.line((4, 10, 11, 10), fill=iron.core)
+    for x in (5, 8, 10):
+        grate.line((x, 8, x, 10), fill=iron.core_hot)
+    grate.line((4, 9, 11, 9), fill=iron.plate)
+    return front, side_fins(iron), top_port(iron)
+
+
 MACHINES = (
+    ("combustion_generator", None, combustion_faces()),
     ("alkaline_reactor", ALKALINE, (front_chamber(ALKALINE), side_fins(ALKALINE), top_port(ALKALINE))),
     ("rtg_generator", RTG, (front_rings(RTG), side_band(RTG), top_port(RTG))),
 )

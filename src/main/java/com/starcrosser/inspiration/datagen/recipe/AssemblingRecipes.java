@@ -10,6 +10,7 @@ import com.starcrosser.inspiration.machine.recipe.FluidRequirement;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -32,17 +33,15 @@ public final class AssemblingRecipes {
     }
 
     public static void build(RecipeOutput recipeOutput) {
-        assembling(recipeOutput, "assembling/capacitor_plugin",
-                List.of(Ingredient.of(ModMaterials.PLASMA.item().get()), Ingredient.of(ModMaterials.REDSTONE.item().get())),
-                new ItemStack(ModItems.CAPACITOR_PLUGIN.get()), ASSEMBLE_DURATION, ASSEMBLE_ENERGY_PER_TICK);
+        pluginPair(recipeOutput, "capacitor_plugin", Ingredient.of(ModMaterials.REDSTONE.item().get()),
+                ModItems.CAPACITOR_PLUGIN.get(), ModItems.HIGH_ENERGY_CAPACITOR_PLUGIN.get());
+        pluginPair(recipeOutput, "inspiration_plugin", Ingredient.of(ModItems.INSPIRATION.get()),
+                ModItems.INSPIRATION_PLUGIN.get(), ModItems.HIGH_ENERGY_INSPIRATION_PLUGIN.get());
+        pluginPair(recipeOutput, "speed_plugin", Ingredient.of(Items.SUGAR),
+                ModItems.SPEED_PLUGIN.get(), ModItems.HIGH_ENERGY_SPEED_PLUGIN.get());
 
-        assembling(recipeOutput, "assembling/inspiration_plugin",
-                List.of(Ingredient.of(ModMaterials.PLASMA.item().get()), Ingredient.of(ModItems.INSPIRATION.get())),
-                new ItemStack(ModItems.INSPIRATION_PLUGIN.get()), ASSEMBLE_DURATION, ASSEMBLE_ENERGY_PER_TICK);
-
-        assembling(recipeOutput, "assembling/speed_plugin",
-                List.of(Ingredient.of(ModMaterials.PLASMA.item().get()), Ingredient.of(Items.SUGAR)),
-                new ItemStack(ModItems.SPEED_PLUGIN.get()), ASSEMBLE_DURATION, ASSEMBLE_ENERGY_PER_TICK);
+        plasmaPlugin(recipeOutput, "parallel_plugin", Ingredient.of(ModMaterials.SPECTRUM_ALLOY.item().get()),
+                ModItems.PARALLEL_PLUGIN.get());
 
         assembling(recipeOutput, "assembling/capacitor_downgrade_plugin",
                 List.of(Ingredient.of(ModMaterials.PLASMA.item().get()), Ingredient.of(Items.IRON_INGOT)),
@@ -86,10 +85,10 @@ public final class AssemblingRecipes {
                 new ItemStack(ModItems.ZERO_POINT_AMPLIFIER.get()),
                 ASSEMBLE_DURATION, ASSEMBLE_ENERGY_PER_TICK);
 
-        // 高能核心：强能核心 + 钫盐 + 强化深板岩 —— 三样材料缺一不可
+        // 高能核心：强能核心 + 钫锭 + 强化深板岩 —— 三样材料缺一不可
         assembling(recipeOutput, "assembling/high_energy_core",
                 List.of(Ingredient.of(ModItems.POWERFUL_CORE.get()),
-                        Ingredient.of(ModItems.FRANCIUM_SALT.get()),
+                        Ingredient.of(ModMaterials.FRANCIUM.item().get()),
                         Ingredient.of(Items.REINFORCED_DEEPSLATE)),
                 new ItemStack(ModItems.HIGH_ENERGY_CORE.get()),
                 ASSEMBLE_DURATION, ASSEMBLE_ENERGY_PER_TICK);
@@ -111,6 +110,22 @@ public final class AssemblingRecipes {
                 List.of(new FluidRequirement(FluidIngredient.of(net.minecraft.world.level.material.Fluids.WATER), 4000)),
                 new ItemStack(ModItems.SHIPWRECK_DATA.get()),
                 SHIPWRECK_DATA_DURATION, SHIPWRECK_DATA_ENERGY_PER_TICK);
+    }
+
+    private static void pluginPair(RecipeOutput output, String name, Ingredient ingredient,
+                                   Item ordinary, Item highEnergy) {
+        assembling(output, "assembling/" + name,
+                List.of(Ingredient.of(ModMaterials.PLASMA.item().get()), ingredient),
+                new ItemStack(ordinary), ASSEMBLE_DURATION, ASSEMBLE_ENERGY_PER_TICK);
+        plasmaPlugin(output, "high_energy_" + name, ingredient, highEnergy);
+    }
+
+    private static void plasmaPlugin(RecipeOutput output, String name, Ingredient ingredient, Item result) {
+        var moltenPlasma = new FluidRequirement(FluidIngredient.of(ModFluids.Fluids.MOLTEN_PLASMA.get()),
+                2 * FluidExtractingRecipe.INGOT_AMOUNT);
+        assembling(output, "assembling/" + name,
+                List.of(ingredient), List.of(), List.of(moltenPlasma), new ItemStack(result),
+                ASSEMBLE_DURATION, ASSEMBLE_ENERGY_PER_TICK);
     }
 
     /** 写出单条装配配方（不需要流体原料）。 */

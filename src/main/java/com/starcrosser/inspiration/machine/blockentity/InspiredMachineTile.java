@@ -97,7 +97,7 @@ public abstract class InspiredMachineTile<T extends InspiredMachineTile<T>> exte
         addTank(this.chargeTank);
 
         // Titanium 默认只允许带有 augment 数据组件的物品入槽，这里按本模组的插件要求重配一遍
-        PluginInventory.configure(getAugmentInventory());
+        PluginInventory.configure(getAugmentInventory(), this instanceof BatchProcessingTile<?>);
         this.plugins = new PluginHost(getAugmentInventory(), this::applyPlugins);
 
         // ⚠️ 必须放在构造体**最后**：能量缓冲是 PoweredTile 在构造期建的，那时 spec 还没赋值，
@@ -215,9 +215,9 @@ public abstract class InspiredMachineTile<T extends InspiredMachineTile<T>> exte
 
     @Override
     public void serverTick(Level level, BlockPos pos, BlockState state, T self) {
+        refreshPlugins();
         super.serverTick(level, pos, state, self);
         convertInspiration();
-        refreshPlugins();
     }
 
     /**

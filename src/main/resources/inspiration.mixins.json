@@ -3,7 +3,8 @@
   "package": "com.starcrosser.inspiration.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
-    "SpawnerBlockMixin"
+    "SpawnerBlockMixin",
+    "RadiationEffectLayerMixin"
   ],
   "injectors": {
     "defaultRequire": 1

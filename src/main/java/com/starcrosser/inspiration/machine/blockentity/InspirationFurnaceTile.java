@@ -10,7 +10,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.AbstractCookingRecipe;
-import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.item.crafting.SingleRecipeInput;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -21,7 +20,7 @@ import net.neoforged.api.distmarker.OnlyIn;
 import javax.annotation.Nonnull;
 import java.util.List;
 
-public class InspirationFurnaceTile extends InspiredMachineTile<InspirationFurnaceTile> {
+public class InspirationFurnaceTile extends BatchProcessingTile<InspirationFurnaceTile> {
 
     public static final int BASE_ENERGY_CAPACITY = 40_000;
     public static final int BASE_MAX_ENERGY_INPUT = 1_000;
@@ -65,7 +64,7 @@ public class InspirationFurnaceTile extends InspiredMachineTile<InspirationFurna
         bar.setColor(spec.barColor());
         bar.setCanIncrease(this::canProcess);
         bar.setCanReset(tile -> tile.isFinished() || tile.findRecipe() == null);
-        bar.setOnTickWork(this::consumeEnergy);
+        bar.setOnTickWork(this::consumeBatchEnergy);
         bar.setOnFinishWork(this::finishCraft);
         this.progressBar = bar;
         addProgressBar(this.progressBar);
@@ -111,42 +110,22 @@ public class InspirationFurnaceTile extends InspiredMachineTile<InspirationFurna
         if (recipe == null) {
             return false;
         }
-        return getEnergyStorage().getEnergyStored() >= effectiveEnergyPerTick(BASE_ENERGY_PER_TICK)
-                && hasCharge(effectiveChargePerTick())
-                && canAccept(recipe);
-    }
-
-    private boolean canAccept(AbstractCookingRecipe recipe) {
-        ItemStack result = resultOf(recipe);
-        ItemStack current = outputInventory.getStackInSlot(0);
-        if (current.isEmpty()) {
-            return true;
-        }
-        return ItemStack.isSameItemSameComponents(current, result)
-                && current.getCount() + result.getCount() <= outputInventory.getSlotLimit(0);
+        return prepareBatch(DURATION, BASE_ENERGY_PER_TICK,
+                n -> inputInventory.getStackInSlot(0).getCount() >= n
+                        && fitsOutput(outputInventory, 0, resultOf(recipe), n));
     }
 
     private ItemStack resultOf(AbstractCookingRecipe recipe) {
         return recipe.getResultItem(level.registryAccess());
     }
 
-    private void consumeEnergy() {
-        if (findRecipe() == null) {
-            return;
-        }
-        PluginEnergyStorage<InspirationFurnaceTile> storage =
-                (PluginEnergyStorage<InspirationFurnaceTile>) getEnergyStorage();
-        storage.setEnergyStored(storage.getEnergyStored() - effectiveEnergyPerTick(BASE_ENERGY_PER_TICK));
-        consumeCharge(effectiveChargePerTick());
-    }
-
     private void finishCraft() {
         AbstractCookingRecipe recipe = findRecipe();
-        if (recipe == null || !canAccept(recipe)) {
+        if (recipe == null || !fitsOutput(outputInventory, 0, resultOf(recipe), batchSize())) {
             return;
         }
-        outputInventory.insertItem(0, resultOf(recipe).copy(), false);
-        inputInventory.extractItem(0, 1, false);
+        outputInventory.insertItem(0, batchOutput(resultOf(recipe)), false);
+        inputInventory.extractItem(0, batchSize(), false);
         invalidateCache();
         markForUpdate();
     }
@@ -173,7 +152,7 @@ public class InspirationFurnaceTile extends InspiredMachineTile<InspirationFurna
         for (RecipeType<? extends AbstractCookingRecipe> type : TYPES) {
             var holder = level.getRecipeManager().getRecipeFor(type, recipeInput, level);
             if (holder.isPresent()) {
-                cachedRecipe = holder.get().value();
+                cachedRecipe = trackRecipe(holder.get());
                 break;
             }
         }

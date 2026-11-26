@@ -39,6 +39,10 @@ public class ModFluids {
                 "molten_plasma",
                 () -> new MoltenPlasma.Source(MoltenPlasma.PROPERTIES)
         );
+        public static final DeferredHolder<Fluid, BaseFlowingFluid.Source> VOID_FLUID = FLUIDS.register(
+                "void_fluid", () -> new BaseFlowingFluid.Source(VoidFluid.properties()));
+        public static final DeferredHolder<Fluid, BaseFlowingFluid.Flowing> FLOWING_VOID_FLUID = FLUIDS.register(
+                "flowing_void_fluid", () -> new BaseFlowingFluid.Flowing(VoidFluid.properties()));
         public static final DeferredHolder<Fluid, BaseFlowingFluid.Flowing> FLOWING_NUTRIENT_FLUID = FLUIDS.register(
                 "flowing_nutrient_fluid",
                 () -> new NutrientFluid.Flowing(NutrientFluid.PROPERTIES)
@@ -65,6 +69,8 @@ public class ModFluids {
                         "molten_plasma",
                         MoltenPlasmaFluidType::new
                 );
+        public static final DeferredHolder<FluidType, FluidType> VOID_FLUID_TYPE = FLUID_TYPES.register(
+                "void_fluid", () -> new FluidType(FluidType.Properties.create().canConvertToSource(false)));
         public static final DeferredHolder<FluidType, NutrientFluidType> NUTRIENT_FLUID_TYPE =
                 FLUID_TYPES.register(
                         "nutrient_fluid",

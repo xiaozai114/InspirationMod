@@ -60,6 +60,7 @@ public class ModZhCnLangProvider extends LanguageProvider {
         add("effect.inspiration.mechanical_parasite", "机械寄生");
         add("block.inspiration.cracked_bedrock", "开裂的基岩");
         add("block.inspiration.void_energy_extractor", "虚空能量提取器");
+        add("block.inspiration.void_energy_collector", "虚空能量汇流器");
         add("block.inspiration.void_injection_gun", "虚空注入枪");
         add("block.inspiration.void_energy_relay", "虚空能量中继器");
         add("item.inspiration.sculk_alloy_drill_bit", "幽匿合金钻头");
@@ -71,8 +72,95 @@ public class ModZhCnLangProvider extends LanguageProvider {
         add("item.inspiration.zero_point_amplifier", "零点能量增幅器");
         add("item.inspiration.compressed_redstone_ingot", "压缩红石锭");
         add("item.inspiration.void_goggles", "虚空护目镜");
+        add("item.inspiration.mineshaft_data", "废弃矿井数据");
+        add("item.inspiration.monster_room_data", "地牢数据");
+        add("item.inspiration.desert_pyramid_data", "沙漠神殿数据");
+        add("item.inspiration.desert_well_data", "沙漠水井数据");
+        add("item.inspiration.jungle_temple_data", "丛林神庙数据");
+        add("item.inspiration.igloo_data", "雪屋数据");
+        add("item.inspiration.ocean_ruin_data", "海底废墟数据");
+        add("item.inspiration.trail_ruins_data", "古迹废墟数据");
+        add("item.inspiration.buried_treasure_data", "埋藏的宝藏数据");
+        add("item.inspiration.village_data", "村庄数据");
+        add("item.inspiration.pillager_outpost_data", "掠夺者前哨站数据");
+        add("item.inspiration.stronghold_data", "要塞数据");
+        add("item.inspiration.woodland_mansion_data", "林地府邸数据");
+        add("item.inspiration.ancient_city_data", "远古城市数据");
+        add("item.inspiration.ruined_portal_data", "废弃传送门数据");
+        add("item.inspiration.nether_fortress_data", "下界要塞数据");
+        add("item.inspiration.bastion_remnant_data", "堡垒遗迹数据");
+        add("item.inspiration.end_city_data", "末地城数据");
+        add("item.inspiration.trial_chambers_data", "试炼密室数据");
+        add("item.inspiration.trial_vault_data", "普通宝库数据");
+        add("item.inspiration.ominous_vault_data", "不祥宝库数据");
+        add("item.inspiration.nether_data", "下界数据");
+        add("item.inspiration.end_data", "末地数据");
+        add("block.inspiration.tungsten_ore", "钨矿石");
+        add("fluid_type.inspiration.void_fluid", "虚空流体");
+        add("block.inspiration.void_fluid", "虚空流体");
+        add("item.inspiration.void_fluid_bucket", "虚空流体桶");
+        add("jei.inspiration.loot.minecraft.chests.abandoned_mineshaft", "运输矿车箱");
+        add("jei.inspiration.loot.minecraft.chests.simple_dungeon", "地牢宝箱");
+        add("jei.inspiration.loot.minecraft.chests.desert_pyramid", "神殿宝箱");
+        add("jei.inspiration.loot.minecraft.archaeology.desert_pyramid", "神殿可疑的沙子");
+        add("jei.inspiration.loot.minecraft.archaeology.desert_well", "水井可疑的沙子");
+        add("jei.inspiration.loot.minecraft.chests.jungle_temple", "神庙宝箱");
+        add("jei.inspiration.loot.minecraft.chests.jungle_temple_dispenser", "机关发射器");
+        add("jei.inspiration.loot.minecraft.chests.igloo_chest", "地下室宝箱");
+        add("jei.inspiration.loot.minecraft.chests.underwater_ruin_big", "大型废墟宝箱");
+        add("jei.inspiration.loot.minecraft.chests.underwater_ruin_small", "小型废墟宝箱");
+        add("jei.inspiration.loot.minecraft.archaeology.ocean_ruin_warm", "暖水废墟可疑的沙子");
+        add("jei.inspiration.loot.minecraft.archaeology.ocean_ruin_cold", "冷水废墟可疑的沙砾");
+        add("jei.inspiration.loot.minecraft.archaeology.trail_ruins_common", "普通考古发现");
+        add("jei.inspiration.loot.minecraft.archaeology.trail_ruins_rare", "稀有考古发现");
+        add("jei.inspiration.loot.minecraft.chests.buried_treasure", "宝藏箱");
+        add("jei.inspiration.loot.minecraft.chests.pillager_outpost", "哨站宝箱");
+        add("jei.inspiration.loot.minecraft.chests.stronghold_corridor", "走廊宝箱");
+        add("jei.inspiration.loot.minecraft.chests.stronghold_crossing", "十字路口宝箱");
+        add("jei.inspiration.loot.minecraft.chests.stronghold_library", "图书馆宝箱");
+        add("jei.inspiration.loot.minecraft.chests.woodland_mansion", "府邸宝箱");
+        add("jei.inspiration.loot.minecraft.chests.ancient_city", "城市宝箱");
+        add("jei.inspiration.loot.minecraft.chests.ancient_city_ice_box", "冰窖宝箱");
+        add("jei.inspiration.loot.minecraft.chests.ruined_portal", "传送门宝箱");
+        add("jei.inspiration.loot.minecraft.chests.nether_bridge", "下界要塞宝箱");
+        add("jei.inspiration.loot.minecraft.chests.bastion_bridge", "桥梁宝箱");
+        add("jei.inspiration.loot.minecraft.chests.bastion_hoglin_stable", "疣猪兽棚宝箱");
+        add("jei.inspiration.loot.minecraft.chests.bastion_other", "普通堡垒宝箱");
+        add("jei.inspiration.loot.minecraft.chests.bastion_treasure", "藏宝室宝箱");
+        add("jei.inspiration.loot.minecraft.chests.end_city_treasure", "末地城宝箱");
+        add("jei.inspiration.loot.minecraft.chests.trial_chambers.entrance", "入口宝箱");
+        add("jei.inspiration.loot.minecraft.chests.trial_chambers.corridor", "走廊宝箱");
+        add("jei.inspiration.loot.minecraft.chests.trial_chambers.intersection", "路口宝箱");
+        add("jei.inspiration.loot.minecraft.chests.trial_chambers.intersection_barrel", "路口木桶");
+        add("jei.inspiration.loot.minecraft.chests.trial_chambers.supply", "补给箱");
+        add("jei.inspiration.loot.minecraft.pots.trial_chambers.corridor", "走廊饰纹陶罐");
+        add("jei.inspiration.loot.minecraft.dispensers.trial_chambers.chamber", "试炼房间发射器");
+        add("jei.inspiration.loot.minecraft.dispensers.trial_chambers.corridor", "走廊发射器");
+        add("jei.inspiration.loot.minecraft.dispensers.trial_chambers.water", "水流发射器");
+        add("jei.inspiration.loot.minecraft.chests.trial_chambers.reward", "宝库奖励");
+        add("jei.inspiration.loot.minecraft.chests.trial_chambers.reward_ominous", "不祥宝库奖励");
+        add("jei.inspiration.loot.minecraft.chests.village.village_armorer", "盔甲匠箱");
+        add("jei.inspiration.loot.minecraft.chests.village.village_butcher", "屠夫箱");
+        add("jei.inspiration.loot.minecraft.chests.village.village_cartographer", "制图师箱");
+        add("jei.inspiration.loot.minecraft.chests.village.village_desert_house", "沙漠民居箱");
+        add("jei.inspiration.loot.minecraft.chests.village.village_fisher", "渔夫箱");
+        add("jei.inspiration.loot.minecraft.chests.village.village_fletcher", "制箭师箱");
+        add("jei.inspiration.loot.minecraft.chests.village.village_mason", "石匠箱");
+        add("jei.inspiration.loot.minecraft.chests.village.village_plains_house", "平原民居箱");
+        add("jei.inspiration.loot.minecraft.chests.village.village_savanna_house", "热带草原民居箱");
+        add("jei.inspiration.loot.minecraft.chests.village.village_shepherd", "牧羊人箱");
+        add("jei.inspiration.loot.minecraft.chests.village.village_snowy_house", "雪原民居箱");
+        add("jei.inspiration.loot.minecraft.chests.village.village_taiga_house", "针叶林民居箱");
+        add("jei.inspiration.loot.minecraft.chests.village.village_tannery", "制革匠箱");
+        add("jei.inspiration.loot.minecraft.chests.village.village_temple", "教堂箱");
+        add("jei.inspiration.loot.minecraft.chests.village.village_toolsmith", "工具匠箱");
+        add("jei.inspiration.loot.minecraft.chests.village.village_weaponsmith", "武器匠箱");
         add("item.inspiration.overworld_data", "主世界数据");
         add("item.inspiration.void_alloy", "虚空合金");
+        add(ModItems.RESONANT_MIND_LATTICE.get(), "谐振思维晶格");
+        add(ModItems.RESONANT_INSPIRATION.get(), "谐振灵感");
+        add(ModItems.RESONANT_END_ALLOY.get(), "谐振末地合金");
+        add(ModItems.QUANTUM_INGOT.get(), "量子锭");
         add("tooltip.inspiration.sculk_drill_bit.cracks", "挖到底时会把那一格基岩裂成开裂的基岩。");
         add("void_energy.stage.weak", "虚弱");
         add("void_energy.stage.climbing", "攀升");
@@ -110,8 +198,11 @@ public class ModZhCnLangProvider extends LanguageProvider {
         add(ModItems.BASALT_ALLOY_FIRESTRIKER.get(),"玄武岩合金打火石");
         add(ModItems.BASALT_ALLOY_DRILL_BIT.get(),"玄武岩合金钻头");
         add(ModItems.CAPACITOR_PLUGIN.get(),"电容插件");
+        add(ModItems.HIGH_ENERGY_CAPACITOR_PLUGIN.get(), "高能电容插件");
         add(ModItems.INSPIRATION_PLUGIN.get(),"灵感插件");
+        add(ModItems.HIGH_ENERGY_INSPIRATION_PLUGIN.get(), "高能灵感插件");
         add(ModItems.SPEED_PLUGIN.get(),"速度插件");
+        add(ModItems.HIGH_ENERGY_SPEED_PLUGIN.get(), "高能速度插件");
         add(ModItems.CAPACITOR_DOWNGRADE_PLUGIN.get(),"电容降级插件");
         add(ModItems.RECYCLING_PLUGIN.get(),"回收升级");
         add(ModItems.INSPIRATION_SHARD.get(),"灵感碎片");
@@ -263,9 +354,9 @@ public class ModZhCnLangProvider extends LanguageProvider {
         // 翡翠钢升级模板（文案结构对齐下界合金升级模板）
         add("upgrade.inspiration.jade_steel_upgrade", "翡翠钢升级");
         add("item.inspiration.energized_jade_steel_upgrade.applies_to",
-                "翡翠钢剑、翡翠钢斧、翡翠钢镐、翡翠钢铲、翡翠钢锄");
+                "翡翠钢工具、下界合金盔甲");
         add("item.inspiration.energized_jade_steel_upgrade.ingredients", "注能翡翠钢");
-        add("item.inspiration.energized_jade_steel_upgrade.base_slot_description", "放入一件翡翠钢系列工具");
+        add("item.inspiration.energized_jade_steel_upgrade.base_slot_description", "放入翡翠钢工具或下界合金盔甲");
         add("item.inspiration.energized_jade_steel_upgrade.additions_slot_description", "放入注能翡翠钢");
         add("upgrade.inspiration.energized_jade_steel_upgrade", "注能翡翠钢升级");
         add("item.inspiration.jade_steel_upgrade.applies_to", "灵感之剑、灵感之斧、灵感之镐、灵感之锄、灵感之铲");
@@ -275,10 +366,12 @@ public class ModZhCnLangProvider extends LanguageProvider {
 
         // 机器插件
         add("tooltip.inspiration.plugin.slot", "放入机器右侧的插件槽后生效");
-        add("tooltip.inspiration.plugin.energy_capacity", "机器能量缓冲容量 ×2");
-        add("tooltip.inspiration.plugin.charge_capacity", "机器灵感充能上限 ×2");
-        add("tooltip.inspiration.plugin.speed", "运行速度 ×2，每刻耗电 ×4，每刻灵感充能消耗 ×2");
+        add("tooltip.inspiration.plugin.energy_capacity", "机器能量缓冲容量 ×%1$s");
+        add("tooltip.inspiration.plugin.charge_capacity", "机器灵感充能上限 ×%1$s");
+        add("tooltip.inspiration.plugin.speed", "运行速度 ×%1$s，每刻耗电 ×%2$s，每刻灵感充能消耗 ×%1$s");
         add("tooltip.inspiration.plugin.energy_capacity_downgrade", "机器能量缓冲容量 ×0.67");
+        add(ModItems.PARALLEL_PLUGIN.get(), "并行插件");
+        add("tooltip.inspiration.plugin.parallel", "单次加工份数上限 ×%1$s，按实际份数消耗电力与灵感充能。");
         add("tooltip.inspiration.plugin.byproduct", "原料精炼机副产物产量 +100%（加算叠加）");
         add("tooltip.inspiration.plugin.stack", "同类插件可叠加，每个 ×%s");
         add("tooltip.inspiration.brain.villager", "放入培养缸：100 FE/刻 + 1 mB/刻营养液，每 10 秒 1 灵感。\\n营养液耗尽会失活。");
@@ -307,6 +400,7 @@ public class ModZhCnLangProvider extends LanguageProvider {
         add("tooltip.inspiration.machine.high_energy_matter_reshaper", "配方类型：物质重塑\n也可以执行右键转化配方；速度 ×2。");
         add("tooltip.inspiration.machine.high_energy_mineral_twister", "配方类型：矿物扭曲\n产出等效时运 12；速度 ×2。");
         add("tooltip.inspiration.machine.high_energy_inspiration_assembler", "配方类型：灵感装配\n有六个输入槽与两个流体罐，可做材料更多的配方；速度 ×2。");
+        add("tooltip.inspiration.machine.combustion_generator", "熔炉燃料按原燃烧时长发电，基础功率 40 FE/刻。紧贴机器即可供电。");
         add("tooltip.inspiration.machine.alkaline_reactor", "烧碱性物品发电：100x FE/刻，12000 刻。\nx 为碱性值。");
         add("tooltip.inspiration.machine.rtg_generator", "烧放射性物品发电：1000x FE/刻，24000 刻。\n每分钟向区块放 (x-1)³ 辐射，x>9 时另有 (x-9)/1000 概率爆炸；产出 x 个核废料。");
         add("tooltip.inspiration.machine.fluid_extractor", "配方类型：流体提取\n把材料熔成流体，一锭 = 144 mB，产物存输出罐。");
@@ -315,6 +409,22 @@ public class ModZhCnLangProvider extends LanguageProvider {
         add("tooltip.inspiration.machine.inspiration_furnace", "熔炉 / 高炉 / 烟熏三类配方通用，统一 5 秒。\\n耗 10 FE/刻 + 1 mB/刻灵感充能，产物不给经验。");
         add("tooltip.inspiration.machine.energized_inspiration_furnace", "同灵感高炉；速度 ×2，耗电与耗充能 ×2。");
         add("tooltip.inspiration.machine.void_condenser", "把团簇的能量凝成虚空露珠：16 ve + 500 FE/刻，1024 ve 出 1 个。\n需要中继器或直接站在团簇上。");
+        add("jei.inspiration.resonance.cost", "%s FE/刻，%s VE/刻");
+        add("jei.inspiration.resonance.failure", "开工后断供 VE 会损失当前这一件原料。");
+        add("tooltip.inspiration.machine.resonance_chamber", "每刻消耗电力和 2 VE。开工后断供 VE 会损失正在加工的一件原料。");
+        add("item.inspiration.energized_jade_steel_helmet", "注能翡翠钢头盔");
+        add("item.inspiration.energized_jade_steel_chestplate", "注能翡翠钢胸甲");
+        add("item.inspiration.energized_jade_steel_leggings", "注能翡翠钢护腿");
+        add("item.inspiration.energized_jade_steel_boots", "注能翡翠钢靴子");
+        add("item.inspiration.energized_golden_apple", "注能金苹果");
+        add("item.inspiration.energized_enchanted_golden_apple", "注能附魔金苹果");
+        add("effect.inspiration.radiation_resistance", "辐射抵抗");
+        add("tooltip.inspiration.radiation_armor", "每件减少 %s%% 的新增体内辐射");
+        add("tooltip.inspiration.radiation_apple", "减少 %s 点体内辐射，获得 %s 分钟辐射抵抗");
+        add("tooltip.inspiration.machine.radiation_absorber", "消耗 400 FE/刻，每 60 秒吸收所在区块 1 点辐射。累计吸收 64 点产出 1 个核废料。");
+        add("jei.inspiration.absorber.rate", "每 %s 秒吸收 1 点区块辐射");
+        add("jei.inspiration.absorber.waste", "累计 %s 点产出 1 个核废料");
+        add("tooltip.inspiration.machine.void_energy_collector", "从周围 5×5×5 内的每个团簇最多抽取 16 VE/刻，汇入正上方团簇。");
         add("tooltip.inspiration.machine.zero_point_generator", "每分钟按增幅器数量产出 1 + n×1.2G FE（最多 64 个），缓冲 128 GFE。\n不会自己攒电：缓冲满了就只往邻居送。");
         add("tooltip.inspiration.machine.void_energy_extractor", "站在开裂的基岩上，每刻把 1 ve 送进上方那一格。\n需要 50 FE/刻；没有电就不产出。");
         add("tooltip.inspiration.machine.void_energy_relay", "必须放在团簇所在的那一格；让 5×5×5 内的机器取到它的能量。");
@@ -336,12 +446,24 @@ public class ModZhCnLangProvider extends LanguageProvider {
         // 结构投影仪
         add("tooltip.inspiration.projector.usage", "手持右键结构模拟机的主方块，投影出完整结构。");
         add("tooltip.inspiration.projector.duration", "虚影持续 30 秒，不消耗物品。");
-        // JEI 里的结构预览：每层一页
-        add("jei.inspiration.structure_preview", "结构模拟机结构");
-        add("jei.inspiration.structure_preview.layer", "第%s/%s层·%s");
-        add("jei.inspiration.structure_preview.layer.0", "后");
-        add("jei.inspiration.structure_preview.layer.1", "中");
-        add("jei.inspiration.structure_preview.layer.2", "前");
+        add("jei.inspiration.structure_preview", "多方块搭建");
+        add("jei.inspiration.preview.title", "%s  %s×%s×%s");
+        add("jei.inspiration.preview.all", "完整结构");
+        add("jei.inspiration.preview.floor", "第 %s / %s 层");
+        add("jei.inspiration.preview.hint", "拖动旋转 · 仓室可换到其他外壳位");
+        add("jei.inspiration.preview.parts", "示例用量：%s × %s");
+        add("jei.inspiration.sim.retained", "放入数据仓，可重复使用");
+        add("jei.inspiration.sim.time_power", "%s 刻 · %s FE/刻");
+        add("jei.inspiration.sim.total_fe", "每轮用电 %s FE");
+        add("jei.inspiration.sim.total_charge", "每轮灵感充能 %s mB");
+        add("jei.inspiration.sim.charge", "灵感充能 %s mB/刻");
+        add("jei.inspiration.sim.loot", "每轮抽取一张战利品表");
+        add("jei.inspiration.sim.table_chance", "%s  ·  %s/%s");
+        add("jei.inspiration.loot.minecraft.chests.shipwreck_supply", "沉船补给箱");
+        add("jei.inspiration.loot.minecraft.chests.shipwreck_treasure", "沉船宝藏箱");
+        add("jei.inspiration.loot.minecraft.chests.shipwreck_map", "沉船地图箱");
+        add("jei.inspiration.sim.one_ore", "每轮随机产出以下一组矿石");
+        add("jei.inspiration.sim.weight", "抽取权重 %s / %s");
         // 主方块界面上的运行状态（顺序即优先级，见 SimulatorStatus）
         add("gui.inspiration.structure_simulator.status.not_formed", "结构未成型");
         add("gui.inspiration.structure_simulator.status.no_data", "数据仓里没有结构数据");
@@ -380,19 +502,16 @@ public class ModZhCnLangProvider extends LanguageProvider {
                         + "多数还要持续补充灵感充能。");
         add("guide.inspiration.chapter.energy", "能量与充能");
         add("guide.inspiration.chapter.energy.body",
-                "机器界面上的能量条只减不增，\n"
-                        + "电要从外部接进来。\n\n"
-                        + "灵感充能单独存在罐体里：\n"
-                        + "灵感 = 1000 mB，灵感碎片 = 100 mB。\n"
-                        + "充能见底时进度会停下，\n"
-                        + "但已经投进去的材料不会损失。");
+                "熔炉、三个铁锭和一个红石可合成简易火力发电机。\n"
+                        + "把机器放在发电机旁边，放入煤即可供电。每块煤共发 64,000 FE。\n"
+                        + "加工机还要补灵感充能。灵感提供 1,000 mB，碎片提供 100 mB。");
         add("guide.inspiration.chapter.plugins", "插件");
         add("guide.inspiration.chapter.plugins.body",
-                "每台机器右侧都有四个插件槽。\n\n"
-                        + "速度插件：速度翻倍，耗电与耗充能随之上升。\n"
-                        + "容量插件：抬高能量缓冲的上限。\n"
-                        + "电容降级插件：把上限压到 67%。\n"
-                        + "它不是削弱，而是用来压低一次放电的规模。");
+                "四槽可混装，倍率相乘。\n"
+                        + "电容扩储电，灵感扩充能。速度提高时两项消耗都增加。\n"
+                        + "普通 ×2，高能 ×4。\n"
+                        + "每个并行插件使单轮加工份数上限翻倍。\n"
+                        + "电容降级插件将储电降至 67%。");
         add("guide.inspiration.chapter.injection", "注入合成");
         add("guide.inspiration.chapter.injection.body",
                 "在物质束缚器下方摆好底座、四周放上注入枪，\n"

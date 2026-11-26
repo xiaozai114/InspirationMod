@@ -12,6 +12,8 @@ import com.starcrosser.inspiration.machine.recipe.FusionRecipe;
 import com.starcrosser.inspiration.machine.recipe.FusionRecipeSerializer;
 import com.starcrosser.inspiration.machine.recipe.RefiningRecipe;
 import com.starcrosser.inspiration.machine.recipe.RefiningRecipeSerializer;
+import com.starcrosser.inspiration.machine.recipe.ResonanceRecipe;
+import com.starcrosser.inspiration.machine.recipe.ResonanceRecipeSerializer;
 import com.starcrosser.inspiration.machine.recipe.ReshapingRecipe;
 import com.starcrosser.inspiration.machine.recipe.ReshapingRecipeSerializer;
 import com.starcrosser.inspiration.machine.recipe.TwistingRecipe;
@@ -49,6 +51,13 @@ public class ModRecipes {
     public static final DeferredHolder<RecipeType<?>, RecipeType<ReshapingRecipe>> RESHAPING_TYPE =
             TYPES.register("reshaping", () -> RecipeType.simple(
                     ResourceLocation.fromNamespaceAndPath(Inspiration.MODID, "reshaping")));
+
+    // 谐振腔配方
+    public static final DeferredHolder<RecipeSerializer<?>, RecipeSerializer<ResonanceRecipe>> RESONANCE_SERIALIZER =
+            SERIALIZERS.register("resonance", ResonanceRecipeSerializer::new);
+    public static final DeferredHolder<RecipeType<?>, RecipeType<ResonanceRecipe>> RESONANCE_TYPE =
+            TYPES.register("resonance", () -> RecipeType.simple(
+                    ResourceLocation.fromNamespaceAndPath(Inspiration.MODID, "resonance")));
 
     // 矿物扭曲机配方
     public static final DeferredHolder<RecipeSerializer<?>, RecipeSerializer<TwistingRecipe>> TWISTING_SERIALIZER =

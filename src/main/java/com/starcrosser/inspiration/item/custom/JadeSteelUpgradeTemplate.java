@@ -36,6 +36,10 @@ public final class JadeSteelUpgradeTemplate {
             vanillaIcon("item/empty_slot_pickaxe"),
             vanillaIcon("item/empty_slot_axe"),
             vanillaIcon("item/empty_slot_shovel"),
+            vanillaIcon("item/empty_armor_slot_helmet"),
+            vanillaIcon("item/empty_armor_slot_chestplate"),
+            vanillaIcon("item/empty_armor_slot_leggings"),
+            vanillaIcon("item/empty_armor_slot_boots"),
             vanillaIcon("item/empty_slot_hoe"));
 
     /** 附加材料图标：锭。 */

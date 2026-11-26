@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "subfacing=east": {
+      "model": "inspiration:block/radiation_absorber",
+      "y": 90
+    },
+    "subfacing=north": {
+      "model": "inspiration:block/radiation_absorber"
+    },
+    "subfacing=south": {
+      "model": "inspiration:block/radiation_absorber",
+      "y": 180
+    },
+    "subfacing=west": {
+      "model": "inspiration:block/radiation_absorber",
+      "y": 270
+    }
+  }
+}

@@ -50,7 +50,12 @@ public final class PluginInventory {
      * 管道与漏斗都够不着，免得机器被别的东西偷偷改装。
      */
     public static void configure(SidedInventoryComponent<?> inventory) {
-        inventory.setInputFilter((stack, slot) -> stack.getItem() instanceof MachinePluginItem);
+        configure(inventory, false);
+    }
+
+    public static void configure(SidedInventoryComponent<?> inventory, boolean supportsParallel) {
+        inventory.setInputFilter((stack, slot) -> stack.getItem() instanceof MachinePluginItem plugin
+                && (supportsParallel || plugin.pluginType() != MachinePluginType.PARALLEL));
         inventory.setSlotLimit(1);
         inventory.setRange(1, SLOTS);
         inventory.setColor(DyeColor.PURPLE);
